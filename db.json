@@ -54,6 +54,11 @@
       "markdown": "# h1\n\n*still in business*",
       "title": "",
       "id": 29
+    },
+    {
+      "markdown": "# post title\n\nthis is a piece of `code`\n```js\nfunction (){\nreturn null\nor let 666\n}\n```\n",
+      "title": "tytul postu",
+      "id": 30
     }
   ]
 }

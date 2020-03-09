@@ -12,8 +12,8 @@
 } */
 
 .container {
-  width: 90%;
   margin: auto;
+  width: 90%;
 }
 
 nav ul {
@@ -35,12 +35,12 @@ nav li {
   padding: 15px;
 }
 .posts {
-  width: 90%;
   margin: auto;
+  width: 90%;
 }
 
 .preview {
-  min-height: 200px;
   border: 1px solid #c8ccd0;
+  min-height: 200px;
   padding: 10px;
 }

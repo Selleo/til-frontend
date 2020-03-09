@@ -4,7 +4,7 @@ import "react-mde/lib/styles/css/react-mde-all.css";
 import { useHistory } from "react-router-dom";
 
 import Markdown from "./Markdown";
-import { postData } from "../utils";
+import { postData } from "../utils/utils";
 
 const AddPost = props => {
   const [buttonState, setButtonState] = useState(true);
