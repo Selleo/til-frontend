@@ -13,6 +13,6 @@ defmodule TilWeb.Router do
 
   scope "/api", TilWeb do
     pipe_through :api
-    get "/posts", PostController, :request
+    resources "/posts", PostController, only: [:create, :index, :show, :update]
   end
 end
