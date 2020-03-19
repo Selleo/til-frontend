@@ -5,10 +5,7 @@ defmodule TilWeb.PostControllerTest do
   alias Til.ShareableContent
 
   describe "GET /api/posts" do
-    test "returns all existing posts with categories", %{conn: conn} do
-      current_user = insert(:user, email: "peter@parker.com")
-      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
-
+    test "returns all existing posts with categories as public", %{conn: conn} do
       first_category = insert(:category, name: "Elixir")
       second_category = insert(:category, name: "Javascript")
 
@@ -17,7 +14,6 @@ defmodule TilWeb.PostControllerTest do
 
       response =
         conn
-        |> put_req_header("authorization", "bearer: " <> token)
         |> get(Routes.post_path(conn, :index))
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)

@@ -3,6 +3,9 @@ defmodule TilWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :authenticated do
     plug TilWeb.Plug.AuthAccessPipeline
   end
 
@@ -13,6 +16,9 @@ defmodule TilWeb.Router do
 
   scope "/api", TilWeb do
     pipe_through :api
-    resources "/posts", PostController, only: [:create, :index, :show, :update]
+    resources "/posts", PostController, only: [:index, :show]
+
+    pipe_through :authenticated
+    resources "/posts", PostController, only: [:create, :update]
   end
 end
