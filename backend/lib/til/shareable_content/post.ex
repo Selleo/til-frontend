@@ -11,7 +11,7 @@ defmodule Til.ShareableContent.Post do
     field :likes_count, :integer
 
     belongs_to(:author, User)
-    many_to_many :categories, Category, join_through: "posts_categories"
+    many_to_many :categories, Category, join_through: "posts_categories", on_replace: :delete
     timestamps()
   end
 

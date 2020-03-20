@@ -2,11 +2,6 @@ defmodule TilWeb.PostView do
   use TilWeb, :view
   alias Til.Repo
 
-  def render("create.json", %{post: post}) do
-    post
-    |> serialize_post
-  end
-
   def render("index.json", %{posts: posts}) do
     posts
     |> Enum.map(&serialize_post/1)

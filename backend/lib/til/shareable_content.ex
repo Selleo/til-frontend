@@ -20,15 +20,26 @@ defmodule Til.ShareableContent do
   end
 
   def create_post(author, attrs \\ %{}) do
-    categories_ids = if attrs["categories_ids"], do: attrs["categories_ids"], else: []
-
     %Post{author_id: author.id}
-    |> Post.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:categories, get_categories(categories_ids))
+    |> change_post(attrs)
     |> Repo.insert()
   end
 
+  def update_post(post, attrs \\ %{}) do
+    post
+    |> change_post(attrs)
+    |> Repo.update()
+  end
+
   #private
+
+  defp change_post(post, attrs) do
+    categories_ids = if attrs["categories_ids"], do: attrs["categories_ids"], else: []
+
+    post
+    |> Post.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:categories, get_categories(categories_ids))
+  end
 
   defp preload_post_data(post_data), do: Repo.preload(post_data, [:categories, :author])
 end
