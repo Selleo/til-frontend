@@ -9,6 +9,12 @@ defmodule TilWeb.PostController do
       |> render("index.json", posts: ShareableContent.get_posts)
   end
 
+  def show(conn, %{"id" => id}) do
+    conn
+      |> put_status(:ok)
+      |> render("show.json", post: ShareableContent.get_post(id))
+  end
+
   def create(conn, params) do
     current_user_uuid = conn.private.guardian_default_resource.uuid
     author = Accounts.get_user_by(uuid: current_user_uuid)

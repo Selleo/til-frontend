@@ -12,6 +12,11 @@ defmodule TilWeb.PostView do
     |> Enum.map(&serialize_post/1)
   end
 
+  def render("show.json", %{post: post}) do
+    post
+    |> serialize_post
+  end
+
   defp serialize_post(post) do
     %{
       data: %{
