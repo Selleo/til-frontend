@@ -108,8 +108,7 @@ defmodule TilWeb.PostControllerTest do
 
       assert length(categories) == 2
 
-      post_first_category = List.first categories
-      post_last_category = List.last categories
+      [post_first_category, post_last_category] = categories
 
       assert post_first_category.id == first_category.id
       assert post_last_category.id == second_category.id
@@ -197,7 +196,7 @@ defmodule TilWeb.PostControllerTest do
 
       assert length(categories) == 1
 
-      post_category = List.first categories
+      [post_category] = categories
 
       assert post_category.id == third_category.id
     end
