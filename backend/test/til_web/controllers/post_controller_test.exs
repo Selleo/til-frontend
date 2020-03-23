@@ -22,8 +22,8 @@ defmodule TilWeb.PostControllerTest do
 
       [first_post, second_post] = parsed_response_body
 
-      assert first_post["data"]["categoriesIds"] == [first_category.id, second_category.id]
-      assert second_post["data"]["categoriesIds"] == [first_category.id]
+      assert first_post["categoriesIds"] == [first_category.id, second_category.id]
+      assert second_post["categoriesIds"] == [first_category.id]
     end
   end
 
@@ -43,10 +43,8 @@ defmodule TilWeb.PostControllerTest do
 
       assert response.status == 200
 
-      post = parsed_response_body
-
-      assert post["data"]["title"] == post_title
-      assert post["data"]["categoriesIds"] == [first_category.id, second_category.id]
+      assert parsed_response_body["title"] == post_title
+      assert parsed_response_body["categoriesIds"] == [first_category.id, second_category.id]
     end
   end
 
@@ -64,7 +62,7 @@ defmodule TilWeb.PostControllerTest do
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
           body: post_body,
-          categories_ids: []
+          categoriesIds: []
         })
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
@@ -77,9 +75,9 @@ defmodule TilWeb.PostControllerTest do
       assert created_post.title == post_title
       assert created_post.body == post_body
 
-      assert parsed_response_body["data"]["title"] == post_title
-      assert parsed_response_body["data"]["body"] == post_body
-      assert parsed_response_body["data"]["author"]["data"]["email"] == current_user.email
+      assert parsed_response_body["title"] == post_title
+      assert parsed_response_body["body"] == post_body
+      assert parsed_response_body["author"]["email"] == current_user.email
     end
 
     test "creates post with proper categories", %{conn: conn} do
@@ -97,7 +95,7 @@ defmodule TilWeb.PostControllerTest do
         |> put_req_header("authorization", "bearer: " <> token)
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
-          categories_ids: [first_category.id, second_category.id]
+          categoriesIds: [first_category.id, second_category.id]
         })
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
@@ -163,9 +161,9 @@ defmodule TilWeb.PostControllerTest do
       assert updated_post.title == post_title
       assert updated_post.body == post_body
 
-      assert parsed_response_body["data"]["title"] == post_title
-      assert parsed_response_body["data"]["body"] == post_body
-      assert parsed_response_body["data"]["author"]["data"]["email"] == post.author.email
+      assert parsed_response_body["title"] == post_title
+      assert parsed_response_body["body"] == post_body
+      assert parsed_response_body["author"]["email"] == post.author.email
     end
 
     test "updates post with proper categories", %{conn: conn} do
@@ -185,7 +183,7 @@ defmodule TilWeb.PostControllerTest do
         |> put_req_header("authorization", "bearer: " <> token)
         |> put(Routes.post_path(conn, :update, post.id), %{
           title: post_title,
-          categories_ids: [third_category.id]
+          categoriesIds: [third_category.id]
         })
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)

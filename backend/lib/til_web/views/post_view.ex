@@ -14,15 +14,13 @@ defmodule TilWeb.PostView do
 
   defp serialize_post(post) do
     %{
-      data: %{
-        id: post.id,
-        title: post.title,
-        body: post.body,
-        isPublic: post.is_public,
-        likesCount: post.likes_count,
-        author: render(TilWeb.UserView, "show.json", user: post.author),
-        categoriesIds: Enum.map(post.categories, & &1.id)
-      }
+      id: post.id,
+      title: post.title,
+      body: post.body,
+      isPublic: post.is_public,
+      likesCount: post.likes_count,
+      author: render(TilWeb.UserView, "show.json", user: post.author),
+      categoriesIds: Enum.map(post.categories, & &1.id)
     }
   end
 end

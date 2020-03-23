@@ -9,10 +9,8 @@ defmodule TilWeb.CategoryView do
 
   defp serialize_post(category) do
     %{
-      data: %{
-        id: category.id,
-        name: category.name
-      }
+      id: category.id,
+      name: category.name
     }
   end
 end

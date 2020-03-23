@@ -21,8 +21,8 @@ defmodule TilWeb.CategoryControllerTest do
 
       assert length(parsed_response_body) == 2
 
-      assert first_responded_category["data"]["name"] == first_category.name
-      assert second_responded_category["data"]["name"] == second_category.name
+      assert first_responded_category["name"] == first_category.name
+      assert second_responded_category["name"] == second_category.name
     end
   end
 end

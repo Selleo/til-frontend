@@ -34,7 +34,7 @@ defmodule Til.ShareableContent do
   #private
 
   defp change_post(post, attrs) do
-    categories_ids = if attrs["categories_ids"], do: attrs["categories_ids"], else: []
+    categories_ids = if attrs["categoriesIds"], do: attrs["categoriesIds"], else: []
 
     post
     |> Post.changeset(attrs)
