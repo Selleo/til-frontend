@@ -17,6 +17,7 @@ defmodule TilWeb.Router do
   scope "/api", TilWeb do
     pipe_through :api
     resources "/posts", PostController, only: [:index, :show]
+    resources "/categories", CategoryController, only: [:index]
 
     pipe_through :authenticated
     resources "/posts", PostController, only: [:create, :update]
