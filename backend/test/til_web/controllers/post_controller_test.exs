@@ -16,9 +16,10 @@ defmodule TilWeb.PostControllerTest do
         conn
         |> get(Routes.post_path(conn, :index))
 
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
       assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
       [first_post, second_post] = parsed_response_body
 
@@ -39,9 +40,9 @@ defmodule TilWeb.PostControllerTest do
         conn
         |> get(Routes.post_path(conn, :show, post.id))
 
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
       assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
       assert parsed_response_body["title"] == post_title
       assert parsed_response_body["categoriesIds"] == [first_category.id, second_category.id]
@@ -65,12 +66,11 @@ defmodule TilWeb.PostControllerTest do
           categoriesIds: []
         })
 
+      assert response.status == 201
+
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-
       created_post = ShareableContent.get_post_by(title: post_title)
-
-      assert response.status == 201
 
       assert created_post.title == post_title
       assert created_post.body == post_body
@@ -98,9 +98,9 @@ defmodule TilWeb.PostControllerTest do
           categoriesIds: [first_category.id, second_category.id]
         })
 
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
       assert response.status == 201
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
       %{categories: categories} = ShareableContent.get_post_by(title: post_title)
 
@@ -126,10 +126,28 @@ defmodule TilWeb.PostControllerTest do
           categories_ids: []
         })
 
+      assert response.status == 400
+
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert response.status == 400
       assert not is_nil parsed_response_body["errors"]
+    end
+
+    test "throws 401 error when not authenticated", %{conn: conn} do
+      post_body = "Some post body"
+
+      response =
+        conn
+        |> post(Routes.post_path(conn, :create), %{
+          body: post_body,
+          categories_ids: []
+        })
+
+      assert response.status == 401
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert not is_nil parsed_response_body["message"] == "unauthenticated"
     end
   end
 
@@ -151,12 +169,11 @@ defmodule TilWeb.PostControllerTest do
           body: post_body
         })
 
+      assert response.status == 200
+
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-
       updated_post = ShareableContent.get_post(post.id)
-
-      assert response.status == 200
 
       assert updated_post.title == post_title
       assert updated_post.body == post_body
@@ -186,10 +203,9 @@ defmodule TilWeb.PostControllerTest do
           categoriesIds: [third_category.id]
         })
 
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
       assert response.status == 200
 
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       %{categories: categories} = ShareableContent.get_post(post.id)
 
       assert length(categories) == 1
@@ -215,10 +231,83 @@ defmodule TilWeb.PostControllerTest do
           categories_ids: []
         })
 
+      assert response.status == 400
+
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert response.status == 400
       assert not is_nil parsed_response_body["errors"]
+    end
+
+    test "throws 401 error when no authenticated", %{conn: conn} do
+      post_body = "Some post body"
+      post = insert(:post)
+
+      response =
+        conn
+        |> put(Routes.post_path(conn, :update, post.id), %{
+          title: "",
+          body: post_body,
+          categories_ids: []
+        })
+
+      assert response.status == 401
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert not is_nil parsed_response_body["message"] == "unauthenticated"
+    end
+  end
+
+  describe "DELETE /api/posts" do
+    test "deletes post properly", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+
+      post = insert(:post)
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> put(Routes.post_path(conn, :delete, post.id))
+
+      assert response.status == 200
+
+      deleted_post = ShareableContent.get_post(post.id)
+
+      assert is_nil deleted_post
+    end
+
+    test "deletes post without deleting categories", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+
+      first_category = insert(:category, name: "Elixir")
+      second_category = insert(:category, name: "Javascript")
+
+      post = insert(:post, categories: [first_category, second_category])
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> put(Routes.post_path(conn, :delete, post.id))
+
+      assert response.status == 200
+
+      assert length(ShareableContent.get_categories) == 2
+    end
+
+    test "throws 401 error when no authenticated", %{conn: conn} do
+      post = insert(:post)
+
+      response =
+        conn
+        |> put(Routes.post_path(conn, :delete, post.id))
+
+      assert response.status == 401
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert not is_nil parsed_response_body["message"] == "unauthenticated"
     end
   end
 end
