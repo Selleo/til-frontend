@@ -20,6 +20,6 @@ defmodule TilWeb.Router do
     resources "/categories", CategoryController, only: [:index]
 
     pipe_through :authenticated
-    resources "/posts", PostController, only: [:create, :update]
+    resources "/posts", PostController, only: [:create, :update, :delete]
   end
 end

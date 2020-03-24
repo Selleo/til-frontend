@@ -31,6 +31,8 @@ defmodule Til.ShareableContent do
     |> Repo.update()
   end
 
+  def delete_post(post), do: Repo.delete(post)
+
   #private
 
   defp change_post(post, attrs) do

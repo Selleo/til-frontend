@@ -263,18 +263,16 @@ defmodule TilWeb.PostControllerTest do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
 
-      post = insert(:post)
+      post = insert(:post, author: current_user)
 
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.post_path(conn, :delete, post.id))
+        |> delete(Routes.post_path(conn, :delete, post.id))
 
       assert response.status == 200
 
-      deleted_post = ShareableContent.get_post(post.id)
-
-      assert is_nil deleted_post
+      assert length(ShareableContent.get_posts) == 0
     end
 
     test "deletes post without deleting categories", %{conn: conn} do
@@ -284,12 +282,12 @@ defmodule TilWeb.PostControllerTest do
       first_category = insert(:category, name: "Elixir")
       second_category = insert(:category, name: "Javascript")
 
-      post = insert(:post, categories: [first_category, second_category])
+      post = insert(:post, author: current_user, categories: [first_category, second_category])
 
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.post_path(conn, :delete, post.id))
+        |> delete(Routes.post_path(conn, :delete, post.id))
 
       assert response.status == 200
 
@@ -301,7 +299,7 @@ defmodule TilWeb.PostControllerTest do
 
       response =
         conn
-        |> put(Routes.post_path(conn, :delete, post.id))
+        |> delete(Routes.post_path(conn, :delete, post.id))
 
       assert response.status == 401
 

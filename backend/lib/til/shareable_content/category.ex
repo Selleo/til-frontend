@@ -10,7 +10,7 @@ defmodule Til.ShareableContent.Category do
       :posts,
       Post,
       join_through: "posts_categories",
-      on_replace: :delete
+      on_delete: :delete_all
     )
   end
 
