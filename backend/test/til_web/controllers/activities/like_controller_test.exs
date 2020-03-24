@@ -26,8 +26,8 @@ defmodule TilWeb.Activities.LikeControllerTest do
 
       [like] = likes
 
-      assert like["user_id"] == current_user.id
-      assert like["post_id"] == post.id
+      assert like.user_id == current_user.id
+      assert like.post_id == post.id
     end
 
     test "does not create new like and throws error when post is already liked", %{conn: conn} do
@@ -50,7 +50,23 @@ defmodule TilWeb.Activities.LikeControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert parsed_response_body["message"] == "post is already liked"
+      assert parsed_response_body["error"]["message"] == "post is already liked"
+    end
+
+    test "throws error when post doesn't exists", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> put(Routes.like_path(conn, :like, %{"id" => 12312497}))
+
+      assert response.status == 400
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert not is_nil(parsed_response_body["errors"])
     end
 
     test "throws error when user is not authenticated", %{conn: conn} do
@@ -95,13 +111,13 @@ defmodule TilWeb.Activities.LikeControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> delete(Routes.like_path(conn, :unlike, %{"id" => "some-fake-id"}))
+        |> delete(Routes.like_path(conn, :unlike, %{"id" => 19238417}))
 
       assert response.status == 400
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert not is_nil(parsed_response_body["errors"])
+      assert parsed_response_body["error"]["message"] == "not found"
     end
 
     test "throws error if not authenticated", %{conn: conn} do
