@@ -26,10 +26,7 @@ defmodule TilWeb.PostController do
         |> render("show.json", post: ShareableContent.get_post(post.id))
 
       {:error, %Ecto.Changeset{errors: _} = changeset} ->
-        conn
-        |> put_status(:bad_request)
-        |> put_view(TilWeb.ErrorView)
-        |> render("400.json", changeset: changeset)
+        render_changeset_error(conn, changeset)
     end
   end
 
@@ -44,10 +41,7 @@ defmodule TilWeb.PostController do
         |> render("show.json", post: ShareableContent.get_post(post.id))
 
       {:error, %Ecto.Changeset{errors: _} = changeset} ->
-        conn
-        |> put_status(:bad_request)
-        |> put_view(TilWeb.ErrorView)
-        |> render("400.json", changeset: changeset)
+        render_changeset_error(conn, changeset)
     end
   end
 
@@ -62,10 +56,14 @@ defmodule TilWeb.PostController do
         |> json(%{})
 
       {:error, %Ecto.Changeset{errors: _} = changeset} ->
-        conn
-        |> put_status(:bad_request)
-        |> put_view(TilWeb.ErrorView)
-        |> render("400.json", changeset: changeset)
+        render_changeset_error(conn, changeset)
     end
+  end
+
+  def render_changeset_error(conn, changeset) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(TilWeb.ErrorView)
+    |> render("400.json", changeset: changeset)
   end
 end
