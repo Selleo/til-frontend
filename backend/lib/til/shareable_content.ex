@@ -3,11 +3,11 @@ defmodule Til.ShareableContent do
   alias Til.Repo
   alias Til.ShareableContent.{Post, Category}
 
-  def get_posts, do: Repo.all(Post) |> preload_post_data
+  def get_posts, do: Repo.all(Post) |> preload_post_data()
 
-  def get_post(id), do: Repo.get!(Post, id) |> preload_post_data
+  def get_post(id), do: Repo.get!(Post, id) |> preload_post_data()
 
-  def get_post_by(attrs), do: Repo.get_by(Post, attrs) |> preload_post_data
+  def get_post_by(attrs), do: Repo.get_by(Post, attrs) |> preload_post_data()
 
   def get_categories, do: Repo.all(Category)
 

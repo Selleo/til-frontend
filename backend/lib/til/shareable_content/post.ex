@@ -10,7 +10,7 @@ defmodule Til.ShareableContent.Post do
     field :is_public, :boolean
     field :likes_count, :integer
 
-    belongs_to(:author, User)
+    belongs_to :author, User
     many_to_many :categories, Category, join_through: "posts_categories", on_replace: :delete, on_delete: :delete_all
     timestamps()
   end

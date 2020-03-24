@@ -2,7 +2,8 @@ defmodule TilWeb.PostControllerTest do
   use TilWeb.ConnCase
   import Til.Guardian
   import Til.Factory
-  alias Til.ShareableContent
+  alias Til.Repo
+  alias Til.ShareableContent.{Post, Category}
 
   describe "GET /api/posts" do
     test "returns all existing posts with categories as public", %{conn: conn} do
@@ -70,7 +71,7 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      created_post = ShareableContent.get_post_by(title: post_title)
+      created_post = Repo.get_by(Post, title: post_title)
 
       assert created_post.title == post_title
       assert created_post.body == post_body
@@ -102,7 +103,7 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      %{categories: categories} = ShareableContent.get_post_by(title: post_title)
+      %{categories: categories} = Repo.get_by(Post, title: post_title) |> Repo.preload([:categories])
 
       assert length(categories) == 2
 
@@ -173,7 +174,7 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      updated_post = ShareableContent.get_post(post.id)
+      updated_post = Repo.get!(Post, post.id)
 
       assert updated_post.title == post_title
       assert updated_post.body == post_body
@@ -206,7 +207,7 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      %{categories: categories} = ShareableContent.get_post(post.id)
+      %{categories: categories} = Repo.get!(Post, post.id) |> Repo.preload([:categories])
 
       assert length(categories) == 1
 
@@ -272,7 +273,7 @@ defmodule TilWeb.PostControllerTest do
 
       assert response.status == 200
 
-      assert length(ShareableContent.get_posts) == 0
+      assert length(Repo.all(Post)) == 0
     end
 
     test "deletes post without deleting categories", %{conn: conn} do
@@ -291,7 +292,7 @@ defmodule TilWeb.PostControllerTest do
 
       assert response.status == 200
 
-      assert length(ShareableContent.get_categories) == 2
+      assert length(Repo.all(Category)) == 2
     end
 
     test "throws 401 error when no authenticated", %{conn: conn} do

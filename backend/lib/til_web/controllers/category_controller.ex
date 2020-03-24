@@ -6,6 +6,6 @@ defmodule TilWeb.CategoryController do
   def index(conn, _) do
     conn
       |> put_status(:ok)
-      |> render("index.json", categories: ShareableContent.get_categories)
+      |> render("index.json", categories: ShareableContent.get_categories())
   end
 end

@@ -9,7 +9,7 @@ defmodule TilWeb.PostView do
 
   def render("show.json", %{post: post}) do
     post
-    |> serialize_post
+    |> serialize_post()
   end
 
   defp serialize_post(post) do
