@@ -1,30 +1,15 @@
 alias Til.ShareableContent.Category
 alias Til.Repo
 
-Repo.insert! %Category{
-  name: "Javascript"
-}
+categories = [
+  "android", "angular", "aws", "chrome", "commandline", "crystal", "css", "docker", "elasticsearch",
+  "elixir", "ember", "emberjs", "erlang", "flutter", "general", "git", "heroku", "html", "javascript", "k8s",
+  "linux", "markdown", "meetup", "mongodb", "nodejs", "osx", "phoenix", "rails", "react", "react-native", "redis",
+  "ruby", "rust", "sql", "terraform", "vault"
+]
 
-Repo.insert! %Category{
-  name: "Ruby on Rails"
-}
-
-Repo.insert! %Category{
-  name: "Elixir"
-}
-
-Repo.insert! %Category{
-  name: "Machine Learing"
-}
-
-Repo.insert! %Category{
-  name: "React"
-}
-
-Repo.insert! %Category{
-  name: "Ember"
-}
-
-Repo.insert! %Category{
-  name: "Node"
-}
+Enum.map(categories, fn category ->
+  Repo.insert! %Category{
+    name: category
+  }
+end)
