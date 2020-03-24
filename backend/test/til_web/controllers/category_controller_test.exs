@@ -1,8 +1,6 @@
 defmodule TilWeb.CategoryControllerTest do
   use TilWeb.ConnCase
-  import Til.Guardian
   import Til.Factory
-  alias Til.ShareableContent
 
   describe "GET /api/categories" do
     test "returns all existing categories as public", %{conn: conn} do

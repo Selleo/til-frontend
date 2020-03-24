@@ -101,8 +101,6 @@ defmodule TilWeb.PostControllerTest do
 
       assert response.status == 201
 
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-
       %{categories: categories} = Repo.get_by(Post, title: post_title) |> Repo.preload([:categories])
 
       assert length(categories) == 2
@@ -206,7 +204,6 @@ defmodule TilWeb.PostControllerTest do
 
       assert response.status == 200
 
-      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       %{categories: categories} = Repo.get!(Post, post.id) |> Repo.preload([:categories])
 
       assert length(categories) == 1
