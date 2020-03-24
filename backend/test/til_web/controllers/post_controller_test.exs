@@ -27,6 +27,30 @@ defmodule TilWeb.PostControllerTest do
       assert first_post["categoriesIds"] == [first_category.id, second_category.id]
       assert second_post["categoriesIds"] == [first_category.id]
     end
+
+    test "returns all existing posts with proper like count", %{conn: conn} do
+      current_user = insert(:user)
+
+      first_post = insert(:post)
+      second_post = insert(:post)
+
+      first_like = insert(:like, user_id: current_user.id, post_id: first_post.id)
+      second_like = insert(:like, user_id: current_user.id, post_id: first_post.id)
+      third_like = insert(:like, user_id: current_user.id, post_id: second_post.id)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      [first_responded_post, second_responded_post] = parsed_response_body
+
+      assert first_responded_post["likesCount"] == 2
+      assert second_responded_post["likesCount"] == 1
+    end
   end
 
   describe "GET /api/posts/:id" do
@@ -47,6 +71,25 @@ defmodule TilWeb.PostControllerTest do
 
       assert parsed_response_body["title"] == post_title
       assert parsed_response_body["categoriesIds"] == [first_category.id, second_category.id]
+    end
+
+    test "returns particular post with proper likes count", %{conn: conn} do
+      current_user = insert(:user)
+
+      post = insert(:post)
+
+      first_like = insert(:like, user_id: current_user.id, post_id: post.id)
+      second_like = insert(:like, user_id: current_user.id, post_id: post.id)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :show, post.id))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body["likesCount"] == 2
     end
   end
 
