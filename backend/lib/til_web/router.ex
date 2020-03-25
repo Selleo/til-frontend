@@ -21,5 +21,10 @@ defmodule TilWeb.Router do
 
     pipe_through :authenticated
     resources "/posts", PostController, only: [:create, :update, :delete]
+
+    scope "/activities", Activities do
+      put "/like", LikeController, :like
+      delete "/like", LikeController, :unlike
+    end
   end
 end

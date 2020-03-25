@@ -2,12 +2,12 @@ defmodule TilWeb.Activities.LikeController do
   use TilWeb, :controller
   alias Til.Activities
 
-  def like(conn, %{"id" => post_id}) do
+  def like(conn, %{"id" => id}) do
     current_user_uuid = conn.private.guardian_default_resource.uuid
     user = Til.Accounts.get_user_by(uuid: current_user_uuid)
+    {post_id, ""} = Integer.parse(id)
 
-
-    case Activities.like_post(post_id, user.id) do
+    case Activities.like_post(post_id, user) do
       {:ok, _} ->
         conn
         |> put_status(:ok)

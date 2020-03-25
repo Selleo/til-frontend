@@ -3,6 +3,7 @@ defmodule Til.Repo.Migrations.CreateLikes do
 
   def change do
     create table(:likes) do
+      add :user_uuid, :string
       add :user_id, references(:users, on_delete: :nothing), null: false
       add :post_id, references(:posts, on_delete: :nothing), null: false
 
