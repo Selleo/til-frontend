@@ -14,8 +14,8 @@ defmodule Til.Activities.Like do
 
   def changeset(like, attrs) do
     like
-    |> cast(attrs, [:user_id, :post_id])
-    |> validate_required([:user_id, :post_id])
+    |> cast(attrs, [:user_id, :post_id, :user_uuid])
+    |> validate_required([:user_id, :post_id, :user_uuid])
     |> foreign_key_constraint(:post_id)
   end
 end
