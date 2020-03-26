@@ -18,12 +18,6 @@ defmodule TilWeb.Activities.LikeController do
         |> put_status(:bad_request)
         |> put_view(TilWeb.ErrorView)
         |> render("400.json", changeset: changeset)
-
-      {:error, %{message: message}} ->
-        conn
-        |> put_status(:bad_request)
-        |> put_view(TilWeb.ErrorView)
-        |> render("400.json", message: message)
     end
   end
 

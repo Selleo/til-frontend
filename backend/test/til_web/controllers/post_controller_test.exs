@@ -29,14 +29,15 @@ defmodule TilWeb.PostControllerTest do
     end
 
     test "returns all existing posts with proper like count", %{conn: conn} do
-      current_user = insert(:user)
+      first_user = insert(:user)
+      second_user = insert(:user)
 
       first_post = insert(:post)
       second_post = insert(:post)
 
-      first_like = insert(:like, user_id: current_user.id, post_id: first_post.id)
-      second_like = insert(:like, user_id: current_user.id, post_id: first_post.id)
-      third_like = insert(:like, user_id: current_user.id, post_id: second_post.id)
+      first_like = insert(:like, user_id: first_user.id, post_id: first_post.id)
+      second_like = insert(:like, user_id: second_user.id, post_id: first_post.id)
+      third_like = insert(:like, user_id: first_user.id, post_id: second_post.id)
 
       response =
         conn
@@ -53,14 +54,15 @@ defmodule TilWeb.PostControllerTest do
     end
 
     test "returns all existing posts with proper likes", %{conn: conn} do
-      current_user = insert(:user)
+      first_user = insert(:user)
+      second_user = insert(:user)
 
       first_post = insert(:post)
       second_post = insert(:post)
 
-      first_like = insert(:like, user_id: current_user.id, post_id: first_post.id)
-      second_like = insert(:like, user_id: current_user.id, post_id: first_post.id)
-      third_like = insert(:like, user_id: current_user.id, post_id: second_post.id)
+      first_like = insert(:like, user_id: first_user.id, post_id: first_post.id)
+      second_like = insert(:like, user_id: second_user.id, post_id: first_post.id)
+      third_like = insert(:like, user_id: first_user.id, post_id: second_post.id)
 
       response =
         conn
@@ -75,15 +77,15 @@ defmodule TilWeb.PostControllerTest do
       [first_responded_like, second_responded_like] = first_responded_post["likes"]
       [third_responded_like] = second_responded_post["likes"]
 
-      assert first_responded_like["user_uuid"] == current_user.uuid
+      assert first_responded_like["user_uuid"] == first_user.uuid
       assert first_responded_like["post_id"] == first_post.id
       assert first_responded_like["user_id"] == nil
 
-      assert second_responded_like["user_uuid"] == current_user.uuid
+      assert second_responded_like["user_uuid"] == second_user.uuid
       assert second_responded_like["post_id"] == first_post.id
       assert second_responded_like["user_id"] == nil
 
-      assert third_responded_like["user_uuid"] == current_user.uuid
+      assert third_responded_like["user_uuid"] == first_user.uuid
       assert third_responded_like["post_id"] == second_post.id
       assert third_responded_like["user_id"] == nil
     end
@@ -110,12 +112,13 @@ defmodule TilWeb.PostControllerTest do
     end
 
     test "returns particular post with proper likes count", %{conn: conn} do
-      current_user = insert(:user)
+      first_user = insert(:user)
+      second_user = insert(:user)
 
       post = insert(:post)
 
-      first_like = insert(:like, user_id: current_user.id, post_id: post.id)
-      second_like = insert(:like, user_id: current_user.id, post_id: post.id)
+      first_like = insert(:like, user_id: first_user.id, post_id: post.id)
+      second_like = insert(:like, user_id: second_user.id, post_id: post.id)
 
       response =
         conn
@@ -129,12 +132,13 @@ defmodule TilWeb.PostControllerTest do
     end
 
     test "returns particular post with proper likes data", %{conn: conn} do
-      current_user = insert(:user)
+      first_user = insert(:user)
+      second_user = insert(:user)
 
       post = insert(:post)
 
-      first_like = insert(:like, user_id: current_user.id, post_id: post.id)
-      second_like = insert(:like, user_id: current_user.id, post_id: post.id)
+      first_like = insert(:like, user_id: first_user.id, post_id: post.id)
+      second_like = insert(:like, user_id: second_user.id, post_id: post.id)
 
       response =
         conn
@@ -146,11 +150,11 @@ defmodule TilWeb.PostControllerTest do
 
       [first_responded_like, second_responded_like] = parsed_response_body["likes"]
 
-      assert first_responded_like["user_uuid"] == current_user.uuid
+      assert first_responded_like["user_uuid"] == first_user.uuid
       assert first_responded_like["post_id"] == post.id
       assert first_responded_like["user_id"] == nil
 
-      assert second_responded_like["user_uuid"] == current_user.uuid
+      assert second_responded_like["user_uuid"] == second_user.uuid
       assert second_responded_like["post_id"] == post.id
       assert second_responded_like["user_id"] == nil
     end

@@ -16,5 +16,6 @@ defmodule Til.Activities.Like do
     |> cast(attrs, [:user_id, :post_id])
     |> validate_required([:user_id, :post_id])
     |> foreign_key_constraint(:post_id)
+    |> unique_constraint(:post_id, name: :user_post_pair)
   end
 end

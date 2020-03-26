@@ -50,7 +50,9 @@ defmodule TilWeb.Activities.LikeControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert parsed_response_body["error"]["message"] == "post is already liked"
+      IO.inspect parsed_response_body
+
+      assert not is_nil(parsed_response_body["errors"])
     end
 
     test "throws error when post doesn't exists", %{conn: conn} do

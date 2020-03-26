@@ -9,5 +9,7 @@ defmodule Til.Repo.Migrations.CreateLikes do
 
       timestamps()
     end
+
+    create unique_index(:likes, [:user_id, :post_id], name: :user_post_pair)
   end
 end
