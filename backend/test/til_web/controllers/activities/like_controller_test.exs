@@ -16,7 +16,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.like_path(conn, :like, %{"id" => post.id}))
+        |> put(Routes.like_path(conn, :like, post.id))
 
       assert response.status == 200
 
@@ -41,7 +41,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.like_path(conn, :like, %{"id" => post.id}))
+        |> put(Routes.like_path(conn, :like, post.id))
 
       assert response.status == 400
 
@@ -61,7 +61,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.like_path(conn, :like, %{"id" => 12312497}))
+        |> put(Routes.like_path(conn, :like, 12312497))
 
       assert response.status == 400
 
@@ -75,7 +75,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
 
       response =
         conn
-        |> put(Routes.like_path(conn, :like, %{"id" => post.id}))
+        |> put(Routes.like_path(conn, :like, post.id))
 
       assert response.status == 401
 
@@ -96,7 +96,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> delete(Routes.like_path(conn, :unlike, %{"id" => post.id}))
+        |> delete(Routes.like_path(conn, :unlike, post.id))
 
       assert response.status == 200
 
@@ -112,7 +112,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> delete(Routes.like_path(conn, :unlike, %{"id" => 19238417}))
+        |> delete(Routes.like_path(conn, :unlike, 19238417))
 
       assert response.status == 400
 
@@ -126,7 +126,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
 
       response =
         conn
-        |> delete(Routes.like_path(conn, :unlike, %{"id" => post.id}))
+        |> delete(Routes.like_path(conn, :unlike, post.id))
 
       assert response.status == 401
 

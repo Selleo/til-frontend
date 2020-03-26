@@ -23,8 +23,8 @@ defmodule TilWeb.Router do
     resources "/posts", PostController, only: [:create, :update, :delete]
 
     scope "/activities", Activities do
-      put "/like", LikeController, :like
-      delete "/like", LikeController, :unlike
+      put "/like/:id", LikeController, :like
+      delete "/like/:id", LikeController, :unlike
     end
   end
 end
