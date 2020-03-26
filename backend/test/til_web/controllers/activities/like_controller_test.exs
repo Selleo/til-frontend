@@ -27,7 +27,6 @@ defmodule TilWeb.Activities.LikeControllerTest do
       [like] = likes
 
       assert like.user_id == current_user.id
-      assert like.user_uuid == current_user.uuid
       assert like.post_id == post.id
     end
 

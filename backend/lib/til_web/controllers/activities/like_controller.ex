@@ -7,7 +7,7 @@ defmodule TilWeb.Activities.LikeController do
     user = Til.Accounts.get_user_by(uuid: current_user_uuid)
     {post_id, ""} = Integer.parse(id)
 
-    case Activities.like_post(post_id, user) do
+    case Activities.like_post(post_id, user.id) do
       {:ok, _} ->
         conn
         |> put_status(:ok)

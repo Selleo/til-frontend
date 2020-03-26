@@ -58,9 +58,9 @@ defmodule TilWeb.PostControllerTest do
       first_post = insert(:post)
       second_post = insert(:post)
 
-      first_like = insert(:like, user_id: current_user.id, user_uuid: current_user.uuid, post_id: first_post.id)
-      second_like = insert(:like, user_id: current_user.id, user_uuid: current_user.uuid, post_id: first_post.id)
-      third_like = insert(:like, user_id: current_user.id, user_uuid: current_user.uuid, post_id: second_post.id)
+      first_like = insert(:like, user_id: current_user.id, post_id: first_post.id)
+      second_like = insert(:like, user_id: current_user.id, post_id: first_post.id)
+      third_like = insert(:like, user_id: current_user.id, post_id: second_post.id)
 
       response =
         conn
@@ -133,8 +133,8 @@ defmodule TilWeb.PostControllerTest do
 
       post = insert(:post)
 
-      first_like = insert(:like, user_id: current_user.id, user_uuid: current_user.uuid, post_id: post.id)
-      second_like = insert(:like, user_id: current_user.id, user_uuid: current_user.uuid, post_id: post.id)
+      first_like = insert(:like, user_id: current_user.id, post_id: post.id)
+      second_like = insert(:like, user_id: current_user.id, post_id: post.id)
 
       response =
         conn

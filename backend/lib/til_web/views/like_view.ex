@@ -10,7 +10,7 @@ defmodule TilWeb.LikeView do
   defp serialize_like(like) do
     %{
       post_id: like.post_id,
-      user_uuid: like.user_uuid
+      user_uuid: like.user.uuid
     }
   end
 end

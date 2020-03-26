@@ -43,6 +43,6 @@ defmodule Til.ShareableContent do
     |> Ecto.Changeset.put_assoc(:categories, get_categories(categories_ids))
   end
 
-  defp preload_post_data(post_data), do: Repo.preload(post_data, [:categories, :author, :likes])
+  defp preload_post_data(post_data), do: Repo.preload(post_data, [:categories, :author, likes: :user])
 end
 

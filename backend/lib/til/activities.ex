@@ -11,10 +11,10 @@ defmodule Til.Activities do
     Repo.one(user_like_for_post_query)
   end
 
-  def like_post(post_id, user) do
-    case get_user_like_for_post(post_id, user.id) do
+  def like_post(post_id, user_id) do
+    case get_user_like_for_post(post_id, user_id) do
       %Like{} -> {:error, %{message: "post is already liked"}}
-      _ -> create_like(post_id, user)
+      _ -> create_like(post_id, user_id)
     end
   end
 
@@ -27,9 +27,9 @@ defmodule Til.Activities do
 
   # private
 
-  defp create_like(post_id, user) do
+  defp create_like(post_id, user_id) do
     %Like{}
-    |> Like.changeset(%{user_id: user.id, post_id: post_id, user_uuid: user.uuid})
+    |> Like.changeset(%{user_id: user_id, post_id: post_id})
     |> Repo.insert()
   end
 
