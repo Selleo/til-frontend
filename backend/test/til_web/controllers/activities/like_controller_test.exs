@@ -6,7 +6,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
   alias Til.Repo
   alias Til.Activities.Like
 
-  describe "PUT /api/activities/like" do
+  describe "POST /api/posts/likes" do
     test "creates like for post when not liked yet and returns ok", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
@@ -16,7 +16,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.like_path(conn, :like, post.id))
+        |> post(Routes.post_like_path(conn, :like, post.id))
 
       assert response.status == 200
 
@@ -40,7 +40,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.like_path(conn, :like, post.id))
+        |> post(Routes.post_like_path(conn, :like, post.id))
 
       assert response.status == 400
 
@@ -62,7 +62,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.like_path(conn, :like, 12312497))
+        |> post(Routes.post_like_path(conn, :like, 12312497))
 
       assert response.status == 400
 
@@ -76,7 +76,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
 
       response =
         conn
-        |> put(Routes.like_path(conn, :like, post.id))
+        |> post(Routes.post_like_path(conn, :like, post.id))
 
       assert response.status == 401
 
@@ -86,7 +86,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
     end
   end
 
-  describe "DELETE /api/activities/like" do
+  describe "DELETE /api/posts/likes" do
     test "deletes like properly and returns ok", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
@@ -97,7 +97,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> delete(Routes.like_path(conn, :unlike, post.id))
+        |> delete(Routes.post_like_path(conn, :unlike, post.id))
 
       assert response.status == 200
 
@@ -113,7 +113,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> delete(Routes.like_path(conn, :unlike, 19238417))
+        |> delete(Routes.post_like_path(conn, :unlike, 19238417))
 
       assert response.status == 400
 
@@ -127,7 +127,7 @@ defmodule TilWeb.Activities.LikeControllerTest do
 
       response =
         conn
-        |> delete(Routes.like_path(conn, :unlike, post.id))
+        |> delete(Routes.post_like_path(conn, :unlike, post.id))
 
       assert response.status == 401
 
