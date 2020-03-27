@@ -9,8 +9,8 @@ defmodule TilWeb.UserView do
     %{
       uuid: user.uuid,
       email: user.email,
-      first_name: user.first_name,
-      last_name: user.last_name,
+      firstName: user.first_name,
+      lastName: user.last_name,
       image: user.image
     }
   end
