@@ -12,6 +12,6 @@ defmodule TilWeb.UserController do
   def show(conn, %{"id" => user_id}) do
     conn
       |> put_status(:ok)
-      |> render("show.json", user: Accounts.get_user(user_id))
+      |> render("show_with_nested.json", user: Accounts.get_user_with_posts(user_id), preload: [:posts])
   end
 end

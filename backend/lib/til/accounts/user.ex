@@ -10,7 +10,7 @@ defmodule Til.Accounts.User do
     field :image, :string
     field :uuid, :string
 
-    has_many :posts, Post
+    has_many :posts, Post, foreign_key: :author_id
   end
 
   def changeset(struct, params) do
