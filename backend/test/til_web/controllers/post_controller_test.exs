@@ -341,7 +341,7 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      IO.inspect parsed_response_body
+      assert parsed_response_body == %{"errors" => %{"detail" => "Forbidden"}}
     end
 
     test "throws 400 error when lack of title", %{conn: conn} do
@@ -439,7 +439,7 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      IO.inspect parsed_response_body
+      assert parsed_response_body == %{"errors" => %{"detail" => "Forbidden"}}
     end
 
     test "throws 401 error when no authenticated", %{conn: conn} do
