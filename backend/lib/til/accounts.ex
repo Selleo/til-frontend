@@ -5,6 +5,8 @@ defmodule Til.Accounts do
 
   def get_user(id), do: Repo.get!(User, id)
 
+  def get_users, do: Repo.all(User)
+
   def get_user_by(attrs), do: Repo.get_by(User, attrs)
 
   def create_user(attrs \\ %{}) do
