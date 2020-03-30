@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { handleLike, checkHasLiked } from "../utils";
 
 const Likes = props => {
@@ -17,17 +16,19 @@ const Likes = props => {
 
   const toggleLike = async () => {
     if (hasLiked) {
-      const response = await handleLike(id, "DELETE");
-      if (response) {
-        setHasLiked(!hasLiked);
-        setLikesNumber(likesNumber - 1);
-      }
+      await handleLike(id, "DELETE")
+        .then(() => {
+          setHasLiked(!hasLiked);
+          setLikesNumber(likesNumber - 1);
+        })
+        .catch(err => console.error(err));
     } else {
-      const response = await handleLike(id, "POST");
-      if (response) {
-        setHasLiked(!hasLiked);
-        setLikesNumber(likesNumber + 1);
-      }
+      await handleLike(id, "POST")
+        .then(() => {
+          setHasLiked(!hasLiked);
+          setLikesNumber(likesNumber + 1);
+        })
+        .catch(err => console.error(err));
     }
   };
 

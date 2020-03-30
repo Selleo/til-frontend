@@ -66,11 +66,13 @@ export const handleLike = async (postId, method) => {
       "Content-Type": "application/json"
     }
   });
+
   return response.ok;
 };
 
 export const checkHasLiked = (likes, userId) => {
   const likesArray = likes.map(like => like.user_uuid);
+
   return likesArray.includes(userId);
 };
 

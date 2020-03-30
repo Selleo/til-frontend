@@ -90,6 +90,7 @@ const EditPost = props => {
 
     if (!selectedOptions) {
       setCategoriesIds([]);
+
       return;
     }
 
