@@ -36,7 +36,7 @@ defmodule TilWeb.UserControllerTest do
 
       response =
         conn
-        |> get(Routes.user_path(conn, :show, user.id))
+        |> get(Routes.user_path(conn, :show, user.uuid))
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
