@@ -1,11 +1,23 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { render } from "@testing-library/react";
 import App from "../../App";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import rootReducer from "../../store/reducers/reducers";
+
+const store = createStore(
+  rootReducer,
+  compose(applyMiddleware(thunk))
+);
 
 describe("render", () => {
   it("renders without crashing", () => {
-    const { getByTestId } = render(<App />);
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
 
     expect(getByTestId("app-main")).toBeTruthy();
   });

@@ -30,12 +30,23 @@ const App = () => {
   );
 
   return (
+<<<<<<< HEAD
     <Router>
       {renderApp}
       <Route path="/auth">
         <AuthHandler />
       </Route>
     </Router>
+=======
+    <div data-testid="app-main">
+      <Router>
+        {renderApp}
+        <Route path="/auth">
+          <AuthHandler setIsLoggedIn={setIsLoggedIn} />
+        </Route>
+      </Router>
+    </div>
+>>>>>>> test: redux actions
   );
 };
 
