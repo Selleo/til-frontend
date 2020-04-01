@@ -4,7 +4,7 @@
 # congfig
 .prettierrc
 
-# testing
+# jest data
 dummyData.js
 
 # dependencies
