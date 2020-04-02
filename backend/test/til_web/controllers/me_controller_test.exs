@@ -8,8 +8,8 @@ defmodule TilWeb.MeControllerTest do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
 
-      insert(:post, author: current_user, for_review: true)
-      insert(:post, author: current_user, for_review: false)
+      insert(:post, author: current_user, is_public: true)
+      insert(:post, author: current_user, is_public: false)
 
       response =
         conn

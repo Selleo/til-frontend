@@ -2,6 +2,7 @@ defmodule Til.Accounts do
   import Ecto.Query, warn: false
   alias Til.Repo
   alias Til.Accounts.User
+  alias Til.ShareableContent.Post
 
   def get_user(uuid), do: Repo.get_by(User, uuid: uuid)
 
@@ -26,7 +27,7 @@ defmodule Til.Accounts do
   end
 
   defp preload_visible_posts(user) do
-    visible_posts_query = from p in Post, where: p.for_review == false
+    visible_posts_query = from p in Post, where: p.is_public == true
     user |> Repo.preload([posts: visible_posts_query])
   end
 end
