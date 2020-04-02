@@ -1,8 +1,8 @@
-defmodule TilWeb.ReviewController do
+defmodule TilWeb.Posts.ReviewController do
   use TilWeb, :controller
   alias Til.ShareableContent
 
-  def show(conn, %{"id" => hashed_id}) do
+  def show(conn, %{"post_id" => hashed_id}) do
     case ShareableContent.decode_post_id(hashed_id) do
       {:ok, %{"sub" => id}} ->
         post = ShareableContent.get_post(id)
@@ -21,7 +21,7 @@ defmodule TilWeb.ReviewController do
   end
 
 
-  def update(conn, %{"id" => hashed_id}) do
+  def publish(conn, %{"post_id" => hashed_id}) do
     case ShareableContent.decode_post_id(hashed_id) do
       {:ok, %{"sub" => id}} ->
         post = ShareableContent.get_post(id)

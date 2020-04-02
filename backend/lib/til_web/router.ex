@@ -28,8 +28,8 @@ defmodule TilWeb.Router do
     resources "/posts", PostController, only: [:create, :update, :delete] do
       post "/reactions", Posts.ReactionController, :react
       delete "/reactions/:type", Posts.ReactionController, :unreact
+      get "/review", Posts.ReviewController, :show
+      put "/review", Posts.ReviewController, :publish
     end
-
-    resources "reviews", ReviewController, only: [:show, :update]
   end
 end

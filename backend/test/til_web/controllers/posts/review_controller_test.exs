@@ -1,11 +1,11 @@
-defmodule TilWeb.ReviewControllerTest do
+defmodule TilWeb.Posts.ReviewControllerTest do
   use TilWeb.ConnCase
   import Til.Guardian
   import Til.Factory
   alias Til.Repo
   alias Til.ShareableContent.Post
 
-  describe "GET /api/reviews/:hashed_id" do
+  describe "GET /api/posts/:hashed_id/reviews" do
     test "returns post with hashed id", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
@@ -18,7 +18,7 @@ defmodule TilWeb.ReviewControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> get(Routes.review_path(conn, :show, hashed_id))
+        |> get(Routes.post_review_path(conn, :show, hashed_id))
 
       assert response.status == 200
 
@@ -36,7 +36,7 @@ defmodule TilWeb.ReviewControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> get(Routes.review_path(conn, :show, "somerandomstring"))
+        |> get(Routes.post_review_path(conn, :show, "somerandomstring"))
 
       assert response.status == 400
 
@@ -51,7 +51,7 @@ defmodule TilWeb.ReviewControllerTest do
 
       response =
         conn
-        |> get(Routes.review_path(conn, :show, hashed_id))
+        |> get(Routes.post_review_path(conn, :show, hashed_id))
 
       assert response.status == 401
 
@@ -61,7 +61,7 @@ defmodule TilWeb.ReviewControllerTest do
     end
   end
 
-  describe "PUT /api/reviews/:hashed_id" do
+  describe "PUT /api/posts/:hashed_id/reviews" do
     test "returns and public post", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
@@ -72,7 +72,7 @@ defmodule TilWeb.ReviewControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.review_path(conn, :update, hashed_id))
+        |> put(Routes.post_review_path(conn, :publish, hashed_id))
 
       assert response.status == 200
 
@@ -92,7 +92,7 @@ defmodule TilWeb.ReviewControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> put(Routes.review_path(conn, :update, "somerandomstring"))
+        |> put(Routes.post_review_path(conn, :publish, "somerandomstring"))
 
       assert response.status == 400
 
@@ -107,7 +107,7 @@ defmodule TilWeb.ReviewControllerTest do
 
       response =
         conn
-        |> put(Routes.review_path(conn, :update, hashed_id))
+        |> put(Routes.post_review_path(conn, :publish, hashed_id))
 
       assert response.status == 401
 
