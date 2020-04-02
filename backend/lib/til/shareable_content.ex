@@ -47,6 +47,15 @@ defmodule Til.ShareableContent do
 
   def delete_post(post), do: Repo.delete(post)
 
+
+  def encode_post_id(id) do
+    Application.get_env(:til, :guardian, Til.Guardian).encode_and_sign(
+      id,
+      %{},
+      ttl: {100, :weeks}
+    )
+  end
+
   #private
 
   defp change_post(post, attrs) do
