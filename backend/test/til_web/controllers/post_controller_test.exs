@@ -6,7 +6,25 @@ defmodule TilWeb.PostControllerTest do
   alias Til.ShareableContent.Post
 
   describe "GET /api/posts" do
-    test "returns all existing posts with categories as public", %{conn: conn} do
+    test "returns only public posts", %{conn: conn} do
+      insert(:post, title: "public post")
+      insert(:post, is_public: false)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert length(parsed_response_body) == 1
+
+      [post] = parsed_response_body
+      assert post["title"] == "public post"
+    end
+
+    test "returns posts with categories", %{conn: conn} do
       first_category = insert(:category, name: "Elixir")
       second_category = insert(:category, name: "Javascript")
 
@@ -28,12 +46,12 @@ defmodule TilWeb.PostControllerTest do
       assert second_post["categoriesIds"] == [first_category.id]
     end
 
-    test "returns all existing posts with proper like count", %{conn: conn} do
+    test "returns posts with proper like count", %{conn: conn} do
       first_user = insert(:user)
       second_user = insert(:user)
 
-      first_post = insert(:post)
-      second_post = insert(:post)
+      first_post = insert(:post, is_public: true)
+      second_post = insert(:post, is_public: true)
 
       insert(:like, user_id: first_user.id, post_id: first_post.id)
       insert(:like, user_id: second_user.id, post_id: first_post.id)
@@ -53,7 +71,7 @@ defmodule TilWeb.PostControllerTest do
       assert second_responded_post["likesCount"] == 1
     end
 
-    test "returns all existing posts with proper likes", %{conn: conn} do
+    test "returns posts with proper likes", %{conn: conn} do
       first_user = insert(:user)
       second_user = insert(:user)
 
@@ -92,7 +110,21 @@ defmodule TilWeb.PostControllerTest do
   end
 
   describe "GET /api/posts/:id" do
-    test "returns particular post with categories as public", %{conn: conn} do
+    test "returns particular post if public", %{conn: conn} do
+      post = insert(:post, title: "public post")
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :show, post.id))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body["title"] == "public post"
+    end
+
+    test "returns particular post with categories", %{conn: conn} do
       first_category = insert(:category, name: "Elixir")
       second_category = insert(:category, name: "Javascript")
       post_title = "Some post"
@@ -157,6 +189,20 @@ defmodule TilWeb.PostControllerTest do
       assert second_responded_like["user_uuid"] == second_user.uuid
       assert second_responded_like["post_id"] == post.id
       assert second_responded_like["user_id"] == nil
+    end
+
+    test "does not return particular post if not public", %{conn: conn} do
+      post = insert(:post, is_public: false)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :show, post.id))
+
+      assert response.status == 400
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body == %{"error" => %{"message" => "not found"}}
     end
   end
 

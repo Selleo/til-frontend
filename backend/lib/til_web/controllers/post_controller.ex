@@ -1,10 +1,12 @@
 defmodule TilWeb.PostController do
   use TilWeb, :controller
   alias Til.Accounts
+  alias Til.Accounts.User
   alias Til.ShareableContent
+  alias Til.ShareableContent.Post
 
   def index(conn, _) do
-    posts = ShareableContent.get_posts()
+    posts = ShareableContent.get_public_posts()
 
     conn
       |> put_status(:ok)
@@ -12,11 +14,18 @@ defmodule TilWeb.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    post = ShareableContent.get_post(id)
+    case ShareableContent.get_post_by(id: id, is_public: true) do
+      nil ->
+        conn
+        |> put_status(:bad_request)
+        |> put_view(TilWeb.ErrorView)
+        |> render("400.json", message: "not found")
 
-    conn
-      |> put_status(:ok)
-      |> render("show_with_nested.json", post: post)
+      post ->
+        conn
+        |> put_status(:ok)
+        |> render("show_with_nested.json", post: post)
+    end
   end
 
   def create(%{private: %{:guardian_default_resource => current_user}} = conn, params) do
