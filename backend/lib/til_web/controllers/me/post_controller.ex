@@ -5,6 +5,13 @@ defmodule TilWeb.Me.PostController do
   alias Til.ShareableContent
   alias Til.ShareableContent.Post
 
+  def update(conn, %{"isPublic" => is_public}) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(TilWeb.ErrorView)
+    |> render("400.json", message: "post public property can't be modified")
+  end
+
   def update(%{private: %{:guardian_default_resource => current_user}} = conn, %{"id" => id} = params) do
     post = ShareableContent.get_post(id)
     current_user = Accounts.get_user(current_user.uuid)
