@@ -18,7 +18,7 @@ defmodule TilWeb.PostController do
 
   def create(conn, params) do
     current_user_uuid = conn.private.guardian_default_resource.uuid
-    author = Accounts.get_user_by(uuid: current_user_uuid)
+    author = Accounts.get_user(current_user_uuid)
 
     case ShareableContent.create_post(author, params) do
       {:ok, post} ->
@@ -34,7 +34,7 @@ defmodule TilWeb.PostController do
   def update(conn, %{"id" => id} = params) do
     current_user_uuid = conn.private.guardian_default_resource.uuid
     post = ShareableContent.get_post(id)
-    current_user = Accounts.get_user_by(uuid: current_user_uuid)
+    current_user = Accounts.get_user(current_user_uuid)
 
     with :ok <- Bodyguard.permit(Post, :update, current_user, post) do
       case ShareableContent.update_post(post, params) do
@@ -52,7 +52,7 @@ defmodule TilWeb.PostController do
   def delete(conn, %{"id" => id}) do
     current_user_uuid = conn.private.guardian_default_resource.uuid
     post = ShareableContent.get_post(id)
-    current_user = Accounts.get_user_by(uuid: current_user_uuid)
+    current_user = Accounts.get_user(current_user_uuid)
 
     with :ok <- Bodyguard.permit(Post, :delete, current_user, post) do
       case ShareableContent.delete_post(post) do
