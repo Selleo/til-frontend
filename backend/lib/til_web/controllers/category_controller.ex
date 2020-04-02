@@ -4,8 +4,9 @@ defmodule TilWeb.CategoryController do
   alias Til.ShareableContent
 
   def index(conn, _) do
+    categories = ShareableContent.get_categories()
     conn
       |> put_status(:ok)
-      |> render("index.json", categories: ShareableContent.get_categories())
+      |> render("index.json", categories: categories)
   end
 end

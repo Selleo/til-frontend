@@ -4,14 +4,18 @@ defmodule TilWeb.UserController do
   alias Til.ShareableContent
 
   def index(conn, _) do
+    users = Accounts.get_users()
+
     conn
       |> put_status(:ok)
-      |> render("index.json", users: Accounts.get_users())
+      |> render("index.json", users: users)
   end
 
   def show(conn, %{"id" => user_uuid}) do
+    user = Accounts.get_user_with_visible_posts(user_uuid)
+
     conn
       |> put_status(:ok)
-      |> render("show_with_nested.json", user: Accounts.get_user_with_visible_posts(user_uuid))
+      |> render("show_with_nested.json", user: user)
   end
 end
