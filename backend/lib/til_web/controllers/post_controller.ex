@@ -16,9 +16,8 @@ defmodule TilWeb.PostController do
       |> render("show_with_nested.json", post: ShareableContent.get_post(id))
   end
 
-  def create(conn, params) do
-    current_user_uuid = conn.private.guardian_default_resource.uuid
-    author = Accounts.get_user(current_user_uuid)
+  def create(%{private: %{:guardian_default_resource => current_user}} = conn, params) do
+    author = Accounts.get_user(current_user.uuid)
 
     case ShareableContent.create_post(author, params) do
       {:ok, post} ->
@@ -31,10 +30,9 @@ defmodule TilWeb.PostController do
     end
   end
 
-  def update(conn, %{"id" => id} = params) do
-    current_user_uuid = conn.private.guardian_default_resource.uuid
+  def update(%{private: %{:guardian_default_resource => current_user}} = conn, %{"id" => id} = params) do
     post = ShareableContent.get_post(id)
-    current_user = Accounts.get_user(current_user_uuid)
+    current_user = Accounts.get_user(current_user.uuid)
 
     with :ok <- Bodyguard.permit(Post, :update, current_user, post) do
       case ShareableContent.update_post(post, params) do
@@ -49,10 +47,9 @@ defmodule TilWeb.PostController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    current_user_uuid = conn.private.guardian_default_resource.uuid
+  def delete(%{private: %{:guardian_default_resource => current_user}} = conn, %{"id" => id}) do
     post = ShareableContent.get_post(id)
-    current_user = Accounts.get_user(current_user_uuid)
+    current_user = Accounts.get_user(current_user.uuid)
 
     with :ok <- Bodyguard.permit(Post, :delete, current_user, post) do
       case ShareableContent.delete_post(post) do
