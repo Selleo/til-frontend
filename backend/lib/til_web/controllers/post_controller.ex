@@ -28,7 +28,7 @@ defmodule TilWeb.PostController do
     end
   end
 
-  def create(%{private: %{:guardian_default_resource => current_user}} = conn, params) do
+  def create(%{private: %{:guardian_default_resource => current_user}} = conn, %{"isPublic" => true} = params) do
     author = Accounts.get_user(current_user.uuid)
 
     case ShareableContent.create_post(author, params) do
@@ -38,6 +38,26 @@ defmodule TilWeb.PostController do
         conn
         |> put_status(:created)
         |> render("show_with_nested.json", post: post)
+
+      {:error, %Ecto.Changeset{errors: _} = changeset} ->
+        render_changeset_error(conn, changeset)
+    end
+  end
+
+  def create(%{private: %{:guardian_default_resource => current_user}} = conn, params) do
+    author = Accounts.get_user(current_user.uuid)
+
+    case ShareableContent.create_post(author, params) do
+      {:ok, post} ->
+        post = ShareableContent.get_post(post.id)
+
+        {:ok, encoded_id, _} = ShareableContent.encode_post_id(post.id)
+
+        conn
+        |> put_status(:created)
+        # TODO returned encoded id only for FE testing/development before slack feature ready
+        # After slack ready it will be attached in slack encoded url.
+        |> render("show_with_nested.json", post: post, encoded_id: encoded_id)
 
       {:error, %Ecto.Changeset{errors: _} = changeset} ->
         render_changeset_error(conn, changeset)
