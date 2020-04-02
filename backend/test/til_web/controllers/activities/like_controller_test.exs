@@ -2,7 +2,6 @@ defmodule TilWeb.Activities.LikeControllerTest do
   use TilWeb.ConnCase
   import Til.Guardian
   import Til.Factory
-  alias Til.ShareableContent
   alias Til.Repo
   alias Til.Activities.Like
 

@@ -1,7 +1,5 @@
 defmodule TilWeb.AuthControllerTest do
   use TilWeb.ConnCase
-  import Til.Factory
-  import Til.Guardian
   alias Til.Repo
   alias Til.Accounts.User
 
