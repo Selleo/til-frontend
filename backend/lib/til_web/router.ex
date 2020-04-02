@@ -29,5 +29,7 @@ defmodule TilWeb.Router do
       post "/likes", Posts.LikeController, :like
       delete "/likes", Posts.LikeController, :unlike
     end
+
+    resources "reviews", ReviewController, only: [:show, :update]
   end
 end
