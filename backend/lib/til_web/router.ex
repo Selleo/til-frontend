@@ -21,7 +21,9 @@ defmodule TilWeb.Router do
     resources "/categories", CategoryController, only: [:index]
 
     pipe_through :authenticated
-    get "/me", MeController, :index
+    get "/me", MeController, :index do
+      resources "/me/posts", Me.PostController, only: [:update, :delete]
+    end
 
     resources "/posts", PostController, only: [:create, :update, :delete] do
       post "/reactions", Posts.ReactionController, :react
