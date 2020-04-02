@@ -7,7 +7,21 @@ defmodule Til.ShareableContent do
 
   def get_post(id), do: Repo.get!(Post, id) |> preload_post_data() |> Post.populate_reaction_count()
 
-  def get_post_by(attrs), do: Repo.get_by(Post, attrs) |> preload_post_data()
+  def get_public_posts do
+    public_posts_query = from p in Post, where: p.is_public == true
+
+    Repo.all(public_posts_query) |> preload_post_data() |> Enum.map(&Post.populate_likes_count/1)
+  end
+
+  def get_post_by(attrs) do
+    case Repo.get_by(Post, attrs) do
+      nil -> nil
+      post ->
+        post
+        |> preload_post_data()
+        |> Post.populate_likes_count()
+    end
+  end
 
   def get_categories, do: Repo.all(Category)
 
