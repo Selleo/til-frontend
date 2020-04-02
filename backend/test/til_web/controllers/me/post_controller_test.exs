@@ -168,6 +168,24 @@ defmodule TilWeb.Me.PostControllerTest do
       assert length(Repo.all(Category)) == 2
     end
 
+    test "deletes post containing rections properly", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+
+      post = insert(:post, author: current_user)
+      insert(:reaction, user_id: current_user.id, post_id: post.id, type: "love")
+      insert(:reaction, user_id: current_user.id, post_id: post.id, type: "funny")
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> delete(Routes.post_path(conn, :delete, post.id))
+
+      assert response.status == 200
+
+      assert length(Repo.all(Post)) == 0
+    end
+
     test "throws error when not a post author", %{conn: conn} do
       first_user = insert(:user)
       second_user = insert(:user)
