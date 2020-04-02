@@ -49,11 +49,15 @@ defmodule Til.ShareableContent do
 
 
   def encode_post_id(id) do
-    Application.get_env(:til, :guardian, Til.Guardian).encode_and_sign(
+    jwt_handler.encode_and_sign(
       id,
       %{},
       ttl: {100, :weeks}
     )
+  end
+
+  def decode_post_id(encoded) do
+    jwt_handler.decode_and_verify(encoded)
   end
 
   #private
@@ -67,5 +71,9 @@ defmodule Til.ShareableContent do
   end
 
   defp preload_post_data(post_data), do: Repo.preload(post_data, [:categories, :author, reactions: :user])
+
+  defp jwt_handler do
+    Application.get_env(:til, :guardian, Til.Guardian)
+  end
 end
 
