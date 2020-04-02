@@ -9,6 +9,7 @@ defmodule TilWeb.ReviewController do
 
         conn
         |> put_status(:ok)
+        |> put_view(TilWeb.PostView)
         |> render("show_with_nested.json", post: post)
 
       {:error, _} ->
