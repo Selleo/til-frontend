@@ -4,7 +4,7 @@ defmodule TilWeb.Posts.ReactionController do
 
   def react(conn, %{"post_id" => id, "type" => type}) do
     current_user_uuid = conn.private.guardian_default_resource.uuid
-    user = Til.Accounts.user_by(current_user_uuid)
+    user = Til.Accounts.get_user(current_user_uuid)
     {post_id, ""} = Integer.parse(id)
 
     case Activities.react_to_post(post_id, user.id, type) do

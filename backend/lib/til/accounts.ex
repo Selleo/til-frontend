@@ -1,5 +1,5 @@
 defmodule Til.Accounts do
-  import Ecto, warn: false
+  import Ecto.Query, warn: false
   alias Til.Repo
   alias Til.Accounts.User
 
@@ -7,9 +7,9 @@ defmodule Til.Accounts do
 
   def get_user_by(attrs), do: Repo.get_by(User, attrs)
 
-  def get_user_with_all_posts(uuid), do: Repo.get_by(User, uuid: uuid) |> preload_posts
+  def get_user_with_all_posts(uuid), do: Repo.get_by(User, uuid: uuid) |> preload_posts()
 
-  def get_user_with_visible_posts(uuid), do: Repo.get_by(User, uuid: uuid) |> preload_visible_posts
+  def get_user_with_visible_posts(uuid), do: Repo.get_by(User, uuid: uuid) |> preload_visible_posts()
 
   def get_users, do: Repo.all(User)
 
@@ -27,6 +27,6 @@ defmodule Til.Accounts do
 
   defp preload_visible_posts(user) do
     visible_posts_query = from p in Post, where: p.for_review == false
-    user |> Repo.preload([posts:])
+    user |> Repo.preload([posts: visible_posts_query])
   end
 end
