@@ -4,7 +4,7 @@ defmodule TilWeb.Posts.LikeController do
 
   def like(conn, %{"post_id" => id}) do
     current_user_uuid = conn.private.guardian_default_resource.uuid
-    user = Til.Accounts.get_user_by(uuid: current_user_uuid)
+    user = Til.Accounts.user_by(current_user_uuid)
     {post_id, ""} = Integer.parse(id)
 
     case Activities.like_post(post_id, user.id) do
@@ -23,7 +23,7 @@ defmodule TilWeb.Posts.LikeController do
 
   def unlike(conn, %{"post_id" => post_id}) do
     current_user_uuid = conn.private.guardian_default_resource.uuid
-    user = Til.Accounts.get_user_by(uuid: current_user_uuid)
+    user = Til.Accounts.get_user(current_user_uuid)
 
     case Activities.unlike_post(post_id, user.id) do
       {:ok, _} ->

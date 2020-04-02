@@ -13,7 +13,7 @@ defmodule Til.Guardian do
 
   def resource_from_claims(claims) do
     uuid = claims["sub"]
-    resource = Accounts.get_user_by(uuid: uuid)
+    resource = Accounts.get_user(uuid)
     {:ok,  resource}
   end
 

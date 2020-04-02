@@ -2,7 +2,7 @@ defmodule TilWeb.AuthControllerTest do
   use TilWeb.ConnCase
   import Til.Factory
   import Til.Guardian
-  alias Til.Accounts
+  alias Til.Accounts.User
 
   describe "/auth/:provider/callback" do
     test "user gets created when requested email is NOT persisted in the database", %{conn: conn} do
@@ -15,13 +15,13 @@ defmodule TilWeb.AuthControllerTest do
         uid: "google_uid"
       }
 
-      assert Accounts.get_user_by(email: subject_email) == nil
+      assert Repo.get_by(User, email: subject_email) == nil
 
       conn
       |> assign(:ueberauth_auth, ueberauth_auth)
       |> get(Routes.auth_path(conn, :callback, "google"))
 
-      created_user = Accounts.get_user_by(email: subject_email)
+      created_user = Repo.get_by(User, email: subject_email)
 
       assert created_user.email == subject_email
       assert created_user.first_name == "Peter"
