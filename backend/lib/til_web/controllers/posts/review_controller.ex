@@ -1,6 +1,7 @@
 defmodule TilWeb.Posts.ReviewController do
   use TilWeb, :controller
   alias Til.ShareableContent
+  alias Til.Notifications
 
   def show(conn, %{"post_id" => hashed_id}) do
     case ShareableContent.decode_post_id(hashed_id) do
@@ -29,6 +30,7 @@ defmodule TilWeb.Posts.ReviewController do
         case ShareableContent.update_post(post, %{is_public: true}) do
           {:ok, post} ->
             post = ShareableContent.get_post(post.id)
+            Notifications.notify_post_published(post)
 
             conn
             |> put_status(:ok)

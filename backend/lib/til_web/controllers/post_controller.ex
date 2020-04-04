@@ -4,6 +4,7 @@ defmodule TilWeb.PostController do
   alias Til.Accounts.User
   alias Til.ShareableContent
   alias Til.ShareableContent.Post
+  alias Til.Notifications
 
   def index(conn, _) do
     posts = ShareableContent.get_public_posts()
@@ -34,6 +35,7 @@ defmodule TilWeb.PostController do
     case ShareableContent.create_post(author, params) do
       {:ok, post} ->
         post = ShareableContent.get_post(post.id)
+        Notifications.notify_post_published(post)
 
         conn
         |> put_status(:created)
@@ -52,12 +54,11 @@ defmodule TilWeb.PostController do
         post = ShareableContent.get_post(post.id)
 
         {:ok, encoded_id, _} = ShareableContent.encode_post_id(post.id)
+        Notifications.notify_post_created(post, encoded_id)
 
         conn
         |> put_status(:created)
-        # TODO returned encoded id only for FE testing/development before slack feature ready
-        # After slack ready it will be attached in slack encoded url.
-        |> render("show_with_nested.json", post: post, encoded_id: encoded_id)
+        |> render("show_with_nested.json", post: post)
 
       {:error, %Ecto.Changeset{errors: _} = changeset} ->
         render_changeset_error(conn, changeset)
