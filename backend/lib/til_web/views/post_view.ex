@@ -16,15 +16,6 @@ defmodule TilWeb.PostView do
     |> serialize_post()
   end
 
-  # TODO returned encoded id only for FE testing/development before slack feature ready
-  # After slack ready it will be attached in slack encoded url.
-  def render("show_with_nested.json", %{post: post, encoded_id: encoded_id}) do
-    serialized = post
-    |> serialize_post(:nested)
-
-    Map.merge(serialized, %{encoded_id: encoded_id})
-  end
-
   def render("show_with_nested.json", %{post: post}) do
     post
     |> serialize_post(:nested)
