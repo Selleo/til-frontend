@@ -13,7 +13,7 @@ defmodule Til.ShareableContent.Post do
     field :reaction_count, :integer, virtual: true
 
     belongs_to :author, User
-    has_many :reactions, Reaction
+    has_many :reactions, Reaction, on_delete: :delete_all
     many_to_many :categories, Category, join_through: "posts_categories", on_replace: :delete, on_delete: :delete_all
     timestamps()
   end
