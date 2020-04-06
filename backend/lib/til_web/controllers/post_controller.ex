@@ -29,7 +29,7 @@ defmodule TilWeb.PostController do
     end
   end
 
-  def create(%{private: %{:guardian_default_resource => current_user}} = conn, %{"isPublic" => true} = params) do
+  def create(%{private: %{:guardian_default_resource => current_user}} = conn, %{"is_public" => true} = params) do
     author = Accounts.get_user(current_user.uuid)
 
     case ShareableContent.create_post(author, params) do

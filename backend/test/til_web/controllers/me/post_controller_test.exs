@@ -54,7 +54,7 @@ defmodule TilWeb.Me.PostControllerTest do
         |> put_req_header("authorization", "bearer: " <> token)
         |> put(Routes.post_path(conn, :update, post.id), %{
           title: post_title,
-          categoriesIds: [third_category.id]
+          categories_ids: [third_category.id]
         })
 
       assert response.status == 200
@@ -99,7 +99,7 @@ defmodule TilWeb.Me.PostControllerTest do
         conn
         |> put_req_header("authorization", "bearer: " <> token)
         |> put(Routes.post_path(conn, :update, post.id), %{
-          isPublic: true,
+          is_public: true,
         })
 
       assert response.status == 400

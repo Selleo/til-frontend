@@ -63,11 +63,11 @@ defmodule Til.ShareableContent do
   #private
 
   defp change_post(post, attrs) do
-    categories_ids = if attrs["categoryIds"], do: attrs["categoryIds"], else: []
+    category_ids = if attrs["category_ids"], do: attrs["category_ids"], else: []
 
     post
     |> Post.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:categories, get_categories(categories_ids))
+    |> Ecto.Changeset.put_assoc(:categories, get_categories(category_ids))
   end
 
   defp preload_post_data(post_data), do: Repo.preload(post_data, [:categories, :author, reactions: :user])

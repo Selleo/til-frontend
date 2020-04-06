@@ -222,7 +222,7 @@ defmodule TilWeb.PostControllerTest do
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
           body: post_body,
-          categoryIds: []
+          category_ids: []
         })
 
       assert response.status == 201
@@ -254,7 +254,7 @@ defmodule TilWeb.PostControllerTest do
         |> put_req_header("authorization", "bearer: " <> token)
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
-          categoryIds: [first_category.id, second_category.id]
+          category_ids: [first_category.id, second_category.id]
         })
 
       assert response.status == 201

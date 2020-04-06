@@ -5,7 +5,7 @@ defmodule TilWeb.Me.PostController do
   alias Til.ShareableContent
   alias Til.ShareableContent.Post
 
-  def update(conn, %{"isPublic" => is_public}) do
+  def update(conn, %{"is_public" => is_public}) do
     conn
     |> put_status(:bad_request)
     |> put_view(TilWeb.ErrorView)
