@@ -1,10 +1,6 @@
 defmodule Til.Notifications.Notifiers.SlackNotifier do
   use GenServer, restart: :temporary
 
-  @frontend_host Application.get_env(:til, :frontend_host)
-  @slack_review_hook Application.get_env(:til, :slack_review_hook)
-  @slack_feed_hook Application.get_env(:til, :slack_feed_hook)
-
   def start_link(notification_params) do
     GenServer.start_link(__MODULE__, notification_params)
   end
@@ -16,18 +12,18 @@ defmodule Til.Notifications.Notifiers.SlackNotifier do
 
   def handle_cast([:post_published, %{post: post}], state) do
     body = Jason.encode!(%{
-      text: "#{author_string(post)} created post <#{@frontend_host}/posts/#{post.id}|#{post.title}> #{categories_string(post)}"
+      text: "#{author_string(post)} created post <#{Application.get_env(:til, :frontend_host)}/posts/#{post.id}|#{post.title}> #{categories_string(post)}"
     })
 
-    with {:ok, _} <- HTTPoison.post @slack_feed_hook, body do {:noreply, %{}} end
+    with {:ok, _} <- HTTPoison.post Application.get_env(:til, :slack_feed_hook), body do {:noreply, %{}} end
   end
 
   def handle_cast([:post_created, %{post: post, hashed_id: hashed_id}], state) do
     body = Jason.encode!(%{
-      text: "#{author_string(post)} created post <#{@frontend_host}/posts/hidden?hashed_id=#{hashed_id}|#{post.title}> #{categories_string(post)}"
+      text: "#{author_string(post)} created post <#{Application.get_env(:til, :frontend_host)}/posts/hidden?hashed_id=#{hashed_id}|#{post.title}> #{categories_string(post)}"
     })
 
-    with {:ok, _} <- HTTPoison.post @slack_review_hook, body do {:noreply, %{}} end
+    with {:ok, _} <- HTTPoison.post Application.get_env(:til, :slack_review_hook), body do {:noreply, %{}} end
   end
 
   # private
