@@ -149,8 +149,8 @@ defmodule TilWeb.PostControllerTest do
 
       post = insert(:post)
 
-      first_reaction = insert(:reaction, user_id: first_user.id, post_id: post.id)
-      second_reaction = insert(:reaction, user_id: second_user.id, post_id: post.id)
+      insert(:reaction, user_id: first_user.id, post_id: post.id)
+      insert(:reaction, user_id: second_user.id, post_id: post.id)
 
       response =
         conn

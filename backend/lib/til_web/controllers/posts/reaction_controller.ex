@@ -20,7 +20,7 @@ defmodule TilWeb.Posts.ReactionController do
     end
   end
 
-  def unreact(%{private: %{:guardian_default_resource => current_user}} = conn, %{"post_id" => post_id, type => "type"}) do
+  def unreact(%{private: %{:guardian_default_resource => current_user}} = conn, %{"post_id" => post_id, "type" => type}) do
     user = Til.Accounts.get_user(current_user.uuid)
 
     case Activities.unreact_to_post(post_id, user.id, type) do

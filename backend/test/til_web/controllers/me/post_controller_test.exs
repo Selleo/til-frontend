@@ -54,7 +54,7 @@ defmodule TilWeb.Me.PostControllerTest do
         |> put_req_header("authorization", "bearer: " <> token)
         |> put(Routes.post_path(conn, :update, post.id), %{
           title: post_title,
-          categories_ids: [third_category.id]
+          category_ids: [third_category.id]
         })
 
       assert response.status == 200

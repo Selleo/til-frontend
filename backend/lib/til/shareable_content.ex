@@ -10,7 +10,7 @@ defmodule Til.ShareableContent do
   def get_public_posts do
     public_posts_query = from p in Post, where: p.is_public == true
 
-    Repo.all(public_posts_query) |> preload_post_data() |> Enum.map(&Post.populate_likes_count/1)
+    Repo.all(public_posts_query) |> preload_post_data() |> Enum.map(&Post.populate_reaction_count/1)
   end
 
   def get_post_by(attrs) do
@@ -19,7 +19,7 @@ defmodule Til.ShareableContent do
       post ->
         post
         |> preload_post_data()
-        |> Post.populate_likes_count()
+        |> Post.populate_reaction_count()
     end
   end
 
@@ -49,7 +49,7 @@ defmodule Til.ShareableContent do
 
 
   def encode_post_id(id) do
-    jwt_handler.encode_and_sign(
+    jwt_handler().encode_and_sign(
       id,
       %{},
       ttl: {100, :weeks}
@@ -57,7 +57,7 @@ defmodule Til.ShareableContent do
   end
 
   def decode_post_id(encoded) do
-    jwt_handler.decode_and_verify(encoded)
+    jwt_handler().decode_and_verify(encoded)
   end
 
   #private
