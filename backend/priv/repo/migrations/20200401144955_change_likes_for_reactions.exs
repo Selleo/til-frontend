@@ -15,6 +15,6 @@ defmodule Til.Repo.Migrations.ChangeLikesForReactions do
       timestamps()
     end
 
-    create unique_index(:reactions, [:user_id, :post_id, :type], name: :user_post_reaction)
+    create unique_index(:reactions, [:post_id, :user_id, :type], name: :user_post_reaction)
   end
 end

@@ -19,6 +19,7 @@ defmodule Til.Activities.Reaction do
     |> validate_required([:user_id, :post_id, :type])
     |> validate_inclusion(:type, ["like", "funny", "love", "surprised"])
     |> foreign_key_constraint(:post_id)
+    |> foreign_key_constraint(:user_id)
     |> unique_constraint(:post_id, name: :user_post_reaction)
   end
 end
