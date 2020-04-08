@@ -269,6 +269,29 @@ defmodule TilWeb.PostControllerTest do
       assert post_last_category.id == second_category.id
     end
 
+    test "throws error while creating public and reviewed post", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+
+      insert(:category, name: "Machine Learning")
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> post(Routes.post_path(conn, :create), %{
+          title: "Some post title",
+          is_public: true,
+          reviewed: true
+        })
+
+      assert response.status == 400
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert parsed_response_body == %{"error" => %{"message" => "can't create public reviewed post"}}
+
+      assert length(Repo.all(Post)) == 0
+    end
+
     test "throws 400 error when lack of title", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})

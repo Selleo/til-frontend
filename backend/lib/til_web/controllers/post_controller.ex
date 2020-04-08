@@ -1,9 +1,7 @@
 defmodule TilWeb.PostController do
   use TilWeb, :controller
   alias Til.Accounts
-  alias Til.Accounts.User
   alias Til.ShareableContent
-  alias Til.ShareableContent.Post
   alias Til.Notifications
 
   def index(conn, _) do
@@ -29,7 +27,14 @@ defmodule TilWeb.PostController do
     end
   end
 
-  def create(%{private: %{:guardian_default_resource => current_user}} = conn, %{"is_public" => true} = params) do
+  def create(conn, %{"is_public" => true, "reviewed" => true}) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(TilWeb.ErrorView)
+    |> render("400.json", message: "can't create public reviewed post")
+  end
+
+  def create(%{private: %{:guardian_default_resource => current_user}} = conn, %{"reviewed" => true} = params) do
     author = Accounts.get_user(current_user.uuid)
 
     case ShareableContent.create_post(author, params) do

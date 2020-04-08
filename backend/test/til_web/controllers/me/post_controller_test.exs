@@ -89,7 +89,7 @@ defmodule TilWeb.Me.PostControllerTest do
       assert parsed_response_body == %{"errors" => %{"detail" => "Forbidden"}}
     end
 
-    test "throws error when trying to update is_public property", %{conn: conn} do
+    test "throws error when trying to update reviewed property", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
 
@@ -99,14 +99,14 @@ defmodule TilWeb.Me.PostControllerTest do
         conn
         |> put_req_header("authorization", "bearer: " <> token)
         |> put(Routes.post_path(conn, :update, post.id), %{
-          is_public: true,
+          reviewed: true,
         })
 
       assert response.status == 400
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert parsed_response_body == %{"error" => %{ "message" => "post public property can't be modified"}}
+      assert parsed_response_body == %{"error" => %{ "message" => "post reviewed property can't be modified"}}
     end
 
     test "throws 400 error when lack of title", %{conn: conn} do
