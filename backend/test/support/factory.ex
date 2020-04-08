@@ -2,7 +2,7 @@ defmodule Til.Factory do
   use ExMachina.Ecto, repo: Til.Repo
   import Ecto
   alias Til.Accounts.User
-  alias Til.ShareableContent.{Author, Post, Category}
+  alias Til.ShareableContent.{Post, Category}
   alias Til.Activities.Reaction
 
   def user_factory do

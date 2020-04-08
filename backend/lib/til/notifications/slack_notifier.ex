@@ -10,13 +10,13 @@ defmodule Til.Notifications.Notifiers.SlackNotifier do
     {:ok, %{}}
   end
 
-  def handle_cast([:post_published, %{message: message}] = params, state) do
+  def handle_cast([:post_published, %{message: message}], _state) do
     body = Jason.encode!(%{text: message})
 
     with {:ok, _} <- http_adapter().post feed_hook(), body do {:stop, :normal, %{}} end
   end
 
-  def handle_cast([:post_created, %{message: message}] = params, state) do
+  def handle_cast([:post_created, %{message: message}], _state) do
     body = Jason.encode!(%{text: message})
 
     with {:ok, _} <- http_adapter().post review_hook(), body do {:stop, :normal, %{}} end
