@@ -1,6 +1,5 @@
 defmodule Til.Factory do
   use ExMachina.Ecto, repo: Til.Repo
-  import Ecto
   alias Til.Accounts.User
   alias Til.ShareableContent.{Post, Category}
   alias Til.Activities.Reaction

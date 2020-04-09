@@ -10,8 +10,8 @@ defmodule TilWeb.AuthController do
       assigns: %{
         ueberauth_auth: %{
           info: %{email: email, first_name: first_name, last_name: last_name, image: image},
-          credentials: %{token: token},
-          uid: uid
+          credentials: %{token: _},
+          uid: _
         }
       }
     } = conn, _

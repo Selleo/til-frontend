@@ -1,6 +1,5 @@
 defmodule TilWeb.CategoryController do
   use TilWeb, :controller
-  alias Til.Accounts
   alias Til.ShareableContent
 
   def index(conn, _) do

@@ -1,7 +1,6 @@
 defmodule TilWeb.UserController do
   use TilWeb, :controller
   alias Til.Accounts
-  alias Til.ShareableContent
 
   def index(conn, _) do
     users = Accounts.get_users()
