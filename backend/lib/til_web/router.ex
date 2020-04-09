@@ -32,5 +32,9 @@ defmodule TilWeb.Router do
       get "/review", Posts.ReviewController, :show
       put "/review", Posts.ReviewController, :approve
     end
+
+    scope "/statistics", Statistics, as: "statistics" do
+      get "/users", UserController, only: [:index, :show]
+    end
   end
 end
