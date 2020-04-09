@@ -148,7 +148,7 @@ defmodule TilWeb.Me.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert not is_nil parsed_response_body["message"] == "unauthenticated"
+      assert parsed_response_body["message"] == "unauthenticated"
     end
   end
 
@@ -236,7 +236,7 @@ defmodule TilWeb.Me.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      assert not is_nil parsed_response_body["message"] == "unauthenticated"
+      assert parsed_response_body["message"] == "unauthenticated"
     end
   end
 end
