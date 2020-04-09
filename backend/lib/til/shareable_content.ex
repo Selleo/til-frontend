@@ -3,12 +3,16 @@ defmodule Til.ShareableContent do
   alias Til.Repo
   alias Til.ShareableContent.{Post, Category}
 
-  def get_posts, do: Repo.all(Post) |> preload_post_data() |> Enum.map(&Post.populate_reaction_count/1)
-
   def get_post(id), do: Repo.get!(Post, id) |> preload_post_data() |> Post.populate_reaction_count()
 
   def get_public_posts do
-    public_posts_query = from p in Post, where: p.is_public == true
+    public_posts_query = from p in Post, where: p.is_public == true and p.reviewed == true
+
+    Repo.all(public_posts_query) |> preload_post_data() |> Enum.map(&Post.populate_reaction_count/1)
+  end
+
+  def get_internal_posts do
+    public_posts_query = from p in Post, where: p.reviewed == true
 
     Repo.all(public_posts_query) |> preload_post_data() |> Enum.map(&Post.populate_reaction_count/1)
   end

@@ -4,6 +4,14 @@ defmodule TilWeb.PostController do
   alias Til.ShareableContent
   alias Til.Notifications
 
+  def index(%{private: %{:guardian_default_resource => _}} = conn, _) do
+    posts = ShareableContent.get_internal_posts()
+
+    conn
+      |> put_status(:ok)
+      |> render("index_with_nested.json", posts: posts)
+  end
+
   def index(conn, _) do
     posts = ShareableContent.get_public_posts()
 
@@ -12,8 +20,23 @@ defmodule TilWeb.PostController do
       |> render("index_with_nested.json", posts: posts)
   end
 
+  def show(%{private: %{:guardian_default_resource => _}} = conn, %{"id" => id}) do
+    case ShareableContent.get_post_by(id: id, reviewed: true) do
+      nil ->
+        conn
+        |> put_status(:bad_request)
+        |> put_view(TilWeb.ErrorView)
+        |> render("400.json", message: "not found")
+
+      post ->
+        conn
+        |> put_status(:ok)
+        |> render("show_with_nested.json", post: post)
+    end
+  end
+
   def show(conn, %{"id" => id}) do
-    case ShareableContent.get_post_by(id: id, is_public: true) do
+    case ShareableContent.get_post_by(id: id, is_public: true, reviewed: true) do
       nil ->
         conn
         |> put_status(:bad_request)
