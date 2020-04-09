@@ -41,6 +41,10 @@ config :til, TilWeb.Plug.AuthAccessPipeline,
   module: Til.Guardian,
   error_handler: TilWeb.Plug.AuthErrorHandler
 
+config :til, TilWeb.Plug.AuthInfoPipeline,
+  module: Til.Guardian,
+  error_handler: TilWeb.Plug.AuthErrorHandler
+
 config :til, Til.Guardian,
   issuer: "til",
   secret_key: System.get_env("GUARDIAN_SECRET")

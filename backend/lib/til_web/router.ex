@@ -3,6 +3,7 @@ defmodule TilWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug TilWeb.Plug.AuthInfoPipeline
   end
 
   pipeline :authenticated do
