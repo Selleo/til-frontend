@@ -20,6 +20,7 @@ defmodule Til.Factory do
       title: sequence(:title, &"post-title-#{&1}"),
       body: "some body",
       is_public: true,
+      reviewed: false,
       reaction_count: 1,
       author: build(:user)
     }
