@@ -223,6 +223,34 @@ defmodule TilWeb.PostControllerTest do
       assert post_last_category.id == second_category.id
     end
 
+    test "creates new categories as unofficial during post creation", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+      first_category = insert(:category, name: "Elixir")
+      second_category = insert(:category, name: "Javascript")
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> post(Routes.post_path(conn, :create), %{
+          title: "Some post title",
+          categories: [first_category.name, second_category.name, "ML", "Vue"]
+        })
+
+      assert response.status == 201
+
+      %{categories: categories} = Repo.get_by(Post, title: "Some post title") |> Repo.preload([:categories])
+      assert length(categories) == 3
+      [post_first_category, post_second_category, post_third_category, post_fourth_category] = categories
+      assert post_first_category.id == first_category.id
+      assert post_second_category.id == second_category.id
+      assert post_third_category.name == "ML"
+      assert post_third_category.official == false
+      assert post_fourth_category.name == "Vue"
+      assert post_fourth_category.official == false
+      assert length(Repo.all(Category)) == 4
+    end
+
     test "throws 400 error when lack of title", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
@@ -292,6 +320,31 @@ defmodule TilWeb.PostControllerTest do
       assert parsed_response_body["title"] == post_title
       assert parsed_response_body["body"] == post_body
       assert parsed_response_body["author"]["email"] == post.author.email
+    end
+
+    test "creates new categories as unofficial during post update", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+      first_category = insert(:category, name: "Elixir")
+      second_category = insert(:category, name: "Javascript")
+      post = insert(:post, author: current_user, categories: [first_category, second_category])
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> put(Routes.post_path(conn, :update, post.id), %{
+          title: "Some post title",
+          categories: ["ML", "Vue"]
+        })
+
+      assert response.status == 200
+
+      %{categories: categories} = Repo.get!(Post, post.id) |> Repo.preload([:categories])
+      assert length(categories) == 2
+      [first_post_category, second_post_category] = categories
+      assert first_post_category.name == "Ml"
+      assert second_post_category.name == "Vue"
+      assert length(Repo.all(Category)) == 4
     end
 
     test "updates post with proper categories", %{conn: conn} do
