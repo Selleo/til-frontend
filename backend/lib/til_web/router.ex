@@ -21,6 +21,10 @@ defmodule TilWeb.Router do
     resources "/posts", PostController, only: [:index, :show]
     resources "/categories", CategoryController, only: [:index]
 
+    scope "/statistics", Statistics, as: "statistics" do
+      resources "/users", UserController, only: [:index, :show]
+    end
+
     pipe_through :authenticated
     get "/me", MeController, :index do
       resources "/me/posts", Me.PostController, only: [:update, :delete]
@@ -31,10 +35,6 @@ defmodule TilWeb.Router do
       delete "/reactions/:type", Posts.ReactionController, :unreact
       get "/review", Posts.ReviewController, :show
       put "/review", Posts.ReviewController, :approve
-    end
-
-    scope "/statistics", Statistics, as: "statistics" do
-      get "/users", UserController, only: [:index, :show]
     end
   end
 end
