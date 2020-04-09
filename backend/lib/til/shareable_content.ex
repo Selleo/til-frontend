@@ -11,10 +11,10 @@ defmodule Til.ShareableContent do
 
   def get_categories, do: Repo.all(Category)
 
-  def get_categories(ids) do
+  def get_categories(names) do
     categories =
       from c in Category,
-        where: c.id in ^ids
+        where: c.name in ^names
 
     Repo.all(categories)
   end
@@ -36,11 +36,11 @@ defmodule Til.ShareableContent do
   #private
 
   defp change_post(post, attrs) do
-    categories_ids = if attrs["categoryIds"], do: attrs["categoryIds"], else: []
+    category_names = if attrs["categories"], do: attrs["categories"], else: []
 
     post
     |> Post.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:categories, get_categories(categories_ids))
+    |> Ecto.Changeset.put_assoc(:categories, get_categories(category_names))
   end
 
   defp preload_post_data(post_data), do: Repo.preload(post_data, [:categories, :author, reactions: :user])

@@ -24,8 +24,8 @@ defmodule TilWeb.PostControllerTest do
 
       [first_post, second_post] = parsed_response_body
 
-      assert first_post["categoryIds"] == [first_category.id, second_category.id]
-      assert second_post["categoryIds"] == [first_category.id]
+      assert first_post["categories"] == [first_category.id, second_category.id]
+      assert second_post["categories"] == [first_category.id]
     end
 
     test "returns all existing posts with proper reaction count", %{conn: conn} do
@@ -108,7 +108,7 @@ defmodule TilWeb.PostControllerTest do
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
       assert parsed_response_body["title"] == post_title
-      assert parsed_response_body["categoryIds"] == [first_category.id, second_category.id]
+      assert parsed_response_body["categories"] == [first_category.id, second_category.id]
     end
 
     test "returns particular post with proper reaction count", %{conn: conn} do
@@ -176,7 +176,7 @@ defmodule TilWeb.PostControllerTest do
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
           body: post_body,
-          categoryIds: []
+          categories: []
         })
 
       assert response.status == 201
@@ -208,7 +208,7 @@ defmodule TilWeb.PostControllerTest do
         |> put_req_header("authorization", "bearer: " <> token)
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
-          categoryIds: [first_category.id, second_category.id]
+          categories: [first_category.name, second_category.name]
         })
 
       assert response.status == 201
@@ -311,7 +311,7 @@ defmodule TilWeb.PostControllerTest do
         |> put_req_header("authorization", "bearer: " <> token)
         |> put(Routes.post_path(conn, :update, post.id), %{
           title: post_title,
-          categoryIds: [third_category.id]
+          categories: [third_category.name]
         })
 
       assert response.status == 200
