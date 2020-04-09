@@ -2,33 +2,39 @@ import * as actionTypes from "../actionTypes";
 import { fetchUser, fetchUserPosts, fetchData } from "../../utils";
 
 // CATEGORIES
-const getAllCategories = categories => ({
+export const getAllCategories = (categories) => ({
   type: actionTypes.GET_ALL_CATEGORIES,
-  categories
+  categories,
 });
 
-export const saveAllCategories = () => async dispatch => {
+export const saveAllCategories = () => async (dispatch) => {
   const categoriesArray = await fetchData("/api/categories");
 
   dispatch(getAllCategories(categoriesArray));
 };
 
 // USER
-const getCurrentUser = currentUser => ({
+export const getCurrentUser = (currentUser) => ({
   type: actionTypes.GET_CURRENT_USER,
-  currentUser
+  currentUser,
 });
 
+<<<<<<< HEAD
 export const saveCurrentUser = () => async dispatch => {
   let currentUser = await fetchUser("/api/me");
 
   if (currentUser.errors) {
     currentUser = false;
   }
+=======
+export const saveCurrentUser = () => async (dispatch) => {
+  const currentUser = await fetchUser("/api/me");
+>>>>>>> fix app and actions unit tests
 
   dispatch(getCurrentUser(currentUser));
 };
 
+<<<<<<< HEAD
 export const deleteCurrentUser = () => ({
   type: actionTypes.DELETE_CURRENT_USER,
   currentUser: false
@@ -40,35 +46,38 @@ export const logOut = () => dispatch => {
 };
 
 export const getCurrentUserPosts = currentUserPosts => ({
+=======
+export const getCurrentUserPosts = (currentUserPosts) => ({
+>>>>>>> fix app and actions unit tests
   type: actionTypes.GET_CURRENT_USER_POSTS,
-  currentUserPosts
+  currentUserPosts,
 });
 
-export const saveCurrentUserPosts = id => async dispatch => {
+export const saveCurrentUserPosts = (id) => async (dispatch) => {
   const posts = await fetchUserPosts("/api/users/", id);
 
   dispatch(getCurrentUserPosts(posts));
 };
 
 // ALL USERS
-const getAllUsers = users => ({
+export const getAllUsers = (users) => ({
   type: actionTypes.GET_ALL_USERS,
-  users
+  users,
 });
 
-export const saveAllUsers = () => async dispatch => {
+export const saveAllUsers = () => async (dispatch) => {
   const allUsers = await fetchData("/api/users");
 
   dispatch(getAllUsers(allUsers));
 };
 
 // POSTS
-const getPosts = posts => ({
+export const getPosts = (posts) => ({
   type: actionTypes.GET_ALL_POSTS,
-  posts
+  posts,
 });
 
-export const saveAllPosts = () => async dispatch => {
+export const saveAllPosts = () => async (dispatch) => {
   const allPosts = await fetchData("/api/posts");
 
   dispatch(getPosts(allPosts));

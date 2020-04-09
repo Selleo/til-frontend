@@ -9,7 +9,7 @@ import {
   saveAllCategories,
   saveCurrentUser,
   saveAllUsers,
-  saveAllPosts
+  saveAllPosts,
 } from "./store/actions/actions";
 
 const App = () => {
