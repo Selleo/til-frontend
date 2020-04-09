@@ -24,8 +24,8 @@ defmodule TilWeb.PostControllerTest do
 
       [first_post, second_post] = parsed_response_body
 
-      assert first_post["categories"] == [first_category.id, second_category.id]
-      assert second_post["categories"] == [first_category.id]
+      assert first_post["categories"] == [first_category.name, second_category.name]
+      assert second_post["categories"] == [first_category.name]
     end
 
     test "returns all existing posts with proper reaction count", %{conn: conn} do
@@ -108,7 +108,7 @@ defmodule TilWeb.PostControllerTest do
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
       assert parsed_response_body["title"] == post_title
-      assert parsed_response_body["categories"] == [first_category.id, second_category.id]
+      assert parsed_response_body["categories"] == [first_category.name, second_category.name]
     end
 
     test "returns particular post with proper reaction count", %{conn: conn} do
@@ -240,7 +240,7 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 201
 
       %{categories: categories} = Repo.get_by(Post, title: "Some post title") |> Repo.preload([:categories])
-      assert length(categories) == 3
+      assert length(categories) == 4
       [post_first_category, post_second_category, post_third_category, post_fourth_category] = categories
       assert post_first_category.id == first_category.id
       assert post_second_category.id == second_category.id
@@ -342,8 +342,10 @@ defmodule TilWeb.PostControllerTest do
       %{categories: categories} = Repo.get!(Post, post.id) |> Repo.preload([:categories])
       assert length(categories) == 2
       [first_post_category, second_post_category] = categories
-      assert first_post_category.name == "Ml"
+      assert first_post_category.name == "ML"
       assert second_post_category.name == "Vue"
+      assert first_post_category.official == false
+      assert second_post_category.official == false
       assert length(Repo.all(Category)) == 4
     end
 

@@ -9,16 +9,6 @@ defmodule Til.ShareableContent do
 
   def get_post_by(attrs), do: Repo.get_by(Post, attrs) |> preload_post_data()
 
-  def get_categories, do: Repo.all(Category)
-
-  def get_categories(names) do
-    categories =
-      from c in Category,
-        where: c.name in ^names
-
-    Repo.all(categories)
-  end
-
   def create_post(author, attrs \\ %{}) do
     %Post{author_id: author.id}
     |> change_post(attrs)
@@ -33,14 +23,24 @@ defmodule Til.ShareableContent do
 
   def delete_post(post), do: Repo.delete(post)
 
+  def get_categories, do: Repo.all(Category)
+
+  def get_or_create_category(name) do
+    case Repo.get_by(Category, name: name) do
+      nil -> %Category{name: name, official: false} |> Repo.insert!()
+      category -> category
+    end
+  end
+
   #private
 
   defp change_post(post, attrs) do
     category_names = if attrs["categories"], do: attrs["categories"], else: []
+    categories = category_names |> Enum.map(&get_or_create_category/1)
 
     post
     |> Post.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:categories, get_categories(category_names))
+    |> Ecto.Changeset.put_assoc(:categories, categories)
   end
 
   defp preload_post_data(post_data), do: Repo.preload(post_data, [:categories, :author, reactions: :user])
