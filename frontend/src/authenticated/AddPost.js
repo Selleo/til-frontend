@@ -57,7 +57,6 @@ const AddPost = props => {
   const handleSelect = selectedOptions => {
     if (!selectedOptions) {
       setUserCategories([]);
-
       return;
     }
 
