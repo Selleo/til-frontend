@@ -14,6 +14,8 @@ defmodule Til.Accounts do
 
   def get_users, do: Repo.all(User)
 
+  def get_users_with_posts, do: Repo.all(User) |> preload_posts()
+
   def create_user(attrs \\ %{}) do
     %User{}
     |> User.changeset(attrs |> Map.merge(%{uuid: Ecto.UUID.generate}))
