@@ -14,9 +14,10 @@ defmodule TilWeb.Statistics.UserStatisticsView do
 
   defp serialize_user_statistics(user_statistics) do
     %{
-      user: user_statistics.user,
-      reactions: user_statistics.reactions,
-      posts: user_statistics.posts
+      user: render(TilWeb.UserView, "show.json", user: user_statistics.user),
+      postCount: user_statistics.post_count,
+      reactionsGiven: user_statistics.reactions_given,
+      reactionsReceived: user_statistics.reactions_received
     }
   end
 end
