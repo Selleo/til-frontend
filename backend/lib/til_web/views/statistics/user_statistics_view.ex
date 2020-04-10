@@ -1,4 +1,4 @@
-defmodule TilWeb.Statistics.UserView do
+defmodule TilWeb.Statistics.UserStatisticsView do
   use TilWeb, :view
 
   def render("index.json", %{users_statistics: users_statistics}) do
@@ -14,7 +14,9 @@ defmodule TilWeb.Statistics.UserView do
 
   defp serialize_user_statistics(user_statistics) do
     %{
-      user: user_statistics.user
+      user: user_statistics.user,
+      reactions: user_statistics.reactions,
+      posts: user_statistics.posts
     }
   end
 end

@@ -21,8 +21,8 @@ defmodule TilWeb.Router do
     resources "/posts", PostController, only: [:index, :show]
     resources "/categories", CategoryController, only: [:index]
 
-    scope "/statistics", Statistics, as: "statistics" do
-      resources "/users", UserController, only: [:index, :show]
+    scope "/statistics", Statistics do
+      resources "/users", UserStatisticsController, only: [:index, :show]
     end
 
     pipe_through :authenticated

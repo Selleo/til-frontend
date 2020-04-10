@@ -1,4 +1,4 @@
-defmodule TilWeb.Statistics.UserControllerTest do
+defmodule TilWeb.Statistics.UserStatisticsControllerTest do
   use TilWeb.ConnCase
   import Til.Factory
 
@@ -30,7 +30,7 @@ defmodule TilWeb.Statistics.UserControllerTest do
 
       response =
         conn
-        |> get(Routes.statistics_user_path(conn, :index))
+        |> get(Routes.user_statistics_path(conn, :index))
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       assert response.status == 200
@@ -120,7 +120,7 @@ defmodule TilWeb.Statistics.UserControllerTest do
 
       response =
         conn
-        |> get(Routes.statistics_user_path(conn, :show, first_user.id))
+        |> get(Routes.user_statistics_path(conn, :show, first_user.id))
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       assert response.status == 200
