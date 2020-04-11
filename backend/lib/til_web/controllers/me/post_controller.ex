@@ -6,10 +6,7 @@ defmodule TilWeb.Me.PostController do
   alias Til.ShareableContent.Post
 
   def update(conn, %{"reviewed" => _}) do
-    conn
-    |> put_status(:bad_request)
-    |> put_view(TilWeb.ErrorView)
-    |> render("400.json", message: "post reviewed property can't be modified")
+    {:error, :unauthorized}
   end
 
   def update(%{private: %{:guardian_default_resource => current_user}} = conn, %{"id" => id} = params) do
