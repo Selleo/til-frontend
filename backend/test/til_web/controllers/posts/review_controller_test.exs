@@ -2,8 +2,6 @@ defmodule TilWeb.Posts.ReviewControllerTest do
   use TilWeb.ConnCase
   import Til.Guardian
   import Til.Factory
-  alias Til.Repo
-  alias Til.ShareableContent.Post
 
   describe "GET /api/posts/:hashed_id/reviews" do
     test "returns post with hashed id", %{conn: conn} do
