@@ -3,32 +3,19 @@ defmodule TilWeb.PostController do
   alias Til.Accounts
   alias Til.ShareableContent
 
-  def index(%{private: %{:guardian_default_resource => _}} = conn, _) do
-    posts = ShareableContent.get_approved_posts()
+  def index(conn, params) do
+    only_public = is_nil conn.private[:guardian_default_resource]
+    posts = ShareableContent.get_posts(only_public, params)
 
     conn
       |> put_status(:ok)
       |> render("index_with_nested.json", posts: posts)
-  end
-
-  def index(conn, _) do
-    posts = ShareableContent.get_public_posts()
-
-    conn
-      |> put_status(:ok)
-      |> render("index_with_nested.json", posts: posts)
-  end
-
-  def show(%{private: %{:guardian_default_resource => _}} = conn, %{"id" => id}) do
-    with {:ok, post} <- ShareableContent.get_approved_post(id) do
-      conn
-      |> put_status(:ok)
-      |> render("show_with_nested.json", post: post)
-    end
   end
 
   def show(conn, %{"id" => id}) do
-    with {:ok, post} <- ShareableContent.get_public_post(id) do
+    only_public = is_nil conn.private[:guardian_default_resource]
+
+    with {:ok, post} <- ShareableContent.get_post(id, only_public) do
       conn
       |> put_status(:ok)
       |> render("show_with_nested.json", post: post)

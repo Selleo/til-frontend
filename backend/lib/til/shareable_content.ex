@@ -3,6 +3,7 @@ defmodule Til.ShareableContent do
   alias Til.Repo
   alias Til.ShareableContent.{Post, Category}
   alias Til.Notifications
+  alias Ecto.Adapters.SQL
 
   def get_post(id) do
     case Repo.get(Post, id) do
@@ -40,24 +41,48 @@ defmodule Til.ShareableContent do
     end
   end
 
-  def get_approved_post(id) do
-    get_post_by(id: id, reviewed: true)
+  def get_post(id, only_public) do
+    get_post_by(id: id, reviewed: true, is_public: only_public)
   end
 
-  def get_public_post(id) do
-    get_post_by(id: id, is_public: true, reviewed: true)
+  def get_posts(only_public, %{"q" => search_query}) do
+    sql = """
+    select p.* from posts p
+      join users u on u.id = p.author_id
+      left join posts_categories pc on pc.post_id = p.id
+      left join categories c on c.id = pc.category_id
+      join lateral (
+        select ts_rank_cd(
+          setweight(to_tsvector(p.title), 'A')
+          ||
+          setweight(to_tsvector(u.first_name), 'B')
+          ||
+          setweight(to_tsvector(u.last_name), 'B')
+          ||
+          setweight(to_tsvector(c.name), 'C')
+          ||
+          setweight(to_tsvector(p.body), 'D')
+          ,
+          plainto_tsquery($1)
+        ) as rank
+      ) ranks on true
+      where ranks.rank > 0 and p.is_public = ANY($2) and p.reviewed = true
+      order by ranks.rank desc, p.inserted_at desc
+    """
+
+    results = SQL.query!(Repo, sql, [search_query, is_public_in(only_public)])
+
+    posts =
+      results.rows
+      |> Enum.map(&Repo.load(Post, {results.columns, &1}))
+      |> Repo.preload([:categories, :author, :reactions])
+      |> Enum.map(&Post.populate_reaction_count/1)
   end
 
-  def get_public_posts do
-    public_posts_query = from p in Post, where: p.is_public == true and p.reviewed == true
-
-    Repo.all(public_posts_query) |> preload_post_data() |> Enum.map(&Post.populate_reaction_count/1)
-  end
-
-  def get_approved_posts do
-    public_posts_query = from p in Post, where: p.reviewed == true
-
-    Repo.all(public_posts_query) |> preload_post_data() |> Enum.map(&Post.populate_reaction_count/1)
+  def get_posts(only_public, _) do
+    base_posts_query(only_public)
+    |> Repo.all()
+    |> Enum.map(&Post.populate_reaction_count/1)
   end
 
   def create_post(_, %{"is_public" => true, "reviewed" => true}) do
@@ -114,6 +139,19 @@ defmodule Til.ShareableContent do
   def get_categories, do: Repo.all(Category)
 
   #private
+
+  defp base_posts_query(only_public) do
+    from(
+      p in Post,
+      order_by: [desc: p.inserted_at],
+      where: p.is_public in ^is_public_in(only_public) and p.reviewed == true,
+      preload: [:categories, :author, reactions: :user]
+    )
+  end
+
+  defp is_public_in(true), do: [true]
+
+  defp is_public_in(false), do: [true, false]
 
   defp get_or_create_category(name) do
     case Repo.get_by(Category, name: name) do
