@@ -4,7 +4,8 @@ defmodule TilWeb.Statistics.UserStatisticsController do
   alias Til.Accounts
 
   def index(conn, _) do
-    users_statistics = Statistics.get_users_statistics()
+    only_public = is_nil conn.private[:guardian_default_resource]
+    users_statistics = Statistics.get_users_statistics(only_public)
 
     conn
       |> put_status(:ok)
@@ -12,7 +13,8 @@ defmodule TilWeb.Statistics.UserStatisticsController do
   end
 
   def show(conn, %{"id" => uuid}) do
-    user_statistics = Accounts.get_user_with_all_posts(uuid) |> Statistics.get_user_statistics()
+    only_public = is_nil conn.private[:guardian_default_resource]
+    user_statistics = Accounts.get_user_with_posts(uuid, only_public) |> Statistics.get_user_statistics(only_public)
 
     conn
       |> put_status(:ok)

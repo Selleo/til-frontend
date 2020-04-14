@@ -6,16 +6,16 @@ defmodule Til.Statistics do
   alias Til.ShareableContent.Post
   alias Til.Statistics.UserStatistics
 
-  def get_users_statistics do
-    Accounts.get_users_with_posts() |> Enum.map(&get_user_statistics/1)
+  def get_users_statistics(only_public) do
+    Accounts.get_users_with_posts(only_public) |> Enum.map(fn user -> get_user_statistics(user, only_public) end)
   end
 
-  def get_user_statistics(user) do
+  def get_user_statistics(user, only_public) do
     %UserStatistics{
       user: user,
       post_count: length(user.posts),
       reactions_given: get_user_reactions(user.id) |> serialize_user_reactions(),
-      reactions_received: get_user_received_reactions(user.id) |> serialize_user_reactions()
+      reactions_received: get_user_received_reactions(user.id, only_public) |> serialize_user_reactions()
     }
   end
 
@@ -27,10 +27,10 @@ defmodule Til.Statistics do
     reactions_query |> Repo.all()
   end
 
-  defp get_user_received_reactions(user_id) do
+  defp get_user_received_reactions(user_id, only_public) do
     reactions_query =
       from p in Post,
-        where: p.author_id == ^user_id,
+        where: p.author_id == ^user_id and p.reviewed == true and p.is_public in ^is_public_in(only_public),
         join: r in Reaction,
         on: r.post_id == p.id,
         select: r
@@ -47,4 +47,8 @@ defmodule Til.Statistics do
       surprised: Enum.filter(reactions, &(&1.type == "surprised")) |> length()
     }
   end
+
+  defp is_public_in(true), do: [true]
+
+  defp is_public_in(false), do: [true, false]
 end
