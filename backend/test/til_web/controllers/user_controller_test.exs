@@ -31,8 +31,8 @@ defmodule TilWeb.UserControllerTest do
   describe "GET /api/users/:id" do
     test "returns particular user with public posts", %{conn: conn} do
       user = insert(:user)
-      insert(:post, title: "public post", author: user, is_public: true)
-      insert(:post, author: user, is_public: false)
+      insert(:post, title: "public post", author: user, is_public: true, reviewed: true)
+      insert(:post, author: user, is_public: false, reviewed: true)
 
       response =
         conn
