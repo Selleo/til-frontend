@@ -1,15 +1,17 @@
-import React from 'react';
+import React from "react";
+import { useDispatch } from "react-redux";
 import { deleteToken } from "../utils";
+import { deleteCurrentUser } from "../store/actions/actions";
 
-const Logout = ({ setIsLoggedIn }) => {
+const Logout = props => {
+  const dispatch = useDispatch();
+
   const logOut = () => {
-    setIsLoggedIn(false);
+    dispatch(deleteCurrentUser());
     deleteToken();
   };
 
-  return (
-    <button onClick={logOut}>log out</button>
-  );
+  return <button onClick={logOut}>log out</button>;
 };
 
 export default Logout;

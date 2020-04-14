@@ -20,10 +20,19 @@ const getCurrentUser = currentUser => ({
 });
 
 export const saveCurrentUser = () => async dispatch => {
-  const currentUser = await fetchUser("/api/me");
+  let currentUser = await fetchUser("/api/me");
+
+  if (currentUser.message === "invalid_token") {
+    currentUser = false;
+  }
 
   dispatch(getCurrentUser(currentUser));
 };
+
+export const deleteCurrentUser = () => ({
+  type: actionTypes.DELETE_CURRENT_USER,
+  currentUser: false
+});
 
 export const getCurrentUserPosts = currentUserPosts => ({
   type: actionTypes.GET_CURRENT_USER_POSTS,

@@ -9,12 +9,15 @@ export const getToken = () => {
   return window.localStorage.getItem(localStorageKey);
 };
 
-// AUTHENTICATION
-export const isAuthenticated = () => {
-  const token = getToken();
-  if (token) {
-    return true;
+export const checkForToken = () => {
+  let optionsToken = null;
+  if (getToken()) {
+    optionsToken = {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        "Content-Type": "application/json"
+      }
+    };
   }
-
-  return false;
+  return optionsToken;
 };
