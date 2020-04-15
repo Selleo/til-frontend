@@ -10,24 +10,12 @@ import UserPosts from "./UsersPosts";
 const MainRoutes = () => {
   return (
     <Switch>
-      <Route exact path="/">
-        <PostsList />
-      </Route>
-      <Route path="/random-post">
-        <RandomPost />
-      </Route>
-      <Route path="/stats">
-        <Stats />
-      </Route>
-      <Route path="/categories">
-        <Categories />
-      </Route>
-      <Route path="/posts/:id">
-        <DisplayPost />
-      </Route>
-      <Route path="/user-posts/:id">
-        <UserPosts />
-      </Route>
+      <Route exact path="/" component={PostsList} />
+      <Route path="/random-post" component={RandomPost} />
+      <Route path="/stats" component={Stats} />
+      <Route path="/categories" component={Categories} />
+      <Route path="/posts/:id" component={DisplayPost} />
+      <Route path="/user-posts/:id" component={UserPosts} />
     </Switch>
   );
 };
