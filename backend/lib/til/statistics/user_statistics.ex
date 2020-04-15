@@ -6,7 +6,8 @@ defmodule Til.Statistics.UserStatistics do
       total: 0,
       like: 0,
       love: 0,
-      funny: 0
+      funny: 0,
+      surprised: 0
     },
     post_count: 0,
     reactions_received: %{
