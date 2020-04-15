@@ -22,29 +22,53 @@ defmodule Til.Statistics do
   # private
 
   defp get_user_reactions(user_id) do
-    reactions_query = from r in Reaction, where: r.user_id == ^user_id
+    reactions_detailed_query =
+      from r in Reaction,
+        where: r.user_id == ^user_id,
+        group_by: r.type,
+        select: {r.type, count(r.type)}
 
-    reactions_query |> Repo.all()
+    reactions_total_query =
+      from r in Reaction,
+        where: r.user_id == ^user_id,
+        select: {"total", count(r.id)}
+
+    reactions_total_query
+    |> union(^reactions_detailed_query)
+    |> Repo.all()
+    |> Enum.into(%{}, fn {k, v} -> {String.to_atom(k), v} end)
   end
 
   defp get_user_received_reactions(user_id, only_public) do
-    reactions_query =
-      from p in Post,
-        where: p.author_id == ^user_id and p.reviewed == true and p.is_public in ^is_public_in(only_public),
-        join: r in Reaction,
-        on: r.post_id == p.id,
-        select: r
+    reactions_total_query =
+      reactions_received_base_query(user_id, only_public)
+      |> select([p, r], {"total", count(r.id)})
 
-    reactions_query |> Repo.all()
+    reactions_detailed_query =
+      reactions_received_base_query(user_id, only_public)
+      |> group_by([p, r], r.type)
+      |> select([p, r], {r.type, count(r.type)})
+
+    reactions_total_query
+    |> union(^reactions_detailed_query)
+    |> Repo.all()
+    |> Enum.into(%{}, fn {k, v} -> {String.to_atom(k), v} end)
+  end
+
+  defp reactions_received_base_query(user_id, only_public) do
+    from p in Post,
+      where: p.author_id == ^user_id and p.reviewed == true and p.is_public in ^is_public_in(only_public),
+      join: r in Reaction,
+      on: r.post_id == p.id
   end
 
   defp serialize_user_reactions(reactions) do
     %{
-      total: length(reactions),
-      like: Enum.filter(reactions, &(&1.type == "like")) |> length(),
-      love: Enum.filter(reactions, &(&1.type == "love")) |> length(),
-      funny: Enum.filter(reactions, &(&1.type == "funny")) |> length(),
-      surprised: Enum.filter(reactions, &(&1.type == "surprised")) |> length()
+      total: reactions[:total] || 0,
+      like: reactions[:like] || 0,
+      love: reactions[:love] || 0,
+      funny: reactions[:funny] || 0,
+      surprised: reactions[:surprised] || 0
     }
   end
 
