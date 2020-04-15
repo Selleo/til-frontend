@@ -12,12 +12,11 @@ defmodule Til.Statistics do
 
   def get_user_statistics(user, only_public) do
     default_users_statistics = %UserStatistics{user: user}
-    %{reactions_given: default_reactions_given, reactions_received: default_reactions_received} = default_users_statistics
 
     statistics_fullfilment = %{
       post_count: length(user.posts),
-      reactions_given: default_reactions_given |> Map.merge(get_user_reactions(user.id)),
-      reactions_received: default_reactions_received |> Map.merge(get_user_received_reactions(user.id, only_public))
+      reactions_given: Map.merge(default_users_statistics.reactions_given, get_user_reactions(user.id)),
+      reactions_received: Map.merge(default_users_statistics.reactions_received, get_user_received_reactions(user.id, only_public))
     }
 
     Map.merge(default_users_statistics, statistics_fullfilment)
