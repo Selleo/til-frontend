@@ -11,12 +11,16 @@ defmodule Til.Statistics do
   end
 
   def get_user_statistics(user, only_public) do
-    %UserStatistics{
-      user: user,
+    default_users_statistics = %UserStatistics{user: user}
+    %{reactions_given: default_reactions_given, reactions_received: default_reactions_received} = default_users_statistics
+
+    statistics_fullfilment = %{
       post_count: length(user.posts),
-      reactions_given: get_user_reactions(user.id) |> serialize_user_reactions(),
-      reactions_received: get_user_received_reactions(user.id, only_public) |> serialize_user_reactions()
+      reactions_given: default_reactions_given |> Map.merge(get_user_reactions(user.id)),
+      reactions_received: default_reactions_received |> Map.merge(get_user_received_reactions(user.id, only_public))
     }
+
+    Map.merge(default_users_statistics, statistics_fullfilment)
   end
 
   # private
@@ -60,16 +64,6 @@ defmodule Til.Statistics do
       where: p.author_id == ^user_id and p.reviewed == true and p.is_public in ^is_public_in(only_public),
       join: r in Reaction,
       on: r.post_id == p.id
-  end
-
-  defp serialize_user_reactions(reactions) do
-    %{
-      total: reactions[:total] || 0,
-      like: reactions[:like] || 0,
-      love: reactions[:love] || 0,
-      funny: reactions[:funny] || 0,
-      surprised: reactions[:surprised] || 0
-    }
   end
 
   defp is_public_in(true), do: [true]
