@@ -161,11 +161,9 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       assert length(parsed_response_body) == 4
-      [first_responded_post, second_responded_post, third_responded_post, fourth_responded_post] = parsed_response_body
+      [first_responded_post, _, _, fourth_responded_post] = parsed_response_body
 
       assert first_responded_post["title"] == "Bruce post"
-      assert second_responded_post["author"]["firstName"] == "Bruce"
-      assert third_responded_post["categories"] |> length() == 2
       assert fourth_responded_post["body"] == "Bruce post body"
     end
   end

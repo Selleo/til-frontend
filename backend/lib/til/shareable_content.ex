@@ -48,17 +48,11 @@ defmodule Til.ShareableContent do
     sql = """
     select p.* from posts p
       join users u on u.id = p.author_id
-      left join posts_categories pc on pc.post_id = p.id
-      left join categories c on c.id = pc.category_id
       join lateral (
         select ts_rank_cd(
           setweight(to_tsvector(p.title), 'A')
           ||
-          setweight(to_tsvector(u.first_name), 'B')
-          ||
-          setweight(to_tsvector(u.last_name), 'B')
-          ||
-          setweight(to_tsvector(c.name), 'C')
+          setweight(to_tsvector(u.first_name || ' ' || u.last_name), 'B')
           ||
           setweight(to_tsvector(p.body), 'D')
           ,
