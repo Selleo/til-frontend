@@ -2,7 +2,6 @@ defmodule Til.ShareableContent do
   import Ecto.Query, warn: false
   alias Til.Repo
   alias Til.ShareableContent.{Post, Category}
-  alias Til.Notifications
   alias Ecto.Adapters.SQL
 
   def get_post(id) do
@@ -88,24 +87,9 @@ defmodule Til.ShareableContent do
     {:error, :public_reviewed_forbidden}
   end
 
-  def create_post(author, %{"reviewed" => true} = attrs) do
-    case %Post{author_id: author.id} |> change_post(attrs) |> Repo.insert() do
-      {:ok, post} ->
-        {:ok, post} = get_post(post.id)
-        Notifications.notify_post_published(post)
-        {:ok, post}
-      {:error, %Ecto.Changeset{errors: _} = changeset} ->
-        {:error, :changeset, changeset}
-    end
-  end
-
   def create_post(author, attrs) do
     case %Post{author_id: author.id} |> change_post(attrs) |> Repo.insert() do
-      {:ok, post} ->
-        {:ok, post} = get_post(post.id)
-        {:ok, encoded_id, _} = encode_post_id(post.id)
-        Notifications.notify_post_created(post, encoded_id)
-        {:ok, post}
+      {:ok, post} -> get_post(post.id)
       {:error, %Ecto.Changeset{errors: _} = changeset} ->
         {:error, :changeset, changeset}
     end
@@ -126,7 +110,6 @@ defmodule Til.ShareableContent do
          {:ok, post} <- get_post_by(id: id, reviewed: false),
          {:ok, post} <- update_post(post, %{reviewed: true})
     do
-      Notifications.notify_post_published(post)
       {:ok, post}
     else
       {:error, :not_found} -> {:error, :post_approved}
@@ -136,6 +119,14 @@ defmodule Til.ShareableContent do
   end
 
   def get_categories, do: Repo.all(Category)
+
+  def encode_post_id(id) do
+    jwt_handler().encode_and_sign(
+      id,
+      %{},
+      ttl: {100, :weeks}
+    )
+  end
 
   #private
 
@@ -157,14 +148,6 @@ defmodule Til.ShareableContent do
       nil -> %Category{name: name} |> Repo.insert!()
       category -> category
     end
-  end
-
-  defp encode_post_id(id) do
-    jwt_handler().encode_and_sign(
-      id,
-      %{},
-      ttl: {100, :weeks}
-    )
   end
 
   defp decode_post_id(encoded) do
