@@ -51,9 +51,7 @@
   },
   "collectCoverageFrom": [
     "src/**/*.{js,jsx}",
-    "!src/index.js",
-    "!src/hooks/*.js",
-    "!src/context/*.js"
+    "!src/index.js"
   ],
   "coverageThreshold": {
     "global": {

@@ -5,7 +5,7 @@ import PostCategories from "./PostCategories";
 import CopyPostURL from "./CopyURL";
 import Markdown from "./Markdown";
 
-const DisplayPost = props => {
+const DisplayPost = (props) => {
   const [post, setPost] = useState(null);
   const { id } = useParams();
 
@@ -18,7 +18,7 @@ const DisplayPost = props => {
   }, [id]);
 
   if (!post) {
-    return <p>...loading...</p>;
+    return <p data-testid="loading">...loading...</p>;
   }
 
   return (

@@ -5,6 +5,7 @@ import CodeBlock from "../../components/CodeBlock";
 describe("<CodeBlock/>", () => {
   it("renders properly", () => {
     const { asFragment } = render(<CodeBlock />);
+
     expect(asFragment()).toMatchSnapshot();
   });
 });
