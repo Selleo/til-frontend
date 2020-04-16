@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Likes/> renders properly 1`] = `
+<DocumentFragment>
+  <button>
+    Likes: 1 You like it!
+  </button>
+</DocumentFragment>
+`;
