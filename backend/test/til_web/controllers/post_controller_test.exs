@@ -130,7 +130,7 @@ defmodule TilWeb.PostControllerTest do
     test "searches properly with post title > author name > category name > post body priority", %{conn: conn} do
       first_user = insert(:user, first_name: "Bruce", last_name: "Wayne")
       second_user = insert(:user, first_name: "Peter", last_name: "Parker")
-      third_user = insert(:user, first_name: "Iron", last_name: "Man")
+      insert(:user, first_name: "Iron", last_name: "Man")
 
       # No fit at all
       insert(:post, title: "No fit title 5", body: "no fit body", author: second_user, reviewed: true)

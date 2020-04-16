@@ -72,8 +72,7 @@ defmodule Til.ShareableContent do
 
     results = SQL.query!(Repo, sql, [search_query, is_public_in(only_public)])
 
-    posts =
-      results.rows
+    results.rows
       |> Enum.map(&Repo.load(Post, {results.columns, &1}))
       |> Repo.preload([:categories, :author, :reactions])
       |> Enum.map(&Post.populate_reaction_count/1)
