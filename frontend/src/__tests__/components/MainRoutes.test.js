@@ -11,7 +11,6 @@ describe("<MainRoutes/>", () => {
   let component;
   let store;
   const history = createMemoryHistory();
-
   const mockStore = configureMockStore([]);
 
   beforeEach(() => {
