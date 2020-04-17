@@ -5,11 +5,11 @@ import Markdown from "./Markdown";
 import CopyPostURL from "./CopyURL";
 import ReactionBar from "./ReactionBar";
 
-const Post = props => {
+const Post = (props) => {
   const { post } = props;
 
   return (
-    <section className="post">
+    <section className="post" data-testid="post-component">
       <article>
         <Link to={`/posts/${post.id}`}>
           <h1>{post.title}</h1>

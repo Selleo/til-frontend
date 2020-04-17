@@ -78,5 +78,6 @@ export const posts = [
     likes: [],
     likesCount: 0,
     title: "maciekdfd",
+    reactions: [{ type: "surprised" }, { type: "love" }],
   },
 ];

@@ -4,6 +4,7 @@ exports[`<Post/> renders properly 1`] = `
 <DocumentFragment>
   <section
     class="post"
+    data-testid="post-component"
   >
     <article>
       <a
