@@ -12,14 +12,16 @@ describe("<PostsList/>", () => {
   const mockStore = configureMockStore([]);
   let store = mockStore(initialState);
 
+  const wrappedComponentWithoutStore = (store) => (
+    <Provider store={store}>
+      <Router history={history}>
+        <PostsList />
+      </Router>
+    </Provider>
+  );
+
   it("renders properly", () => {
-    const { asFragment } = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <PostsList />
-        </Router>
-      </Provider>
-    );
+    const { asFragment } = render(wrappedComponentWithoutStore(store));
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -28,13 +30,7 @@ describe("<PostsList/>", () => {
     store = mockStore({ ...initialState, posts });
 
     it("renders list of posts", () => {
-      const { getAllByTestId } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <PostsList />
-          </Router>
-        </Provider>
-      );
+      const { getAllByTestId } = render(wrappedComponentWithoutStore(store));
 
       expect(getAllByTestId("post-component").length).toEqual(2);
     });
