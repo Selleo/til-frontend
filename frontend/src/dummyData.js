@@ -60,7 +60,10 @@ export const posts = [
     ],
     likesCount: 1,
     title: "title ",
-    reactions: [{ type: "like" }, { type: "love" }],
+    reactions: [
+      { whoReacted: [user], type: "like" },
+      { whoReacted: [user], type: "love" },
+    ],
   },
   {
     author: {
@@ -78,6 +81,9 @@ export const posts = [
     likes: [],
     likesCount: 0,
     title: "maciekdfd",
-    reactions: [{ type: "surprised" }, { type: "love" }],
+    reactions: [
+      { whoReacted: [user], type: "surprised" },
+      { whoReacted: [user], type: "love" },
+    ],
   },
 ];
