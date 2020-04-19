@@ -1,33 +1,26 @@
 import React from "react";
-import { Router } from "react-router-dom";
-import { createMemoryHistory } from "history";
-import { render, cleanup } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import DisplayPost from "../../components/DisplayPost";
+import { WrapperWithRouter } from "../../utils/test-utils";
 
 describe("<DisplayPost/>", () => {
-  let component;
-  const history = createMemoryHistory();
-
-  beforeEach(() => {
-    component = render(
-      <Router history={history}>
-        <DisplayPost />
-      </Router>
-    );
-  });
-
-  afterEach(cleanup);
-
   it("renders correctly", () => {
-    const { asFragment } = component;
+    const { asFragment } = render(
+      <WrapperWithRouter>
+        <DisplayPost />
+      </WrapperWithRouter>
+    );
 
     expect(asFragment()).toMatchSnapshot();
   });
 
   it("initializes with `loading` state", () => {
-    const { getByTestId } = component;
-    const loadingText = getByTestId("loading");
+    const { getByTestId } = render(
+      <WrapperWithRouter>
+        <DisplayPost />
+      </WrapperWithRouter>
+    );
 
-    expect(loadingText).toBeInTheDocument();
+    expect(getByTestId("loading")).toBeInTheDocument();
   });
 });
