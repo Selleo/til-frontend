@@ -5,8 +5,6 @@ import configureMockStore from "redux-mock-store";
 import Reaction from "../../components/Reaction";
 import { initialState, posts, user } from "../../dummyData";
 
-// { handleReaction, checkHasReacted }
-
 describe("<Reaction/>", () => {
   const reaction = posts[0].reactions[0];
   const props = { post: posts[0], reaction };
