@@ -23,9 +23,6 @@ exports[`<SideBar/> renders properly 1`] = `
         </a>
       </li>
       <li>
-         search 
-      </li>
-      <li>
         <a
           href="/stats"
         >
@@ -34,17 +31,19 @@ exports[`<SideBar/> renders properly 1`] = `
       </li>
       <li>
         <a
-          href="/random-post"
-        >
-           random
-        </a>
-      </li>
-      <li>
-        <a
           href="/categories"
         >
            categories
         </a>
+      </li>
+      <li>
+        <div>
+          <input
+            placeholder="search"
+            type="text"
+            value=""
+          />
+        </div>
       </li>
     </ul>
   </nav>

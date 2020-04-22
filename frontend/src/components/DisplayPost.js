@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom";
 import PostCategories from "./PostCategories";
 import CopyPostURL from "./CopyURL";
 import Markdown from "./Markdown";
+import ReactionBar from "./ReactionBar";
 
-const DisplayPost = (props) => {
+const DisplayPost = () => {
   const [post, setPost] = useState(null);
   const { id } = useParams();
 
@@ -25,10 +26,14 @@ const DisplayPost = (props) => {
     <section className="post">
       <article>
         <h1>{post.title}</h1>
+        <p>
+          written by {post.author.firstName} {post.author.lastName}
+        </p>
         <Markdown source={post.body} />
       </article>
       <CopyPostURL />
       <PostCategories categories={post.categories} />
+      <ReactionBar post={post} />
     </section>
   );
 };
