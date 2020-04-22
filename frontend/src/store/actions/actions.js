@@ -7,7 +7,7 @@ import {
 } from "../../utils";
 
 // CATEGORIES
-const getAllCategories = (categories) => ({
+export const getAllCategories = (categories) => ({
   type: actionTypes.GET_ALL_CATEGORIES,
   categories,
 });
@@ -19,7 +19,7 @@ export const saveAllCategories = () => async (dispatch) => {
 };
 
 // USER
-const getCurrentUser = (currentUser) => ({
+export const getCurrentUser = (currentUser) => ({
   type: actionTypes.GET_CURRENT_USER,
   currentUser,
 });
@@ -56,7 +56,7 @@ export const saveCurrentUserPosts = (id) => async (dispatch) => {
 };
 
 // ALL USERS WITH STATS
-const getAllUsers = (users) => ({
+export const getAllUsers = (users) => ({
   type: actionTypes.GET_ALL_USERS,
   users,
 });
@@ -68,7 +68,7 @@ export const saveAllUsers = () => async (dispatch) => {
 };
 
 // POSTS
-const getPosts = (posts) => ({
+export const getPosts = (posts) => ({
   type: actionTypes.GET_ALL_POSTS,
   posts,
 });

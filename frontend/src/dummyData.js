@@ -1,8 +1,10 @@
 export const initialState = {
   categories: [],
   currentUser: null,
-  users: [],
   posts: [],
+  searchedPosts: [],
+  searchQuery: [],
+  users: [],
 };
 
 export const user = {
