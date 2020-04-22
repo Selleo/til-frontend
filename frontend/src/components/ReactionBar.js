@@ -12,17 +12,8 @@ const ReactionBar = ({ post }) => {
 
   if (!reactions) return null;
 
-<<<<<<< HEAD
-  return reactions.map(reaction => (
-    <Reaction
-      post={post}
-      reaction={reaction}
-      key={reaction.type}
-    />
-=======
   return reactions.map((reaction, index) => (
     <Reaction key={index} post={post} reaction={reaction} />
->>>>>>> Post component test
   ));
 };
 

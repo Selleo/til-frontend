@@ -14,7 +14,7 @@ import {
 
 const App = () => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.currentUser);
+  const currentUser = useSelector((state) => state.currentUser);
 
   useEffect(() => {
     dispatch(saveAllPosts());
@@ -30,23 +30,14 @@ const App = () => {
   );
 
   return (
-<<<<<<< HEAD
-    <Router>
-      {renderApp}
-      <Route path="/auth">
-        <AuthHandler />
-      </Route>
-    </Router>
-=======
     <div data-testid="app-main">
       <Router>
         {renderApp}
         <Route path="/auth">
-          <AuthHandler setIsLoggedIn={setIsLoggedIn} />
+          <AuthHandler />
         </Route>
       </Router>
     </div>
->>>>>>> test: redux actions
   );
 };
 

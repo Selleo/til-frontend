@@ -19,36 +19,13 @@ export const getCurrentUser = (currentUser) => ({
   currentUser,
 });
 
-<<<<<<< HEAD
-export const saveCurrentUser = () => async dispatch => {
-  let currentUser = await fetchUser("/api/me");
-
-  if (currentUser.errors) {
-    currentUser = false;
-  }
-=======
 export const saveCurrentUser = () => async (dispatch) => {
   const currentUser = await fetchUser("/api/me");
->>>>>>> fix app and actions unit tests
 
   dispatch(getCurrentUser(currentUser));
 };
 
-<<<<<<< HEAD
-export const deleteCurrentUser = () => ({
-  type: actionTypes.DELETE_CURRENT_USER,
-  currentUser: false
-});
-
-export const logOut = () => dispatch => {
-  dispatch(deleteCurrentUser());
-  dispatch(saveAllPosts());
-};
-
-export const getCurrentUserPosts = currentUserPosts => ({
-=======
 export const getCurrentUserPosts = (currentUserPosts) => ({
->>>>>>> fix app and actions unit tests
   type: actionTypes.GET_CURRENT_USER_POSTS,
   currentUserPosts,
 });
