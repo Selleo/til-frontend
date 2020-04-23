@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProfilePosts/> renders correctly 1`] = `
+<div>
+  <div>
+    <p>
+      title 
+    </p>
+    <a
+      href="/edit-post/1"
+    >
+      <button>
+        edit
+      </button>
+    </a>
+    <button>
+      delete
+    </button>
+  </div>
+</div>
+`;

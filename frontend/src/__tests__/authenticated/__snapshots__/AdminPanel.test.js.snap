@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AdminPanel/> renders correctly 1`] = `
+<div>
+  <div
+    class="admin-panel"
+  >
+    <button>
+      log out
+    </button>
+    <a
+      href="/add-post"
+    >
+      <p>
+        add post
+      </p>
+    </a>
+    <a
+      href="/profile"
+    >
+      <p>
+        profile
+      </p>
+    </a>
+  </div>
+</div>
+`;
