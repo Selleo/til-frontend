@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Categories/> renders properly 1`] = `
+<DocumentFragment>
+  <p>
+    java
+  </p>
+  <p>
+    javascript
+  </p>
+</DocumentFragment>
+`;

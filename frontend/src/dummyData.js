@@ -1,8 +1,10 @@
 export const initialState = {
   categories: [],
   currentUser: null,
+  posts: [],
+  searchedPosts: [],
+  searchQuery: [],
   users: [],
-  posts: []
 };
 
 export const user = {
@@ -11,7 +13,7 @@ export const user = {
   image:
     "https://lh5.googleusercontent.com/-4na6W1JJVa0/AAAAAAAAAAI/AAAAAAAAAAA/SDwbLxAgbqc/photo.jpg",
   lastName: null,
-  uuid: "36528600-e215-49bf-8d5b-e1096b63c876"
+  uuid: "36528600-e215-49bf-8d5b-e1096b63c876",
 };
 
 export const allUsers = [
@@ -21,7 +23,7 @@ export const allUsers = [
     image:
       "https://lh5.googleusercontent.com/-4na6W1JJVa0/AAAAAAAAAAI/AAAAAAAAAAA/SDwbLxAgbqc/photo.jpg",
     lastName: null,
-    uuid: "36528600-e215-49bf-8d5b-e1096b63c876"
+    uuid: "36528600-e215-49bf-8d5b-e1096b63c876",
   },
   {
     email: "maciekPlacek@selleo.com",
@@ -29,13 +31,13 @@ export const allUsers = [
     image:
       "https://lh5.googleusercontent.com/-4na6W1JJVa0/AAAAAAAAAAIdsdfjdkjdfi/photo.jpg",
     lastName: null,
-    uuid: "36528600-e215-49bf-8d5b-dadlfj33343443"
-  }
+    uuid: "36528600-e215-49bf-8d5b-dadlfj33343443",
+  },
 ];
 
 export const categories = [
   { id: 1, name: "java" },
-  { id: 2, name: "javascript" }
+  { id: 2, name: "javascript" },
 ];
 
 export const posts = [
@@ -46,7 +48,7 @@ export const posts = [
       image:
         "https://lh5.googleusercontent.com/-4na6W1JJVa0/AAAAAAAAAAI/AAAAAAAAAAA/SDwbLxAgbqc/photo.jpg",
       lastName: null,
-      uuid: "36528600-e215-49bf-8d5b-e1096b63c876"
+      uuid: "36528600-e215-49bf-8d5b-e1096b63c876",
     },
     body: "adsfdf",
     categoriesIds: [2, 1],
@@ -55,11 +57,15 @@ export const posts = [
     likes: [
       {
         post_id: 1,
-        user_uuid: "36528600-e215-49bf-8d5b-e1096b63c876"
-      }
+        user_uuid: "36528600-e215-49bf-8d5b-e1096b63c876",
+      },
     ],
     likesCount: 1,
-    title: "title "
+    title: "title ",
+    reactions: [
+      { whoReacted: [user], type: "like" },
+      { whoReacted: [user], type: "love" },
+    ],
   },
   {
     author: {
@@ -68,7 +74,7 @@ export const posts = [
       image:
         "https://lh5.googleusercontent.com/-4na6W1JJVa0/AAAAAAAAAAI/AAAAAAAAAAA/SDwbLxAgbqc/photo.jpg",
       lastName: null,
-      uuid: "36528600-e215-49bf-8d5b-e1096b63c876"
+      uuid: "36528600-e215-49bf-8d5b-e1096b63c876",
     },
     body: "adfefsddf",
     categoriesIds: [3],
@@ -76,6 +82,10 @@ export const posts = [
     isPublic: false,
     likes: [],
     likesCount: 0,
-    title: "maciekdfd"
-  }
+    title: "maciekdfd",
+    reactions: [
+      { whoReacted: [user], type: "surprised" },
+      { whoReacted: [user], type: "love" },
+    ],
+  },
 ];

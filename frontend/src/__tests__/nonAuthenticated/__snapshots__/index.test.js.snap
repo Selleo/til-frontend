@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NonAuthenticatedApp/> renders correctly 1`] = `
+<div>
+  <nav
+    class="side-nav-bar"
+  >
+    <ul
+      class="side-nav-bar-list"
+    >
+      <li>
+        <a
+          href="http://localhost:4000/auth/google"
+        >
+          login
+        </a>
+      </li>
+      <li>
+        <a
+          href="/"
+        >
+          home
+        </a>
+      </li>
+      <li>
+        <a
+          href="/stats"
+        >
+           stats
+        </a>
+      </li>
+      <li>
+        <a
+          href="/categories"
+        >
+           categories
+        </a>
+      </li>
+      <li>
+        <div>
+          <input
+            placeholder="search"
+            type="text"
+            value=""
+          />
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <div
+    class="posts"
+  />
+</div>
+`;

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CopyURL/> renders properly 1`] = `
+<DocumentFragment>
+  <button>
+    Copy post Url
+  </button>
+</DocumentFragment>
+`;

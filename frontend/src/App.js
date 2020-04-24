@@ -9,12 +9,12 @@ import {
   saveAllCategories,
   saveCurrentUser,
   saveAllUsers,
-  saveAllPosts
+  saveAllPosts,
 } from "./store/actions/actions";
 
 const App = () => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.currentUser);
+  const currentUser = useSelector((state) => state.currentUser);
 
   useEffect(() => {
     dispatch(saveAllPosts());
@@ -30,12 +30,14 @@ const App = () => {
   );
 
   return (
-    <Router>
-      {renderApp}
-      <Route path="/auth">
-        <AuthHandler />
-      </Route>
-    </Router>
+    <div data-testid="app-main">
+      <Router>
+        {renderApp}
+        <Route path="/auth">
+          <AuthHandler />
+        </Route>
+      </Router>
+    </div>
   );
 };
 

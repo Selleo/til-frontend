@@ -3,28 +3,28 @@ import {
   fetchUser,
   fetchUserPosts,
   fetchData,
-  fetchSearchedPosts
+  fetchSearchedPosts,
 } from "../../utils";
 
 // CATEGORIES
-const getAllCategories = categories => ({
+export const getAllCategories = (categories) => ({
   type: actionTypes.GET_ALL_CATEGORIES,
-  categories
+  categories,
 });
 
-export const saveAllCategories = () => async dispatch => {
+export const saveAllCategories = () => async (dispatch) => {
   const categoriesArray = await fetchData("/api/categories");
 
   dispatch(getAllCategories(categoriesArray));
 };
 
 // USER
-const getCurrentUser = currentUser => ({
+export const getCurrentUser = (currentUser) => ({
   type: actionTypes.GET_CURRENT_USER,
-  currentUser
+  currentUser,
 });
 
-export const saveCurrentUser = () => async dispatch => {
+export const saveCurrentUser = () => async (dispatch) => {
   let currentUser = await fetchUser("/api/me");
 
   if (currentUser.errors) {
@@ -36,44 +36,44 @@ export const saveCurrentUser = () => async dispatch => {
 
 export const deleteCurrentUser = () => ({
   type: actionTypes.DELETE_CURRENT_USER,
-  currentUser: false
+  currentUser: false,
 });
 
-export const logOut = () => dispatch => {
+export const logOut = () => (dispatch) => {
   dispatch(deleteCurrentUser());
   dispatch(saveAllPosts());
 };
 
-export const getCurrentUserPosts = currentUserPosts => ({
+export const getCurrentUserPosts = (currentUserPosts) => ({
   type: actionTypes.GET_CURRENT_USER_POSTS,
-  currentUserPosts
+  currentUserPosts,
 });
 
-export const saveCurrentUserPosts = id => async dispatch => {
+export const saveCurrentUserPosts = (id) => async (dispatch) => {
   const posts = await fetchUserPosts("/api/users/", id);
 
   dispatch(getCurrentUserPosts(posts));
 };
 
 // ALL USERS WITH STATS
-const getAllUsers = users => ({
+export const getAllUsers = (users) => ({
   type: actionTypes.GET_ALL_USERS,
-  users
+  users,
 });
 
-export const saveAllUsers = () => async dispatch => {
+export const saveAllUsers = () => async (dispatch) => {
   const allUsers = await fetchData("/api/statistics/users");
 
   dispatch(getAllUsers(allUsers));
 };
 
 // POSTS
-const getPosts = posts => ({
+export const getPosts = (posts) => ({
   type: actionTypes.GET_ALL_POSTS,
-  posts
+  posts,
 });
 
-export const saveAllPosts = () => async dispatch => {
+export const saveAllPosts = () => async (dispatch) => {
   const allPosts = await fetchData("/api/posts");
 
   dispatch(getPosts(allPosts));
@@ -81,18 +81,18 @@ export const saveAllPosts = () => async dispatch => {
 
 // SEARCHED POSTS
 
-const getSerchedPosts = searchedPosts => ({
+export const getSerchedPosts = (searchedPosts) => ({
   type: actionTypes.GET_SEARCHED_POSTS,
-  searchedPosts
+  searchedPosts,
 });
 
-export const saveSearchedPosts = query => async dispatch => {
+export const saveSearchedPosts = (query) => async (dispatch) => {
   const searchedPosts = await fetchSearchedPosts(query);
 
   dispatch(getSerchedPosts(searchedPosts));
 };
 
-export const saveSearchedQuery = searchQuery => ({
+export const saveSearchedQuery = (searchQuery) => ({
   type: actionTypes.SEARCH_QUERY,
-  searchQuery
+  searchQuery,
 });
