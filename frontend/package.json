@@ -46,7 +46,6 @@
   },
   "proxy": "http://localhost:4000",
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
     "html-to-react": "^1.4.2",
     "husky": "^4.2.5",
