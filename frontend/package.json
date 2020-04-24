@@ -25,6 +25,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --watchAll --coverage",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
   },
@@ -55,13 +56,14 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "react-scripts test --watchAll=false"
     }
   },
   "lint-staged": {
-    "./src/*.{js,jsx,ts,tsx}": [
-      "npx prettier --write",
-      "eslint src/*.js --fix-dry-run"
+    "*.{js,jsx}": [
+      "prettier --config .prettierrc --write",
+      "eslint --fix"
     ]
   }
 }
