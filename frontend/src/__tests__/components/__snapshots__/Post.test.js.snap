@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Post/> renders correctly 1`] = `
+<div>
+  <section
+    class="post"
+  >
+    <article>
+      <a
+        href="/posts/1"
+      >
+        <h1>
+          title 
+        </h1>
+      </a>
+      <p>
+        written by 
+         
+      </p>
+      <p>
+        <span>
+          <span
+            class=""
+          >
+            adsfdf
+          </span>
+        </span>
+      </p>
+    </article>
+    <button>
+      Copy post Url
+    </button>
+    <p>
+      like
+      : 
+      0
+    </p>
+    <p>
+      funny
+      : 
+      0
+    </p>
+    <p>
+      love
+      : 
+      0
+    </p>
+    <p>
+      surprised
+      : 
+      0
+    </p>
+  </section>
+</div>
+`;

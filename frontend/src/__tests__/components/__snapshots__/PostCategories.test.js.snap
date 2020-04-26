@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PostCategories/> renders correctly with categories 1`] = `
+<div>
+  <p
+    data-testid="category"
+  >
+    One
+  </p>
+  <p
+    data-testid="category"
+  >
+    Two
+  </p>
+  <p
+    data-testid="category"
+  >
+    Three
+  </p>
+</div>
+`;

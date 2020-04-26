@@ -5,9 +5,15 @@ const PostCategories = ({ categories }) => {
     return null;
   }
 
-  return categories.map((category, index) => (
-    <p key={index}>{category}</p>
-  ));
+  return (
+    <>
+      {categories.map((category, index) => (
+        <p key={index} data-testid="category">
+          {category}
+        </p>
+      ))}
+    </>
+  );
 };
 
 export default PostCategories;
