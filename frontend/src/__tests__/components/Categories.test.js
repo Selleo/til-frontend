@@ -45,7 +45,7 @@ describe("<Categories/>", () => {
       );
       const items = queryAllByTestId("category-item");
 
-      expect(items.length).toEqual(0);
+      expect(items).toHaveLength(0);
     });
   });
 });

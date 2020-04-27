@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Search/> renders correctly 1`] = `
+<div>
+  <div>
+    <input
+      placeholder="search"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;
