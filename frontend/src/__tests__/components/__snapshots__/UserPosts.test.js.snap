@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UserPosts/> renders correctly 1`] = `
+<div>
+  <h3>
+    Users posts
+  </h3>
+</div>
+`;

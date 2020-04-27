@@ -5,12 +5,12 @@ import Stats from "../components/Stats";
 import PostsList from "../components/PostsList";
 import DisplayPost from "../components/DisplayPost";
 import Categories from "./Categories";
-import UserPosts from "./UsersPosts";
+import UserPosts from "./UserPosts";
 import SearchedPosts from "./SearchedPosts";
 import { useSelector } from "react-redux";
 
 const MainRoutes = () => {
-  const posts = useSelector(state => state.posts);
+  const posts = useSelector((state) => state.posts);
 
   return (
     <Switch>

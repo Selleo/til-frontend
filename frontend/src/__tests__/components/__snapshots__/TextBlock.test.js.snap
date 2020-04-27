@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TextBlock/> renders correctly 1`] = `
+<div>
+  <span>
+    <mark
+      class="YourHighlightClass "
+    >
+      lorem
+    </mark>
+    <span
+      class=""
+    >
+       ipsum dolor sit amet
+    </span>
+  </span>
+</div>
+`;
