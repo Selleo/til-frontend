@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Reaction from "./Reaction";
 import { convertReactions } from "../utils";
+import StyledReactionBar from "../styles/StyledReactionBar";
+import Reaction from "./Reaction";
 
 const ReactionBar = ({ post }) => {
   const [reactions, setReactions] = useState();
@@ -12,13 +13,13 @@ const ReactionBar = ({ post }) => {
 
   if (!reactions) return null;
 
-  return reactions.map(reaction => (
-    <Reaction
-      post={post}
-      reaction={reaction}
-      key={reaction.type}
-    />
-  ));
+  return (
+    <StyledReactionBar>
+      {reactions.map((reaction) => (
+        <Reaction post={post} reaction={reaction} key={reaction.type} />
+      ))}
+    </StyledReactionBar>
+  );
 };
 
 export default ReactionBar;

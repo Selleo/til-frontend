@@ -1,29 +1,31 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import PostCategories from "./PostCategories";
 import Markdown from "./Markdown";
 import CopyPostURL from "./CopyURL";
+import PostCategories from "./PostCategories";
 import ReactionBar from "./ReactionBar";
+import StyledPost from "../styles/StyledPost";
+import StyledPostInfo from "../styles/StyledPostInfo";
+import StyledTitleLink from "../styles/StyledTitleLink";
 
-const Post = props => {
-  const { post } = props;
-
-  return (
-    <section className="post">
-      <article>
-        <Link to={`/posts/${post.id}`}>
-          <h1>{post.title}</h1>
-        </Link>
-        <p>
-          written by {post.author.firstName} {post.author.lastName}
-        </p>
-        <Markdown source={post.body} />
-      </article>
+const Post = ({ post }) => (
+  <StyledPost>
+    <article>
+      <StyledPostInfo>
+        <img src={post.author.image} />
+        <div className="date-author">
+          <p className="author">
+            {post.author.firstName} {post.author.lastName}
+          </p>
+          <p className="date">date</p>
+        </div>
+      </StyledPostInfo>
+      <StyledTitleLink to={`/posts/${post.id}`}>{post.title}</StyledTitleLink>
+      <Markdown source={post.body} />
       <CopyPostURL postId={post.id} />
       <PostCategories categories={post.categories} />
       <ReactionBar post={post} />
-    </section>
-  );
-};
+    </article>
+  </StyledPost>
+);
 
 export default Post;
