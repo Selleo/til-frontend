@@ -11,7 +11,6 @@ import { saveAllPosts } from "../store/actions/actions";
 import Markdown from "../components/Markdown";
 import ReactMde from "react-mde";
 import Select from "react-select";
-import postSuccessToast from "../utils/toasts/postSuccessToast";
 
 const EditPost = props => {
   const [buttonState, setButtonState] = useState(true);
@@ -59,22 +58,21 @@ const EditPost = props => {
     setUserCategoriesOptions(userCategoriesOptions);
   }, [allCategories, categories]);
 
-  const updatePost = async () => {
+  const updatePost = () => {
     const markdownPost = {
       body: markdown,
       title: title,
       categories: categories
     };
-    const post = await request(
+    const post = request(
       "PATCH",
       "/api/me/posts/" + id,
       JSON.stringify(markdownPost)
     );
 
-    if (post.ok) {
+    if (post) {
       dispatch(saveAllPosts());
       history.push(`/posts/${id}`);
-      postSuccessToast("Post updated successfully");
     }
   };
 

@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { handleReaction, checkHasReacted } from "../utils";
-import {
-  saveAllPosts,
-  saveAllUsers
-} from "../store/actions/actions";
-import useUser from "../utils/customHooks/useUser";
+import { saveAllPosts } from "../store/actions/actions";
 
 const Reaction = props => {
   const { id } = props.post;
   const { type, whoReacted } = props.reaction;
   const [hasReacted, setHasReacted] = useState(false);
   const [reactionNumber, setReactionNumber] = useState(0);
-  const user = useUser();
+  const user = useSelector(state => state.currentUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,7 +27,6 @@ const Reaction = props => {
           setHasReacted(!hasReacted);
           setReactionNumber(reactionNumber - 1);
           dispatch(saveAllPosts());
-          dispatch(saveAllUsers());
         })
         .catch(err => console.error(err));
     } else {
@@ -40,7 +35,6 @@ const Reaction = props => {
           setHasReacted(!hasReacted);
           setReactionNumber(reactionNumber + 1);
           dispatch(saveAllPosts());
-          dispatch(saveAllUsers());
         })
         .catch(err => console.error(err));
     }

@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-export const useOnRouteLeave = route => {
+export const useRouteLeave = route => {
   const location = useLocation();
 
   if (location.pathname !== route) {

@@ -21,7 +21,7 @@ export const request = async (action, url, data) => {
     body: data
   });
 
-  return response;
+  return response.ok;
 };
 
 // FETCH SINGLE POST
