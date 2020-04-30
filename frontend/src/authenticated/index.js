@@ -1,10 +1,9 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import AddPost from "../authenticated/AddPost";
-import AdminPanel from "./AdminPanel";
 import EditPost from "../authenticated/EditPost";
 import MainRoutes from "../components/MainRoutes";
-import SideBar from "../components/SideBar";
+import AppHeader from "../components/AppHeader";
 import UserProfile from "../authenticated/UserProfile";
 import ReviewPost from "./ReviewPost";
 import { ToastContainer } from "react-toastify";
@@ -14,8 +13,7 @@ const AuthenticatedApp = () => {
   return (
     <>
       <ToastContainer />
-      <AdminPanel />
-      <SideBar />
+      <AppHeader />
       <MainRoutes />
       {/* authenticated user routes */}
       <Switch>

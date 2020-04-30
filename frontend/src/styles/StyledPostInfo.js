@@ -1,21 +1,21 @@
 import styled from "styled-components";
 
 const StyledPostInfo = styled.div`
-  display: flex;
   align-items: center;
+  display: flex;
   img {
-    width: 50px;
-    height: 50px;
     border-radius: 50%;
+    height: 50px;
+    width: 50px;
   }
   .author {
-    margin: 0;
     font-size: 16px;
+    margin: 0;
   }
 
   .date {
-    margin: 0;
     font-size: 16px;
+    margin: 0;
   }
 
   .date-author {

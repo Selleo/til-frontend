@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-  saveSearchedPosts,
-  saveSearchedQuery
-} from "../store/actions/actions";
+import { saveSearchedPosts, saveSearchedQuery } from "../store/actions/actions";
 import { useOnRouteLeave } from "../utils/customHooks/useOnRouteLeave";
+import StyledSearch from "../styles/StyledSearch";
 
 const Search = () => {
   const [input, setInput] = useState("");
@@ -21,7 +19,7 @@ const Search = () => {
     }
   }, [hasLeavedRoute, dispatch]);
 
-  const handleInput = event => {
+  const handleInput = (event) => {
     const targetValue = event.target.value;
 
     setInput(targetValue);
@@ -39,14 +37,12 @@ const Search = () => {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="search"
-        value={input}
-        onChange={handleInput}
-      />
-    </div>
+    <StyledSearch
+      type="text"
+      placeholder="search"
+      value={input}
+      onChange={handleInput}
+    />
   );
 };
 

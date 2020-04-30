@@ -14,7 +14,7 @@ const Logout = () => {
     history.push("/");
   };
 
-  return <button onClick={logOutHandler}>log out</button>;
+  return <p onClick={logOutHandler}>Log Out</p>;
 };
 
 export default Logout;
