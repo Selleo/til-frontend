@@ -74,6 +74,11 @@ const StyledAdminPanel = styled.li`
     align-items: center;
     display: flex;
   }
+
+  .user-name {
+    font-weight: 600;
+    letter-spacing: 0.28px;
+  }
 `;
 
 export default StyledAdminPanel;

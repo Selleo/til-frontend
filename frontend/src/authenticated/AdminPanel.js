@@ -4,36 +4,51 @@ import Logout from "./Logout";
 import StyledAdminPanel from "../styles/StyledAdminPanel";
 import useUser from "../utils/customHooks/useUser";
 import chevron from "../assets/chevron.png";
+import classNames from 'classnames';
 
 const AdminPanel = () => {
   const [isHidden, setIsHidden] = useState(true);
   const [backgroundClass, setBackgroundClass] = useState("");
-  const [imgRotate, setImgRotate] = useState("");
+  const [imgRotate, setImgRotate] = useState(false);
   const user = useUser();
 
   const toggleDropdown = () => {
     setIsHidden(!isHidden);
     setBackgroundClass(backgroundClass === "bg-light" ? "" : "bg-light");
-    setImgRotate(imgRotate === "img-rotate" ? "" : "img-rotate");
+    setImgRotate(!imgRotate);
   };
 
+  const dropDownClasses = classNames({
+    hidden: isHidden,
+    [`${backgroundClass}`] : true,
+    "drop-down-menu":true
+  })
+
+  const chevronClasses = classNames({
+    chevron: true,
+    'img-rotate': imgRotate 
+  })
+ 
+  const profileClasses = classNames({
+    [`${backgroundClass}`] : true,
+    profile: true
+  }) 
+  
   return (
     <StyledAdminPanel>
       <Link to="/add-post" className="add-post-btn">
         ADD POST
       </Link>
-      <div className={`${backgroundClass} profile`} onClick={toggleDropdown}>
+      <div className={profileClasses} onClick={toggleDropdown}>
         <div className="user-info">
           <img src={user.image} alt="user-img" />
-          <p>
+          <p className="user-name">
             {user.firstName} {user.lastName}
           </p>
-          <img src={chevron} alt="chevron" className={`${imgRotate} chevron`} />
+          <img src={chevron} alt="chevron" className={chevronClasses} />
         </div>
         <div
-          className={`${
-            isHidden ? "hidden" : ""
-          } drop-down-menu ${backgroundClass}`}
+          className={dropDownClasses}
         >
           <Link to="/profile" className="profile-link">
             Profile

@@ -7,6 +7,7 @@ const StyledAppHeader = styled.div`
 
   .home {
     color: white;
+    font-weight:600;
     margin-right: 20px;
     text-decoration: none;
   }

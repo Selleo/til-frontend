@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -9,7 +8,6 @@ const StyledTitleLink = styled(Link)`
   letter-spacing: 0.96px;
   color: #ffffff;
   opacity: 1;
-  color: white;
   text-decoration: none;
 `;
 
