@@ -15,21 +15,29 @@ const Categories = () => {
   }
   const sortedCategories = sortCategories(categories)
 
-  return sortedCategories.map(category => (
-    <div key={category.name} className="categories__single-category">
-      <div className="categories__icon">
-        <Icon categoryName={category.name} />
-      </div>
-      <Link className="categories__name" to={`/category/${category.name}`}>
+  return (
+    <div className="categories">
+      {sortedCategories.map(category => (
         <div
-          className="categories__name"
-          onClick={() => handleClick(category.id)}
+          key={category.name}
+          className="categories__single-category"
+          data-testid="single-category"
         >
-          {category.name}
+          <div className="categories__icon">
+            <Icon categoryName={category.name} />
+          </div>
+          <Link className="categories__name" to={`/category/${category.name}`}>
+            <div
+              className="categories__name"
+              onClick={() => handleClick(category.id)}
+            >
+              {category.name}
+            </div>
+          </Link>
         </div>
-      </Link>
+      ))}
     </div>
-  ))
+  )
 }
 
 export default Categories

@@ -21,10 +21,10 @@ const App = () => {
   const currentUser = useUser()
 
   useEffect(() => {
-    dispatch(saveAllPosts())
-    dispatch(saveCurrentUser())
+    // dispatch(saveAllPosts())
+    // dispatch(saveCurrentUser())
     dispatch(saveAllCategories())
-    dispatch(saveAllUsers())
+    // dispatch(saveAllUsers())
   }, [dispatch])
 
   const renderApp = currentUser ? <AuthenticatedApp /> : <NonAuthenticatedApp />

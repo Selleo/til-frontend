@@ -11,7 +11,7 @@ const AppHeader = () => {
       {user ? (
         <AdminPanel />
       ) : (
-          <a className="login-link" href={`${API_URL}/auth/google`} >
+          <a className="login-link" data-testid="login" href={`${API_URL}/auth/google`} >
             log in
           </a>
         )

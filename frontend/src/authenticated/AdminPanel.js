@@ -60,11 +60,11 @@ const AdminPanel = () => {
             src={user.image}
             alt="user-img"
           />
-          <p className="user__name">
+          <p className="user__name" data-testid="user-name">
             {user.firstName} {user.lastName}
           </p>
           <img src={chevron} alt="chevron" className={chevronClasses} />
-          <div className={userMenuClasses}>
+          <div className={userMenuClasses} data-testid="user-menu">
             <Link to="/profile" className="profile-link">
               Profile
             </Link>

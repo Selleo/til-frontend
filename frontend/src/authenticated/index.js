@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const AuthenticatedApp = () => {
   return (
-    <>
+    <div data-testid="authenticated-app">
       <ToastContainer />
       <SideNav />
       <AppHeader />
@@ -34,7 +34,7 @@ const AuthenticatedApp = () => {
           </Route>
         </Switch>
       </div>
-    </>
+    </div>
   )
 }
 

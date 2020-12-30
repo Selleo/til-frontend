@@ -5,6 +5,7 @@ export const fetchData = async url => {
   const optionsToken = checkForToken()
 
   const response = await fetch(url, optionsToken)
+  console.log('==>>', 'response', '==>>', response)
   const data = response.json()
 
   return data

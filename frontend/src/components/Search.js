@@ -37,7 +37,7 @@ const Search = () => {
   }
 
   return (
-    <div className="search-box">
+    <div className="search-box" data-testid="search-box">
       <input
         className="search-box__input"
         type="text"

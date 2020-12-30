@@ -17,9 +17,7 @@ const SideNav = () => (
       {/* <li className="side-nav__menu-item">Users</li> */}
       {/* <li className="side-nav__menu-item">Stats </li> */}
     </ul>
-    <div className="categories">
-      <Categories />
-    </div>
+    <Categories />
   </div>
 )
 
