@@ -15,17 +15,14 @@ const Categories = () => {
   }
   const sortedCategories = sortCategories(categories)
 
-  return sortedCategories.map(category => (
-    <div key={category.name} className="categories__single-category">
+  return sortedCategories.map(({ id, name }) => (
+    <div key={name} className="categories__single-category">
       <div className="categories__icon">
-        <Icon categoryName={category.name} />
+        <Icon categoryName={name} />
       </div>
-      <Link className="categories__name" to={`/category/${category.name}`}>
-        <div
-          className="categories__name"
-          onClick={() => handleClick(category.id)}
-        >
-          {category.name}
+      <Link className="categories__name" to={`/category/${name}`}>
+        <div className="categories__name" onClick={() => handleClick(id)}>
+          {name}
         </div>
       </Link>
     </div>

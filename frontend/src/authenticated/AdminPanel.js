@@ -14,18 +14,15 @@ const AdminPanel = () => {
     setIsMenuOpen(!isMenuOpen)
   }
 
-  const userMenuClasses = classNames({
-    'user-panel__menu': true,
+  const userMenuClasses = classNames('user-panel__menu', {
     '-hidden': !isMenuOpen,
   })
 
-  const chevronClasses = classNames({
-    chevron: true,
-    'chevron -rotate': isMenuOpen,
+  const chevronClasses = classNames('chevron', {
+    ' -rotate': isMenuOpen,
   })
 
-  const userPanelClasses = classNames({
-    'user-panel': true,
+  const userPanelClasses = classNames('user-panel', {
     '-active': isMenuOpen,
   })
 
