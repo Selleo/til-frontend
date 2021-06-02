@@ -25,17 +25,11 @@ const Search = () => {
     setInput(targetValue)
     clearTimeout(timeoutID)
 
-    dispatch(saveSearchedQuery(targetValue))
-
     if (targetValue) {
       const timeout = setTimeout(() => {
         history.push('/search')
 
         dispatch(saveSearchedPosts(targetValue))
-
-        // if (targetValue > input) {
-        //   dispatch(saveSearchedPosts(targetValue))
-        // }
       }, 300)
       setTimeoutID(timeout)
     }

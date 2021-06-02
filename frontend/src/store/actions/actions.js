@@ -105,6 +105,7 @@ const getSerchedPosts = searchedPosts => ({
 export const saveSearchedPosts = query => async dispatch => {
   const searchedPosts = await fetchSearchedPosts(query)
 
+  dispatch(saveSearchedQuery(query))
   dispatch(getSerchedPosts(searchedPosts))
 }
 
