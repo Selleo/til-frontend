@@ -11,6 +11,8 @@ const TextBlock = ({ value }) => {
     return state.searchQuery
   })
 
+  console.log(searchedPhrase)
+
   return (
     <Highlighter
       highlightClassName="YourHighlightClass"
