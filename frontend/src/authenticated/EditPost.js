@@ -111,7 +111,7 @@ const EditPost = () => {
   }, [markdown, title, categories])
 
   return (
-    <div>
+    <>
       <div className="add-post-container">
         <div className="add-post__post-create">
           <div className="add-post__header">Update your post</div>
@@ -163,7 +163,7 @@ const EditPost = () => {
           update Post
         </button>
       </div>
-    </div>
+    </>
   )
 }
 
