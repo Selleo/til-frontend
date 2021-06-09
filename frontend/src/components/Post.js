@@ -8,7 +8,8 @@ import { Link, useLocation } from 'react-router-dom'
 import TextBlock from './TextBlock'
 import { format, parseISO } from 'date-fns'
 
-const Post = ({ post, userPost, userImage }) => {
+const Post = props => {
+  const { post, userPost, userImage, review } = props
   const location = useLocation()
 
   let title
@@ -37,7 +38,7 @@ const Post = ({ post, userPost, userImage }) => {
             <div className="post__date">{date}</div>
           </div>
         </div>
-        <CopyPostURL postId={post.id} />
+        {!review && <CopyPostURL postId={post.id} />}
       </div>
       <div>
         <Link className="post__title" to={`/posts/${post.id}`}>
@@ -49,7 +50,7 @@ const Post = ({ post, userPost, userImage }) => {
       </div>
       <div className="post__footer">
         <PostCategories categories={post.categories} />
-        <ReactionBar post={post} />
+        {!review && <ReactionBar post={post} />}
       </div>
       {userPost && <UserPostMenu post={post} />}
     </article>

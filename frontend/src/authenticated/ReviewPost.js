@@ -46,7 +46,7 @@ const ReviewPost = () => {
 
   return (
     <div className="review-post__container">
-      <Post post={post} />
+      <Post post={post} review={true} />
       <button
         className="review-post__confirm-button"
         onClick={approvePostHandler}
