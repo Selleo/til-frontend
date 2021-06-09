@@ -4,11 +4,13 @@ import Logout from './Logout'
 import useUser from '../utils/customHooks/useUser'
 import chevron from '../assets/icons/chevron.png'
 import classNames from 'classnames'
+import { useDisableElementsOnSomeRoutes } from '../utils/customHooks/useDisableElementsOnSomeRoutes'
 
 const AdminPanel = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const user = useUser()
   const node = useRef()
+  const disable = useDisableElementsOnSomeRoutes(['add'])
 
   const toggleDropdown = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -45,11 +47,19 @@ const AdminPanel = () => {
     }
   }, [isMenuOpen])
 
+  const AddPostButton = () => {
+    return (
+      !disable && (
+        <Link to="/add-post" className="add-post-btn">
+          ADD POST
+        </Link>
+      )
+    )
+  }
+
   return (
     <div className="user-panel-container" ref={node}>
-      <Link to="/add-post" className="add-post-btn">
-        ADD POST
-      </Link>
+      {AddPostButton()}
       <div onClick={toggleDropdown}>
         <div className={userPanelClasses}>
           <img

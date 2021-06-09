@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { saveSearchedPosts, saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
 import { ReactComponent as SearchIcon } from '../assets/icons/search.svg'
 import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { useDisableElementsOnSomeRoutes } from '../utils/customHooks/useDisableElementsOnSomeRoutes'
 
 const Search = () => {
   const [input, setInput] = useState('')
   const [timeoutID, setTimeoutID] = useState(null)
-  const [disableInput, setDisableInput] = useState(false)
   const dispatch = useDispatch()
   const history = useHistory()
-  const location = useLocation()
   const hasLeavedRoute = useOnRouteLeave('/search')
+  const disable = useDisableElementsOnSomeRoutes(['add', 'edit'])
 
   useEffect(() => {
     if (hasLeavedRoute) {
@@ -22,17 +21,6 @@ const Search = () => {
       setInput('')
     }
   }, [hasLeavedRoute, dispatch])
-
-  useEffect(() => {
-    if (
-      location.pathname.includes('add') ||
-      location.pathname.includes('edit')
-    ) {
-      setDisableInput(true)
-    } else {
-      setDisableInput(false)
-    }
-  }, [location])
 
   const handleInput = event => {
     const targetValue = event.target.value
@@ -51,15 +39,14 @@ const Search = () => {
     }
   }
   const notify = () => toast("Can't search while post is creating/editing")
-
   return (
-    <div className="search-box" onClick={disableInput && notify}>
+    <div className="search-box" onClick={disable && notify}>
       <input
         className="search-box__input"
         type="text"
         placeholder="Search"
         value={input}
-        disabled={disableInput}
+        disabled={disable}
         onChange={handleInput}
       />
 

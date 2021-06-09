@@ -5,12 +5,20 @@ import { useDispatch } from 'react-redux'
 import { saveCategoryPosts } from '../store/actions/actions'
 import Icon from './UI/Icon'
 import { sortCategories } from '../utils/array/helpers.js'
+import { toast } from 'react-toastify'
+import { useDisableElementsOnSomeRoutes } from '../utils/customHooks/useDisableElementsOnSomeRoutes'
 
 const Categories = () => {
   const categories = useSelector(state => state.categories)
   const dispatch = useDispatch()
+  const disable = useDisableElementsOnSomeRoutes(['add', 'edit'])
 
-  const handleClick = id => {
+  const blockSelection = e => {
+    e.preventDefault()
+    toast("Can't change view category while post is creating/editing")
+  }
+  const handleClick = (e, id) => {
+    disable && blockSelection(e)
     dispatch(saveCategoryPosts(id))
   }
   const sortedCategories = sortCategories(categories)
@@ -21,7 +29,7 @@ const Categories = () => {
         <Icon categoryName={name} />
       </div>
       <Link className="categories__name" to={`/category/${name}`}>
-        <div className="categories__name" onClick={() => handleClick(id)}>
+        <div className="categories__name" onClick={e => handleClick(e, id)}>
           {name}
         </div>
       </Link>
