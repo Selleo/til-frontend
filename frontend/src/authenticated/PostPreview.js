@@ -1,7 +1,6 @@
 import React from 'react'
 import Markdown from '../components/Markdown'
 import PostCategories from '../components/PostCategories'
-// import ReactionBar from '../components/ReactionBar'
 import useUser from '../utils/customHooks/useUser'
 import { Link } from 'react-router-dom'
 import { getDate } from '../utils'
