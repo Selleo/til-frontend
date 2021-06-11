@@ -1,5 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
+import 'react-tippy/dist/tippy.css'
+import { Tooltip } from 'react-tippy'
 
 const PostCategories = ({ categories, preview }) => {
   if (!categories) {
@@ -31,11 +33,27 @@ const PostCategories = ({ categories, preview }) => {
 
   return (
     <div className={postCategoriesClassnames}>
-      {slicedCategories.map((category, index) => (
-        <div key={index} className="post__single-category">
-          {category}
-        </div>
-      ))}
+      {slicedCategories.map((category, index) => {
+        return (
+          <div key={index} className="post__single-category">
+            <Tooltip
+              interactive
+              arrow
+              html={
+                <a
+                  href={`${category}_link`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {category}
+                </a>
+              }
+            >
+              {category}
+            </Tooltip>
+          </div>
+        )
+      })}
       {moreCategories}
     </div>
   )
