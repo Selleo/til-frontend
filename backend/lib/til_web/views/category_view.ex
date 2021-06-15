@@ -16,6 +16,7 @@ defmodule TilWeb.CategoryView do
     %{
       id: category.id,
       name: category.name,
+      url: category.url
     }
   end
 
@@ -23,7 +24,8 @@ defmodule TilWeb.CategoryView do
     %{
       id: category.id,
       name: category.name,
-      posts: render(TilWeb.PostView, "index_with_nested.json", posts: category.posts)
+      posts: render(TilWeb.PostView, "index_with_nested.json", posts: category.posts),
+      url: category.url
     }
   end
 end

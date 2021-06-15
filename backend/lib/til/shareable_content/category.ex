@@ -6,6 +6,7 @@ defmodule Til.ShareableContent.Category do
   schema "categories" do
     field :name, :string
     field :official, :boolean
+    field :url, :string
 
     many_to_many(
       :posts,

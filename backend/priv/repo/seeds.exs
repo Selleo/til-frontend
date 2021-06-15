@@ -3,10 +3,8 @@ alias Til.Accounts.User
 alias Til.Repo
 
 categories = [
-  "android", "angular", "aws", "chrome", "commandline", "crystal", "css", "docker",
-  "elixir", "ember", "erlang", "flutter", "general", "git", "heroku", "html", "javascript", "k8s",
-  "linux", "markdown", "meetup", "mongodb", "nodejs", "osx", "phoenix", "rails", "react", "react-native", "redis",
-  "ruby", "rust", "sql", "terraform", "vault"
+  "android", "angular", "aws", "crystal", "docker", "ember", "erlang", "flutter", "heroku", "html", "k8s",
+  "markdown", "meetup", "mongodb", "nodejs", "osx", "phoenix", "redis", "rust", "terraform", "vault"
 ]
 
 Enum.map(categories, fn category ->
@@ -15,6 +13,90 @@ Enum.map(categories, fn category ->
     official: true
   }
 end)
+
+Repo.insert! %Category{
+  name: "rails",
+  url: "https://selleo.com/ruby-on-rails-expert-developers-team",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "javascript",
+  url: "https://selleo.com/custom-software-development-company",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "ruby",
+  url: "https://selleo.com/ruby-on-rails-expert-developers-team",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "general",
+  url: "https://selleo.com/custom-software-development-company",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "react",
+  url: "https://selleo.com/react-expert-developers-team",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "css",
+  url: "https://selleo.com/ux-design",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "git",
+  url: "https://selleo.com/custom-software-development-company",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "chrome",
+  url: "https://selleo.com/custom-software-development-company",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "linux",
+  url: "https://selleo.com/custom-software-development-company",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "elixir",
+  url: "https://selleo.com/elixir-expert-developers-team",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "commandline",
+  url: "https://selleo.com/devops-cloud-services",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "nodejs",
+  url: "https://selleo.com/node-js-expert-developers-team",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "sql",
+  url: "https://selleo.com/devops-cloud-services",
+  official: true
+}
+
+Repo.insert! %Category{
+  name: "react-native",
+  url: "https://selleo.com/react-native-expert-developers-team",
+  official: true
+}
 
 # user1 = Repo.insert! %User{
 #     first_name: "Mick",
