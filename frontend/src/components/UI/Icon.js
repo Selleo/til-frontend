@@ -26,6 +26,9 @@ import { SiRedis } from 'react-icons/si'
 import { DiRuby } from 'react-icons/di'
 import { SiRust } from 'react-icons/si'
 import { SiTerraform } from 'react-icons/si'
+import { FaFacebook } from 'react-icons/fa'
+import { FaInstagram } from 'react-icons/fa'
+import { BsInfoCircleFill } from 'react-icons/bs'
 
 const Icon = ({ categoryName }) => {
   switch (categoryName) {
@@ -96,6 +99,12 @@ const Icon = ({ categoryName }) => {
       return <SiTerraform />
     // case 'vault':
     //   return < />
+    case 'facebook':
+      return <FaFacebook />
+    case 'instagram':
+      return <FaInstagram />
+    case 'info':
+      return <BsInfoCircleFill />
     default:
       return null
   }

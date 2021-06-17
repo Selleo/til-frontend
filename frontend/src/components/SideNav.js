@@ -9,6 +9,17 @@ const SideNav = () => (
       <Link to="/" className="logo__link">
         todayilearned
       </Link>
+      <a
+        href="https://selleo.com/blog"
+        rel="noopener noreferrer"
+        target="_blank"
+        className="logo__link -selleo-logo"
+      >
+        <img
+          src={`${process.env.PUBLIC_URL}/assets/images/logo.svg`}
+          alt="Selleo logo"
+        />
+      </a>
     </div>
     <ul className="side-nav__menu">
       <li className="side-nav__menu-item">
