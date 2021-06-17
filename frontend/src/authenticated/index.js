@@ -7,6 +7,7 @@ import MainRoutes from '../components/MainRoutes'
 import UserProfile from '../authenticated/UserProfile'
 import ReviewPost from './ReviewPost'
 import SideNav from '../components/SideNav'
+import Footer from '../components/Footer'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -33,6 +34,7 @@ const AuthenticatedApp = () => {
             <ReviewPost />
           </Route>
         </Switch>
+        <Footer />
       </div>
     </>
   )
