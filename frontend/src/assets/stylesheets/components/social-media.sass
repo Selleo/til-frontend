@@ -1,0 +1,57 @@
+
+.social-links
+  display: flex
+  justify-content: space-between
+  padding: 0
+  list-style-type: none
+
+  max-width: 1500px
+  margin: 16px auto
+
+  &__link
+    display: flex
+    align-items: center
+
+    svg
+      margin: 14px
+      height: 22px
+
+      path
+        fill: #A0A0A0
+        transition: fill $transition-duration $transition-function
+
+    &:hover
+      &.-linkedin
+        svg
+          path
+            fill: #0077b5
+
+      &.-medium
+        svg
+          path
+            fill: #1c9963
+
+      &.-youtube
+        svg
+          path
+            fill: red
+
+      &.-behance
+        svg
+          path
+            fill: #1769ff
+
+      &.-dribbble
+        svg
+          path
+            fill: #ea4c89
+
+      &.-twitter
+        svg
+          path
+            fill: #1da1f2
+
+      &.-instagram
+        svg
+          path
+            fill: #e1306c
