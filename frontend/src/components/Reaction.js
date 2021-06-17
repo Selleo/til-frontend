@@ -3,10 +3,11 @@ import { useDispatch } from 'react-redux'
 import { handleReaction, checkHasReacted } from '../utils'
 import { saveAllPosts, saveAllUsers } from '../store/actions/actions'
 import useUser from '../utils/customHooks/useUser'
+import classNames from 'classnames'
 
-const Reaction = ({ post, reaction }) => {
-  const { id } = post
-  const { type, whoReacted, Icon } = reaction
+const Reaction = props => {
+  const { id } = props.post
+  const { type, whoReacted, Icon } = props.reaction
   const [hasReacted, setHasReacted] = useState(false)
   const [reactionNumber, setReactionNumber] = useState(0)
   const user = useUser()
@@ -43,11 +44,13 @@ const Reaction = ({ post, reaction }) => {
     }
   }
 
-  const iconFillColor = hasReacted ? 'green' : '#8a8a8a'
+  const iconActiveClasses = classNames(type, {
+    '-fill': hasReacted,
+  })
 
   return (
     <div className="post__single-reaction" onClick={toggleReaction}>
-      <Icon width="28px" fill={iconFillColor} />
+      <Icon width="28px" className={iconActiveClasses} />
       <div>{reactionNumber}</div>
     </div>
   )

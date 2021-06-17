@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { convertReactions } from '../utils'
 import Reaction from './Reaction'
 
-const ReactionBar = ({ post }) => {
+const ReactionBar = props => {
+  const { post } = props
   const [reactions, setReactions] = useState()
 
   useEffect(() => {
