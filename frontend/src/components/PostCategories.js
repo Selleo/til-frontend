@@ -36,7 +36,7 @@ const PostCategories = props => {
     <div className={postCategoriesClassnames}>
       {slicedCategories.map((category, index) => {
         return (
-          <ToolTip key={index} link={`${category}_link`} linkLabel={category}>
+          <ToolTip key={index} link={`/category/${category}`} name={category}>
             <div className="post__single-category">{category}</div>
           </ToolTip>
         )
