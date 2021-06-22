@@ -2,7 +2,9 @@ import React from 'react'
 import Post from './Post'
 import '../App.css'
 
-const PostsList = ({ posts }) => {
+const PostsList = props => {
+  const { posts } = props
+
   if (!posts) {
     return null
   }

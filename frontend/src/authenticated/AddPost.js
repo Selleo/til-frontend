@@ -104,7 +104,7 @@ const AddPost = () => {
   }, [markdown, title, userCategories])
 
   return (
-    <div>
+    <>
       <div className="add-post-container">
         <div className="add-post__post-create">
           <h2 className="add-post__header">Create a post</h2>
@@ -167,7 +167,7 @@ const AddPost = () => {
           Save Post
         </button>
       </div>
-    </div>
+    </>
   )
 }
 

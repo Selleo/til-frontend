@@ -6,7 +6,7 @@
   opacity: 1
   padding: 32px
   position: relative
- 
+
   &__body
     min-height: 100px
     margin-bottom: 56px
@@ -38,11 +38,11 @@
     color: $color-gray
     font-weight: 300
 
-  &__footer 
+  &__footer
     display: flex
     justify-content: space-between
 
-    p 
+    p
       font-size: 16px
 
   &__header
@@ -55,24 +55,23 @@
     margin-top: 24px
     border: 1px solid $color-background
 
-
   &__more-categories
     align-self: center
-    
+
   &__reactions
     align-items: center
     display: flex
     justify-content: space-around
 
   &__share-button
-    display: flex;
-    width: 75px;
-    justify-content: space-around;
-    align-items: center;
-    color: gray;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.48px;
+    display: flex
+    width: 75px
+    justify-content: space-around
+    align-items: center
+    color: gray
+    font-size: 16px
+    font-weight: 600
+    letter-spacing: 0.48px
 
   &__separator
     align-self: stretch
@@ -105,7 +104,6 @@
       transform: rotate(-90deg)
       margin-top: 6px
 
-
   &__single-category
     align-items: center
     border-radius: 45px
@@ -129,6 +127,28 @@
     justify-content: space-between
     margin-left: 36px
     width: 42px
+    cursor: pointer
+
+    svg
+      fill: #8a8a8a
+
+      &:hover
+        transition: $transition-duration $transition-function
+        fill: rgba(#8a8a8a, 0.5)
+        transform: scale(1.1)
+
+    .like
+      &.-fill
+        fill: #1769ff
+    .funny
+      &.-fill
+        fill: #FFC074
+    .love
+      &.-fill
+        fill: red
+    .surprised
+      &.-fill
+        fill: #E99497
 
   &__text-details
     color: $color-white
@@ -157,5 +177,3 @@
     margin-top: 24px
     display: flex
     justify-content: flex-end
-
-  

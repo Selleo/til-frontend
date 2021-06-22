@@ -1,8 +1,6 @@
 import React from 'react'
-import CopyPostURL from '../components/CopyURL'
 import Markdown from '../components/Markdown'
 import PostCategories from '../components/PostCategories'
-// import ReactionBar from '../components/ReactionBar'
 import useUser from '../utils/customHooks/useUser'
 import { Link } from 'react-router-dom'
 import { getDate } from '../utils'
@@ -22,7 +20,6 @@ const PostPreview = ({ body, title, categories }) => {
             <div className="post__date">{getDate()}</div>
           </div>
         </div>
-        <CopyPostURL postId={null} />
       </div>
       <Link className="post__title" to={'not-yet'}>
         {title}
