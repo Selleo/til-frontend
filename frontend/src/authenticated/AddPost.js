@@ -75,9 +75,11 @@ const AddPost = () => {
       return
     }
 
-    const categories = selectedOptions.map(
-      categoryOption => categoryOption.label
-    )
+    const categories = selectedOptions.map(el => ({
+      id: el.value,
+      name: el.label,
+      url: el.url,
+    }))
 
     setUserCategories(categories)
   }
