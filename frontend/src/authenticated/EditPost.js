@@ -59,8 +59,9 @@ const EditPost = () => {
     const markdownPost = {
       body: markdown,
       title: title,
-      categories: categories,
+      categories: categories.map(el => el.name),
     }
+
     const post = await request(
       'PATCH',
       `${API_URL}/api/me/posts/` + id,

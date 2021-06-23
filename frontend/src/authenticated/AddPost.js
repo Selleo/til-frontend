@@ -36,7 +36,7 @@ const AddPost = () => {
     const post = {
       body: markdown,
       title: title,
-      categories: userCategories,
+      categories: userCategories.map(el => el.name),
       is_public: isPublic,
       reviewed: !isReviewNeeded,
     }
@@ -80,7 +80,6 @@ const AddPost = () => {
       name: el.label,
       url: el.url,
     }))
-
     setUserCategories(categories)
   }
 
