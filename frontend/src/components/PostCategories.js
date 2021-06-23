@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import ToolTip from './ToolTip'
 
 const PostCategories = props => {
-  const { categories, preview } = props
+  const { categories, preview, isHide } = props
 
   if (!categories) {
     return null
@@ -36,7 +36,7 @@ const PostCategories = props => {
     <div className={postCategoriesClassnames}>
       {slicedCategories.map(({ id, name, url }) => {
         return (
-          <ToolTip key={id} id={id} name={name} url={url}>
+          <ToolTip isHide={isHide} key={id} id={id} name={name} url={url}>
             <div className="post__single-category">{name}</div>
           </ToolTip>
         )

@@ -8,7 +8,11 @@ import { saveCategoryPosts } from '../store/actions/actions'
 const ToolTip = props => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { children, id, name, url } = props
+  const { isHide, children, id, name, url } = props
+
+  if (isHide) {
+    return children
+  }
 
   const handleClick = (e, id) => {
     if (!url) {
