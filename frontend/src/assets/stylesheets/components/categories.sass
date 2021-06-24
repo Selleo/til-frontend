@@ -1,18 +1,27 @@
 .categories
   overflow: auto
-  font-size: 14px
-  font-weight: 600
-  letter-spacing: 0.28px
-  text-transform: uppercase
   margin-left: 40px
 
   &__single-category
     display: flex
-    margin-bottom: 22px
+    margin-bottom: 16px
     align-items: center
+    width: max-content
+    text-decoration: none
+    color: $color-white
+    padding: 3px 0px
+
+    transition: $transition-duration $transition-function
+
+    &.-active
+      color: $color-black
+      background-color: $color-white
+      padding: 3px 18px 3px 12px
+      border-radius: $border-radius-base
 
   &__icon
     width: 15px
+    display: flex
 
   &__name
     display: flex
@@ -21,8 +30,6 @@
     letter-spacing: 0.28px
     margin-left: 5px
     text-transform: uppercase
-    text-decoration: none
-    color: $color-white
 
   &::-webkit-scrollbar
     width: 3px
