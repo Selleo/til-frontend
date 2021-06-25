@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -13,14 +13,28 @@ const Categories = () => {
   const dispatch = useDispatch()
   const disable = useIsOnRoute(['add', 'edit'])
 
+  useEffect(() => {
+    const currentCategory = document.querySelector(
+      '.categories__single-category.-active'
+    )
+
+    if (currentCategory) {
+      currentCategory.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  })
+
   const blockSelection = e => {
     e.preventDefault()
     toast("Can't change view category while post is creating/editing")
   }
+
   const handleClick = (e, id) => {
     disable && blockSelection(e)
     dispatch(saveCategoryPosts(id))
   }
+
   const sortedCategories = sortCategories(categories)
 
   return sortedCategories.map(({ id, name }) => (
