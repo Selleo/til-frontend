@@ -6,38 +6,39 @@ import { useDispatch } from 'react-redux'
 import { saveCategoryPosts } from '../store/actions/actions'
 
 const ToolTip = props => {
-  const history = useHistory()
   const dispatch = useDispatch()
+  const history = useHistory()
   const { isHide, children, id, name, url } = props
+  const link = url || 'https://selleo.com/blog'
 
   if (isHide) {
     return children
   }
 
   const handleClick = (e, id) => {
-    if (!url) {
-      e.preventDefault()
-      history.push(`/category/${name}`)
-    }
+    e.preventDefault()
+    history.push(`/category/${name}`)
     dispatch(saveCategoryPosts(id))
   }
 
   return (
     <Tooltip
+      className="ToolTip"
       interactive
       arrow
       html={
-        <a
-          href={url || `"https://selleo.com/blog"`}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={e => handleClick(e, id)}
-        >
+        <a href={link} target="_blank" rel="noopener noreferrer">
           {name}
         </a>
       }
     >
-      {children}
+      <a
+        className="ToolTip__link"
+        href={link}
+        onClick={e => handleClick(e, id)}
+      >
+        {children}
+      </a>
     </Tooltip>
   )
 }

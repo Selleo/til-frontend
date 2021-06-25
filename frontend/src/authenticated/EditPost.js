@@ -64,7 +64,7 @@ const EditPost = () => {
 
     const post = await request(
       'PATCH',
-      `${API_URL}/api/me/posts/` + id,
+      `${API_URL}/api/me/posts/${id}`,
       JSON.stringify(markdownPost)
     )
 
