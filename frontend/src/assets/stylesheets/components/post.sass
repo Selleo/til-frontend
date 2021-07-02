@@ -2,7 +2,7 @@
   background: $color-black
   border-radius: 8px
   margin-bottom: 48px
-  margin-right: 40px
+
   opacity: 1
   padding: 32px
   position: relative
@@ -11,13 +11,21 @@
     min-height: 100px
     margin-bottom: 56px
     p
-      font-size: 24px
+      font-size: $font-size-base
       letter-spacing: 0.48px
       line-height: normal
+      word-break: break-word
 
   &__categories
     display: flex
+    align-items: center
+    flex-wrap: wrap
+    margin-bottom: $m-base
+
+    flex-basis: 100%
+
     color: #8a8a8a
+
     &.-preview
       position: absolute
       bottom: 24px
@@ -27,12 +35,14 @@
     color: #8A8A8A80
 
   &__details
-    align-items: center
     color: #8A8A8A
     font-weight: 300
     display: flex
+    flex-direction: column
     letter-spacing: 0.32px
-    margin-bottom: 8px
+
+    .user__image
+      margin-bottom: 6px
 
   &__date
     color: $color-gray
@@ -41,6 +51,7 @@
   &__footer
     display: flex
     justify-content: space-between
+    flex-wrap: wrap
 
     p
       font-size: 16px
@@ -49,19 +60,21 @@
     align-items: center
     display: flex
     justify-content: space-between
-    margin-bottom: 16px
+    margin-bottom: 28px
 
   &__hr
     margin-top: 24px
     border: 1px solid $color-background
 
   &__more-categories
-    align-self: center
+    margin: 0px auto 8px
 
   &__reactions
-    align-items: center
     display: flex
+    align-items: center
     justify-content: space-around
+
+    flex-basis: 100%
 
   &__share-button
     display: flex
@@ -72,6 +85,9 @@
     font-size: 16px
     font-weight: 600
     letter-spacing: 0.48px
+
+    svg
+      margin-right: 2px
 
   &__separator
     align-self: stretch
@@ -105,27 +121,26 @@
       margin-top: 6px
 
   &__single-category
-    align-items: center
-    border-radius: 45px
-    border: 2px solid $color-gray
+    border-radius: $border-radius-lg
+    border: 1px solid $color-gray
     color: $color-gray
     display: flex
+    align-items: center
     font-weight: 500
-    font-size: $font-size-sm
+    font-size: $font-size-xs
     letter-spacing: 0.28px
-    margin-right: 20px
+    margin-right: 12px
     opacity: 1
-    padding: 8px 24px
+    padding: 6px 18px
     text-transform: uppercase
 
+    margin-bottom: 8px
+
   &__single-reaction
-    align-items: center
     color: $color-gray
     display: flex
-    display: flex
-    font-size: 500
+    align-items: center
     justify-content: space-between
-    margin-left: 36px
     width: 42px
     cursor: pointer
 
@@ -153,17 +168,16 @@
   &__text-details
     color: $color-white
     font-weight: 600
-    margin-left: 16px
 
   &__title
     color: $color-white
     display: block
     font-weight: 600
-    font-size: 48px
-    height: 48px
+    font-size: $font-size-2xl
     letter-spacing: 0.96px
-    margin-bottom: 16px
-    opacity: 1
+    line-height: $line-height-lg
+    word-break: break-word
+    margin-bottom: $m-base
     text-decoration: none
 
   &.-preview
