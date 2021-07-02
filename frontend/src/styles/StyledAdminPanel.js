@@ -30,7 +30,7 @@ const StyledAdminPanel = styled.div`
   .chevron {
     border-radius: 50%;
     height: 20px;
-    margin-left: 30px;
+    margin-left: 24px;
     width: 20px;
     margin-right: 0;
   }

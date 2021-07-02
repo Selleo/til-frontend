@@ -7,9 +7,9 @@ import Footer from '../components/Footer'
 const NonAuthenticatedApp = () => {
   return (
     <>
-      <AppHeader />
       <SideNav />
       <div className="main-content">
+        <AppHeader />
         <MainRoutes />
         <Footer />
       </div>
