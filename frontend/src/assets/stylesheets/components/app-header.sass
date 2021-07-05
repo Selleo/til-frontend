@@ -1,7 +1,7 @@
 .app-header
   background: $color-background
 
-  position: absolute
+  position: fixed
   top: 0
   left: $grid-gutter-width
   right: $grid-gutter-width
@@ -14,3 +14,6 @@
   max-height: $app-header-height
 
   z-index: $z-high
+
+  +media-breakpoint-up(md)
+    justify-content: flex-end

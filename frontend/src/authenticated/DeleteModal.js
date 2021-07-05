@@ -12,11 +12,11 @@ const DeleteModal = props => {
       left: '50%',
       right: 'auto',
       bottom: 'auto',
-      marginRight: '-90%',
       transform: 'translate(-50%, -50%)',
       backgroundColor: '#272B2F',
       border: 'none',
-      width: '576px',
+      maxWidth: '1200px',
+      width: '90%',
     },
   }
   useEffect(() => {
@@ -39,18 +39,20 @@ const DeleteModal = props => {
       isOpen={isModalOpen}
       style={customStyles}
       shouldCloseOnOverlayClick={true}
-      overlayClassName="Overlay"
+      overlayClassName="Overlay delete-modal"
     >
-      <h3 className="delete-modal__header">
-        Are you sure you want to delete this post?
-      </h3>
-      <div className="delete-modal">
-        <button className="cancel-button" onClick={handleCancel}>
-          Cancel
-        </button>
-        <button onClick={handleDelete} className="delete-post-btn">
-          Delete
-        </button>
+      <div className="delete-modal__content">
+        <h3 className="delete-modal__header">
+          Are you sure you want to delete this post?
+        </h3>
+        <div className="delete-modal__buttons">
+          <button className="cancel-button" onClick={handleCancel}>
+            Cancel
+          </button>
+          <button onClick={handleDelete} className="delete-post-btn">
+            Delete
+          </button>
+        </div>
       </div>
     </Modal>
   )

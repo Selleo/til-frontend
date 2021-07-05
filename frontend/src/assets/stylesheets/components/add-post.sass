@@ -1,6 +1,9 @@
 .add-post-container
   display: flex
-  margin-right: 40px
+  flex-direction: column
+
+  +media-breakpoint-up(lg)
+    flex-direction: row
 
 .add-post
   &__header

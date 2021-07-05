@@ -1,6 +1,13 @@
 .delete-modal
-  display: flex
-  justify-content: space-around
+  &__content
+    +container
+    background-color: #272B2F,
+
   &__header
     text-align: center
-  &__delete-button
+  &__buttons
+    display: flex
+    justify-content: center
+
+    .cancel-button
+      margin-right: 5%
