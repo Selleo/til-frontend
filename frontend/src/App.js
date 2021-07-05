@@ -31,7 +31,7 @@ const App = () => {
 
   return (
     <Router>
-      <div className="app-main">
+      <div className="app-main" data-testid="app-main">
         {renderApp}
         <Route path="/auth">
           <AuthHandler />

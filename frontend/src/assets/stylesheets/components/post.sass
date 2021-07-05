@@ -18,11 +18,12 @@
 
   &__categories
     display: flex
-    align-items: center
+    align-items: baseline
     flex-wrap: wrap
     margin-bottom: $m-base
 
     flex-basis: 100%
+    max-width: max-content
 
     color: #8a8a8a
 
@@ -50,16 +51,16 @@
 
   &__footer
     display: flex
+    flex-direction: column
     justify-content: space-between
-    flex-wrap: wrap
 
     p
       font-size: 16px
 
   &__header
-    align-items: center
     display: flex
     justify-content: space-between
+    align-items: flex-start
     margin-bottom: 28px
 
   &__hr
@@ -67,14 +68,11 @@
     border: 1px solid $color-background
 
   &__more-categories
-    margin: 0px auto 8px
+    margin: 0px auto
 
   &__reactions
     display: flex
-    align-items: center
-    justify-content: space-around
-
-    flex-basis: 100%
+    align-self: center
 
   &__share-button
     display: flex
@@ -90,35 +88,29 @@
       margin-right: 2px
 
   &__separator
-    align-self: stretch
     display: flex
-    flex-direction: column
+    justify-content: space-between
     align-items: center
-    &:after
-      align-self: center
-      content: ""
-      border: 1px solid $color-gray
-      height: 50%
+
+    &:after,
     &:before
-      align-self: center
       content: ""
       border: 1px solid $color-gray
-      height: 50%
+      width: 45%
+
     div
       border: 2px solid #A0A0A0
-      margin-top: 16px
       border-radius: 10px
-      margin-bottom: 16px
       margin: 16px 40px
-      width: 40px
+      width: 50px
       height: 40px
-    img
-      display: block
-      max-width: 100%
-      margin: auto
-      width: 20px
-      transform: rotate(-90deg)
-      margin-top: 6px
+      position: relative
+      img
+        position: absolute
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%)
+        width: 20px
 
   &__single-category
     border-radius: $border-radius-lg
@@ -134,7 +126,7 @@
     padding: 6px 18px
     text-transform: uppercase
 
-    margin-bottom: 8px
+    margin-bottom: 10px
 
   &__single-reaction
     color: $color-gray
@@ -143,6 +135,9 @@
     justify-content: space-between
     width: 42px
     cursor: pointer
+
+    &:not(:nth-last-child(1))
+      margin-right: 16px
 
     svg
       fill: #8a8a8a
@@ -188,6 +183,60 @@
     flex-direction: column
 
   &__user-menu
-    margin-top: 24px
     display: flex
-    justify-content: flex-end
+    justify-content: space-between
+    margin: 24px auto 0px
+
+  +media-breakpoint-only(xs)
+    &__user-menu
+      max-width: 250px
+      button
+        width: 100px
+
+  +media-breakpoint-up(sm)
+    &__user-menu
+      max-width: 370px
+
+    +media-breakpoint-up(md)
+    &__header
+      align-items: center
+    &__details
+      flex-direction: row
+      align-items: center
+
+      .user__image
+        margin-bottom: 0px
+        margin-right: 14px
+
+    &__single-reaction
+      &:not(:nth-last-child(1))
+        margin-right: 28px
+
+  +media-breakpoint-up(lg)
+    &__footer
+      flex-direction: row
+
+    &__single-category
+      padding: 8px 24px
+      border-width: 2px
+      font-weight: 600
+      font-size: $font-size-sm
+
+    &__categories,
+    &__single-category
+      margin-bottom: 0
+
+    &__user-menu
+      margin: 24px 0px 0px auto
+
+    &__separator
+      flex-direction: column
+
+      &:after,
+      &:before
+        width: unset
+        height: 50%
+
+      div
+        height: 50px
+        transform: rotate(-90deg)

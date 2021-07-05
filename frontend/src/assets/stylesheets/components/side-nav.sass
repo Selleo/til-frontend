@@ -5,10 +5,14 @@
   height: 100vh
   position: fixed
   left: 0
-  width: $navbar-width
+  width: $side-nav-width
   z-index: $z-higher
 
+
   display: none
+
+  +media-breakpoint-up(xl)
+    display: flex
 
   &__menu
     align-items: flex-start
