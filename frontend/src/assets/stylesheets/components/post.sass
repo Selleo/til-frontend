@@ -18,6 +18,10 @@
   &__categories
     display: flex
     color: #8a8a8a
+
+    a
+      text-decoration: none
+
     &.-preview
       position: absolute
       bottom: 24px
@@ -54,9 +58,6 @@
   &__hr
     margin-top: 24px
     border: 1px solid $color-background
-
-  &__more-categories
-    align-self: center
 
   &__reactions
     align-items: center
@@ -113,10 +114,36 @@
     font-weight: 500
     font-size: $font-size-sm
     letter-spacing: 0.28px
-    margin-right: 20px
-    opacity: 1
-    padding: 8px 24px
+    margin-right: 12px
+    padding: 6px 18px
     text-transform: uppercase
+
+  &__more-categories
+    position: relative
+    margin: 0px auto
+    opacity: 0.6
+    transition: opacity $transition-duration $transition-function
+    cursor: pointer
+
+    &:hover
+      opacity: 1
+      .post__more-categories-view
+        transition-delay: $transition-duration
+        opacity: 1
+        visibility: visible
+
+  &__more-categories-view
+    position: absolute
+    right: -80%
+    bottom: -100%
+    opacity: 0
+    visibility: hidden
+    transition: opacity $transition-duration $transition-function, visibility $transition-duration $transition-function
+
+    .post__single-category
+      margin-right: 0
+      width: max-content
+      margin: auto
 
   &__single-reaction
     align-items: center

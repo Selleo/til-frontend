@@ -20,9 +20,20 @@ const PostCategories = props => {
   let moreCategories = null
 
   if (categories.length > howManyCategories) {
+    const restCategories = categories.slice(howManyCategories)
+
     moreCategories = (
-      <div className="post__more-categories">
+      <div className="post__single-category post__more-categories">
         + {categories.length - howManyCategories} more...
+        <div className="post__more-categories-view">
+          {restCategories.map(({ id, name, url }) => {
+            return (
+              <ToolTip isHide={isHide} key={id} id={id} name={name} url={url}>
+                <div className="post__single-category">{name}</div>
+              </ToolTip>
+            )
+          })}
+        </div>
       </div>
     )
   }
