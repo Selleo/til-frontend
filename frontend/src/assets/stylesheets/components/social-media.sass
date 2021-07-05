@@ -7,6 +7,13 @@
   max-width: 1500px
   margin: 16px auto
 
+  li
+    display: flex
+    flex-basis: 33%
+    flex-grow: 1
+    a
+      margin: auto
+
   &__link
     display: flex
     align-items: center
@@ -54,3 +61,7 @@
         svg
           path
             fill: #e1306c
+
+  +media-breakpoint-up(md)
+    li
+      flex-basis: auto
