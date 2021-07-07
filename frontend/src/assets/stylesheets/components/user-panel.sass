@@ -5,12 +5,15 @@
   align-items: center
   flex: 1
 
-  .add-post-btn 
+  .add-post-btn
     margin-right: auto
 
   +media-breakpoint-up(md)
     justify-content: flex-end
     max-width: max-content
+
+  +media-breakpoint-down(lg)
+    margin-left: $grid-gutter-width * 2.5 
 
 .user-panel
   align-items: center
@@ -45,3 +48,9 @@
   &.-active
     background: $color-black
     box-shadow: 0px 3px 10px #1F1F1F
+
+  +media-breakpoint-only(xs)
+    .user__name
+      display: none
+    .chevron
+      margin-left: 0px
