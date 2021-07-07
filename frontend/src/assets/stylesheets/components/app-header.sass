@@ -9,6 +9,7 @@
   display: flex
   justify-content: flex-end
   align-items: center
+  flex-wrap: wrap
 
   height: $app-header-height
   max-height: $app-header-height
@@ -17,3 +18,8 @@
 
   +media-breakpoint-up(md)
     justify-content: flex-end
+
+  .logo__link 
+    flex: 100%
+    text-align: center
+    margin: 10px 0px 20px
