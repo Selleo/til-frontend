@@ -16,7 +16,10 @@ const DeletePost = ({ postId }) => {
   }
 
   const deletePost = async () => {
-    const isDeleted = await request('DELETE', `${API_URL}/api/me/posts/${postId}`)
+    const isDeleted = await request(
+      'DELETE',
+      `${API_URL}/api/me/posts/${postId}`
+    )
 
     if (isDeleted.ok) {
       dispatch(saveAllPosts())

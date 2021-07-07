@@ -2,15 +2,16 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import DeletePost from '../authenticated/DeletePost'
 
-const UserPostMenu = ({ post }) => {
+const UserPostMenu = props => {
+  const postId = props.post.id
   return (
     <>
       <hr className="post__hr" />
       <div className="post__user-menu">
-        <Link to={`/edit-post/${post.id}`}>
+        <Link to={`/edit-post/${postId}`}>
           <button className="edit-post-btn">Edit</button>
         </Link>
-        <DeletePost postId={post.id} />
+        <DeletePost postId={postId} />
       </div>
     </>
   )

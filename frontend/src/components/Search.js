@@ -4,8 +4,7 @@ import { useDispatch } from 'react-redux'
 import { saveSearchedPosts, saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
 import { ReactComponent as SearchIcon } from '../assets/icons/search.svg'
-import { toast } from 'react-toastify'
-import { useIsOnRoute } from '../utils/customHooks/useIsOnRoute'
+import { useDisableActionOnRouteWithMessage } from '../utils/customHooks/useDisableActionOnRouteWithMessage'
 
 const Search = () => {
   const [input, setInput] = useState('')
@@ -13,7 +12,11 @@ const Search = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const hasLeavedRoute = useOnRouteLeave('/search')
-  const disable = useIsOnRoute(['add', 'edit'])
+
+  const { isDisabled, notifyMessage } = useDisableActionOnRouteWithMessage(
+    ['add', 'edit'],
+    "Can't search while post is creating/editing"
+  )
 
   useEffect(() => {
     if (hasLeavedRoute) {
@@ -38,18 +41,14 @@ const Search = () => {
     }
   }
 
-  const handleClick = () => {
-    return disable ? toast("Can't search while post is creating/editing") : null
-  }
-
   return (
-    <div className="search-box" onClick={handleClick}>
+    <div className="search-box" onClick={notifyMessage}>
       <input
         className="search-box__input"
         type="text"
         placeholder="Search"
         value={input}
-        disabled={disable}
+        disabled={isDisabled}
         onChange={handleInput}
       />
 
