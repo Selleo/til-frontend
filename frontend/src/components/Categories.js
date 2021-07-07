@@ -7,13 +7,11 @@ import Icon from './UI/Icon'
 import { sortCategories } from '../utils/array/helpers.js'
 import { useDisableActionOnRouteWithMessage } from '../utils/customHooks/useDisableActionOnRouteWithMessage'
 
-const Categories = () => {
+const Categories = props => {
   const categories = useSelector(state => state.categories)
   const dispatch = useDispatch()
-  const { isDisabled, notifyMessage } = useDisableActionOnRouteWithMessage(
-    ['add', 'edit'],
-    "Can't change view category while post is creating/editing"
-  )
+  const { closeSideNav } = props
+  const disable = useIsOnRoute(['add', 'edit'])
 
   useEffect(() => {
     const currentCategory = document.querySelector(
@@ -33,7 +31,8 @@ const Categories = () => {
   }
 
   const handleClick = (e, id) => {
-    disable && blockClickCategory(e)
+    disable && blockSelection(e)
+    closeSideNav()
     dispatch(saveCategoryPosts(id))
   }
 
