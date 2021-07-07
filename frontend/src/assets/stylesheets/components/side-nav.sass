@@ -8,11 +8,55 @@
   width: $side-nav-width
   z-index: $z-higher
 
+  visibility: hidden
+  transform: translateX(-50%)
+  opacity: 0
 
-  display: none
+  +transition(opacity,transform,visibility)
+
+  &__hamburger
+    position: fixed
+    width: 34px
+    height: 26px
+
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+    left: $grid-gutter-width
+    top: calc(#{$app-header-height} - 49px)
+
+    z-index: $z-higher + 10
+
+    +transition(left)
+    opacity: 1
+
+    .bar
+      width: 100%
+      height: 3px
+      border-radius: 1px
+      background-color: #FFFEFC
+      +transition(transform)
+
+  &.-active
+    visibility: visible
+    transform: translateX(0)
+    opacity: 1
+
+    & + .side-nav__hamburger
+      left: $side-nav-width - 68px
+
+  +media-breakpoint-down(lg)
+    .side-nav__menu
+      margin-top: 75px
 
   +media-breakpoint-up(xl)
-    display: flex
+    visibility: visible
+    transform: translateX(0)
+    opacity: 1
+    
+    &__hamburger
+      display: none
 
   &__menu
     align-items: flex-start

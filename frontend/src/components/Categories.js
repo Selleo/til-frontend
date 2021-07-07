@@ -8,9 +8,10 @@ import { sortCategories } from '../utils/array/helpers.js'
 import { toast } from 'react-toastify'
 import { useIsOnRoute } from '../utils/customHooks/useIsOnRoute'
 
-const Categories = () => {
+const Categories = props => {
   const categories = useSelector(state => state.categories)
   const dispatch = useDispatch()
+  const { closeSideNav } = props
   const disable = useIsOnRoute(['add', 'edit'])
 
   const blockSelection = e => {
@@ -19,6 +20,7 @@ const Categories = () => {
   }
   const handleClick = (e, id) => {
     disable && blockSelection(e)
+    closeSideNav()
     dispatch(saveCategoryPosts(id))
   }
   const sortedCategories = sortCategories(categories)
