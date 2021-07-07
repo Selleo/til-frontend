@@ -15,6 +15,7 @@ import useUser from './utils/customHooks/useUser'
 import './App.css'
 import './devicon.css'
 import './assets/stylesheets/application.sass'
+import 'react-tippy/dist/tippy.css'
 
 const App = () => {
   const dispatch = useDispatch()
