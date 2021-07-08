@@ -5,8 +5,9 @@ import useUser from '../utils/customHooks/useUser'
 import { Link } from 'react-router-dom'
 import { getDate } from '../utils'
 
-const PostPreview = ({ body, title, categories }) => {
+const PostPreview = props => {
   const user = useUser()
+  const { body, title, categories } = props
 
   return (
     <article className="post -preview">
@@ -28,7 +29,7 @@ const PostPreview = ({ body, title, categories }) => {
         <Markdown source={body} />
       </div>
       <div className="post__footer">
-        <PostCategories categories={categories} preview />
+        <PostCategories categories={categories} preview isHidden />
       </div>
     </article>
   )

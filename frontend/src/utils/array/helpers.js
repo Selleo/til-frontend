@@ -1,6 +1,6 @@
 // HELPERS
 export const convertToSelectOptions = data => {
-  return data.map(el => ({ value: el.id, label: el.name }))
+  return data.map(el => ({ value: el.id, label: el.name, url: el.url }))
 }
 
 export const convertReactions = reactions => {
@@ -24,14 +24,14 @@ export const checkHasReacted = (reaction, userId) => {
 
 const compare = (a, b) => {
   if (a.name < b.name) {
-    return -1;
+    return -1
   }
   if (a.name > b.name) {
-    return 1;
+    return 1
   }
-  return 0;
+  return 0
 }
 
-export const sortCategories = (categories) => {
+export const sortCategories = categories => {
   return categories.sort(compare)
 }
