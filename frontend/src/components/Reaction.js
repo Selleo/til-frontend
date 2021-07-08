@@ -5,9 +5,9 @@ import { saveAllPosts, saveAllUsers } from '../store/actions/actions'
 import useUser from '../utils/customHooks/useUser'
 import classNames from 'classnames'
 
-const Reaction = ({ post, reaction }) => {
-  const { id } = post
-  const { type, whoReacted, Icon } = reaction
+const Reaction = props => {
+  const { id } = props.post
+  const { type, whoReacted, Icon } = props.reaction
   const [hasReacted, setHasReacted] = useState(false)
   const [reactionNumber, setReactionNumber] = useState(0)
   const user = useUser()
