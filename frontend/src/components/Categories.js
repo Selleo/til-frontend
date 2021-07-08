@@ -5,20 +5,21 @@ import { useDispatch } from 'react-redux'
 import { saveCategoryPosts } from '../store/actions/actions'
 import Icon from './UI/Icon'
 import { sortCategories } from '../utils/array/helpers.js'
-import { toast } from 'react-toastify'
-import { useIsOnRoute } from '../utils/customHooks/useIsOnRoute'
+import { useDisableActionOnRouteWithMessage } from '../utils/customHooks/useDisableActionOnRouteWithMessage'
 
 const Categories = () => {
   const categories = useSelector(state => state.categories)
   const dispatch = useDispatch()
-  const disable = useIsOnRoute(['add', 'edit'])
+  const { isDisabled, notifyMessage } = useDisableActionOnRouteWithMessage(
+    ['add', 'edit'],
+    "Can't change view category while post is creating/editing"
+  )
 
-  const blockSelection = e => {
-    e.preventDefault()
-    toast("Can't change view category while post is creating/editing")
-  }
   const handleClick = (e, id) => {
-    disable && blockSelection(e)
+    if (isDisabled) {
+      notifyMessage(e)
+    }
+
     dispatch(saveCategoryPosts(id))
   }
   const sortedCategories = sortCategories(categories)
