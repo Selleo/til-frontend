@@ -7,8 +7,9 @@ import Icon from './UI/Icon'
 import { sortCategories } from '../utils/array/helpers.js'
 import { useDisableActionOnRouteWithMessage } from '../utils/customHooks/useDisableActionOnRouteWithMessage'
 
-const Categories = () => {
+const Categories = props => {
   const categories = useSelector(state => state.categories)
+  const { closeSideNav } = props
   const dispatch = useDispatch()
   const { isDisabled, notifyMessage } = useDisableActionOnRouteWithMessage(
     ['add', 'edit'],
@@ -31,6 +32,7 @@ const Categories = () => {
     if (isDisabled) {
       notifyMessage(e)
     }
+    closeSideNav()
     dispatch(saveCategoryPosts(id))
   }
 

@@ -1,21 +1,34 @@
 .user-panel-container
-  align-items: center
   background: $color-background
   display: flex
   justify-content: flex-end
+  align-items: center
+  flex: 1
 
-.user-panel 
+  .add-post-btn
+    margin-right: auto
+
+  +media-breakpoint-up(md)
+    justify-content: flex-end
+    max-width: max-content
+
+  +media-breakpoint-down(lg)
+    padding-left: $grid-gutter-width * 2
+
+.user-panel
   align-items: center
   border-top-left-radius: 5px
   border-top-right-radius: 5px
   display: flex
   height: 50px
   letter-spacing: 0.28px
+  padding: 4px 18px 4px 0px
   margin-left: 18px
-  padding-right: 32px
-  position: relative
 
-  &__menu 
+  position: relative
+  cursor: pointer
+
+  &__menu
     background: $color-black
     box-shadow: 0px 3px 10px #1F1F1F
     border-bottom-left-radius: 5px
@@ -25,13 +38,19 @@
     position: absolute
     padding-top: 40px
     padding-left: 24px
-    padding-bottom: 10px
+    padding-bottom: 14px
     width: 100%
-    top: 45px
+    top: 100%
 
-    &.-hidden 
+    &.-hidden
       visibility: hidden
 
   &.-active
     background: $color-black
     box-shadow: 0px 3px 10px #1F1F1F
+
+  +media-breakpoint-only(xs)
+    .user__name
+      display: none
+    .chevron
+      margin-left: 0px

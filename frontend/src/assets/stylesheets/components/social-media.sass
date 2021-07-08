@@ -1,12 +1,18 @@
-
 .social-links
   display: flex
-  justify-content: space-between
+  flex-wrap: wrap
   padding: 0
   list-style-type: none
 
   max-width: 1500px
   margin: 16px auto
+
+  li
+    display: flex
+    flex-basis: 33%
+    flex-grow: 1
+    a
+      margin: auto
 
   &__link
     display: flex
@@ -55,3 +61,7 @@
         svg
           path
             fill: #e1306c
+
+  +media-breakpoint-up(md)
+    li
+      flex-basis: auto
