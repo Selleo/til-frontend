@@ -1,7 +1,10 @@
 import React from 'react'
 import classNames from 'classnames'
+import ToolTip from './ToolTip'
 
-const PostCategories = ({ categories, preview }) => {
+const PostCategories = props => {
+  const { categories, preview, isHidden } = props
+
   if (!categories) {
     return null
   }
@@ -31,11 +34,13 @@ const PostCategories = ({ categories, preview }) => {
 
   return (
     <div className={postCategoriesClassnames}>
-      {slicedCategories.map((category, index) => (
-        <div key={index} className="post__single-category">
-          {category}
-        </div>
-      ))}
+      {slicedCategories.map(({ id, name, url }) => {
+        return (
+          <ToolTip isHidden={isHidden} key={id} id={id} name={name} url={url}>
+            <div className="post__single-category">{name}</div>
+          </ToolTip>
+        )
+      })}
       {moreCategories}
     </div>
   )

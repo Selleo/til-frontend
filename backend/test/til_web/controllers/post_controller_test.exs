@@ -64,8 +64,13 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       [first_post, second_post] = parsed_response_body
-      assert first_post["categories"] == [first_category.name, second_category.name]
-      assert second_post["categories"] == [first_category.name]
+      assert first_post["categories"] == [
+        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url},
+        %{"id" => second_category.id, "name" => second_category.name, "url" => second_category.url}
+      ]
+      assert second_post["categories"] == [
+        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url},
+      ]
     end
 
     test "returns all existing posts with proper reaction count", %{conn: conn} do
@@ -295,7 +300,10 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       assert parsed_response_body["title"] == post_title
-      assert parsed_response_body["categories"] == [first_category.name, second_category.name]
+      assert parsed_response_body["categories"] == [
+        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url},
+        %{"id" => second_category.id, "name" => second_category.name, "url" => second_category.url}
+      ]
     end
 
     test "returns particular post with proper reaction count", %{conn: conn} do
