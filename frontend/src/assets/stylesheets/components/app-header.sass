@@ -16,10 +16,21 @@
 
   z-index: $z-high
 
+  .logo__link
+    flex: 100%
+    text-align: center
+    margin: 0px auto 15px
+
+  +media-breakpoint-down(lg)
+    height: unset
+    max-height: unset
+    padding: 10px 0px
+
   +media-breakpoint-up(md)
     justify-content: flex-end
 
-  .logo__link 
-    flex: 100%
-    text-align: center
-    margin: 10px 0px 20px
+  +media-breakpoint-only(xl)
+    position: absolute
+
+    .logo__link
+      display: none
