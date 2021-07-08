@@ -47,8 +47,9 @@ const EditPost = () => {
 
   useEffect(() => {
     const userCategories = allCategories.filter(category =>
-      categories.includes(category.name)
+      categories.find(({ name }) => name.includes(category.name))
     )
+
     const userCategoriesOptions = convertToSelectOptions(userCategories)
 
     setUserCategoriesOptions(userCategoriesOptions)
@@ -58,11 +59,12 @@ const EditPost = () => {
     const markdownPost = {
       body: markdown,
       title: title,
-      categories: categories,
+      categories: categories.map(el => el.name),
     }
+
     const post = await request(
       'PATCH',
-      `${API_URL}/api/me/posts/` + id,
+      `${API_URL}/api/me/posts/${id}`,
       JSON.stringify(markdownPost)
     )
 
@@ -93,7 +95,11 @@ const EditPost = () => {
       return
     }
 
-    const categories = selectedOptions.map(obj => obj.label)
+    const categories = selectedOptions.map(el => ({
+      id: el.value,
+      name: el.label,
+      url: el.url,
+    }))
 
     setCategories(categories)
   }
@@ -147,8 +153,8 @@ const EditPost = () => {
         <PostSeparator />
         <PostPreview
           categories={categories}
-          title={title || 'your title'}
-          body={markdown || 'your content'}
+          title={title || 'Your title'}
+          body={markdown || 'Your content'}
         />
       </div>
       <div className="buttons">
