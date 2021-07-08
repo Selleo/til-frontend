@@ -35,6 +35,8 @@ const Search = () => {
         dispatch(saveSearchedPosts(targetValue))
       }, 300)
       setTimeoutID(timeout)
+    } else {
+      history.push('/')
     }
   }
 
