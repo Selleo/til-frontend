@@ -24,7 +24,7 @@
     justify-content: space-between
 
     left: $grid-gutter-width
-    top: calc(#{$app-header-height} - 49px)
+    top: calc(39px)
 
     z-index: $z-higher + 10
 
@@ -44,17 +44,22 @@
     opacity: 1
 
     & + .side-nav__hamburger
-      left: $side-nav-width - 68px
+      left: $side-nav-width - 64px
 
   +media-breakpoint-down(lg)
     .side-nav__menu
-      margin-top: 75px
+      margin-top: 28px
+      .search-box
+        &__input 
+          width: 190px
+        &__icon
+          right: 50px
 
   +media-breakpoint-up(xl)
     visibility: visible
     transform: translateX(0)
     opacity: 1
-    
+
     &__hamburger
       display: none
 
