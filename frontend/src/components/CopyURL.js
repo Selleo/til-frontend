@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { getCurrentURL } from '../utils'
-import { ReactComponent as Share } from '../assets/icons/share.svg'
+import CopyButton from './CopyButton'
+import { Tooltip } from 'react-tippy'
 
 const CopyPostURL = ({ postId }) => {
+  const [isCopied, setIsCopied] = useState('Click to copy link')
+
   const copyURL = () => {
     let currentURL = getCurrentURL()
 
@@ -11,13 +14,22 @@ const CopyPostURL = ({ postId }) => {
     }
 
     navigator.clipboard.writeText(currentURL)
+    setIsCopied('Copied!')
+
+    setTimeout(() => {
+      setIsCopied('Click to copy link')
+    }, 300)
   }
 
   return (
-    <button onClick={copyURL} className="post__share-button">
-      <Share />
-      Share
-    </button>
+    <Tooltip
+      className="ToolTip"
+      arrow
+      duration={500}
+      html={<CopyButton handleClick={copyURL} text={isCopied} isInTooltip />}
+    >
+      <CopyButton handleClick={copyURL} text={'Share'} />
+    </Tooltip>
   )
 }
 
