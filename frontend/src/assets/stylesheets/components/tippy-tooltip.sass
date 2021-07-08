@@ -13,3 +13,13 @@
 
       &::first-letter
         text-transform: uppercase
+
+.ToolTip
+  &__link
+    text-decoration: none
+
+    .post__single-category
+      transition: background $transition-duration $transition-function
+
+      &:hover
+        background: rgba(#A0A0A0, 0.1 )
