@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { saveCategoryPosts } from '../store/actions/actions'
 import Icon from './UI/Icon'
@@ -13,27 +13,46 @@ const Categories = () => {
   const dispatch = useDispatch()
   const disable = useIsOnRoute(['add', 'edit'])
 
-  const blockSelection = e => {
+  useEffect(() => {
+    const currentCategory = document.querySelector(
+      '.categories__single-category.-active'
+    )
+
+    if (currentCategory) {
+      currentCategory.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  })
+
+  const blockClickCategory = e => {
     e.preventDefault()
     toast("Can't change view category while post is creating/editing")
   }
+
   const handleClick = (e, id) => {
-    disable && blockSelection(e)
+    disable && blockClickCategory(e)
     dispatch(saveCategoryPosts(id))
   }
+
   const sortedCategories = sortCategories(categories)
 
   return sortedCategories.map(({ id, name }) => (
-    <div key={name} className="categories__single-category">
+    <NavLink
+      key={name}
+      to={`/category/${name}`}
+      className="categories__single-category"
+      activeClassName="-active"
+    >
       <div className="categories__icon">
         <Icon categoryName={name} />
       </div>
-      <Link className="categories__name" to={`/category/${name}`}>
+      <div className="categories__name">
         <div className="categories__name" onClick={e => handleClick(e, id)}>
           {name}
         </div>
-      </Link>
-    </div>
+      </div>
+    </NavLink>
   ))
 }
 
