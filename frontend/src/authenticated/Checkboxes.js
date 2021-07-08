@@ -1,12 +1,14 @@
 import React from 'react'
 import classNames from 'classnames'
 
-const Checkboxes = ({
-  handlePublicCheckbox,
-  isPublic,
-  handleReviewCheckbox,
-  isReviewNeeded,
-}) => {
+const Checkboxes = props => {
+  const {
+    handlePublicCheckbox,
+    isPublic,
+    handleReviewCheckbox,
+    isReviewNeeded,
+  } = props
+
   const publicLabelClasses = classNames({
     'checkboxes__single-checkbox': true,
     '-active': isPublic,
