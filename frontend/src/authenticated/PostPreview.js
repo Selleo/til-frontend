@@ -23,10 +23,10 @@ const PostPreview = props => {
         </div>
       </div>
       <Link className="post__title" to={'not-yet'}>
-        {title}
+        {title || 'Your title'}
       </Link>
       <div className="post__body">
-        <Markdown source={body} />
+        <Markdown source={body || 'Your content'} />
       </div>
       <div className="post__footer">
         <PostCategories categories={categories} preview isHidden />
