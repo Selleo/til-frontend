@@ -11,8 +11,8 @@ const SearchedPosts = () => {
   if (!searchedPosts.length) {
     return (
       <>
-        <SearchedPhrase phrase={searchQuery} />
-        {searchQuery && <NothingFound />}
+        {/* <SearchedPhrase phrase={searchQuery} /> */}
+        {searchQuery && <NothingFound text={searchQuery} />}
       </>
     )
   }

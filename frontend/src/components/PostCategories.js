@@ -36,9 +36,11 @@ const PostCategories = props => {
     <div className={postCategoriesClassnames}>
       {slicedCategories.map(({ id, name, url }) => {
         return (
-          <ToolTip isHidden={isHidden} key={id} id={id} name={name} url={url}>
-            <div className="post__single-category">{name}</div>
-          </ToolTip>
+          <div className="post__single-category-wrapper" key={id}>
+            <ToolTip isHidden={isHidden} id={id} name={name} url={url}>
+              <div className="post__single-category">{name}</div>
+            </ToolTip>
+          </div>
         )
       })}
       {moreCategories}

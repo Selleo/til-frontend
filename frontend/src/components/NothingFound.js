@@ -6,7 +6,9 @@ const NothingFound = props => {
   return (
     <div className="nothing-found-wrapper">
       <img src={NothingFoundImage} alt="alt" />
-      <h2>{text}</h2>
+      <p>
+        Nothing found with phrase: <b>{text}</b>
+      </p>
     </div>
   )
 }
