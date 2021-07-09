@@ -26,7 +26,7 @@ const CopyPostURL = ({ postId }) => {
       className="ToolTip"
       arrow
       duration={500}
-      html={<CopyButton handleClick={copyURL} text={isCopied} isInTooltip />}
+      html={<div>{isCopied}</div>}
     >
       <CopyButton handleClick={copyURL} text={'Share'} />
     </Tooltip>

@@ -2,21 +2,22 @@
 
   .tippy-tooltip
     background: #969696
-    right: 10px // 20px is the margin of category 
 
-    a
-      display: block
+    margin: auto
+
+    a, div
       text-decoration: none
-      color: #ffffff
-      font-weight: 600
-      padding: 0px 10px
+      color: $color-white
+      font-weight: 500
 
       &::first-letter
         text-transform: uppercase
 
 .ToolTip
+  display: block !important
   &__link
     text-decoration: none
+    display: block
 
     .post__single-category
       transition: background $transition-duration $transition-function
