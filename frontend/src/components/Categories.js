@@ -44,6 +44,7 @@ const Categories = props => {
       to={`/category/${name}`}
       className="categories__single-category"
       activeClassName="-active"
+      data-testid="single-category"
     >
       <div className="categories__icon">
         <Icon categoryName={name} />

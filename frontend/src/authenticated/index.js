@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const AuthenticatedApp = () => {
   return (
-    <>
+    <div data-testid="authenticated-app">
       <ToastContainer />
       <SideNav />
       <div className="main-content">
@@ -36,7 +36,7 @@ const AuthenticatedApp = () => {
         </Switch>
         <Footer />
       </div>
-    </>
+    </div>
   )
 }
 

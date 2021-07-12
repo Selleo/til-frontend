@@ -23,7 +23,7 @@ const Post = props => {
   const date = format(parsed, ' dd MMM  hh:mm')
 
   return (
-    <article className="post">
+    <article className="post" data-testid="post">
       <div className="post__header">
         <div className="post__details">
           <img

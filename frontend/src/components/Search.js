@@ -44,7 +44,7 @@ const Search = () => {
   }
 
   return (
-    <div className="search-box" onClick={notifyMessage}>
+    <div className="search-box" onClick={notifyMessage || undefined}>
       <input
         className="search-box__input"
         type="text"
@@ -52,6 +52,7 @@ const Search = () => {
         value={input}
         disabled={isDisabled}
         onChange={handleInput}
+        data-testid="search-input"
       />
 
       <SearchIcon className="search-box__icon" />

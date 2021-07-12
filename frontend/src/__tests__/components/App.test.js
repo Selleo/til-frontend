@@ -9,7 +9,7 @@ import rootReducer from '../../store/reducers/reducers'
 const store = createStore(rootReducer, compose(applyMiddleware(thunk)))
 
 describe('<App/>', () => {
-  it('renders properly', () => {
+  it('renders App properly', () => {
     const { getByTestId } = render(
       <Provider store={store}>
         <App />

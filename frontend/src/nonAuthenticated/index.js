@@ -8,7 +8,7 @@ const NonAuthenticatedApp = () => {
   return (
     <>
       <SideNav />
-      <div className="main-content">
+      <div className="main-content" data-testid="app-main-unathorized">
         <AppHeader />
         <MainRoutes />
         <Footer />

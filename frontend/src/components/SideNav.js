@@ -41,7 +41,7 @@ const SideNav = () => {
           {/* <li className="side-nav__menu-item">Users</li> */}
           {/* <li className="side-nav__menu-item">Stats </li> */}
         </ul>
-        <div className="categories">
+        <div className="categories" data-testid="categories">
           <Categories closeSideNav={toggleSideNav} />
         </div>
       </div>
