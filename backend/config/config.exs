@@ -19,7 +19,7 @@ config :til, TilWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "TGVCmQ52f5S76w5dAtjqzbne4axUj2kB8RO7wedO1m9YqDT0z42fvovvjgWIRer3",
   render_errors: [view: TilWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Til.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub_server: MyApp.PubSub,
   live_view: [signing_salt: "vJGJD9ib"]
 
 # Configures Elixir's Logger

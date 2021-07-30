@@ -10,6 +10,8 @@ defmodule Til.Application do
     children = [
       # Start the Ecto repository
       Til.Repo,
+      # Start the PubSub system
+      {Phoenix.PubSub, name: MyApp.PubSub},
       # Start the endpoint when the application starts
       TilWeb.Endpoint,
       # Starts a worker by calling: Til.Worker.start_link(arg)
