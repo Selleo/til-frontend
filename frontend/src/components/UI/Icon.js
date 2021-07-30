@@ -29,6 +29,14 @@ import { SiTerraform } from 'react-icons/si'
 import { FaFacebook } from 'react-icons/fa'
 import { FaInstagram } from 'react-icons/fa'
 import { BsInfoCircleFill } from 'react-icons/bs'
+import { GiCrystalEye } from 'react-icons/gi'
+import { FiCode } from 'react-icons/fi'
+import { SiKubernetes } from 'react-icons/si'
+import { FaMeetup } from 'react-icons/fa'
+import { FaPhoenixFramework } from 'react-icons/fa'
+import { AiFillApi } from 'react-icons/ai'
+
+import { BsFillCircleFill } from 'react-icons/bs'
 
 const Icon = ({ categoryName }) => {
   switch (categoryName) {
@@ -42,8 +50,8 @@ const Icon = ({ categoryName }) => {
       return <FiChrome />
     case 'commandline':
       return <BsTerminalFill />
-    // case 'crystal':
-    //   return <Crystal />
+    case 'crystal':
+      return <GiCrystalEye />
     case 'css':
       return <FaCss3 />
     case 'docker':
@@ -56,7 +64,8 @@ const Icon = ({ categoryName }) => {
       return <FaErlang />
     case 'flutter':
       return <SiFlutter />
-    // case 'general':
+    case 'general':
+      return <FiCode />
     case 'git':
       return <BiGitBranch />
     case 'heroku':
@@ -65,22 +74,22 @@ const Icon = ({ categoryName }) => {
       return <AiFillHtml5 />
     case 'javascript':
       return <SiJavascript />
-    // case 'k8s':
-    //   return < />
+    case 'k8s':
+      return <SiKubernetes />
     case 'linux':
       return <SiLinux />
     case 'markdown':
       return <GoMarkdown />
-    // case 'meetup':
-    //   return < />
+    case 'meetup':
+      return <FaMeetup />
     case 'mongodb':
       return <DiMongodb />
     case 'nodejs':
       return <GrNode />
     case 'osx':
       return <FaApple />
-    // case 'phoenix':
-    //   return < />
+    case 'phoenix':
+      return <FaPhoenixFramework />
     case 'rails':
       return <SiRails />
     case 'react':
@@ -97,8 +106,8 @@ const Icon = ({ categoryName }) => {
     //   return < />
     case 'terraform':
       return <SiTerraform />
-    // case 'vault':
-    //   return < />
+    case 'vault':
+      return <AiFillApi />
     case 'facebook':
       return <FaFacebook />
     case 'instagram':
@@ -106,7 +115,7 @@ const Icon = ({ categoryName }) => {
     case 'info':
       return <BsInfoCircleFill />
     default:
-      return null
+      return <BsFillCircleFill />
   }
 }
 
