@@ -1,3 +1,5 @@
+$post-category-margin: 16px
+
 .post
   background: $color-black
   border-radius: 8px
@@ -23,7 +25,6 @@
     margin-bottom: $m-base
 
     flex-basis: 100%
-    max-width: max-content
 
     color: #8a8a8a
 
@@ -67,12 +68,25 @@
     margin-top: 24px
     border: 1px solid $color-background
 
-  &__more-categories
-    margin: 0px auto
+    &:hover
+      opacity: 1
+      .post__more-categories-view
+        transition-delay: $transition-duration
+        opacity: 1
+        visibility: visible
+
+    .post__single-category
+      margin-right: 0
+      width: max-content
+      margin: auto
 
   &__reactions
     display: flex
-    align-self: center
+    align-self: baseline
+    justify-content: space-evenly
+    width: 100%
+    margin: auto
+    max-width: 460px
 
   &__share-button
     display: flex
@@ -114,7 +128,9 @@
         width: 20px
 
   &__single-category-wrapper
-    margin-right: 16px
+    margin-right: $post-category-margin
+    &.-expanded-categories
+      margin-bottom: $post-category-margin
 
   &__single-category
     border-radius: $border-radius-lg
@@ -122,7 +138,7 @@
     color: $color-gray
     display: flex
     align-items: center
-    font-weight: 500
+    font-weight: 400
     font-size: $font-size-xs
     letter-spacing: 0.28px
     opacity: 1
@@ -130,6 +146,15 @@
     text-transform: uppercase
 
     margin-bottom: 10px
+
+  &__more-categories
+    position: relative
+    opacity: 0.6
+    transition: opacity $transition-duration $transition-function
+    cursor: pointer
+
+    &:hover
+      opacity: 1
 
   &__single-reaction
     color: $color-gray
@@ -178,6 +203,11 @@
     margin-bottom: $m-base
     text-decoration: none
 
+    +transition(color)
+
+    &:hover
+      color: $color-primary
+
   &.-preview
     flex-basis: 55%
     min-width: 0
@@ -200,11 +230,8 @@
     &__user-menu
       max-width: 370px
 
-  +media-breakpoint-between(sm, md)
     &__reactions
       justify-content: space-between
-      width: 60%
-      max-width: 460px
 
   +media-breakpoint-up(md)
     &__header
@@ -226,10 +253,13 @@
       flex-direction: row
 
     &__single-category
-      padding: 8px 24px
+      padding: 8px 22px
       border-width: 2px
       font-weight: 600
       font-size: $font-size-sm
+
+    &__categories
+      margin-right: 40px
 
     &__categories,
     &__single-category
@@ -237,6 +267,9 @@
 
     &__user-menu
       margin: 24px 0px 0px auto
+
+    &__reactions
+      max-width: 300px
 
     &__separator
       flex-direction: column

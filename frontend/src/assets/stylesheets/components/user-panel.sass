@@ -6,7 +6,8 @@
   flex: 1
 
   .add-post-btn
-    margin-right: auto
+    margin-left: auto
+    margin-right: 18px
 
   +media-breakpoint-up(md)
     justify-content: flex-end
@@ -16,17 +17,19 @@
     padding-left: $grid-gutter-width * 2
 
 .user-panel
-  align-items: center
   border-top-left-radius: 5px
   border-top-right-radius: 5px
   display: flex
+  align-items: center
   height: 50px
   letter-spacing: 0.28px
-  padding: 4px 18px 4px 0px
-  margin-left: 18px
+  padding: 12px 22px 6px
 
   position: relative
   cursor: pointer
+
+  .user__image 
+      margin: 0px 10px
 
   &__menu
     background: $color-black
@@ -36,6 +39,10 @@
     display: flex
     flex-direction: column
     position: absolute
+
+    left: 0
+    right: 0
+
     padding-top: 40px
     padding-left: 24px
     padding-bottom: 14px
@@ -50,7 +57,14 @@
     box-shadow: 0px 3px 10px #1F1F1F
 
   +media-breakpoint-only(xs)
-    .user__name
-      display: none
+    margin-right: -16px
+
+    .user__name,
     .chevron
-      margin-left: 0px
+      display: none
+
+    
+    // &__menu
+    //     padding: 40px 30px 14px
+    //     right: 0
+    //     width: max-content

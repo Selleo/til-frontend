@@ -49,23 +49,17 @@ const AdminPanel = () => {
   return (
     <div className="user-panel-container" ref={node}>
       <AddPostButton />
-      <div onClick={toggleDropdown}>
-        <div className={userPanelClasses}>
-          <img
-            className="user__image -margin"
-            src={user.image}
-            alt="user-img"
-          />
-          <p className="user__name">
-            {user.firstName} {user.lastName}
-          </p>
-          <img src={chevron} alt="chevron" className={chevronClasses} />
-          <div className={userMenuClasses}>
-            <Link to="/profile" className="profile-link">
-              Profile
-            </Link>
-            <Logout />
-          </div>
+      <div className={userPanelClasses} onClick={toggleDropdown}>
+        <img className="user__image -margin" src={user.image} alt="user-img" />
+        <p className="user__name">
+          {user.firstName} {user.lastName}
+        </p>
+        <img src={chevron} alt="chevron" className={chevronClasses} />
+        <div className={userMenuClasses}>
+          <Link to="/profile" className="profile-link">
+            Profile
+          </Link>
+          <Logout />
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { saveSearchedPosts, saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
 import { ReactComponent as SearchIcon } from '../assets/icons/search.svg'
-import { useDisableActionOnRouteWithMessage } from '../utils/customHooks/useDisableActionOnRouteWithMessage'
+import { useModalWithActionOnRoute } from '../utils/customHooks/useModalWithActionOnRoute'
 
 const Search = () => {
   const [input, setInput] = useState('')
@@ -12,11 +12,21 @@ const Search = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const hasLeavedRoute = useOnRouteLeave('/search')
-
-  const { isDisabled, notifyMessage } = useDisableActionOnRouteWithMessage(
+  const {
+    isDisabled,
+    triggerActionModal,
+    ActionModal,
+  } = useModalWithActionOnRoute(
     ['add', 'edit'],
-    "Can't search while post is creating/editing"
+    "Can't search while post is creating/editing, you will lose your data",
+    () => history.push('/')
   )
+
+  useEffect(() => {
+    if (!input && history.location.pathname !== '/review-posts') {
+      history.push('/')
+    }
+  }, [input, history])
 
   useEffect(() => {
     if (hasLeavedRoute) {
@@ -24,12 +34,6 @@ const Search = () => {
       setInput('')
     }
   }, [hasLeavedRoute, dispatch])
-
-  useEffect(() => {
-    if (!input.length) {
-      history.push('/')
-    }
-  }, [input, history])
 
   const handleInput = event => {
     const targetValue = event.target.value
@@ -48,18 +52,22 @@ const Search = () => {
   }
 
   return (
-    <div className="search-box" onClick={notifyMessage || null}>
-      <input
-        className="search-box__input"
-        type="text"
-        placeholder="Search"
-        value={input}
-        disabled={isDisabled}
-        onChange={handleInput}
-      />
+    // <div className="search-box" onClick={notifyMessage || null}>
+    <>
+      <div className="search-box" onClick={triggerActionModal}>
+        <input
+          className="search-box__input"
+          type="text"
+          placeholder="Search"
+          value={input}
+          disabled={isDisabled}
+          onChange={handleInput}
+        />
 
-      <SearchIcon className="search-box__icon" />
-    </div>
+        <SearchIcon className="search-box__icon" />
+      </div>
+      <ActionModal />
+    </>
   )
 }
 

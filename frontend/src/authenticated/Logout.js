@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { deleteToken } from '../utils'
 import { logOut } from '../store/actions/actions'
@@ -15,9 +15,9 @@ const Logout = () => {
   }
 
   return (
-    <button className="buttons__button-logout" onClick={logOutHandler}>
+    <Link to="/" className="buttons__button-logout" onClick={logOutHandler}>
       Log out
-    </button>
+    </Link>
   )
 }
 
