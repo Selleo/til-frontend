@@ -5,6 +5,7 @@ import useUser from '../utils/customHooks/useUser'
 import chevron from '../assets/icons/chevron.png'
 import classNames from 'classnames'
 import AddPostButton from './AddPostButton'
+import Icon from '../components/UI/Icon'
 import { Transition } from '../components/Transition'
 
 const AdminPanel = () => {
@@ -50,28 +51,21 @@ const AdminPanel = () => {
   return (
     <div className="user-panel-container" ref={node}>
       <AddPostButton />
-      <div onClick={toggleDropdown}>
-        <div className={userPanelClasses}>
-          <Transition name="zoom-animation">
-            <img
-              className="user__image -margin"
-              src={user.image}
-              alt="user-img"
-            />
-          </Transition>
-          <p className="user__name">
-            {user.firstName} {user.lastName}
-          </p>
-          <img src={chevron} alt="chevron" className={chevronClasses} />
-          <Transition name="opacity-animation" condition={isMenuOpen}>
-            <div className={userMenuClasses}>
-              <Link to="/profile" className="profile-link">
-                Profile
-              </Link>
-              <Logout />
-            </div>
-          </Transition>
-        </div>
+      <div className={userPanelClasses} onClick={toggleDropdown}>
+        <img className="user__image -margin" src={user.image} alt="user-img" />
+        <p className="user__name">
+          {user.firstName} {user.lastName}
+        </p>
+        <img src={chevron} alt="chevron" className={chevronClasses} />
+        <Transition name="opacity-animation" condition={isMenuOpen}>
+          <div className={userMenuClasses}>
+            <Link to="/profile" className="profile-link">
+              <Icon name="profile" />
+              Profile
+            </Link>
+            <Logout />
+          </div>
+        </Transition>
       </div>
     </div>
   )

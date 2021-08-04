@@ -1,7 +1,10 @@
 .main-content
   background: $color-background
-  height: 100%
+  height: 100vh
   position: relative
+
+  &-area 
+    min-height: calc( 100% - #{$app-header-height} - 160px)
 
   +container
   padding-top: $app-header-height

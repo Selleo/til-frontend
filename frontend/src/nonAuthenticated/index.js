@@ -10,7 +10,9 @@ const NonAuthenticatedApp = () => {
       <SideNav />
       <div className="main-content">
         <AppHeader />
-        <MainRoutes />
+        <div className="main-content-area">
+          <MainRoutes />
+        </div>
         <Footer />
       </div>
     </>

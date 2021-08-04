@@ -10,8 +10,8 @@ const errorToast = data => {
   }
 
   toast.error(error, {
-    position: 'top-right',
-    autoClose: 3000,
+    // position: 'top-right',
+    // autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: false,
