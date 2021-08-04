@@ -18,7 +18,7 @@
 
   .logo__link
     flex: 100%
-    text-align: center
+    text-align: left
     margin: 0px auto 15px
 
   +media-breakpoint-down(lg)
@@ -28,6 +28,10 @@
 
   +media-breakpoint-up(md)
     justify-content: flex-end
+
+  +media-breakpoint-up(sm)
+    .logo__link
+      text-align: center
 
   +media-breakpoint-only(xl)
     position: absolute

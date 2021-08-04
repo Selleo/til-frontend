@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux'
 import { saveSearchedPosts, saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
 import { ReactComponent as SearchIcon } from '../assets/icons/search.svg'
-import { useDisableActionOnRouteWithMessage } from '../utils/customHooks/useDisableActionOnRouteWithMessage'
+import { useDisableOnRoute } from '../utils/customHooks/useDisableOnRoute'
+import ActionModal from './ActionModal'
 import { Transition } from './Transition'
 
 const Search = () => {
@@ -13,11 +14,8 @@ const Search = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const hasLeavedRoute = useOnRouteLeave('/search')
-
-  const { isDisabled, notifyMessage } = useDisableActionOnRouteWithMessage(
-    ['add', 'edit'],
-    "Can't search while post is creating/editing"
-  )
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { isDisabled } = useDisableOnRoute(['add', 'edit'])
 
   useEffect(() => {
     if (hasLeavedRoute) {
@@ -25,12 +23,6 @@ const Search = () => {
       setInput('')
     }
   }, [hasLeavedRoute, dispatch])
-
-  useEffect(() => {
-    if (!input.length) {
-      history.push('/')
-    }
-  }, [input, history])
 
   const handleInput = event => {
     const targetValue = event.target.value
@@ -45,24 +37,43 @@ const Search = () => {
         dispatch(saveSearchedPosts(targetValue))
       }, 300)
       setTimeoutID(timeout)
+    } else {
+      history.push('/')
+    }
+  }
+
+  const handleClick = e => {
+    if (isDisabled) {
+      e.preventDefault()
+      setIsModalOpen(true)
     }
   }
 
   return (
-    <Transition name="search-animation">
-      <div className="search-box" onClick={notifyMessage || null}>
-        <input
-          className="search-box__input"
-          type="text"
-          placeholder="Search"
-          value={input}
-          disabled={isDisabled}
-          onChange={handleInput}
-        />
+    <>
+      <Transition name="search-animation">
+        <div className="search-box" onClick={handleClick}>
+          <input
+            className="search-box__input"
+            type="text"
+            placeholder="Search"
+            value={input}
+            disabled={isDisabled}
+            onChange={handleInput}
+          />
 
-        <SearchIcon className="search-box__icon" />
-      </div>
-    </Transition>
+          <SearchIcon className="search-box__icon" />
+        </div>
+      </Transition>
+      {isModalOpen && (
+        <ActionModal
+          action={() => history.push('/')}
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+          message="If you leave, you will lose your data!"
+        />
+      )}
+    </>
   )
 }
 
