@@ -14,26 +14,28 @@ import 'react-toastify/dist/ReactToastify.css'
 const AuthenticatedApp = () => {
   return (
     <>
-      <ToastContainer />
+      <ToastContainer position="top-right" autoClose={3000} />
       <SideNav />
       <div className="main-content">
         <AppHeader />
-        <MainRoutes />
-        {/* authenticated user routes */}
-        <Switch>
-          <Route exact path="/add-post">
-            <AddPost />
-          </Route>
-          <Route path="/edit-post/:id">
-            <EditPost />
-          </Route>
-          <Route path="/profile">
-            <UserProfile />
-          </Route>
-          <Route path="/review-posts">
-            <ReviewPost />
-          </Route>
-        </Switch>
+        <div className="main-content-area">
+          <MainRoutes />
+          {/* authenticated user routes */}
+          <Switch>
+            <Route exact path="/add-post">
+              <AddPost />
+            </Route>
+            <Route path="/edit-post/:id">
+              <EditPost />
+            </Route>
+            <Route path="/profile">
+              <UserProfile />
+            </Route>
+            <Route path="/review-posts">
+              <ReviewPost />
+            </Route>
+          </Switch>
+        </div>
         <Footer />
       </div>
     </>

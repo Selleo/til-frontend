@@ -1,10 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
 import ToolTip from './ToolTip'
 import { Transition, delayStep, animationDuration } from './Transition'
 
 const PostCategories = props => {
   const { categories, preview, isHidden } = props
+  const [showRestCategories, setShowRestCategories] = useState(false)
+  const toogleShowRestCategories = () => {
+    setShowRestCategories(!showRestCategories)
+  }
+
+  const postCategoriesClassnames = classNames({
+    post__categories: true,
+    '-preview': preview,
+  })
+
+  const postSingeCategoryWrapperClassnames = classNames(
+    'post__single-category-wrapper',
+    {
+      '-expanded-categories': showRestCategories,
+    }
+  )
 
   if (!categories) {
     return null
@@ -21,17 +37,21 @@ const PostCategories = props => {
   let moreCategories = null
 
   if (categories.length > howManyCategories) {
-    moreCategories = (
-      <div className="post__more-categories">
-        + {categories.length - howManyCategories} more...
-      </div>
-    )
-  }
+    const restCategories = categories.slice(howManyCategories)
 
-  const postCategoriesClassnames = classNames({
-    post__categories: true,
-    '-preview': preview,
-  })
+    moreCategories = restCategories.map(({ id, name, url }) => {
+      return (
+        <div className={postSingeCategoryWrapperClassnames} key={id}>
+          <ToolTip isHidden={isHidden} id={id} name={name} url={url}>
+            <div className="post__single-category">{name}</div>
+          </ToolTip>
+        </div>
+      )
+    })
+  }
+  const showRestCategoriesButtonText = showRestCategories
+    ? 'Show less'
+    : `${categories.length - howManyCategories} more...`
 
   let delay = animationDuration // animate first whole post after that time render categories
 
@@ -40,7 +60,7 @@ const PostCategories = props => {
       {slicedCategories.map(({ id, name, url }) => {
         delay += delayStep
         return (
-          <div className="post__single-category-wrapper" key={id}>
+          <div className={postSingeCategoryWrapperClassnames} key={id}>
             <ToolTip isHidden={isHidden} id={id} name={name} url={url}>
               <Transition name="opacity-animation" delay={delay}>
                 <div
@@ -54,7 +74,15 @@ const PostCategories = props => {
           </div>
         )
       })}
-      {moreCategories}
+      {showRestCategories && moreCategories}
+      {moreCategories && (
+        <div
+          onClick={toogleShowRestCategories}
+          className="post__single-category post__more-categories"
+        >
+          {showRestCategoriesButtonText}
+        </div>
+      )}
     </div>
   )
 }

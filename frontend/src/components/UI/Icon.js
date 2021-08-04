@@ -38,8 +38,15 @@ import { AiFillApi } from 'react-icons/ai'
 
 import { BsFillCircleFill } from 'react-icons/bs'
 
-const Icon = ({ categoryName }) => {
-  switch (categoryName) {
+import { CgProfile } from 'react-icons/cg'
+import { FiLogOut } from 'react-icons/fi'
+
+const Icon = ({ name }) => {
+  switch (name) {
+    case 'profile':
+      return <CgProfile />
+    case 'logout':
+      return <FiLogOut />
     case 'android':
       return <AiOutlineAndroid />
     case 'angular':

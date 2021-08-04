@@ -1,12 +1,19 @@
+$user-panel-radius: 5px
+
 .user-panel-container
-  background: $color-background
+  background-color: $color-background
   display: flex
   justify-content: flex-end
   align-items: center
   flex: 1
+  margin-right: -$m-sm
 
   .add-post-btn
-    margin-right: auto
+    margin-left: auto
+    margin-right: 18px
+
+    &:hover
+      color: $color-secondary
 
   +media-breakpoint-up(md)
     justify-content: flex-end
@@ -16,40 +23,62 @@
     padding-left: $grid-gutter-width * 2
 
 .user-panel
-  align-items: center
-  border-top-left-radius: 5px
-  border-top-right-radius: 5px
+  border-top-left-radius: $user-panel-radius
+  border-top-right-radius: $user-panel-radius
   display: flex
-  height: 50px
+  align-items: center
   letter-spacing: 0.28px
-  padding: 4px 18px 4px 0px
-  margin-left: 18px
+  padding: $m-sm
 
   position: relative
   cursor: pointer
-
   transition-duration: $transition-duration
 
+  .user__image
+    margin: 0px 16px 0px 0px
+
   &__menu
-    background: $color-black
+    background-color: $color-black
     box-shadow: 0px 3px 10px #1F1F1F
-    border-bottom-left-radius: 5px
-    border-bottom-right-radius: 5px
+    border-bottom-left-radius: $user-panel-radius
+    border-bottom-right-radius: $user-panel-radius
     display: flex
     flex-direction: column
     position: absolute
-    padding-top: 40px
-    padding-left: 24px
-    padding-bottom: 14px
+
+    left: 0
+    right: 0
+
+    padding: $m-sm
     width: 100%
     top: 100%
 
+    & > a
+      display: flex
+      align-items: center
+      font-size: $font-size-sm
+      letter-spacing: 0.28px
+
+      &:not(:nth-last-child(1))
+        margin-bottom: $m-sm
+
+      svg
+        margin-right: $m-xs
   &.-active
     background: $color-black
     box-shadow: 0px 3px 10px #1F1F1F
 
   +media-breakpoint-only(xs)
-    .user__name
-      display: none
+    min-width: 110px
+
+    &.-active
+      .user__image
+        margin: auto
+
+    .user__image
+      margin-right: 0
+      margin-left: auto
+
+    .user__name,
     .chevron
-      margin-left: 0px
+      display: none
