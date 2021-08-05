@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import Categories from '../components/Categories'
 import Search from './Search'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import classNames from 'classnames'
-
+import { useModalWithActionOnRoute } from '../utils/customHooks/useModalWithActionOnRoute'
 const SideNav = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const history = useHistory()
+  const { triggerActionModal, ActionModal } = useModalWithActionOnRoute(
+    ['add', 'edit'],
+    "Can't back to home while post is creating/editing, you will lose your data",
+    () => history.push('/')
+  )
 
   const toggleSideNav = () => {
     setIsOpen(!isOpen)
@@ -19,7 +25,7 @@ const SideNav = () => {
     <>
       <div className={sideNavClasses}>
         <div className="logo">
-          <Link to="/" className="logo__link">
+          <Link to="/" className="logo__link" onClick={triggerActionModal}>
             todayilearned
           </Link>
           <a
@@ -50,6 +56,7 @@ const SideNav = () => {
         <div className="bar"></div>
         <div className="bar"></div>
       </button>
+      <ActionModal />
     </>
   )
 }

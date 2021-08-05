@@ -46,7 +46,7 @@ const ActionModal = props => {
             Stay
           </button>
           <button className="delete-post-btn" onClick={handleAction}>
-            Leave
+            Leave anyway
           </button>
         </div>
       </div>
