@@ -20,7 +20,7 @@ const DeleteModal = props => {
     },
   }
   useEffect(() => {
-    Modal.setAppElement('#root')
+    if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#root')
   }, [])
 
   const handleDelete = () => {
