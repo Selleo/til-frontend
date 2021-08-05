@@ -55,7 +55,7 @@ const Categories = props => {
       activeClassName="-active"
     >
       <div className="categories__icon">
-        <Icon categoryName={name} />
+        <Icon name={name} />
       </div>
       <div className="categories__name">
         <div className="categories__name" onClick={e => handleClick(e, id)}>

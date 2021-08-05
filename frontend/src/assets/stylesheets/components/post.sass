@@ -1,7 +1,7 @@
-$post-category-margin: 16px
+$post-category-margin: 24px
 
 .post
-  background: $color-black
+  background: $color-dark
   border-radius: 8px
   margin-bottom: 48px
 
@@ -13,8 +13,9 @@ $post-category-margin: 16px
     min-height: 100px
     margin-bottom: 56px
     p
-      font-size: $font-size-base
-      letter-spacing: 0.48px
+      font-size: 20px
+      font-weight: 300
+      letter-spacing: 0.44px
       line-height: normal
       word-break: break-word
 
@@ -32,23 +33,22 @@ $post-category-margin: 16px
       position: absolute
       bottom: 24px
 
+  &__author
+    font-weight: 500
+    color: $color-white
+
   &__date
-    margin: 0
-    color: #8A8A8A80
+    color: $color-gray
+    font-weight: 300
 
   &__details
-    color: #8A8A8A
-    font-weight: 300
+    font-size: 16px
     display: flex
     flex-direction: column
     letter-spacing: 0.32px
 
     .user__image
-      margin-bottom: 6px
-
-  &__date
-    color: $color-gray
-    font-weight: 300
+      margin-bottom: 12px
 
   &__footer
     display: flex
@@ -62,23 +62,11 @@ $post-category-margin: 16px
     display: flex
     justify-content: space-between
     align-items: flex-start
-    margin-bottom: 28px
+    margin-bottom: 32px
 
   &__hr
     margin-top: 24px
     border: 1px solid $color-background
-
-    &:hover
-      opacity: 1
-      .post__more-categories-view
-        transition-delay: $transition-duration
-        opacity: 1
-        visibility: visible
-
-    .post__single-category
-      margin-right: 0
-      width: max-content
-      margin: auto
 
   &__reactions
     display: flex
@@ -130,22 +118,20 @@ $post-category-margin: 16px
   &__single-category-wrapper
     margin-right: $post-category-margin
     &.-expanded-categories
-      margin-bottom: $post-category-margin
+      margin-bottom: calc(#{$post-category-margin} - 8px)
 
   &__single-category
-    border-radius: $border-radius-lg
+    border-radius: $border-radius-base
     border: 1px solid $color-gray
     color: $color-gray
+    font-size: $font-size-sm
+    letter-spacing: 0.28px
+    text-transform: uppercase
+    padding: 8px 24px
+
     display: flex
     align-items: center
-    font-weight: 400
-    font-size: $font-size-xs
-    letter-spacing: 0.28px
     opacity: 1
-    padding: 6px 18px
-    text-transform: uppercase
-
-    margin-bottom: 10px
 
   &__more-categories
     position: relative
@@ -195,12 +181,12 @@ $post-category-margin: 16px
   &__title
     display: block
     color: $color-white
-    font-weight: 600
-    font-size: $font-size-2xl
-    letter-spacing: 0.96px
+    font-weight: 700
+    font-size: $font-size-post-title
+    letter-spacing: 0.64px
     line-height: $line-height-lg
     word-break: break-word
-    margin-bottom: $m-base
+    margin-bottom: $m-sm
     text-decoration: none
 
     +transition(color)
@@ -242,21 +228,11 @@ $post-category-margin: 16px
 
       .user__image
         margin-bottom: 0px
-        margin-right: 14px
-
-    &__single-reaction
-      &:not(:nth-last-child(1))
-        margin-right: 28px
+        margin-right: 16px
 
   +media-breakpoint-up(lg)
     &__footer
       flex-direction: row
-
-    &__single-category
-      padding: 8px 22px
-      border-width: 2px
-      font-weight: 600
-      font-size: $font-size-sm
 
     &__categories
       margin-right: 40px
@@ -269,7 +245,7 @@ $post-category-margin: 16px
       margin: 24px 0px 0px auto
 
     &__reactions
-      max-width: 300px
+      max-width: 285px
 
     &__separator
       flex-direction: column

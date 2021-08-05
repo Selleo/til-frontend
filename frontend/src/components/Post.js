@@ -32,7 +32,7 @@ const Post = props => {
             alt="author-img"
           />
           <div className="post__text-details">
-            <div>
+            <div className="post__author">
               {post.author.firstName} {post.author.lastName}
             </div>
             <div className="post__date">{date}</div>

@@ -5,6 +5,7 @@ import useUser from '../utils/customHooks/useUser'
 import chevron from '../assets/icons/chevron.png'
 import classNames from 'classnames'
 import AddPostButton from './AddPostButton'
+import Icon from '../components/UI/Icon'
 
 const AdminPanel = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -57,6 +58,7 @@ const AdminPanel = () => {
         <img src={chevron} alt="chevron" className={chevronClasses} />
         <div className={userMenuClasses}>
           <Link to="/profile" className="profile-link">
+            <Icon name="profile" />
             Profile
           </Link>
           <Logout />
