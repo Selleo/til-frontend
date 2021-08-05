@@ -1,30 +1,37 @@
 import React, { useState } from 'react'
 import ActionModal from '../../components/ActionModal'
-import { useDisableActionOnRouteWithMessage } from './useDisableActionOnRouteWithMessage'
+import { useDisableOnRoute } from './useDisableOnRoute'
 
-export const useModalWithActionOnRoute = (paths, message, action) => {
+export const useModalWithActionOnRoute = (paths, message) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const { isDisabled } = useDisableActionOnRouteWithMessage(paths)
+  const [modalAction, setModalAction] = useState(null)
+  const { isDisabled } = useDisableOnRoute(paths)
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen)
   }
 
-  const handleShowModal = e => {
+  console.log(isDisabled)
+
+  const handleShowModal = (actionForModal, e) => {
     if (isDisabled) {
       e.preventDefault()
       toggleModal()
+      setModalAction(() => actionForModal)
     }
   }
 
-  const renderModal = () => (
-    <ActionModal
-      text={message}
-      action={action}
-      isOpen={isModalOpen}
-      toggleModal={toggleModal}
-    />
-  )
+  const renderModal = () =>
+    isModalOpen && (
+      <ActionModal
+        text={message}
+        action={modalAction}
+        // action={() => console.log('test')}
+        toggleModal={toggleModal}
+        isOpen={isModalOpen}
+      />
+    )
+
   return {
     isDisabled: isDisabled,
     triggerActionModal: handleShowModal,

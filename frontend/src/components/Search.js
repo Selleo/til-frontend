@@ -39,6 +39,7 @@ const Search = () => {
       setTimeoutID(timeout)
     } else {
       history.push('/')
+    }
   }
 
   const handleClick = e => {
@@ -46,6 +47,7 @@ const Search = () => {
       e.preventDefault()
       setIsModalOpen(true)
     }
+  }
   return (
     <>
       <Transition name="search-animation">
