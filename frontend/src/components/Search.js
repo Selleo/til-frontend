@@ -23,12 +23,6 @@ const Search = () => {
   )
 
   useEffect(() => {
-    if (!input && history.location.pathname !== '/review-posts') {
-      history.push('/')
-    }
-  }, [input, history])
-
-  useEffect(() => {
     if (hasLeavedRoute) {
       dispatch(saveSearchedQuery(''))
       setInput('')
@@ -48,6 +42,8 @@ const Search = () => {
         dispatch(saveSearchedPosts(targetValue))
       }, 300)
       setTimeoutID(timeout)
+    } else {
+      history.push('/')
     }
   }
 
