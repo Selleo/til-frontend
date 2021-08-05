@@ -7,7 +7,7 @@ const initialState = {
   users: [],
   posts: [],
   searchedPosts: [],
-  searchQuery: [],
+  searchQuery: '',
 }
 
 const rootReducer = (state = initialState, action) => {
