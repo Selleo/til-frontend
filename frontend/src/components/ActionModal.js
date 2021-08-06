@@ -2,9 +2,8 @@ import React, { useEffect } from 'react'
 import Modal from 'react-modal'
 
 const ActionModal = props => {
-  const { text, action, isOpen, toggleModal } = props
+  const { message, action, isOpen, setIsOpen } = props
 
-  /* backdrop-filter: blur(2px); */
   const customStyles = {
     content: {
       top: '50%',
@@ -23,12 +22,12 @@ const ActionModal = props => {
   }, [])
 
   const handleCancel = () => {
-    toggleModal()
+    setIsOpen(!isOpen)
   }
 
-  const handleAction = () => {
+  const handleLeave = () => {
     action()
-    toggleModal()
+    setIsOpen(!isOpen)
   }
 
   return (
@@ -38,14 +37,15 @@ const ActionModal = props => {
       shouldCloseOnOverlayClick
       shouldCloseOnEsc
       overlayClassName="Overlay action-modal"
+      appElement={document.getElementById('root')}
     >
       <div className="action-modal__content">
-        <h3 className="action-modal__header">{text}</h3>
+        <h3 className="action-modal__header">{message}</h3>
         <div className="action-modal__buttons">
           <button className="cancel-button" onClick={handleCancel}>
             Stay
           </button>
-          <button className="delete-post-btn" onClick={handleAction}>
+          <button className="delete-post-btn" onClick={handleLeave}>
             Leave anyway
           </button>
         </div>

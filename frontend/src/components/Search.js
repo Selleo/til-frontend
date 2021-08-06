@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux'
 import { saveSearchedPosts, saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
 import { ReactComponent as SearchIcon } from '../assets/icons/search.svg'
-import { useModalWithActionOnRoute } from '../utils/customHooks/useModalWithActionOnRoute'
+import { useDisableOnRoute } from '../utils/customHooks/useDisableOnRoute'
+import ActionModal from './ActionModal'
 
 const Search = () => {
   const [input, setInput] = useState('')
@@ -12,15 +13,8 @@ const Search = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const hasLeavedRoute = useOnRouteLeave('/search')
-  const {
-    isDisabled,
-    triggerActionModal,
-    ActionModal,
-  } = useModalWithActionOnRoute(
-    ['add', 'edit'],
-    "Can't search while post is creating/editing, you will lose your data",
-    () => history.push('/')
-  )
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { isDisabled } = useDisableOnRoute(['add', 'edit'])
 
   useEffect(() => {
     if (hasLeavedRoute) {
@@ -47,10 +41,16 @@ const Search = () => {
     }
   }
 
+  const handleClick = e => {
+    if (isDisabled) {
+      e.preventDefault()
+      setIsModalOpen(true)
+    }
+  }
+
   return (
-    // <div className="search-box" onClick={notifyMessage || null}>
     <>
-      <div className="search-box" onClick={triggerActionModal}>
+      <div className="search-box" onClick={handleClick}>
         <input
           className="search-box__input"
           type="text"
@@ -62,7 +62,14 @@ const Search = () => {
 
         <SearchIcon className="search-box__icon" />
       </div>
-      <ActionModal />
+      {isModalOpen && (
+        <ActionModal
+          action={() => history.push('/')}
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+          message="Can't change category while post is creating/editing, you will lose your data"
+        />
+      )}
     </>
   )
 }
