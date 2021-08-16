@@ -1,5 +1,6 @@
 import React from 'react'
 import { socialMedia } from '../utils/sociaMedia'
+import LogoSelleo from './LogoSelleo'
 
 const Footer = () => (
   <div className="footer">
@@ -21,16 +22,7 @@ const Footer = () => (
     </ul>
     <div className="footer__logo">
       <div className="logo">
-        <a
-          href="https://selleo.com/blog"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/logo.svg`}
-            alt="Selleo logo"
-          />
-        </a>
+        <LogoSelleo />
       </div>
     </div>
   </div>

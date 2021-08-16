@@ -1,26 +1,32 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
-import ToolTip from './ToolTip'
+import { useHistory } from 'react-router-dom'
+import { saveCategoryPosts } from '../store/actions/actions'
+import { useDispatch } from 'react-redux'
 import { Transition, delayStep, animationDuration } from './Transition'
 
 const PostCategories = props => {
-  const { categories, preview, isHidden } = props
+  const { categories, preview } = props
   const [showRestCategories, setShowRestCategories] = useState(false)
+  const history = useHistory()
+  const dispatch = useDispatch()
+
   const toogleShowRestCategories = () => {
     setShowRestCategories(!showRestCategories)
   }
 
-  const postCategoriesClassnames = classNames({
-    post__categories: true,
+  const handleClick = (name, id) => {
+    history.push(`/category/${name}`)
+    dispatch(saveCategoryPosts(id))
+  }
+
+  const postCategoriesClassnames = classNames('post__categories', {
     '-preview': preview,
   })
 
-  const postSingeCategoryWrapperClassnames = classNames(
-    'post__single-category-wrapper',
-    {
-      '-expanded-categories': showRestCategories,
-    }
-  )
+  const postSingeCategoryClassNames = classNames('post__single-category', {
+    '-expanded-category': showRestCategories,
+  })
 
   if (!categories) {
     return null
@@ -39,13 +45,16 @@ const PostCategories = props => {
   if (categories.length > howManyCategories) {
     const restCategories = categories.slice(howManyCategories)
 
-    moreCategories = restCategories.map(({ id, name, url }) => {
+    moreCategories = restCategories.map(({ id, name }) => {
       return (
-        <div className={postSingeCategoryWrapperClassnames} key={id}>
-          <ToolTip isHidden={isHidden} id={id} name={name} url={url}>
-            <div className="post__single-category">{name}</div>
-          </ToolTip>
-        </div>
+        <Transition key={id} name="opacity-animation">
+          <div
+            onClick={() => handleClick(name, id)}
+            className={postSingeCategoryClassNames}
+          >
+            {name}
+          </div>
+        </Transition>
       )
     })
   }
@@ -53,25 +62,18 @@ const PostCategories = props => {
     ? 'Show less'
     : `${categories.length - howManyCategories} more...`
 
-  let delay = animationDuration // animate first whole post after that time render categories
-
   return (
     <div className={postCategoriesClassnames}>
-      {slicedCategories.map(({ id, name, url }) => {
-        delay += delayStep
+      {slicedCategories.map(({ id, name }) => {
         return (
-          <div className={postSingeCategoryWrapperClassnames} key={id}>
-            <ToolTip isHidden={isHidden} id={id} name={name} url={url}>
-              <Transition name="opacity-animation" delay={delay}>
-                <div
-                  className="post__single-category"
-                  style={{ transitionDelay: `${delay}ms` }}
-                >
-                  {name}
-                </div>
-              </Transition>
-            </ToolTip>
-          </div>
+          <Transition key={id} name="opacity-animation">
+            <div
+              onClick={() => handleClick(name, id)}
+              className={postSingeCategoryClassNames}
+            >
+              {name}
+            </div>
+          </Transition>
         )
       })}
       {showRestCategories && moreCategories}

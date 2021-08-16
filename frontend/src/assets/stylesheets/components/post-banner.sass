@@ -1,0 +1,53 @@
+.post-banner
+  background-color: $color-black
+  +container
+
+  &__header
+    max-width: 750px
+    margin: auto
+
+    padding: 40px 0px
+
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    position: relative
+    z-index: 2
+
+  &__bg
+    position: absolute
+    z-index: -1
+    inset: 0
+    height: 100%
+
+    object-fit: cover
+
+  &__logo
+    max-width: 140px
+    margin-bottom: $m-base
+
+  &__headers
+    margin-bottom: $m-base
+    text-align: center
+
+    h3
+      margin: 0
+      font-size: 24px
+      letter-spacing: 0.48px
+      font-weight: 700
+      line-height: normal
+
+  &__learn-more
+    @extend .add-post-btn
+    text-transform: uppercase
+    font-size: 13px
+    font-weight: 600
+    border: 1px solid transparent
+
+    +transition(background-color, color, border)
+
+    &:hover
+      background-color: $color-dark
+      color: $color-primary
+      border-color: $color-primary
