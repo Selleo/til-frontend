@@ -1,3 +1,5 @@
+$hamburger-vertical-center-value: 71px
+
 .side-nav
   background: $color-black
   display: flex
@@ -24,7 +26,7 @@
     justify-content: space-between
 
     left: $grid-gutter-width
-    top: 71px
+    top: $hamburger-vertical-center-value
 
     z-index: $z-higher + 10
 
@@ -48,9 +50,9 @@
 
   +media-breakpoint-down(lg)
     .side-nav__menu
-      margin-top: 28px
+      margin-top: 38px
       .search-box
-        &__input 
+        &__input
           width: 190px
         &__icon
           right: 50px

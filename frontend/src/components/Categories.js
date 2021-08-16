@@ -47,7 +47,7 @@ const Categories = props => {
         dispatch(saveCategoryPosts(id))
         history.push(url)
       }
-      setModalAction(() => actionForModal)
+      setModalAction(() => actionForModal) // figure it out :)
       setIsModalOpen(true)
     }
     closeSideNav()
@@ -55,8 +55,6 @@ const Categories = props => {
   }
 
   const sortedCategories = sortCategories(categories)
-
-  console.log(isModalOpen)
 
   return (
     <>
@@ -88,7 +86,7 @@ const Categories = props => {
           action={modalAction}
           isOpen={isModalOpen}
           setIsOpen={setIsModalOpen}
-          message="Can't change category while post is creating/editing, you will lose your data"
+          message="If you leave, you will lose your data, are you sure?"
         />
       )}
     </>

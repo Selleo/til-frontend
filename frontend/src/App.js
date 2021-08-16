@@ -11,6 +11,7 @@ import AuthenticatedApp from './authenticated'
 import AuthHandler from './components/AuthHandler'
 import NonAuthenticatedApp from './nonAuthenticated'
 import useUser from './utils/customHooks/useUser'
+import ScrollToTop from './components/ScrollToTop'
 // needed for styling that has not been changed yet
 import './App.css'
 import './devicon.css'
@@ -33,6 +34,7 @@ const App = () => {
   return (
     <Router>
       <div className="app-main" data-testid="app-main">
+        <ScrollToTop />
         {renderApp}
         <Route path="/auth">
           <AuthHandler />

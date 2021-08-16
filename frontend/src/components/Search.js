@@ -67,7 +67,7 @@ const Search = () => {
           action={() => history.push('/')}
           isOpen={isModalOpen}
           setIsOpen={setIsModalOpen}
-          message="Can't change category while post is creating/editing, you will lose your data"
+          message="If you leave, you will lose your data, are you sure?"
         />
       )}
     </>
