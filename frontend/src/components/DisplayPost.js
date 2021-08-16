@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { fetchSinglePost } from '../utils'
 import { useParams } from 'react-router-dom'
 import Post from '../components/Post'
+import PostBanner from './PostBanner'
 
 const { REACT_APP_API_URL: API_URL } = process.env
 
@@ -21,7 +22,12 @@ const DisplayPost = () => {
     return <p>...loading...</p>
   }
 
-  return <Post key={post.id} post={post} />
+  return (
+    <>
+      <Post key={post.id} post={post} />
+      <PostBanner postCategory={post.categories[0]} />
+    </>
+  )
 }
 
 export default DisplayPost

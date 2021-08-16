@@ -51,7 +51,7 @@ const StyledAddPost = styled.div`
     font-size: 24px;
     font-weight: 600;
     letter-spacing: 0.48px;
-    margin-bottom: 24px;
+    margin-bottom: $m-base;
   }
 
   .add-post-title {
