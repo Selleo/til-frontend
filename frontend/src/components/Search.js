@@ -5,6 +5,7 @@ import { saveSearchedPosts, saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
 import { ReactComponent as SearchIcon } from '../assets/icons/search.svg'
 import { useDisableActionOnRouteWithMessage } from '../utils/customHooks/useDisableActionOnRouteWithMessage'
+import { Transition } from './Transition'
 
 const Search = () => {
   const [input, setInput] = useState('')
@@ -48,18 +49,20 @@ const Search = () => {
   }
 
   return (
-    <div className="search-box" onClick={notifyMessage || null}>
-      <input
-        className="search-box__input"
-        type="text"
-        placeholder="Search"
-        value={input}
-        disabled={isDisabled}
-        onChange={handleInput}
-      />
+    <Transition name="search-animation">
+      <div className="search-box" onClick={notifyMessage || null}>
+        <input
+          className="search-box__input"
+          type="text"
+          placeholder="Search"
+          value={input}
+          disabled={isDisabled}
+          onChange={handleInput}
+        />
 
-      <SearchIcon className="search-box__icon" />
-    </div>
+        <SearchIcon className="search-box__icon" />
+      </div>
+    </Transition>
   )
 }
 

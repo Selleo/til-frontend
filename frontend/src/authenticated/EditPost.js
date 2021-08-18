@@ -10,6 +10,7 @@ import Select from 'react-select'
 import customStyles from '../styles/ReactSelectCustomStyles/customStyles'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
 import PostSeparator from '../components/UI/PostSeparator'
+import { Transition } from '../components/Transition'
 
 const { REACT_APP_API_URL: API_URL } = process.env
 
@@ -117,59 +118,61 @@ const EditPost = () => {
   }, [markdown, title, categories])
 
   return (
-    <>
-      <div className="add-post-container">
-        <div className="add-post__post-create">
-          <div className="add-post__header">Update your post</div>
-          <form>
-            <input
-              className="add-post__title"
-              type="text"
-              name="name"
-              placeholder="Title"
-              value={title}
-              onChange={handleTitle}
+    <Transition name="post-animation">
+      <>
+        <div className="add-post-container">
+          <div className="add-post__post-create">
+            <div className="add-post__header">Update your post</div>
+            <form>
+              <input
+                className="add-post__title"
+                type="text"
+                name="name"
+                placeholder="Title"
+                value={title}
+                onChange={handleTitle}
+              />
+            </form>
+            <ReactMde
+              classes={{
+                toolbar: 'no-show',
+                textArea: 'text-area',
+                reactMde: 'react-mde',
+                grip: 'grip',
+              }}
+              onChange={handleInput}
+              value={markdown}
             />
-          </form>
-          <ReactMde
-            classes={{
-              toolbar: 'no-show',
-              textArea: 'text-area',
-              reactMde: 'react-mde',
-              grip: 'grip',
-            }}
-            onChange={handleInput}
-            value={markdown}
-          />
-          <Select
-            isMulti
-            name="colors"
-            value={userCategoriesOptions}
-            options={categoriesOptions}
-            onChange={handleSelect}
-            styles={customStyles}
+            <Select
+              isMulti
+              name="colors"
+              value={userCategoriesOptions}
+              options={categoriesOptions}
+              onChange={handleSelect}
+              styles={customStyles}
+            />
+          </div>
+          <PostSeparator />
+          <PostPreview
+            categories={categories}
+            title={title || 'Your title'}
+            body={markdown || 'Your content'}
           />
         </div>
-        <PostSeparator />
-        <PostPreview
-          categories={categories}
-          title={title || 'Your title'}
-          body={markdown || 'Your content'}
-        />
-      </div>
-      <div className="buttons">
-        <button onClick={handleCancel} className="buttons__button-cancel">
-          Cancel
-        </button>
-        <button
-          className="buttons__button-primary"
-          disabled={buttonState}
-          onClick={updatePost}
-        >
-          update Post
-        </button>
-      </div>
-    </>
+        <div className="buttons">
+          <button onClick={handleCancel} className="buttons__button-cancel">
+            Cancel
+          </button>
+          <button
+            className="buttons__button-primary"
+            disabled={buttonState}
+            onClick={updatePost}
+          >
+            update Post
+          </button>
+        </div>
+      </>
+    </Transition>
   )
 }
 

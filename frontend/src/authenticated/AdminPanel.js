@@ -5,6 +5,7 @@ import useUser from '../utils/customHooks/useUser'
 import chevron from '../assets/icons/chevron.png'
 import classNames from 'classnames'
 import AddPostButton from './AddPostButton'
+import { Transition } from '../components/Transition'
 
 const AdminPanel = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -51,21 +52,25 @@ const AdminPanel = () => {
       <AddPostButton />
       <div onClick={toggleDropdown}>
         <div className={userPanelClasses}>
-          <img
-            className="user__image -margin"
-            src={user.image}
-            alt="user-img"
-          />
+          <Transition name="zoom-animation">
+            <img
+              className="user__image -margin"
+              src={user.image}
+              alt="user-img"
+            />
+          </Transition>
           <p className="user__name">
             {user.firstName} {user.lastName}
           </p>
           <img src={chevron} alt="chevron" className={chevronClasses} />
-          <div className={userMenuClasses}>
-            <Link to="/profile" className="profile-link">
-              Profile
-            </Link>
-            <Logout />
-          </div>
+          <Transition name="opacity-animation" condition={isMenuOpen}>
+            <div className={userMenuClasses}>
+              <Link to="/profile" className="profile-link">
+                Profile
+              </Link>
+              <Logout />
+            </div>
+          </Transition>
         </div>
       </div>
     </div>

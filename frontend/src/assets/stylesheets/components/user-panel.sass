@@ -28,6 +28,8 @@
   position: relative
   cursor: pointer
 
+  transition-duration: $transition-duration
+
   &__menu
     background: $color-black
     box-shadow: 0px 3px 10px #1F1F1F
@@ -41,9 +43,6 @@
     padding-bottom: 14px
     width: 100%
     top: 100%
-
-    &.-hidden
-      visibility: hidden
 
   &.-active
     background: $color-black
