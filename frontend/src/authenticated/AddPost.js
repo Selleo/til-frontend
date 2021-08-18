@@ -16,6 +16,7 @@ import postSuccessToast from '../utils/toasts/postSuccessToast'
 import PostPreview from '../authenticated/PostPreview'
 import ReactMde from 'react-mde'
 import PostSeparator from '../components/UI/PostSeparator'
+import { Transition } from '../components/Transition'
 
 const { REACT_APP_API_URL: API_URL } = process.env
 
@@ -105,70 +106,72 @@ const AddPost = () => {
   }, [markdown, title, userCategories])
 
   return (
-    <>
-      <div className="add-post-container">
-        <div className="add-post__post-create">
-          <h2 className="add-post__header">Create a post</h2>
-          <form>
-            <input
-              className="add-post__title"
-              name="name"
-              onChange={handleTitle}
-              placeholder="Title"
-              type="text"
-              value={title}
+    <Transition name="post-animation">
+      <>
+        <div className="add-post-container">
+          <div className="add-post__post-create">
+            <h2 className="add-post__header">Create a post</h2>
+            <form>
+              <input
+                className="add-post__title"
+                name="name"
+                onChange={handleTitle}
+                placeholder="Title"
+                type="text"
+                value={title}
+              />
+            </form>
+            <ReactMde
+              classes={{
+                toolbar: 'no-show',
+                textArea: 'text-area',
+                reactMde: 'react-mde',
+                grip: 'grip',
+              }}
+              onChange={handleInput}
+              textAreaProps={{
+                placeholder: 'Write away...',
+              }}
+              value={markdown}
             />
-          </form>
-          <ReactMde
-            classes={{
-              toolbar: 'no-show',
-              textArea: 'text-area',
-              reactMde: 'react-mde',
-              grip: 'grip',
-            }}
-            onChange={handleInput}
-            textAreaProps={{
-              placeholder: 'Write away...',
-            }}
-            value={markdown}
-          />
-          <CreatableSelect
-            className="basic-multi-select"
-            classNamePrefix="select"
-            isMulti
-            name="colors"
-            onChange={handleSelect}
-            options={categoriesOptions}
-            placeholder="Select categories"
-            styles={customStyles}
-          />
-          <Checkboxes
-            handlePublicCheckbox={handlePublicCheckbox}
-            handleReviewCheckbox={handleReviewCheckbox}
-            isPublic={isPublic}
-            isReviewNeeded={isReviewNeeded}
+            <CreatableSelect
+              className="basic-multi-select"
+              classNamePrefix="select"
+              isMulti
+              name="colors"
+              onChange={handleSelect}
+              options={categoriesOptions}
+              placeholder="Select categories"
+              styles={customStyles}
+            />
+            <Checkboxes
+              handlePublicCheckbox={handlePublicCheckbox}
+              handleReviewCheckbox={handleReviewCheckbox}
+              isPublic={isPublic}
+              isReviewNeeded={isReviewNeeded}
+            />
+          </div>
+          <PostSeparator />
+          <PostPreview
+            categories={userCategories}
+            title={title || 'Title'}
+            body={markdown || 'Your content'}
           />
         </div>
-        <PostSeparator />
-        <PostPreview
-          categories={userCategories}
-          title={title || 'Title'}
-          body={markdown || 'Your content'}
-        />
-      </div>
-      <div className="buttons">
-        <button onClick={handleCancel} className="buttons__button-cancel">
-          Cancel
-        </button>
-        <button
-          className="buttons__button-primary"
-          disabled={buttonState}
-          onClick={savePost}
-        >
-          Save Post
-        </button>
-      </div>
-    </>
+        <div className="buttons">
+          <button onClick={handleCancel} className="buttons__button-cancel">
+            Cancel
+          </button>
+          <button
+            className="buttons__button-primary"
+            disabled={buttonState}
+            onClick={savePost}
+          >
+            Save Post
+          </button>
+        </div>
+      </>
+    </Transition>
   )
 }
 

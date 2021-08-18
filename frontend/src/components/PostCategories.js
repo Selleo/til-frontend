@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import ToolTip from './ToolTip'
+import { Transition, delayStep, animationDuration } from './Transition'
 
 const PostCategories = props => {
   const { categories, preview, isHidden } = props
@@ -32,13 +33,23 @@ const PostCategories = props => {
     '-preview': preview,
   })
 
+  let delay = animationDuration // animate first whole post after that time render categories
+
   return (
     <div className={postCategoriesClassnames}>
       {slicedCategories.map(({ id, name, url }) => {
+        delay += delayStep
         return (
           <div className="post__single-category-wrapper" key={id}>
             <ToolTip isHidden={isHidden} id={id} name={name} url={url}>
-              <div className="post__single-category">{name}</div>
+              <Transition name="opacity-animation" delay={delay}>
+                <div
+                  className="post__single-category"
+                  style={{ transitionDelay: `${delay}ms` }}
+                >
+                  {name}
+                </div>
+              </Transition>
             </ToolTip>
           </div>
         )

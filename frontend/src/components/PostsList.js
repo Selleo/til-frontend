@@ -20,13 +20,13 @@ const PostsList = props => {
     return null
   }
 
-  return (
-    <div className="posts">
-      {posts.map(post => (
-        <Post key={post.id} post={post} />
-      ))}
-    </div>
-  )
+  let delay = 0
+
+  return posts.map(post => {
+    delay += 75
+
+    return <Post key={post.id} post={post} animationDelay={delay} />
+  })
 }
 
 export default PostsList
