@@ -6,6 +6,7 @@ import { saveCategoryPosts } from '../store/actions/actions'
 import Icon from './UI/Icon'
 import { sortCategories } from '../utils/array/helpers.js'
 import { useDisableActionOnRouteWithMessage } from '../utils/customHooks/useDisableActionOnRouteWithMessage'
+import { Transition, delayStep } from './Transition'
 
 const Categories = props => {
   const categories = useSelector(state => state.categories)
@@ -46,24 +47,32 @@ const Categories = props => {
   }
 
   const sortedCategories = sortCategories(categories)
+  let delay = 0
 
-  return sortedCategories.map(({ id, name }) => (
-    <NavLink
-      key={name}
-      to={`/category/${name}`}
-      className="categories__single-category"
-      activeClassName="-active"
-    >
-      <div className="categories__icon">
-        <Icon categoryName={name} />
-      </div>
-      <div className="categories__name">
-        <div className="categories__name" onClick={e => handleClick(e, id)}>
-          {name}
-        </div>
-      </div>
-    </NavLink>
-  ))
+  return sortedCategories.map(({ id, name }) => {
+    delay += delayStep
+
+    return (
+      <NavLink
+        key={id}
+        to={`/category/${name}`}
+        className="categories__single-category"
+        activeClassName="-active"
+        style={{ transitionDelay: `${delay}ms` }}
+      >
+        <Transition name="opacity-animation">
+          <>
+            <div className="categories__icon">
+              <Icon categoryName={name} />
+            </div>
+            <div className="categories__name" onClick={e => handleClick(e, id)}>
+              {name}
+            </div>
+          </>
+        </Transition>
+      </NavLink>
+    )
+  })
 }
 
 export default Categories
