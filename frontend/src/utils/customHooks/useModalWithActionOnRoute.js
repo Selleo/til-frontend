@@ -26,7 +26,6 @@ export const useModalWithActionOnRoute = (paths, message) => {
       <ActionModal
         text={message}
         action={modalAction}
-        // action={() => console.log('test')}
         toggleModal={toggleModal}
         isOpen={isModalOpen}
       />

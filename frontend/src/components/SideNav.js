@@ -58,7 +58,7 @@ const SideNav = () => {
           action={() => history.push('/')}
           isOpen={isModalOpen}
           setIsOpen={setIsModalOpen}
-          message="If you leave, you will lose your data, are you sure?"
+          message="If you leave, you will lose your data!"
         />
       )}
     </>

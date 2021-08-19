@@ -14,11 +14,19 @@
 
     +transition(background-color, padding, color, margin)
 
+    svg
+      path
+        fill: $color-white
+
     &.-active
       background-color: $color-white
       color: $color-black
       padding-left: 10px
       margin-left: -10px
+
+      svg
+        path
+          fill: $color-black
 
   &__icon
     height: 17px
