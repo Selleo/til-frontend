@@ -6,7 +6,7 @@ import { saveCategoryPosts } from '../store/actions/actions'
 import Icon from './UI/Icon'
 import { sortCategories } from '../utils/array/helpers.js'
 import { useDisableOnRoute } from '../utils/customHooks/useDisableOnRoute'
-import { Transition, delayStep } from './Transition'
+import { Transition } from './Transition'
 
 import ActionModal from '../components/ActionModal'
 
@@ -56,25 +56,22 @@ const Categories = props => {
   }
 
   const sortedCategories = sortCategories(categories)
-  let delay = 0
 
   return (
     <>
       {sortedCategories.map(({ id, name }) => {
         const categoryUrl = `/category/${name}`
-        delay += delayStep
         return (
           <NavLink
             key={name}
             to={categoryUrl}
             className="categories__single-category"
             activeClassName="-active"
-            style={{ transitionDelay: `${delay}ms` }}
           >
             <Transition name="opacity-animation">
               <>
                 <div className="categories__icon">
-                  <Icon categoryName={name} />
+                  <Icon name={name} />
                 </div>
                 <div
                   className="categories__name"
