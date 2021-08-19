@@ -7,6 +7,8 @@ defmodule Til.ShareableContent.Category do
     field :name, :string
     field :official, :boolean
     field :url, :string
+    field :first_text, :string
+    field :second_text, :string
 
     many_to_many(
       :posts,

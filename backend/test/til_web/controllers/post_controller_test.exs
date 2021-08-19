@@ -65,11 +65,11 @@ defmodule TilWeb.PostControllerTest do
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       [first_post, second_post] = parsed_response_body
       assert first_post["categories"] == [
-        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url},
-        %{"id" => second_category.id, "name" => second_category.name, "url" => second_category.url}
+        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url, "firstText" => first_category.first_text, "secondText" => first_category.second_text},
+        %{"id" => second_category.id, "name" => second_category.name, "url" => second_category.url, "firstText" => second_category.first_text, "secondText" => second_category.second_text}
       ]
       assert second_post["categories"] == [
-        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url},
+        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url, "firstText" => first_category.first_text, "secondText" => first_category.second_text},
       ]
     end
 
@@ -301,8 +301,8 @@ defmodule TilWeb.PostControllerTest do
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       assert parsed_response_body["title"] == post_title
       assert parsed_response_body["categories"] == [
-        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url},
-        %{"id" => second_category.id, "name" => second_category.name, "url" => second_category.url}
+        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url, "firstText" => first_category.first_text, "secondText" => first_category.second_text},
+        %{"id" => second_category.id, "name" => second_category.name, "url" => second_category.url, "firstText" => second_category.first_text, "secondText" => second_category.second_text}
       ]
     end
 

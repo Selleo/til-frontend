@@ -5,8 +5,8 @@ defmodule TilWeb.CategoryControllerTest do
 
   describe "GET /api/categories" do
     test "returns all existing categories as public", %{conn: conn} do
-      first_category = insert(:category, name: "Elixir", url: "https://somepage.com")
-      second_category = insert(:category, name: "Javascript", url: "https://somepage.com")
+      first_category = insert(:category, name: "Elixir", url: "https://somepage.com", first_text: "First text", second_text: "Second text")
+      second_category = insert(:category, name: "Javascript", url: "https://somepage.com", first_text: "First text", second_text: "Second text")
 
       response =
         conn
@@ -22,8 +22,12 @@ defmodule TilWeb.CategoryControllerTest do
 
       assert first_responded_category["name"] == first_category.name
       assert first_responded_category["url"] == first_category.url
+      assert first_responded_category["firstText"] == first_category.first_text
+      assert first_responded_category["secondText"] == first_category.second_text
       assert second_responded_category["name"] == second_category.name
       assert second_responded_category["url"] == second_category.url
+      assert second_responded_category["firstText"] == second_category.first_text
+      assert second_responded_category["secondText"] == second_category.second_text
     end
   end
 

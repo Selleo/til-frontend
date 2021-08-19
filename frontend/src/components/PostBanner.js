@@ -1,10 +1,9 @@
 import React from 'react'
-import { categoryStatementMap } from '../utils/maps'
 import LogoSelleo from './LogoSelleo'
 
 const PostBanner = props => {
   const { postCategory } = props
-  const { name, url } = postCategory
+  const { url, firstText, secondText } = postCategory
 
   if (!url) {
     return null
@@ -22,8 +21,8 @@ const PostBanner = props => {
         <LogoSelleo className="post-banner__logo" />
 
         <div className="post-banner__headers">
-          <h3>{categoryStatementMap.get(name).textFirst}</h3>
-          <h3>{categoryStatementMap.get(name).textSecond}</h3>
+          <h3>{firstText}</h3>
+          <h3>{secondText}</h3>
         </div>
 
         <a
