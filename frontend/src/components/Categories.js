@@ -12,6 +12,7 @@ import ActionModal from '../components/ActionModal'
 
 const Categories = props => {
   const categories = useSelector(state => state.categories)
+  const { closeSideNav } = props
   const dispatch = useDispatch()
   const history = useHistory()
   const [isModalOpen, setIsModalOpen] = useState(false)
