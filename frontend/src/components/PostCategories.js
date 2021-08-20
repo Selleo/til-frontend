@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { useHistory } from 'react-router-dom'
 import { saveCategoryPosts } from '../store/actions/actions'
 import { useDispatch } from 'react-redux'
-import { Transition, delayStep, animationDuration } from './Transition'
+import { Transition } from './Transition'
 
 const PostCategories = props => {
   const { categories, preview } = props

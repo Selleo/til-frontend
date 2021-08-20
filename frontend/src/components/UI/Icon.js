@@ -35,6 +35,11 @@ import { SiKubernetes } from 'react-icons/si'
 import { FaMeetup } from 'react-icons/fa'
 import { FaPhoenixFramework } from 'react-icons/fa'
 import { AiFillApi } from 'react-icons/ai'
+import { MdHttp } from 'react-icons/md'
+import { SiAzuredevops } from 'react-icons/si'
+import { GrTest } from 'react-icons/gr'
+import { FaReact } from 'react-icons/fa'
+import { GrMysql } from 'react-icons/gr'
 
 import { BsFillCircleFill } from 'react-icons/bs'
 
@@ -55,12 +60,16 @@ const Icon = ({ name }) => {
       return <FaAws />
     case 'chrome':
       return <FiChrome />
+    case 'cicd':
+      return <MdHttp />
     case 'commandline':
       return <BsTerminalFill />
     case 'crystal':
       return <GiCrystalEye />
     case 'css':
       return <FaCss3 />
+    case 'devops':
+      return <SiAzuredevops />
     case 'docker':
       return <SiDocker />
     case 'elixir':
@@ -97,20 +106,22 @@ const Icon = ({ name }) => {
       return <FaApple />
     case 'phoenix':
       return <FaPhoenixFramework />
+    case 'qa':
+      return <GrTest />
     case 'rails':
       return <SiRails />
     case 'react':
       return <SiReact />
-    // case 'react-native':
-    //   return < />
+    case 'react-native':
+      return <FaReact />
     case 'redis':
       return <SiRedis />
     case 'ruby':
       return <DiRuby />
     case 'rust':
       return <SiRust />
-    // case 'sql':
-    //   return < />
+    case 'sql':
+      return <GrMysql />
     case 'terraform':
       return <SiTerraform />
     case 'vault':
