@@ -4,6 +4,7 @@ import '../App.css'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveCategoryPosts } from '../store/actions/actions'
+import { delayStep } from './Transition'
 
 const PostsList = props => {
   const { posts } = props
@@ -20,10 +21,14 @@ const PostsList = props => {
     return null
   }
 
+  if (!posts.length) {
+    return <h3>Nothing Found</h3>
+  }
+
   let delay = 0
 
   return posts.map(post => {
-    delay += 75
+    delay += delayStep
 
     return <Post key={post.id} post={post} animationDelay={delay} />
   })
