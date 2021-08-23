@@ -26,8 +26,6 @@ const DisplayPost = () => {
     return <p>post {post.errors.detail}</p>
   }
 
-  console.log(post)
-
   return (
     <>
       <Post key={post.id} post={post} />
