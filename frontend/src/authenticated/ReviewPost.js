@@ -41,7 +41,7 @@ const ReviewPost = () => {
   }
 
   if (post.errors) {
-    return <p>{post.errors.detail}</p>
+    return <p>post {post.errors.detail}</p>
   }
 
   return (
