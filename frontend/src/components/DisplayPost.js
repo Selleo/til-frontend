@@ -22,6 +22,12 @@ const DisplayPost = () => {
     return <p>...loading...</p>
   }
 
+  if (post.errors) {
+    return <p>post {post.errors.detail}</p>
+  }
+
+  console.log(post)
+
   return (
     <>
       <Post key={post.id} post={post} />
