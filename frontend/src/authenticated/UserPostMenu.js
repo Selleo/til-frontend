@@ -4,12 +4,16 @@ import { Link } from 'react-router-dom'
 import DeletePost from '../authenticated/DeletePost'
 
 const UserPostMenu = props => {
-  const { post, isOnProfile } = props
+  const { post, isOnProfile, isOnReview } = props
   const { id } = post
 
   const postUserMenuClasses = classNames('post__user-menu', {
     '-owner-view': !isOnProfile,
   })
+
+  if (isOnReview) {
+    return null
+  }
 
   return (
     <>

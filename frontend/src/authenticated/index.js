@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, useHistory } from 'react-router-dom'
 import AddPost from '../authenticated/AddPost'
 import AppHeader from '../components/AppHeader'
 import EditPost from '../authenticated/EditPost'
@@ -10,8 +10,17 @@ import SideNav from '../components/SideNav'
 import Footer from '../components/Footer'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { deleteHash, getHash } from '../utils/temporaryReviewHash'
 
 const AuthenticatedApp = () => {
+  const history = useHistory()
+  const temporaryHash = getHash()
+
+  if (temporaryHash) {
+    history.push(`/review-posts?hashed_id=${temporaryHash}`)
+    deleteHash()
+  }
+
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
