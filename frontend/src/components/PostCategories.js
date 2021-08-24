@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { saveCategoryPosts } from '../store/actions/actions'
 import { useDispatch } from 'react-redux'
 import { Transition } from './Transition'
+import SinglePostCategory from './SinglePostCategory'
 
 const PostCategories = props => {
   const { categories, preview } = props
@@ -47,14 +48,12 @@ const PostCategories = props => {
 
     moreCategories = restCategories.map(({ id, name }) => {
       return (
-        <Transition key={id} name="opacity-animation">
-          <div
-            onClick={() => handleClick(name, id)}
-            className={postSingeCategoryClassNames}
-          >
-            {name}
-          </div>
-        </Transition>
+        <SinglePostCategory
+          key={id}
+          handleClick={() => handleClick(name, id)}
+          categoryName={name}
+          classNames={postSingeCategoryClassNames}
+        />
       )
     })
   }
@@ -66,24 +65,24 @@ const PostCategories = props => {
     <div className={postCategoriesClassnames}>
       {slicedCategories.map(({ id, name }) => {
         return (
-          <Transition key={id} name="opacity-animation">
-            <div
-              onClick={() => handleClick(name, id)}
-              className={postSingeCategoryClassNames}
-            >
-              {name}
-            </div>
-          </Transition>
+          <SinglePostCategory
+            key={id}
+            handleClick={() => handleClick(name, id)}
+            categoryName={name}
+            classNames={postSingeCategoryClassNames}
+          />
         )
       })}
       {showRestCategories && moreCategories}
       {moreCategories && (
-        <div
-          onClick={toogleShowRestCategories}
-          className="post__single-category post__more-categories"
-        >
-          {showRestCategoriesButtonText}
-        </div>
+        <Transition name="opacity-animation">
+          <div
+            onClick={toogleShowRestCategories}
+            className="post__single-category post__more-categories"
+          >
+            {showRestCategoriesButtonText}
+          </div>
+        </Transition>
       )}
     </div>
   )
