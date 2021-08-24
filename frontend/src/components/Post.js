@@ -9,12 +9,14 @@ import TextBlock from './TextBlock'
 import { format, parseISO } from 'date-fns'
 import { Transition } from './Transition'
 import useUser from '../utils/customHooks/useUser'
+import { useIsPostPublic } from '../utils/customHooks/useIsPostPublic'
 
 const Post = props => {
   const { post, isOnProfile, userImage, review, animationDelay } = props
   const location = useLocation()
   const user = useUser()
   const [isPostOwner, setIsPostOwner] = useState(false)
+  const isPublic = useIsPostPublic(post.isPublic)
 
   useEffect(() => {
     if (user && post) {
@@ -50,6 +52,7 @@ const Post = props => {
                 {post.author.firstName} {post.author.lastName}
               </div>
               <div className="post__date">{date}</div>
+              <div className="post__is-public">{isPublic}</div>
             </div>
           </div>
           {!review && <CopyPostURL postId={post.id} />}
