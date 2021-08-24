@@ -1,17 +1,24 @@
 import React from 'react'
+import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import DeletePost from '../authenticated/DeletePost'
 
 const UserPostMenu = props => {
-  const id = props.post.id
+  const { post, isOnProfile } = props
+  const { id } = post
+
+  const postUserMenuClasses = classNames('post__user-menu', {
+    '-owner-view': !isOnProfile,
+  })
+
   return (
     <>
       <hr className="post__hr" />
-      <div className="post__user-menu">
+      <div className={postUserMenuClasses}>
         <Link to={`/edit-post/${id}`}>
           <button className="edit-post-btn">Edit</button>
         </Link>
-        <DeletePost postId={id} />
+        {isOnProfile && <DeletePost postId={id} />}
       </div>
     </>
   )
