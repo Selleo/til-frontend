@@ -204,6 +204,12 @@
     justify-content: space-between
     margin: 24px auto 0px
 
+    &.-owner-view
+      justify-content: center
+
+      button
+        width: 200px
+
   +media-breakpoint-only(xs)
     &__user-menu
       max-width: 250px
@@ -239,6 +245,9 @@
 
     &__user-menu
       margin: 24px 0px 0px auto
+
+      &.-owner-view
+        justify-content: flex-end
 
     &__reactions
       max-width: 285px
