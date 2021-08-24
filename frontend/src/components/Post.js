@@ -34,6 +34,12 @@ const Post = props => {
   const parsed = parseISO(post.createdAt)
   const date = format(parsed, ' dd MMM  hh:mm')
 
+  const handleTitleClick = e => {
+    if (review) {
+      e.preventDefault()
+    }
+  }
+
   return (
     <Transition name="post-animation" delay={animationDelay}>
       <article
@@ -58,7 +64,11 @@ const Post = props => {
           {!review && <CopyPostURL postId={post.id} />}
         </div>
         <div>
-          <Link className="post__title" to={`/posts/${post.id}`}>
+          <Link
+            className="post__title"
+            to={`/posts/${post.id}`}
+            onClick={e => handleTitleClick(e)}
+          >
             {title}
           </Link>
         </div>
@@ -70,7 +80,11 @@ const Post = props => {
           {!review && <ReactionBar post={post} />}
         </div>
         {(isOnProfile || isPostOwner) && (
-          <UserPostMenu post={post} isOnProfile={isOnProfile} />
+          <UserPostMenu
+            post={post}
+            isOnProfile={isOnProfile}
+            isOnReview={review}
+          />
         )}
       </article>
     </Transition>

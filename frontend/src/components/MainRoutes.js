@@ -5,11 +5,14 @@ import PostsList from '../components/PostsList'
 import DisplayPost from '../components/DisplayPost'
 import UserPosts from './UsersPosts'
 import SearchedPosts from './SearchedPosts'
+import CheckIfCanReview from './CheckIfCanReview'
 import { useSelector } from 'react-redux'
+import useUser from '../utils/customHooks/useUser'
 
 const MainRoutes = () => {
   const posts = useSelector(state => state.posts)
   const categoryPosts = useSelector(state => state.categoryPosts?.posts)
+  const user = useUser()
 
   return (
     <Switch>
@@ -28,6 +31,7 @@ const MainRoutes = () => {
       <Route path="/user-posts/:id">
         <UserPosts />
       </Route>
+      {!user && <Route path="/review-posts" component={CheckIfCanReview} />}
     </Switch>
   )
 }
