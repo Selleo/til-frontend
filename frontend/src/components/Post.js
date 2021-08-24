@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Markdown from './Markdown'
 import CopyPostURL from './CopyURL'
 import PostCategories from './PostCategories'
@@ -8,10 +8,19 @@ import { Link, useLocation } from 'react-router-dom'
 import TextBlock from './TextBlock'
 import { format, parseISO } from 'date-fns'
 import { Transition } from './Transition'
+import useUser from '../utils/customHooks/useUser'
 
 const Post = props => {
-  const { post, userPost, userImage, review, animationDelay } = props
+  const { post, isOnProfile, userImage, review, animationDelay } = props
   const location = useLocation()
+  const user = useUser()
+  const [isPostOwner, setIsPostOwner] = useState(false)
+
+  useEffect(() => {
+    if (user && post) {
+      setIsPostOwner(user.uuid === post.author.uuid)
+    }
+  }, [user, post])
 
   let title
   if (location.pathname === '/search') {
@@ -57,7 +66,9 @@ const Post = props => {
           <PostCategories categories={post.categories} />
           {!review && <ReactionBar post={post} />}
         </div>
-        {userPost && <UserPostMenu post={post} />}
+        {(isOnProfile || isPostOwner) && (
+          <UserPostMenu post={post} isOnProfile={isOnProfile} />
+        )}
       </article>
     </Transition>
   )

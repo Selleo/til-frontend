@@ -17,7 +17,12 @@ const UserProfile = () => {
       {userPosts ? (
         <div className="posts">
           {userPosts.map(post => (
-            <Post key={post.id} post={post} userPost userImage={user.image} />
+            <Post
+              key={post.id}
+              post={post}
+              isOnProfile
+              userImage={user.image}
+            />
           ))}
         </div>
       ) : (
