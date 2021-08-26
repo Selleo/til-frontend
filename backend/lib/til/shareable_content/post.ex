@@ -2,7 +2,7 @@ defmodule Til.ShareableContent.Post do
   use Ecto.Schema
   import Ecto.Changeset
   alias Til.Accounts.User
-  alias Til.ShareableContent.Category
+  alias Til.ShareableContent.PostCategory
   alias Til.Activities.Reaction
   defdelegate authorize(action, user, params), to: Til.Policies.PostPolicy
 
@@ -15,7 +15,7 @@ defmodule Til.ShareableContent.Post do
 
     belongs_to :author, User
     has_many :reactions, Reaction, on_delete: :delete_all
-    many_to_many :categories, Category, join_through: "posts_categories", on_replace: :delete, on_delete: :delete_all
+    has_many :posts_categories, PostCategory, on_replace: :delete, on_delete: :delete_all, preload_order: [asc: :position]
     timestamps()
   end
 

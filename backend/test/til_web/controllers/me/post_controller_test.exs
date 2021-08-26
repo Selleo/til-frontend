@@ -47,7 +47,10 @@ defmodule TilWeb.Me.PostControllerTest do
       second_category = insert(:category, name: "Javascript")
       third_category = insert(:category, name: "Machine Learning")
 
-      post = insert(:post, author: current_user, categories: [first_category, second_category])
+      post = insert(:post, author: current_user)
+
+      insert(:post_category, post_id: post.id, category_id: first_category.id)
+      insert(:post_category, post_id: post.id, category_id: second_category.id)
 
       response =
         conn
@@ -59,13 +62,13 @@ defmodule TilWeb.Me.PostControllerTest do
 
       assert response.status == 200
 
-      %{categories: categories} = Repo.get!(Post, post.id) |> Repo.preload([:categories])
+      %{posts_categories: posts_categories} = Repo.get!(Post, post.id) |> Repo.preload([posts_categories: :category])
 
-      assert length(categories) == 1
+      assert length(posts_categories) == 1
 
-      [post_category] = categories
+      [post_category] = posts_categories
 
-      assert post_category.id == third_category.id
+      assert post_category.category.id == third_category.id
     end
 
     test "creates new categories as unofficial during post update", %{conn: conn} do
@@ -73,7 +76,10 @@ defmodule TilWeb.Me.PostControllerTest do
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
       first_category = insert(:category, name: "Elixir")
       second_category = insert(:category, name: "Javascript")
-      post = insert(:post, author: current_user, categories: [first_category, second_category])
+      post = insert(:post, author: current_user)
+
+      insert(:post_category, post_id: post.id, category_id: first_category.id)
+      insert(:post_category, post_id: post.id, category_id: second_category.id)
 
       response =
         conn
@@ -85,13 +91,13 @@ defmodule TilWeb.Me.PostControllerTest do
 
       assert response.status == 200
 
-      %{categories: categories} = Repo.get!(Post, post.id) |> Repo.preload([:categories])
-      assert length(categories) == 2
-      [first_post_category, second_post_category] = categories
-      assert first_post_category.name == "ML"
-      assert second_post_category.name == "Vue"
-      assert first_post_category.official == false
-      assert second_post_category.official == false
+      %{posts_categories: posts_categories} = Repo.get!(Post, post.id) |> Repo.preload([posts_categories: :category])
+      assert length(posts_categories) == 2
+      [first_post_category, second_post_category] = posts_categories
+      assert first_post_category.category.name == "ML"
+      assert second_post_category.category.name == "Vue"
+      assert first_post_category.category.official == false
+      assert second_post_category.category.official == false
       assert length(Repo.all(Category)) == 4
     end
 
@@ -201,7 +207,10 @@ defmodule TilWeb.Me.PostControllerTest do
       first_category = insert(:category, name: "Elixir")
       second_category = insert(:category, name: "Javascript")
 
-      post = insert(:post, author: current_user, categories: [first_category, second_category])
+      post = insert(:post, author: current_user)
+
+      insert(:post_category, post_id: post.id, category_id: first_category.id)
+      insert(:post_category, post_id: post.id, category_id: second_category.id)
 
       response =
         conn

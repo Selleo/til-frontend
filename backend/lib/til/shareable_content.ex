@@ -1,7 +1,7 @@
 defmodule Til.ShareableContent do
   import Ecto.Query, warn: false
   alias Til.Repo
-  alias Til.ShareableContent.{Post, Category}
+  alias Til.ShareableContent.{Category, Post, PostCategory}
   alias Ecto.Adapters.SQL
 
   def get_post(id) do
@@ -70,7 +70,7 @@ defmodule Til.ShareableContent do
 
     results.rows
       |> Enum.map(&Repo.load(Post, {results.columns, &1}))
-      |> Repo.preload([:categories, :author, reactions: :user])
+      |> Repo.preload([:author, posts_categories: :category, reactions: :user])
       |> Enum.map(&Post.populate_reaction_count/1)
   end
 
@@ -85,18 +85,24 @@ defmodule Til.ShareableContent do
   end
 
   def create_post(author, attrs) do
-    case %Post{author_id: author.id} |> change_post(attrs) |> Repo.insert() do
-      {:ok, post} -> get_post(post.id)
+    with {:ok, post} <- %Post{author_id: author.id} |> change_post(attrs) |> Repo.insert(),
+         {:ok} <- post |> process_categories_association(attrs)
+    do
+      get_post(post.id)
+    else
       {:error, %Ecto.Changeset{errors: _} = changeset} ->
         {:error, :changeset, changeset}
     end
   end
 
   def update_post(post, attrs \\ %{}) do
-    with {:ok, post} <- post |> change_post(attrs) |> Repo.update() do
+    with {:ok, post} <- post |> change_post(attrs) |> Repo.update(),
+         {:ok} <- post |> process_categories_association(attrs)
+    do
       get_post(post.id)
     else
-      {:error, %Ecto.Changeset{errors: _} = changeset} -> {:error, :changeset, changeset}
+      {:error, %Ecto.Changeset{errors: _} = changeset} ->
+        {:error, :changeset, changeset}
     end
   end
 
@@ -144,7 +150,7 @@ defmodule Til.ShareableContent do
       p in Post,
       order_by: [desc: p.inserted_at],
       where: p.is_public in ^is_public_in(only_public) and p.reviewed == true,
-      preload: [:categories, :author, reactions: :user]
+      preload: [:author, posts_categories: :category, reactions: :user]
     )
   end
 
@@ -164,19 +170,49 @@ defmodule Til.ShareableContent do
   end
 
   defp change_post(post, attrs) do
-    category_names = if attrs["categories"], do: attrs["categories"], else: []
-    categories = category_names |> Enum.map(&get_or_create_category/1)
-
     post
     |> Post.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:categories, categories)
   end
 
-  defp preload_post_data(post_data), do: Repo.preload(post_data, [:categories, :author, reactions: :user])
+  defp process_categories_association(post, %{ "categories" => category_names }) do
+    categories = category_names |> Enum.map(&get_or_create_category/1)
 
-  defp preload_category_posts(category, only_public_posts), do: Repo.preload(category, [
-    posts: base_posts_query(only_public_posts)
-  ])
+    from(pc in PostCategory, where: pc.post_id == ^post.id) |> Repo.delete_all
+
+    post_categories = categories
+      |> Enum.with_index(1)
+      |> Enum.map(fn {category, position} -> PostCategory.changeset(%PostCategory{}, %{ post_id: post.id, category_id: category.id, position: position  }) end)
+      |> Enum.map(&Repo.insert/1)
+
+    {:ok}
+  end
+
+  defp process_categories_association(post, _), do: {:ok}
+
+  defp preload_post_data(post_data) do
+    Repo.preload(post_data, [:author, posts_categories: :category, reactions: :user])
+  end
+
+  defp preload_category_posts(category, only_public_posts) do
+    preload_posts_query = from(
+      p in Post,
+      order_by: [desc: p.inserted_at],
+      preload: [:author, posts_categories: :category, reactions: :user]
+    )
+
+    preload_posts_categories_query = from(
+      pc in PostCategory,
+      join: p in Post,
+      on: pc.post_id == p.id,
+      where: p.is_public in ^is_public_in(only_public_posts) and p.reviewed == true,
+      select: pc,
+      preload: [
+        post: ^preload_posts_query,
+      ]
+    )
+
+    Repo.preload(category, [posts_categories: preload_posts_categories_query])
+  end
 
   defp jwt_handler do
     Application.get_env(:til, :guardian, Til.Guardian)

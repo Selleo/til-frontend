@@ -48,12 +48,23 @@ defmodule TilWeb.PostControllerTest do
       assert second_post["title"] == "internal reviewed post"
     end
 
-    test "returns posts with categories", %{conn: conn} do
+    test "returns posts with categories sorted by position", %{conn: conn} do
       first_category = insert(:category, name: "Elixir")
       second_category = insert(:category, name: "Javascript")
+      third_category = insert(:category, name: "Commandline", url: "https://someurl.com")
+      fourth_category = insert(:category, name: "Rails")
+      fifth_category = insert(:category, name: "Postgres")
 
-      insert(:post, reviewed: true, categories: [first_category, second_category])
-      insert(:post, reviewed: true, categories: [first_category])
+      first_post = insert(:post, reviewed: true)
+      second_post = insert(:post, reviewed: true)
+
+      insert(:post_category, post_id: first_post.id, category_id: fifth_category.id, position: 5)
+      insert(:post_category, post_id: first_post.id, category_id: fourth_category.id, position: 4)
+      insert(:post_category, post_id: first_post.id, category_id: second_category.id, position: 2)
+      insert(:post_category, post_id: first_post.id, category_id: third_category.id, position: 3)
+      insert(:post_category, post_id: first_post.id, category_id: first_category.id, position: 1)
+
+      insert(:post_category, post_id: second_post.id, category_id: first_category.id, position: 1)
 
       response =
         conn
@@ -65,11 +76,14 @@ defmodule TilWeb.PostControllerTest do
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       [first_post, second_post] = parsed_response_body
       assert first_post["categories"] == [
-        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url, "firstText" => first_category.first_text, "secondText" => first_category.second_text},
-        %{"id" => second_category.id, "name" => second_category.name, "url" => second_category.url, "firstText" => second_category.first_text, "secondText" => second_category.second_text}
+        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url, "firstText" => first_category.first_text, "secondText" => first_category.second_text, "position" => 1},
+        %{"id" => second_category.id, "name" => second_category.name, "url" => second_category.url, "firstText" => second_category.first_text, "secondText" => second_category.second_text, "position" => 2},
+        %{"id" => third_category.id, "name" => third_category.name, "url" => third_category.url, "firstText" => third_category.first_text, "secondText" => third_category.second_text, "position" => 3},
+        %{"id" => fourth_category.id, "name" => fourth_category.name, "url" => fourth_category.url, "firstText" => fourth_category.first_text, "secondText" => fourth_category.second_text, "position" => 4},
+        %{"id" => fifth_category.id, "name" => fifth_category.name, "url" => fifth_category.url, "firstText" => fifth_category.first_text, "secondText" => fifth_category.second_text, "position" => 5}
       ]
       assert second_post["categories"] == [
-        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url, "firstText" => first_category.first_text, "secondText" => first_category.second_text},
+        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url, "firstText" => first_category.first_text, "secondText" => first_category.second_text, "position" => 1},
       ]
     end
 
@@ -144,13 +158,15 @@ defmodule TilWeb.PostControllerTest do
       # Only fit for category name
       first_category = insert(:category, name: "Bruce category")
       second_category = insert(:category, name: "no fit category")
-      insert(:post,
+      post = insert(:post,
         title: "Not fit title 3",
         body: "some not fit body",
         author: second_user,
         reviewed: true,
-        categories: [first_category, second_category]
       )
+      insert(:post_category, post_id: post.id, category_id: first_category.id)
+      insert(:post_category, post_id: post.id, category_id: second_category.id)
+
       # Only fit for author name
       insert(:post, title: "Not fit title", body: "some not fit body", author: first_user, reviewed: true)
       # Only fit for title
@@ -186,13 +202,16 @@ defmodule TilWeb.PostControllerTest do
       # Only fit for category name
       first_category = insert(:category, name: "Bruce category")
       second_category = insert(:category, name: "no fit category")
-      insert(:post,
+      post = insert(:post,
         title: "Not fit title 3",
         body: "some not fit body",
         author: second_user,
         reviewed: true,
-        categories: [first_category, second_category]
+        # categories: [first_category, second_category]
       )
+
+      insert(:post_category, post_id: post.id, category_id: first_category.id)
+      insert(:post_category, post_id: post.id, category_id: second_category.id)
       # Only fit for author name
       insert(:post, title: "Not fit title", body: "some not fit body", author: first_user, reviewed: true, is_public: false)
       # Only fit for title
@@ -227,13 +246,15 @@ defmodule TilWeb.PostControllerTest do
       # Only fit for category name
       first_category = insert(:category, name: "Bruce category")
       second_category = insert(:category, name: "no fit category")
-      insert(:post,
+      post = insert(:post,
         title: "Not fit title 3",
         body: "some not fit body",
         author: second_user,
         reviewed: true,
-        categories: [first_category, second_category]
+        # categories: [first_category, second_category]
       )
+      insert(:post_category, post_id: post.id, category_id: first_category.id)
+      insert(:post_category, post_id: post.id, category_id: second_category.id)
       # Only fit for author name
       insert(:post, title: "Not fit title", body: "some not fit body", author: first_user, reviewed: true, is_public: false)
       # Only fit for title
@@ -285,12 +306,14 @@ defmodule TilWeb.PostControllerTest do
       assert parsed_response_body["title"] == "internal reviewed post"
     end
 
-    test "returns particular post with categories", %{conn: conn} do
+    test "returns particular post with sorted categories", %{conn: conn} do
       first_category = insert(:category, name: "Elixir")
       second_category = insert(:category, name: "Javascript")
       post_title = "Some post"
 
-      post = insert(:post, reviewed: true, title: post_title, categories: [first_category, second_category])
+      post = insert(:post, reviewed: true, title: post_title)
+      insert(:post_category, post_id: post.id, category_id: first_category.id, position: 2)
+      insert(:post_category, post_id: post.id, category_id: second_category.id, position: 1)
 
       response =
         conn
@@ -301,8 +324,8 @@ defmodule TilWeb.PostControllerTest do
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
       assert parsed_response_body["title"] == post_title
       assert parsed_response_body["categories"] == [
-        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url, "firstText" => first_category.first_text, "secondText" => first_category.second_text},
-        %{"id" => second_category.id, "name" => second_category.name, "url" => second_category.url, "firstText" => second_category.first_text, "secondText" => second_category.second_text}
+        %{"id" => second_category.id, "name" => second_category.name, "url" => second_category.url, "firstText" => second_category.first_text, "secondText" => second_category.second_text, "position" => 1},
+        %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url, "firstText" => first_category.first_text, "secondText" => first_category.second_text, "position" => 2}
       ]
     end
 
@@ -480,7 +503,7 @@ defmodule TilWeb.PostControllerTest do
       assert parsed_response_body["author"]["email"] == current_user.email
     end
 
-    test "creates post with proper categories", %{conn: conn} do
+    test "creates post with proper ordered categories", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
 
@@ -488,26 +511,36 @@ defmodule TilWeb.PostControllerTest do
 
       first_category = insert(:category, name: "Elixir")
       second_category = insert(:category, name: "Javascript")
-      insert(:category, name: "Machine Learning")
+      third_category = insert(:category, name: "CMD")
+      fourth_category = insert(:category, name: "Git")
+      fifth_category = insert(:category, name: "Machine Learning")
 
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
         |> post(Routes.post_path(conn, :create), %{
           title: post_title,
-          categories: [first_category.name, second_category.name]
+          categories: [first_category.name, second_category.name, third_category.name, fourth_category.name, fifth_category.name]
         })
 
       assert response.status == 201
 
-      %{categories: categories} = Repo.get_by(Post, title: post_title) |> Repo.preload([:categories])
+      %{posts_categories: posts_categories} = Repo.get_by(Post, title: post_title) |> Repo.preload([posts_categories: :category])
 
-      assert length(categories) == 2
+      assert length(posts_categories) == 5
 
-      [post_first_category, post_last_category] = categories
+      [post_first_category, post_second_category, post_third_category, post_fourth_category, post_fifth_category] = posts_categories
 
-      assert post_first_category.id == first_category.id
-      assert post_last_category.id == second_category.id
+      assert post_first_category.category.id == first_category.id
+      assert post_first_category.position == 1
+      assert post_second_category.category.id == second_category.id
+      assert post_second_category.position == 2
+      assert post_third_category.category.id == third_category.id
+      assert post_third_category.position == 3
+      assert post_fourth_category.category.id == fourth_category.id
+      assert post_fourth_category.position == 4
+      assert post_fifth_category.category.id == fifth_category.id
+      assert post_fifth_category.position == 5
     end
 
     test "creates new categories as unofficial during post creation", %{conn: conn} do
@@ -526,15 +559,15 @@ defmodule TilWeb.PostControllerTest do
 
       assert response.status == 201
 
-      %{categories: categories} = Repo.get_by(Post, title: "Some post title") |> Repo.preload([:categories])
-      assert length(categories) == 4
-      [post_first_category, post_second_category, post_third_category, post_fourth_category] = categories
-      assert post_first_category.id == first_category.id
-      assert post_second_category.id == second_category.id
-      assert post_third_category.name == "ML"
-      assert post_third_category.official == false
-      assert post_fourth_category.name == "Vue"
-      assert post_fourth_category.official == false
+      %{posts_categories: posts_categories} = Repo.get_by(Post, title: "Some post title") |> Repo.preload([posts_categories: :category])
+      assert length(posts_categories) == 4
+      [post_first_category, post_second_category, post_third_category, post_fourth_category] = posts_categories
+      assert post_first_category.category.id == first_category.id
+      assert post_second_category.category.id == second_category.id
+      assert post_third_category.category.name == "ML"
+      assert post_third_category.category.official == false
+      assert post_fourth_category.category.name == "Vue"
+      assert post_fourth_category.category.official == false
       assert length(Repo.all(Category)) == 4
     end
 
