@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { saveSearchedPosts, saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
 import { ReactComponent as SearchIcon } from '../assets/icons/search.svg'
+import Icon from './UI/Icon'
 import { useDisableOnRoute } from '../utils/customHooks/useDisableOnRoute'
 import ActionModal from './ActionModal'
 import { Transition } from './Transition'
@@ -48,6 +49,23 @@ const Search = () => {
       setIsModalOpen(true)
     }
   }
+
+  const handleClearInput = () => {
+    dispatch(saveSearchedQuery(''))
+    setInput('')
+    history.push('/')
+  }
+
+  const InputIcon = () => {
+    return input ? (
+      <div className="search-box__icon -cancel" onClick={handleClearInput}>
+        <Icon name="cancel" />
+      </div>
+    ) : (
+      <SearchIcon className="search-box__icon" />
+    )
+  }
+
   return (
     <>
       <Transition name="search-animation">
@@ -60,8 +78,7 @@ const Search = () => {
             disabled={isDisabled}
             onChange={handleInput}
           />
-
-          <SearchIcon className="search-box__icon" />
+          <InputIcon />
         </div>
       </Transition>
       {isModalOpen && (
