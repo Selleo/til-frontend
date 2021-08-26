@@ -48,7 +48,7 @@ const Categories = props => {
         dispatch(saveCategoryPosts(id))
         history.push(url)
       }
-      setModalAction(() => actionForModal) // figure it out :)
+      setModalAction(() => actionForModal)
       setIsModalOpen(true)
     }
     closeSideNav()
@@ -75,7 +75,7 @@ const Categories = props => {
                 </div>
                 <div
                   className="categories__name"
-                  onClick={e => handleClick(e, id)}
+                  onClick={e => handleClick(e, id, categoryUrl)}
                 >
                   {name}
                 </div>

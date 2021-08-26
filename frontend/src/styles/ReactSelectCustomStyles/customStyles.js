@@ -1,54 +1,55 @@
 const customStyles = {
-  container: (provided, state) => ({
+  container: provided => ({
     ...provided,
     margin: '16px 0',
     border: '1px solid #8a8a8a',
-    'border-radius': '8px',
+    borderRadius: '8px',
   }),
-  option: (provided, state) => ({
+  option: provided => ({
     ...provided,
     background: '#2A2E32',
     color: '#A0A0A0',
     border: 'none',
-    'border-radius': '26px',
+    borderRadius: '26px',
   }),
   valueContainer: provided => ({
     ...provided,
     border: '2px solid transparent',
     borderRadius: '8px',
     background: '#2A2E32',
-    'min-height': '52px',
+    minHeight: '52px',
+    cursor: 'pointer',
   }),
-  control: (provided, state) => ({
+  control: provided => ({
     ...provided,
     backgroundColor: 'transparent',
     border: 'none',
     minWidth: 300,
   }),
-  menu: (provided, state) => ({
+  menu: provided => ({
     ...provided,
-    'background-color': '#2a2e32',
+    backgroundColor: '#2a2e32',
     border: '1px solid #8a8a8a',
-    'border-radius': '8px',
+    borderRadius: '8px',
     position: 'absolute',
     left: '-1px',
   }),
-  multiValue: (provided, state) => ({
+  multiValue: provided => ({
     ...provided,
     background: 'transparent',
     color: '#a0a0a0',
     border: '1px solid #8a8a8a',
     display: 'flex',
-    'justify-content': 'space-between',
+    justifyContent: 'space-between',
     padding: '4px 14px',
-    'border-radius': '27px',
+    borderRadius: '27px',
   }),
-  multiValueLabel: (provided, state) => ({
+  multiValueLabel: provided => ({
     ...provided,
     color: '#a0a0a0',
-    'text-transform': 'uppercase',
+    textTransform: 'uppercase',
   }),
-  multiValueRemove: (provided, state) => ({
+  multiValueRemove: provided => ({
     ...provided,
     background: 'transparent',
     '&:hover': {
@@ -57,7 +58,7 @@ const customStyles = {
       transform: 'scale(1.5)',
     },
   }),
-  clearIndicator: (provided, state) => ({
+  clearIndicator: provided => ({
     ...provided,
     background: 'transparent',
     color: '#8a8a8a',
@@ -67,11 +68,11 @@ const customStyles = {
       transform: 'scale(1.5)',
     },
   }),
-  indicatorscontainer: (provided, state) => ({
+  indicatorscontainer: provided => ({
     ...provided,
     background: 'transparent',
   }),
-  placeholder: (provided, state) => ({
+  placeholder: provided => ({
     ...provided,
     color: '#A0A0A0',
     fontWeight: 500,
@@ -79,14 +80,14 @@ const customStyles = {
     fontFamily: 'Poppins',
     letterSpacing: '0.48px',
   }),
-  indicatorSeparator: (provided, state) => ({
+  indicatorSeparator: provided => ({
     ...provided,
     display: 'none',
   }),
   input: () => ({
-    color: '#A0A0A0'
+    color: '#A0A0A0',
   }),
-  dropdownIndicator: (provided, state) => ({
+  dropdownIndicator: provided => ({
     ...provided,
     color: '#8a8a8a',
     '&:hover': {

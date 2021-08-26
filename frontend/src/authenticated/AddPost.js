@@ -119,6 +119,7 @@ const AddPost = () => {
                 placeholder="Title"
                 type="text"
                 value={title}
+                autoComplete="off"
               />
             </form>
             <ReactMde

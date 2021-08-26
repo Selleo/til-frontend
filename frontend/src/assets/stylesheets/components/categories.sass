@@ -14,8 +14,14 @@
 
     +transition(background-color, padding, color, margin)
 
+    &:hover
+      svg
+        path
+          fill: $color-primary
+
     svg
       path
+        +transition(fill)
         fill: $color-white
 
     &.-active
