@@ -593,6 +593,24 @@ defmodule TilWeb.PostControllerTest do
       assert length(Repo.all(Post)) == 0
     end
 
+    test "throws error when post with same title exists", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+
+      insert(:post, title: "Some post title")
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> post(Routes.post_path(conn, :create), %{title: "Some post title"})
+
+      assert response.status == 400
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert parsed_response_body == %{"errors" => %{"title" => ["This title already exist"]}}
+      assert length(Repo.all(Post)) == 1
+    end
+
     test "throws 401 error when not authenticated", %{conn: conn} do
       post_body = "Some post body"
 
