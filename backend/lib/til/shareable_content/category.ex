@@ -1,7 +1,7 @@
 defmodule Til.ShareableContent.Category do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Til.ShareableContent.Post
+  alias Til.ShareableContent.PostCategory
 
   schema "categories" do
     field :name, :string
@@ -10,12 +10,7 @@ defmodule Til.ShareableContent.Category do
     field :first_text, :string
     field :second_text, :string
 
-    many_to_many(
-      :posts,
-      Post,
-      join_through: "posts_categories",
-      on_delete: :delete_all
-    )
+    has_many :posts_categories, PostCategory, on_delete: :delete_all
   end
 
   def changeset(post, attrs) do
