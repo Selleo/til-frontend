@@ -20,6 +20,6 @@ defmodule Til.Notifications do
   # private
 
   defp frontend_host, do: Application.get_env(:til, :frontend_host)
-  defp categories_string(post), do: "#{Enum.map post.categories, &("##{&1.name} ")}"
+  defp categories_string(post), do: "#{Enum.map post.posts_categories, &("##{&1.category.name} ")}"
   defp author_string(post), do: "#{post.author.first_name} #{post.author.last_name}"
 end

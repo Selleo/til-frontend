@@ -1,4 +1,4 @@
-defmodule TilWeb.CategoryView do
+defmodule TilWeb.PostCategoryView do
   use TilWeb, :view
 
   def render("index.json", %{categories: categories}) do
@@ -16,6 +16,7 @@ defmodule TilWeb.CategoryView do
     %{
       id: category.id,
       name: category.name,
+      position: category.position,
       url: category.url,
       firstText: category.first_text,
       secondText: category.second_text,
@@ -27,6 +28,7 @@ defmodule TilWeb.CategoryView do
       id: category.id,
       name: category.name,
       posts: render(TilWeb.PostView, "index_with_nested.json", posts: Enum.map(category.posts_categories, &(&1.post))),
+      position: category.position,
       url: category.url,
       firstText: category.first_text,
       secondText: category.second_text,

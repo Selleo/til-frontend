@@ -27,14 +27,14 @@ defmodule Til.Accounts do
   # private
 
   defp preload_posts(user) do
-    user |> Repo.preload([posts: [:categories, :author, reactions: :user]])
+    user |> Repo.preload([posts: [:author, posts_categories: :category, reactions: :user]])
   end
 
   defp preload_posts(user, only_public) do
     post_query =
       from p in Post,
       where: p.is_public in ^is_public_in(only_public) and p.reviewed == true,
-      preload: [:categories, :author, reactions: :user]
+      preload: [:author, posts_categories: :category, reactions: :user]
     user |> Repo.preload([posts: post_query])
   end
 
