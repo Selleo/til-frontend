@@ -29,7 +29,7 @@ defmodule Til.ShareableContent.Post do
       :reviewed
     ])
     |> validate_required([:title])
-    |> unique_constraint(:title)
+    |> unique_constraint(:title, message: "This title already exist")
   end
 
   def populate_reaction_count(post) do
