@@ -45,6 +45,7 @@ import { BsFillCircleFill } from 'react-icons/bs'
 
 import { CgProfile } from 'react-icons/cg'
 import { FiLogOut } from 'react-icons/fi'
+import { MdCancel } from 'react-icons/md'
 
 const Icon = ({ name }) => {
   switch (name) {
@@ -132,6 +133,8 @@ const Icon = ({ name }) => {
       return <FaInstagram />
     case 'info':
       return <BsInfoCircleFill />
+    case 'cancel':
+      return <MdCancel />
     default:
       return <BsFillCircleFill />
   }

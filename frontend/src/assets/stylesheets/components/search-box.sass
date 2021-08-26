@@ -10,14 +10,25 @@
     height: 48px
     opacity: 1
     outline: none
-    width: 250px
+    width: 230px
 
-  &__icon 
+  &__icon
     position: absolute
-    right: -8px;
-    bottom: 0px;
-  
-  &::before 
+    right: -8px
+    bottom: 0px
+
+    &.-cancel
+      cursor: pointer
+      height: 100%
+      width: 50px
+      display: flex
+      align-items: center
+      justify-content: center
+
+      svg
+        transform: scale(1.5)
+
+  &::before
     background: $color-background
     content: ''
     left: -65px
@@ -27,9 +38,8 @@
     top: 0
     height: 48px
 
-  &::placeholder 
+  &::placeholder
     font-size: 16px
     font-weight: 600
     font-family: $font-family
     letter-spacing: 0.32px
-  
