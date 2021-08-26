@@ -50,7 +50,7 @@ const Reaction = props => {
 
   return (
     <div className="post__single-reaction" onClick={toggleReaction}>
-      <Icon width="28px" className={iconActiveClasses} />
+      <Icon className={iconActiveClasses} />
       <div>{reactionNumber}</div>
     </div>
   )

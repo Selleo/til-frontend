@@ -22,7 +22,11 @@ const PostPreview = props => {
           </div>
         </div>
       </div>
-      <Link className="post__title" to={'not-yet'}>
+      <Link
+        className="post__title"
+        to="/not-yet"
+        onClick={e => e.preventDefault()}
+      >
         {title || 'Your title'}
       </Link>
       <div className="post__body">

@@ -1,4 +1,4 @@
-.chevron 
+.chevron
   border-radius: 50%
   height: 20px
   margin-left: 30px
@@ -8,11 +8,11 @@
 
   &.-rotate
     transform: rotate(180deg)
-    
-.add-post-btn 
+
+.add-post-btn
   background-color: $color-primary
   border-radius: 10px
-  color: #1f1f1f
+  color: $color-dark
   display: inline-block
   font-size: 12px
   font-weight: 600
@@ -22,7 +22,13 @@
   text-decoration: none
   width: 160px
 
-.delete-post-btn 
+  &:hover
+    +transition(opacity,background-color)
+    color: $color-dark
+    background-color: $color-primary-hover
+    opacity: 0.9
+
+.delete-post-btn
   background-color: $color-danger
   border-radius: 10px
   color: $color-white
@@ -35,7 +41,7 @@
   text-decoration: none
   width: 160px
 
-.edit-post-btn 
+.edit-post-btn
   background-color: transparent
   border-radius: 10px
   border: 2px solid #1891FD
@@ -44,7 +50,6 @@
   font-size: 16px
   font-weight: 600
   height: 40px
-  // margin-right: 48px
   padding: 10px
   text-align: center
   text-decoration: none
@@ -65,8 +70,6 @@
   text-decoration: none
   width: 160px
 
-.profile-link 
+.profile-link
   color: white
   text-decoration: none
-  
-
