@@ -38,7 +38,11 @@ defmodule TilWeb.CategoryControllerTest do
       third_post = insert(:post, title: "third post", reviewed: true, is_public: false)
       fourth_post = insert(:post, title: "fourth post", reviewed: false, is_public: true)
 
-      first_category = insert(:category, name: "Elixir", posts: [first_post, second_post, third_post, fourth_post])
+      first_category = insert(:category, name: "Elixir")
+
+      insert(:post_category, post_id: first_post.id, category_id: first_category.id)
+      insert(:post_category, post_id: second_post.id, category_id: first_category.id)
+      insert(:post_category, post_id: third_post.id, category_id: first_category.id)
 
       response =
         conn
@@ -58,7 +62,7 @@ defmodule TilWeb.CategoryControllerTest do
       assert second_responded_post["title"] == second_post.title
     end
 
-    test "returns category with only reviewd posts when authenticated", %{conn: conn} do
+    test "returns category with only reviewed posts when authenticated", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
 
@@ -67,7 +71,12 @@ defmodule TilWeb.CategoryControllerTest do
       third_post = insert(:post, title: "third post", reviewed: true, is_public: false)
       fourth_post = insert(:post, title: "fourth post", reviewed: false, is_public: true)
 
-      first_category = insert(:category, name: "Elixir", posts: [first_post, second_post, third_post, fourth_post])
+      first_category = insert(:category, name: "Elixir")
+
+      insert(:post_category, post_id: first_post.id, category_id: first_category.id)
+      insert(:post_category, post_id: second_post.id, category_id: first_category.id)
+      insert(:post_category, post_id: third_post.id, category_id: first_category.id)
+      insert(:post_category, post_id: fourth_post.id, category_id: first_category.id)
 
       response =
         conn

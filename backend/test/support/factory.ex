@@ -1,7 +1,7 @@
 defmodule Til.Factory do
   use ExMachina.Ecto, repo: Til.Repo
   alias Til.Accounts.User
-  alias Til.ShareableContent.{Post, Category}
+  alias Til.ShareableContent.{Category, Post, PostCategory}
   alias Til.Activities.Reaction
 
   def user_factory do
@@ -29,6 +29,12 @@ defmodule Til.Factory do
     %Category{
       name: sequence(:name, &"name-#{&1}"),
       official: true
+    }
+  end
+
+  def post_category_factory do
+    %PostCategory{
+      position: 1
     }
   end
 
