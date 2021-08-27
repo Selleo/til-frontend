@@ -156,36 +156,46 @@
     justify-content: space-between
     width: 42px
     cursor: pointer
+    +transition(width)
 
     &:not(:nth-last-child(1))
       margin-right: 16px
 
+    &:hover
+      svg,
+      div
+        color: rgba(#8a8a8a, 0.5)
+        transform: scale(1.1)
+
+    div
+      margin-left: 6px
+
     svg,
     div
-      fill: #8a8a8a
       color: #8a8a8a
+      +transition(color, transform)
 
-      &:hover
-        transition: $transition-duration $transition-function
-        fill: rgba(#8a8a8a, 0.5)
-        transform: scale(1.1)
-        & + div
-          transition: $transition-duration $transition-function
-          color: rgba(#8a8a8a, 0.5)
-          transform: scale(1.1)
+    svg
+      width: 26px
+      path
+        +transition(fill)
 
     .like
       &.-fill
-        fill: #1769ff
+        path
+          fill: #1769ff
     .funny
       &.-fill
-        fill: #FFC074
+        path
+          fill: #FFC074
     .love
       &.-fill
-        fill: red
+        path
+          fill: red
     .surprised
       &.-fill
-        fill: #E99497
+        path
+          fill: #E99497
 
   &__text-details
     color: $color-white
