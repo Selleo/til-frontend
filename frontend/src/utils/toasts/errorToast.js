@@ -4,7 +4,7 @@ const errorToast = data => {
   let error
 
   if (Object.prototype.hasOwnProperty.call(data.errors, 'title')) {
-    error = `Title ${data.errors.title}.`
+    error = `${data.errors.title}.`
   } else {
     error = 'Something went wrong. Please try again later.'
   }
