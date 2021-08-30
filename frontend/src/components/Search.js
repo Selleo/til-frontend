@@ -21,8 +21,7 @@ const Search = () => {
   const handleClearInput = useCallback(() => {
     dispatch(saveSearchedQuery(''))
     setInput('')
-    history.push('/')
-  }, [dispatch, history])
+  }, [dispatch])
 
   useEffect(() => {
     if (hasLeavedRoute) {
