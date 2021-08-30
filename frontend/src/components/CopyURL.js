@@ -4,7 +4,7 @@ import CopyButton from './CopyButton'
 import { Tooltip } from 'react-tippy'
 
 const CopyPostURL = ({ postId }) => {
-  const [isCopied, setIsCopied] = useState('Click to copy link')
+  const [buttonText, setButtonText] = useState('Click to copy link')
 
   const copyURL = () => {
     let currentURL = getCurrentURL()
@@ -14,10 +14,10 @@ const CopyPostURL = ({ postId }) => {
     }
 
     navigator.clipboard.writeText(currentURL)
-    setIsCopied('Copied!')
+    setButtonText('Copied!')
 
     setTimeout(() => {
-      setIsCopied('Click to copy link')
+      setButtonText('Click to copy link')
     }, 300)
   }
 
@@ -27,7 +27,7 @@ const CopyPostURL = ({ postId }) => {
       arrow
       delay={150}
       duration={500}
-      html={<div>{isCopied}</div>}
+      html={<div>{buttonText}</div>}
     >
       <CopyButton handleClick={copyURL} text={'Share'} />
     </Tooltip>

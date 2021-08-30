@@ -2,7 +2,6 @@ import React from 'react'
 import Markdown from '../components/Markdown'
 import PostCategories from '../components/PostCategories'
 import useUser from '../utils/customHooks/useUser'
-import { Link } from 'react-router-dom'
 import { getDate } from '../utils'
 
 const PostPreview = props => {
@@ -22,13 +21,7 @@ const PostPreview = props => {
           </div>
         </div>
       </div>
-      <Link
-        className="post__title"
-        to="/not-yet"
-        onClick={e => e.preventDefault()}
-      >
-        {title || 'Your title'}
-      </Link>
+      <span className="post__title">{title || 'Your title'}</span>
       <div className="post__body">
         <Markdown source={body || 'Your content'} />
       </div>
