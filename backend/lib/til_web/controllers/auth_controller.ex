@@ -13,7 +13,8 @@ defmodule TilWeb.AuthController do
           credentials: %{token: _},
           uid: _
         }
-      }
+      },
+      query_params: params
     } = conn, _
   ) do
     {:ok, user} = case Accounts.get_user_by(email: email) do
@@ -32,7 +33,7 @@ defmodule TilWeb.AuthController do
     conn
     |> put_resp_header("authorization", "Bearer #{jwt}")
     |> redirect(
-      external: "#{Application.get_env(:til, :frontend_host)}/auth?auth_token=#{jwt}"
+      external: "#{Application.get_env(:til, :frontend_host)}/auth?auth_token=#{jwt}&callback_url=#{params["state"]}"
     )
   end
 
