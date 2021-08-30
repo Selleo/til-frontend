@@ -207,7 +207,6 @@ defmodule TilWeb.PostControllerTest do
         body: "some not fit body",
         author: second_user,
         reviewed: true,
-        # categories: [first_category, second_category]
       )
 
       insert(:post_category, post_id: post.id, category_id: first_category.id)
@@ -251,7 +250,6 @@ defmodule TilWeb.PostControllerTest do
         body: "some not fit body",
         author: second_user,
         reviewed: true,
-        # categories: [first_category, second_category]
       )
       insert(:post_category, post_id: post.id, category_id: first_category.id)
       insert(:post_category, post_id: post.id, category_id: second_category.id)
