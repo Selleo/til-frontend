@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom'
 import { useQuery } from '../utils'
 
 import LogInButton from '../components/LogInButton'
-import { saveHash } from '../utils/temporaryReviewHash'
 
 const CheckIfCanReview = () => {
   const history = useHistory()
@@ -14,16 +13,12 @@ const CheckIfCanReview = () => {
     history.push('/')
   }
 
-  const handleClick = () => {
-    saveHash(hash)
-  }
-
   return (
     <div className="check-if-can-review-container">
       <LogInButton
         className="log-in-btn"
         text="Log in for review"
-        handleClick={handleClick}
+        callbackURL={`/review-posts?hashed_id=${hash}`}
       />
     </div>
   )

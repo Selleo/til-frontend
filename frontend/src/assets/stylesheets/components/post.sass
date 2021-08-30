@@ -59,7 +59,6 @@
     display: flex
     flex-direction: column
     justify-content: space-between
-    margin-bottom: -$m-sm
 
     p
       font-size: 16px
@@ -183,19 +182,19 @@
     .like
       &.-fill
         path
-          fill: #1769ff
-    .funny
-      &.-fill
-        path
-          fill: #FFC074
-    .love
-      &.-fill
-        path
-          fill: red
-    .surprised
-      &.-fill
-        path
-          fill: #E99497
+          stroke: #1769ff
+  .funny
+    &.-fill
+      path
+        fill: #FFC074
+  .love
+    &.-fill
+      path
+        fill: red
+  .surprised
+    &.-fill
+      path
+        fill: #E99497
 
   &__text-details
     color: $color-white
@@ -262,6 +261,7 @@
   +media-breakpoint-up(lg)
     &__footer
       flex-direction: row
+      margin-bottom: -$m-sm
 
     &__categories
       margin-right: 40px

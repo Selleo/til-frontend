@@ -1,4 +1,3 @@
-import React from 'react'
 import useUser from './useUser'
 
 export const useIsPostPublic = isPublic => {
@@ -8,5 +7,5 @@ export const useIsPostPublic = isPublic => {
     return null
   }
 
-  return <>{isPublic ? 'Public' : 'Private'} post</>
+  return isPublic ? 'Public post' : 'Private post'
 }
