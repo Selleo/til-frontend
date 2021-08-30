@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { saveSearchedPosts, saveSearchedQuery } from '../store/actions/actions'
@@ -18,12 +18,16 @@ const Search = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { isDisabled } = useDisableOnRoute(['add', 'edit'])
 
+  const handleClearInput = useCallback(() => {
+    dispatch(saveSearchedQuery(''))
+    setInput('')
+  }, [dispatch])
+
   useEffect(() => {
     if (hasLeavedRoute) {
-      dispatch(saveSearchedQuery(''))
-      setInput('')
+      handleClearInput()
     }
-  }, [hasLeavedRoute, dispatch])
+  }, [hasLeavedRoute, handleClearInput])
 
   const handleInput = event => {
     const targetValue = event.target.value
@@ -48,12 +52,6 @@ const Search = () => {
       e.preventDefault()
       setIsModalOpen(true)
     }
-  }
-
-  const handleClearInput = () => {
-    dispatch(saveSearchedQuery(''))
-    setInput('')
-    history.push('/')
   }
 
   const InputIcon = () => {
