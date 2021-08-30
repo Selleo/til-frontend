@@ -33,8 +33,15 @@ defmodule TilWeb.AuthController do
     conn
     |> put_resp_header("authorization", "Bearer #{jwt}")
     |> redirect(
-      external: "#{Application.get_env(:til, :frontend_host)}/auth?auth_token=#{jwt}&callback_url=#{params["state"]}"
+      external: get_redirect_url(params, jwt)
     )
+  end
+
+  defp get_redirect_url(params, jwt) do
+    case params["state"] do
+      nil -> "#{Application.get_env(:til, :frontend_host)}/auth?auth_token=#{jwt}"
+      state -> "#{Application.get_env(:til, :frontend_host)}/auth?auth_token=#{jwt}&callback_url=#{URI.encode_www_form(state)}"
+    end
   end
 
   defp jwt_handler do
