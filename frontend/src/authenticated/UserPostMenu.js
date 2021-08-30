@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 import DeletePost from '../authenticated/DeletePost'
 
 const UserPostMenu = props => {
-  const { post, isOnProfile, isOnReview } = props
+  const { post, userMenu, isOnReview } = props
   const { id } = post
 
   const postUserMenuClasses = classNames('post__user-menu', {
-    '-owner-view': !isOnProfile,
+    '-owner-view': !userMenu,
   })
 
   if (isOnReview) {
@@ -22,7 +22,7 @@ const UserPostMenu = props => {
         <Link to={`/edit-post/${id}`}>
           <button className="edit-post-btn">Edit</button>
         </Link>
-        {isOnProfile && <DeletePost postId={id} />}
+        {userMenu && <DeletePost postId={id} />}
       </div>
     </>
   )

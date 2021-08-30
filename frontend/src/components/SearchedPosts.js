@@ -10,7 +10,7 @@ const SearchedPosts = () => {
   const searchQuery = useSelector(state => state.searchQuery)
   const history = useHistory()
 
-  if (!searchQuery.length < 0) {
+  if (searchQuery.length < 0) {
     history.push('/')
   }
 

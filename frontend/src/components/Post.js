@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useMemo } from 'react'
 import Markdown from './Markdown'
 import CopyPostURL from './CopyURL'
 import PostCategories from './PostCategories'
@@ -12,17 +12,15 @@ import useUser from '../utils/customHooks/useUser'
 import { useIsPostPublic } from '../utils/customHooks/useIsPostPublic'
 
 const Post = props => {
-  const { post, isOnProfile, userImage, review, animationDelay } = props
+  const { post, userMenu, userImage, review, animationDelay } = props
   const location = useLocation()
   const user = useUser()
-  const [isPostOwner, setIsPostOwner] = useState(false)
-  const isPublic = useIsPostPublic(post.isPublic)
-
-  useEffect(() => {
+  const isPostOwner = useMemo(() => {
     if (user && post) {
-      setIsPostOwner(user.uuid === post.author.uuid)
+      return user.uuid === post.author.uuid
     }
   }, [user, post])
+  const isPublic = useIsPostPublic(post.isPublic)
 
   let title
   if (location.pathname === '/search') {
@@ -34,10 +32,14 @@ const Post = props => {
   const parsed = parseISO(post.createdAt)
   const date = format(parsed, ' dd MMM  hh:mm')
 
-  const handleTitleClick = e => {
-    if (review) {
-      e.preventDefault()
-    }
+  const TitleLink = () => {
+    return review ? (
+      <span className="post__title">{title}</span>
+    ) : (
+      <Link className="post__title" to={`/posts/${post.id}`}>
+        {title}
+      </Link>
+    )
   }
 
   return (
@@ -64,13 +66,7 @@ const Post = props => {
           {!review && <CopyPostURL postId={post.id} />}
         </div>
         <div>
-          <Link
-            className="post__title"
-            to={`/posts/${post.id}`}
-            onClick={e => handleTitleClick(e)}
-          >
-            {title}
-          </Link>
+          <TitleLink />
         </div>
         <div className="post__body">
           <Markdown source={post.body} />
@@ -79,12 +75,8 @@ const Post = props => {
           <PostCategories categories={post.categories} />
           {!review && <ReactionBar post={post} />}
         </div>
-        {(isOnProfile || isPostOwner) && (
-          <UserPostMenu
-            post={post}
-            isOnProfile={isOnProfile}
-            isOnReview={review}
-          />
+        {(userMenu || isPostOwner) && (
+          <UserPostMenu post={post} userMenu={userMenu} isOnReview={review} />
         )}
       </article>
     </Transition>
