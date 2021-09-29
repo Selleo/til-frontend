@@ -1,0 +1,10 @@
+/_build/
+/cover/
+/deps/
+/doc/
+/.fetch
+/.env
+erl_crash.dump
+*.ez
+til-*.tar
+/priv/static/
