@@ -1,15 +1,37 @@
-FROM elixir:1.9.1
+# --- build stage ---
+FROM elixir:1.12-alpine AS build
 
-RUN apt-get update && \
-  apt-get install -y postgresql-client
+RUN apk add --update alpine-sdk coreutils
 
 RUN mkdir /app
-COPY . /app
 WORKDIR /app
-RUN mix local.hex --force
-RUN mix local.rebar --force
-RUN rm -rf _build deps
-RUN mix deps.get
-RUN mix do compile
-RUN chmod +x /app/entrypoint.sh
-CMD ["/app/entrypoint.sh"]
+
+ENV MIX_ENV=prod
+
+COPY mix.exs mix.lock ./
+COPY config config
+COPY priv priv
+COPY lib lib
+
+RUN mix local.hex --force && \
+    mix local.rebar --force && \
+    mix deps.get && \
+    mix deps.compile && \
+    mix compile && \
+    mix release
+
+# --- application stage ---
+FROM alpine:3.14
+
+RUN apk add --update bash openssl libstdc++ ncurses-libs
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY --from=build /app/_build/prod/rel/til ./
+RUN chown -R nobody: /app
+USER nobody
+
+ENV HOME=/app
+
+CMD ["./bin/til", "start"]
