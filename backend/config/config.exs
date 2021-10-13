@@ -7,21 +7,6 @@
 # General application configuration
 use Mix.Config
 
-config :til,
-  ecto_repos: [Til.Repo],
-  frontend_host: System.get_env("FRONTEND_HOST"),
-  slack_review_hook: System.get_env("SLACK_REVIEW_HOOK"),
-  slack_feed_hook: System.get_env("SLACK_FEED_HOOK"),
-  http_adapter: HTTPoison
-
-# Configures the endpoint
-config :til, TilWeb.Endpoint,
-  url: [host: "localhost"],
-  secret_key_base: "TGVCmQ52f5S76w5dAtjqzbne4axUj2kB8RO7wedO1m9YqDT0z42fvovvjgWIRer3",
-  render_errors: [view: TilWeb.ErrorView, accepts: ~w(json)],
-  pubsub_server: MyApp.PubSub,
-  live_view: [signing_salt: "vJGJD9ib"]
-
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
@@ -32,10 +17,6 @@ config :ueberauth, Ueberauth,
     google: {Ueberauth.Strategy.Google, [default_scope: "email profile"]}
   ]
 
-config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: System.get_env("GOOGLE_CLIENT_ID"),
-  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
-
 # Configure the authentication plug pipeline
 config :til, TilWeb.Plug.AuthAccessPipeline,
   module: Til.Guardian,
@@ -44,10 +25,6 @@ config :til, TilWeb.Plug.AuthAccessPipeline,
 config :til, TilWeb.Plug.AuthInfoPipeline,
   module: Til.Guardian,
   error_handler: TilWeb.Plug.AuthErrorHandler
-
-config :til, Til.Guardian,
-  issuer: "til",
-  secret_key: System.get_env("GUARDIAN_SECRET")
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
