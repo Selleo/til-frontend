@@ -17,6 +17,9 @@ defmodule TilWeb.Router do
 
   scope "/api", TilWeb do
     pipe_through :api
+
+    get("/healthcheck", HealthcheckController, :index)
+
     resources "/users", UserController, only: [:index, :show]
     resources "/posts", PostController, only: [:index, :show]
     resources "/categories", CategoryController, only: [:index, :show]
@@ -37,6 +40,6 @@ defmodule TilWeb.Router do
       put "/review", Posts.ReviewController, :approve
     end
 
-    get("/healthcheck", HealthcheckController, :index)
   end
+
 end
