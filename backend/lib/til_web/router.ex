@@ -36,5 +36,7 @@ defmodule TilWeb.Router do
       get "/review", Posts.ReviewController, :show
       put "/review", Posts.ReviewController, :approve
     end
+
+    get("/healthcheck", HealthcheckController, :index)
   end
 end
