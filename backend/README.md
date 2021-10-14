@@ -17,3 +17,22 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+## Deployment
+
+1. Build image
+
+```
+docker build -t til:NEW_VER .
+docker tag til:NEW_VER AWS_ACCOUNT_ID.dkr.ecr.eu-central-1.amazonaws.com/til:NEW_VER
+docker push AWS_ACCOUNT_ID.dkr.ecr.eu-central-1.amazonaws.com/til:NEW_VER
+```
+
+2. Terraform apply with newest tag
+
+3. Log in to EC2 and elixir container and run migrations
+
+```
+./bin/til rpc Til.Release.migrate
+```
+
