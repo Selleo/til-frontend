@@ -11,7 +11,7 @@ defmodule TilWeb.AuthController do
         ueberauth_auth: %{
           info: %{email: email, first_name: first_name, last_name: last_name, image: image},
           credentials: %{token: _},
-          uid: _
+          uid: uuid
         }
       },
       query_params: params
@@ -21,9 +21,11 @@ defmodule TilWeb.AuthController do
       nil ->
         Accounts.create_user(%{
           email: email,
+          image: image,
           first_name: first_name,
           last_name: last_name,
-          image: image
+          username: String.downcase("#{first_name}#{last_name}"),
+          uuid: uuid
         })
       user -> {:ok, user}
     end

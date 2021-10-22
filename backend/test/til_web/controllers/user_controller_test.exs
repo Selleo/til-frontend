@@ -26,6 +26,8 @@ defmodule TilWeb.UserControllerTest do
       assert second_responded_user["email"] == second_user.email
       assert first_responded_user["lastName"] == first_user.last_name
       assert second_responded_user["lastName"] == second_user.last_name
+      assert first_responded_user["userName"] == first_user.username
+      assert second_responded_user["userName"] == second_user.username
     end
   end
 
@@ -47,6 +49,7 @@ defmodule TilWeb.UserControllerTest do
       assert parsed_response_body["firstName"] == user.first_name
       assert parsed_response_body["email"] == user.email
       assert parsed_response_body["lastName"] == user.last_name
+      assert parsed_response_body["userName"] == user.username
 
       assert length(parsed_response_body["posts"]) == 1
 
