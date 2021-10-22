@@ -20,5 +20,7 @@ defmodule Til.Accounts.User do
     |> validate_format(:email, ~r/@/)
     |> validate_required([:email, :uuid])
     |> unique_constraint(:email)
+    |> unique_constraint(:username)
+    |> unique_constraint(:uuid)
   end
 end

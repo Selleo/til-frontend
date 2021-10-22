@@ -49,7 +49,7 @@ defmodule TilWeb.UserControllerTest do
       assert parsed_response_body["firstName"] == user.first_name
       assert parsed_response_body["email"] == user.email
       assert parsed_response_body["lastName"] == user.last_name
-      assert parsed_response_body["userNAme"] == user.username
+      assert parsed_response_body["userName"] == user.username
 
       assert length(parsed_response_body["posts"]) == 1
 
