@@ -5,4 +5,4 @@ config :til, TilWeb.Endpoint,
   pubsub_server: MyApp.PubSub,
   force_ssl: [hsts: true, rewrite_on: [:x_forwarded_proto]]
 
-config :logger, level: :debug
+config :logger, level: :info
