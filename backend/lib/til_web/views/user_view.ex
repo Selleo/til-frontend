@@ -16,22 +16,24 @@ defmodule TilWeb.UserView do
 
   defp serialize_user(user) do
     %{
-      uuid: user.uuid,
       email: user.email,
       firstName: user.first_name,
       lastName: user.last_name,
-      image: user.image
+      image: user.image,
+      userName: user.username,
+      uuid: user.uuid,
     }
   end
 
   defp serialize_user(user, :nested) do
     %{
-      uuid: user.uuid,
       email: user.email,
       firstName: user.first_name,
       lastName: user.last_name,
       image: user.image,
-      posts: render(TilWeb.PostView, "index_with_nested.json", posts: user.posts)
+      posts: render(TilWeb.PostView, "index_with_nested.json", posts: user.posts),
+      userName: user.username,
+      uuid: user.uuid,
     }
   end
 end

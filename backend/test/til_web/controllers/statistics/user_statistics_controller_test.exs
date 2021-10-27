@@ -44,6 +44,7 @@ defmodule TilWeb.Statistics.UserStatisticsControllerTest do
             "firstName" => first_user.first_name,
             "lastName" => first_user.last_name,
             "image" => first_user.image,
+            "userName" => first_user.username
           },
           "postCount" => 2,
           "reactionsGiven" => %{
@@ -68,6 +69,7 @@ defmodule TilWeb.Statistics.UserStatisticsControllerTest do
             "firstName" => second_user.first_name,
             "lastName" => second_user.last_name,
             "image" => second_user.image,
+            "userName" => first_user.username
           },
           "postCount" => 2,
           "reactionsGiven" => %{
@@ -202,6 +204,7 @@ defmodule TilWeb.Statistics.UserStatisticsControllerTest do
           "firstName" => first_user.first_name,
           "lastName" => first_user.last_name,
           "image" => first_user.image,
+          "userName" => first_user.username
         },
         "postCount" => 2,
         "reactionsGiven" => %{
