@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  pg:
+    image: postgres:12.3-alpine
+    restart: always
+    ports:
+      - 5400:5432
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: til
+      POSTGRES_DB: til
+      
+  pgweb:
+    restart: always
+    image: sosedoff/pgweb
+    ports: 
+      - "8400:8081" 
+    environment:
+      - DATABASE_URL=postgres://til:secret@pg:5432/til?sslmode=disable
+    depends_on:
+      - pg
+
+  app:
+    image: til:0.8.0
+    ports:
+      - "4000:4000"
+    environment:
+      MIX_ENV: prod
+      PORT: "4000"
+      DATABASE_URL: "postgres://til:secret@pg:5432/til?sslmode=disable"
+      HOST_URL: localhost
+      SECRET_KEY_BASE: todo
+      GOOGLE_CLIENT_ID: todo
+      GOOGLE_CLIENT_SECRET: todo
+      GUARDIAN_SECRET: todo
+      FRONTEND_HOST: localhost
+      SLACK_REVIEW_HOOK: todo
+      SLACK_FEED_HOOK: todo
+
