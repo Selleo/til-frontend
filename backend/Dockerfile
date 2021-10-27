@@ -23,7 +23,7 @@ RUN mix local.hex --force && \
 # --- application stage ---
 FROM alpine:3.14
 
-RUN apk add --update bash openssl libstdc++ ncurses-libs
+RUN apk add --update bash openssl libstdc++ ncurses-libs curl
 
 RUN mkdir /app
 WORKDIR /app
