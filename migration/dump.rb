@@ -4,6 +4,10 @@ require 'csv'
 require 'active_record'
 
 
+def title_url(title)
+  title.downcase.gsub(/\s+/, "-").gsub(/[^a-zA-Z0-9\-_]/, "").squeeze("-")
+end
+
 ActiveRecord::Base.establish_connection(
   "postgres://til:secret@localhost:5400/til?sslmode=disable"
 )
@@ -97,4 +101,26 @@ File.open("posts_categories.csv", "w") do |f|
     )
   end
 end
+
+
+File.open("redirections.cr", "w") do |f|
+  f.write("# This file is generated from Selleo/til/migration/dump.rb script based on current database\n\n")
+  f.write("REDIRECTIONS = {\n")
+
+  Post.all.each do |post|
+    f.write("  \"posts/#{post.slug}-#{title_url(post.title)}\" => \"https://til.selleo.com/posts/#{post.id}-#{title_url(post.title)}\",\n")
+  end
+  f.write("\n")
+  Channel.all.each do |ch|
+    f.write("  \"#{ch.name}\" => \"https://til.selleo.com/category/#{ch.name}\",\n")
+  end
+  f.write("\n")
+  Developer.all.each do |dev|
+    f.write("  \"authors/#{dev.username}\" => \"https://til.selleo.com/authors/#{dev.username}\",\n")
+  end
+
+  f.write("}")
+end
+
+
 
