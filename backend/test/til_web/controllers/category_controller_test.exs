@@ -62,6 +62,40 @@ defmodule TilWeb.CategoryControllerTest do
       assert second_responded_post["title"] == second_post.title
     end
 
+    test "returns category with posts sorted correctly (desc by inserted_at)", %{conn: conn} do
+      now = DateTime.utc_now()
+      first_post = insert(:post, title: "first post", reviewed: true, is_public: true, inserted_at: now)
+      second_post = insert(:post, title: "second post", reviewed: true, is_public: true, inserted_at: DateTime.add(now, 1, :second))
+      third_post = insert(:post, title: "third post", reviewed: true, is_public: true, inserted_at: DateTime.add(now, 2, :second))
+      fourth_post = insert(:post, title: "fourth post", reviewed: true, is_public: true, inserted_at: DateTime.add(now, 3, :second))
+
+      first_category = insert(:category, name: "Elixir")
+
+      insert(:post_category, post_id: first_post.id, category_id: first_category.id)
+      insert(:post_category, post_id: second_post.id, category_id: first_category.id)
+      insert(:post_category, post_id: third_post.id, category_id: first_category.id)
+      insert(:post_category, post_id: fourth_post.id, category_id: first_category.id)
+
+      response =
+        conn
+        |> get(Routes.category_path(conn, :show, first_category.id))
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert response.status == 200
+
+      %{ "posts" => posts } = parsed_response_body
+
+      assert length(posts) == 4
+
+      [first_responded_post, second_responded_post, third_responded_post, fourth_respondend_post] = posts
+
+      assert first_responded_post["title"] == fourth_post.title
+      assert second_responded_post["title"] == third_post.title
+      assert third_responded_post["title"] == second_post.title
+      assert fourth_respondend_post["title"] == first_post.title
+    end
+
     test "returns category with only reviewed posts when authenticated", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})

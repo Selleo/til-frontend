@@ -196,7 +196,6 @@ defmodule Til.ShareableContent do
   defp preload_category_posts(category, only_public_posts) do
     preload_posts_query = from(
       p in Post,
-      order_by: [desc: p.inserted_at],
       preload: [:author, posts_categories: :category, reactions: :user]
     )
 
@@ -206,6 +205,7 @@ defmodule Til.ShareableContent do
       on: pc.post_id == p.id,
       where: p.is_public in ^is_public_in(only_public_posts) and p.reviewed == true,
       select: pc,
+      order_by: [desc: p.inserted_at],
       preload: [
         post: ^preload_posts_query,
       ]
