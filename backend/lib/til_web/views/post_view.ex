@@ -29,6 +29,7 @@ defmodule TilWeb.PostView do
       isPublic: post.is_public,
       reactionCount: post.reaction_count,
       reactions: render(TilWeb.ReactionView, "index.json", reactions: post.reactions),
+      slug: post.slug,
       author: render(TilWeb.UserView, "show.json", user: post.author),
       reviewed: post.reviewed,
       categories: render(TilWeb.PostCategoryView, "index.json", categories: Enum.map(post.posts_categories, &(Map.merge(&1.category, %{position: &1.position})))),
@@ -44,6 +45,7 @@ defmodule TilWeb.PostView do
       isPublic: post.is_public,
       reviewed: post.reviewed,
       reactionCount: post.reaction_count,
+      slug: post.slug,
       createdAt: post.inserted_at
     }
   end

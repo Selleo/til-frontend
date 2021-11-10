@@ -438,6 +438,29 @@ defmodule TilWeb.PostControllerTest do
       assert parsed_response_body["author"]["email"] == current_user.email
     end
 
+    test "creates post with proper slug", %{conn: conn} do
+      current_user = insert(:user)
+      {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
+
+      post_title = "Some post title"
+      post_body = "Some post body"
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> post(Routes.post_path(conn, :create), %{
+          title: post_title,
+          body: post_body,
+          categories: []
+        })
+
+      assert response.status == 201
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body["slug"] == "some-post-title"
+    end
+
     test "creates reviewed post and returns 201 status with created post", %{conn: conn} do
       current_user = insert(:user)
       {:ok, token, _} = encode_and_sign(current_user.uuid, %{})
