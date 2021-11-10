@@ -10,7 +10,7 @@ defmodule Til.Accounts do
 
   @spec get_user_with_posts(any, boolean) ::
           nil | [%{optional(atom) => any}] | %{optional(atom) => any}
-  def get_user_with_posts(uuid, only_public), do: Repo.get_by(User, uuid: uuid) |> preload_posts(only_public)
+  def get_user_with_posts(username, only_public), do: Repo.get_by(User, username: username) |> preload_posts(only_public)
 
   def get_user_with_all_posts(uuid), do: Repo.get_by(User, uuid: uuid) |> preload_posts()
 

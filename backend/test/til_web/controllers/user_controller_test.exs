@@ -39,7 +39,7 @@ defmodule TilWeb.UserControllerTest do
 
       response =
         conn
-        |> get(Routes.user_path(conn, :show, user.uuid))
+        |> get(Routes.user_path(conn, :show, user.username))
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
@@ -70,7 +70,7 @@ defmodule TilWeb.UserControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> get(Routes.user_path(conn, :show, user.uuid))
+        |> get(Routes.user_path(conn, :show, user.username))
 
       assert response.status == 200
 
