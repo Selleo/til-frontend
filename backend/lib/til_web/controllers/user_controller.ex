@@ -10,9 +10,9 @@ defmodule TilWeb.UserController do
       |> render("index.json", users: users)
   end
 
-  def show(conn, %{"id" => user_uuid}) do
+  def show(conn, %{"id" => username}) do
     only_public = is_nil conn.private[:guardian_default_resource]
-    user = Accounts.get_user_with_posts(user_uuid, only_public)
+    user = Accounts.get_user_with_posts(username, only_public)
 
     conn
       |> put_status(:ok)
