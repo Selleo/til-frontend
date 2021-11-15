@@ -19,8 +19,8 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert length(parsed_response_body) == 1
-      [post] = parsed_response_body
+      assert length(parsed_response_body["posts"]) == 1
+      [post] = parsed_response_body["posts"]
       assert post["title"] == "public post"
       assert post["createdAt"] != nil
     end
@@ -42,8 +42,8 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert length(parsed_response_body) == 2
-      [first_post, second_post] = parsed_response_body
+      assert length(parsed_response_body["posts"]) == 2
+      [first_post, second_post] = parsed_response_body["posts"]
       assert first_post["title"] == "public reviewed post"
       assert second_post["title"] == "internal reviewed post"
     end
@@ -74,7 +74,7 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      [first_post, second_post] = parsed_response_body
+      [first_post, second_post] = parsed_response_body["posts"]
       assert first_post["categories"] == [
         %{"id" => first_category.id, "name" => first_category.name, "url" => first_category.url, "firstText" => first_category.first_text, "secondText" => first_category.second_text, "position" => 1},
         %{"id" => second_category.id, "name" => second_category.name, "url" => second_category.url, "firstText" => second_category.first_text, "secondText" => second_category.second_text, "position" => 2},
@@ -105,7 +105,7 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      [first_responded_post, second_responded_post] = parsed_response_body
+      [first_responded_post, second_responded_post] = parsed_response_body["posts"]
       assert first_responded_post["reactionCount"] == 2
       assert second_responded_post["reactionCount"] == 1
     end
@@ -129,7 +129,7 @@ defmodule TilWeb.PostControllerTest do
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
-      [first_responded_post, second_responded_post] = parsed_response_body
+      [first_responded_post, second_responded_post] = parsed_response_body["posts"]
 
       [first_responded_reaction, second_responded_reaction] = first_responded_post["reactions"]
       [third_responded_reaction] = second_responded_post["reactions"]
@@ -145,6 +145,126 @@ defmodule TilWeb.PostControllerTest do
       assert third_responded_reaction["user_uuid"] == first_user.uuid
       assert third_responded_reaction["post_id"] == second_post.id
       assert third_responded_reaction["user_id"] == nil
+    end
+
+    test "paginates posts properly with proper sorting from newest to oldest", %{conn: conn} do
+      now = DateTime.utc_now()
+      records = Enum.map(0..65, fn num -> insert(:post, reviewed: true, is_public: true, inserted_at: DateTime.add(now, num, :second)) end)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body["pageNumber"] == 1
+      assert parsed_response_body["pageSize"] == 20
+      assert parsed_response_body["totalEntries"] == 66
+      assert parsed_response_body["totalPages"] == 4
+      assert length(parsed_response_body["posts"]) == 20
+      assert Enum.at(parsed_response_body["posts"], 0)["id"] == Enum.at(records, 65).id
+      assert Enum.at(parsed_response_body["posts"], 19)["id"] == Enum.at(records, 46).id
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index, page: 2))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body["pageNumber"] == 2
+      assert parsed_response_body["pageSize"] == 20
+      assert parsed_response_body["totalEntries"] == 66
+      assert parsed_response_body["totalPages"] == 4
+      assert length(parsed_response_body["posts"]) == 20
+      assert Enum.at(parsed_response_body["posts"], 0)["id"] == Enum.at(records, 45).id
+      assert Enum.at(parsed_response_body["posts"], 19)["id"] == Enum.at(records, 26).id
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index, page: 2, page_size: 40))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body["pageNumber"] == 2
+      assert parsed_response_body["pageSize"] == 40
+      assert parsed_response_body["totalEntries"] == 66
+      assert parsed_response_body["totalPages"] == 2
+      assert length(parsed_response_body["posts"]) == 26
+      assert Enum.at(parsed_response_body["posts"], 0)["id"] == Enum.at(records, 25).id
+      assert Enum.at(parsed_response_body["posts"], 25)["id"] == Enum.at(records, 0).id
+    end
+
+    test "paginates posts properly with proper sorting from newest to oldest during search", %{conn: conn} do
+      now = DateTime.utc_now()
+      records = Enum.map(0..65, fn num -> insert(:post, reviewed: true, is_public: true, inserted_at: DateTime.add(now, num, :second)) end)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index, q: "post-title-"))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body["pageNumber"] == 1
+      assert parsed_response_body["pageSize"] == 20
+      assert parsed_response_body["totalEntries"] == 66
+      assert parsed_response_body["totalPages"] == 4
+      assert length(parsed_response_body["posts"]) == 20
+      assert Enum.at(parsed_response_body["posts"], 0)["id"] == Enum.at(records, 65).id
+      assert Enum.at(parsed_response_body["posts"], 19)["id"] == Enum.at(records, 46).id
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index, page: 2, q: "post-title-"))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body["pageNumber"] == 2
+      assert parsed_response_body["pageSize"] == 20
+      assert parsed_response_body["totalEntries"] == 66
+      assert parsed_response_body["totalPages"] == 4
+      assert length(parsed_response_body["posts"]) == 20
+      assert Enum.at(parsed_response_body["posts"], 0)["id"] == Enum.at(records, 45).id
+      assert Enum.at(parsed_response_body["posts"], 19)["id"] == Enum.at(records, 26).id
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index, page: 2, page_size: 40, q: "post-title-"))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body["pageNumber"] == 2
+      assert parsed_response_body["pageSize"] == 40
+      assert parsed_response_body["totalEntries"] == 66
+      assert parsed_response_body["totalPages"] == 2
+      assert length(parsed_response_body["posts"]) == 26
+      assert Enum.at(parsed_response_body["posts"], 0)["id"] == Enum.at(records, 25).id
+      assert Enum.at(parsed_response_body["posts"], 25)["id"] == Enum.at(records, 0).id
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index, page: 1, page_size: 20, q: Enum.at(records, 0).title))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert parsed_response_body["pageNumber"] == 1
+      assert parsed_response_body["pageSize"] == 20
+      assert parsed_response_body["totalEntries"] == 1
+      assert parsed_response_body["totalPages"] == 1
+      assert length(parsed_response_body["posts"]) == 1
     end
 
     test "searches properly with post title > author name > category name > post body priority", %{conn: conn} do
@@ -181,8 +301,8 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert length(parsed_response_body) == 3
-      [first_responded_post, second_responded_post, third_responded_post] = parsed_response_body
+      assert length(parsed_response_body["posts"]) == 3
+      [first_responded_post, second_responded_post, third_responded_post] = parsed_response_body["posts"]
 
       assert first_responded_post["title"] == "Bruce post"
       assert second_responded_post["author"]["firstName"] == "Bruce"
@@ -226,8 +346,8 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert length(parsed_response_body) == 3
-      [first_responded_post, second_responded_post, third_responded_post] = parsed_response_body
+      assert length(parsed_response_body["posts"]) == 3
+      [first_responded_post, second_responded_post, third_responded_post] = parsed_response_body["posts"]
 
       assert first_responded_post["title"] == "Bruce post"
       assert second_responded_post["author"]["firstName"] == "Bruce"
@@ -267,8 +387,8 @@ defmodule TilWeb.PostControllerTest do
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert length(parsed_response_body) == 1
-      [responded_post] = parsed_response_body
+      assert length(parsed_response_body["posts"]) == 1
+      [responded_post] = parsed_response_body["posts"]
 
       assert responded_post["body"] == "Bruce post body"
     end

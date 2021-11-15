@@ -6,6 +6,20 @@ defmodule TilWeb.PostView do
     |> Enum.map(&serialize_post/1)
   end
 
+  def render("paginated_index.json", %{page: page}) do
+    posts = page.entries
+    |> Enum.map(&serialize_post/1)
+
+    Map.merge(%{posts: posts}, serialize_page_params(page))
+  end
+
+  def render("paginated_index_with_nested.json", %{page: page}) do
+    posts = page.entries
+    |> Enum.map(fn post -> serialize_post(post, :nested) end)
+
+    Map.merge(%{posts: posts}, serialize_page_params(page))
+  end
+
   def render("index_with_nested.json", %{posts: posts}) do
     posts
     |> Enum.map(fn post -> serialize_post(post, :nested) end)
@@ -19,6 +33,15 @@ defmodule TilWeb.PostView do
   def render("show_with_nested.json", %{post: post}) do
     post
     |> serialize_post(:nested)
+  end
+
+  defp serialize_page_params(page) do
+    %{
+      pageNumber: page.page_number,
+      pageSize: page.page_size,
+      totalPages: page.total_pages,
+      totalEntries: page.total_entries
+    }
   end
 
   defp serialize_post(post, :nested) do

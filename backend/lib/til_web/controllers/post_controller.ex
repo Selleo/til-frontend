@@ -6,11 +6,11 @@ defmodule TilWeb.PostController do
 
   def index(conn, params) do
     only_public = is_nil conn.private[:guardian_default_resource]
-    posts = ShareableContent.get_posts(only_public, params)
+    page = ShareableContent.get_posts(only_public, params)
 
     conn
       |> put_status(:ok)
-      |> render("index_with_nested.json", posts: posts)
+      |> render("paginated_index_with_nested.json", page: page)
   end
 
   def show(conn, %{"id" => id}) do

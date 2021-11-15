@@ -26,10 +26,16 @@ defmodule TilWeb.CategoryView do
     %{
       id: category.id,
       name: category.name,
-      posts: render(TilWeb.PostView, "index_with_nested.json", posts: Enum.map(category.posts_categories, &(&1.post))),
+      posts: render(TilWeb.PostView, "paginated_index_with_nested.json", page: prepare_page(category.posts_categories)),
       url: category.url,
       firstText: category.first_text,
       secondText: category.second_text,
     }
+  end
+
+  defp prepare_page(page) do
+    entries = Enum.map(page.entries, &(&1.post))
+
+    Map.merge(page, %{entries: entries})
   end
 end

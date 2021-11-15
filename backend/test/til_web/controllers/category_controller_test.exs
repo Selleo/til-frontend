@@ -54,9 +54,9 @@ defmodule TilWeb.CategoryControllerTest do
 
       %{ "posts" => posts } = parsed_response_body
 
-      assert length(posts) == 2
+      assert length(posts["posts"]) == 2
 
-      [first_responded_post, second_responded_post] = posts
+      [first_responded_post, second_responded_post] = posts["posts"]
 
       assert first_responded_post["title"] == first_post.title
       assert second_responded_post["title"] == second_post.title
@@ -86,14 +86,75 @@ defmodule TilWeb.CategoryControllerTest do
 
       %{ "posts" => posts } = parsed_response_body
 
-      assert length(posts) == 4
+      assert length(posts["posts"]) == 4
 
-      [first_responded_post, second_responded_post, third_responded_post, fourth_respondend_post] = posts
+      [first_responded_post, second_responded_post, third_responded_post, fourth_respondend_post] = posts["posts"]
 
       assert first_responded_post["title"] == fourth_post.title
       assert second_responded_post["title"] == third_post.title
       assert third_responded_post["title"] == second_post.title
       assert fourth_respondend_post["title"] == first_post.title
+    end
+
+    test "paginates posts in category properly", %{conn: conn} do
+      first_category = insert(:category, name: "Elixir")
+      now = DateTime.utc_now()
+      created_posts = Enum.map(0..65, fn num -> insert(:post, reviewed: true, is_public: true, inserted_at: DateTime.add(now, num, :second)) end)
+      Enum.each(0..65, fn num -> insert(:post_category, post_id: Enum.at(created_posts, num).id, category_id: first_category.id) end)
+
+      response =
+        conn
+        |> get(Routes.category_path(conn, :show, first_category.id))
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert response.status == 200
+
+      %{ "posts" => posts } = parsed_response_body
+
+      assert posts["pageNumber"] == 1
+      assert posts["pageSize"] == 20
+      assert posts["totalEntries"] == 66
+      assert posts["totalPages"] == 4
+      assert length(posts["posts"]) == 20
+      assert Enum.at(posts["posts"], 0)["id"] == Enum.at(created_posts, 65).id
+      assert Enum.at(posts["posts"], 19)["id"] == Enum.at(created_posts, 46).id
+
+      response =
+        conn
+        |> get(Routes.category_path(conn, :show, first_category.id, page: 2, page_size: 40))
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert response.status == 200
+
+      %{ "posts" => posts } = parsed_response_body
+
+      assert posts["pageNumber"] == 2
+      assert posts["pageSize"] == 40
+      assert posts["totalEntries"] == 66
+      assert posts["totalPages"] == 2
+      assert length(posts["posts"]) == 26
+      assert Enum.at(posts["posts"], 0)["id"] == Enum.at(created_posts, 25).id
+      assert Enum.at(posts["posts"], 25)["id"] == Enum.at(created_posts, 0).id
+
+      response =
+        conn
+        |> get(Routes.category_path(conn, :show, first_category.id, page: 2))
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+
+      assert response.status == 200
+
+      %{ "posts" => posts } = parsed_response_body
+
+      assert posts["pageNumber"] == 2
+      assert posts["pageSize"] == 20
+      assert posts["totalEntries"] == 66
+      assert posts["totalPages"] == 4
+      assert length(posts["posts"]) == 20
+      assert Enum.at(posts["posts"], 0)["id"] == Enum.at(created_posts, 45).id
+      assert Enum.at(posts["posts"], 19)["id"] == Enum.at(created_posts, 26).id
     end
 
     test "returns category with only reviewed posts when authenticated", %{conn: conn} do
@@ -123,9 +184,9 @@ defmodule TilWeb.CategoryControllerTest do
 
       %{ "posts" => posts } = parsed_response_body
 
-      assert length(posts) == 3
+      assert length(posts["posts"]) == 3
 
-      [first_responded_post, second_responded_post, third_responded_post] = posts
+      [first_responded_post, second_responded_post, third_responded_post] = posts["posts"]
 
       assert first_responded_post["title"] == first_post.title
       assert second_responded_post["title"] == second_post.title

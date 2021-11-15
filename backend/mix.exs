@@ -47,7 +47,8 @@ defmodule Til.MixProject do
       {:bodyguard, "~> 2.4"},
       {:httpoison, "~> 1.6"},
       {:cors_plug, "~> 2.0"},
-      {:ecto_autoslug_field, "~> 3.0"}
+      {:ecto_autoslug_field, "~> 3.0"},
+      {:scrivener_ecto, "~> 2.0"},
     ]
   end
 
