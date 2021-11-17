@@ -54,9 +54,9 @@ defmodule TilWeb.CategoryControllerTest do
 
       %{ "posts" => posts } = parsed_response_body
 
-      assert length(posts["posts"]) == 2
+      assert length(posts["data"]) == 2
 
-      [first_responded_post, second_responded_post] = posts["posts"]
+      [first_responded_post, second_responded_post] = posts["data"]
 
       assert first_responded_post["title"] == first_post.title
       assert second_responded_post["title"] == second_post.title
@@ -86,9 +86,9 @@ defmodule TilWeb.CategoryControllerTest do
 
       %{ "posts" => posts } = parsed_response_body
 
-      assert length(posts["posts"]) == 4
+      assert length(posts["data"]) == 4
 
-      [first_responded_post, second_responded_post, third_responded_post, fourth_respondend_post] = posts["posts"]
+      [first_responded_post, second_responded_post, third_responded_post, fourth_respondend_post] = posts["data"]
 
       assert first_responded_post["title"] == fourth_post.title
       assert second_responded_post["title"] == third_post.title
@@ -116,9 +116,9 @@ defmodule TilWeb.CategoryControllerTest do
       assert posts["pageSize"] == 20
       assert posts["totalEntries"] == 66
       assert posts["totalPages"] == 4
-      assert length(posts["posts"]) == 20
-      assert Enum.at(posts["posts"], 0)["id"] == Enum.at(created_posts, 65).id
-      assert Enum.at(posts["posts"], 19)["id"] == Enum.at(created_posts, 46).id
+      assert length(posts["data"]) == 20
+      assert Enum.at(posts["data"], 0)["id"] == Enum.at(created_posts, 65).id
+      assert Enum.at(posts["data"], 19)["id"] == Enum.at(created_posts, 46).id
 
       response =
         conn
@@ -134,9 +134,9 @@ defmodule TilWeb.CategoryControllerTest do
       assert posts["pageSize"] == 40
       assert posts["totalEntries"] == 66
       assert posts["totalPages"] == 2
-      assert length(posts["posts"]) == 26
-      assert Enum.at(posts["posts"], 0)["id"] == Enum.at(created_posts, 25).id
-      assert Enum.at(posts["posts"], 25)["id"] == Enum.at(created_posts, 0).id
+      assert length(posts["data"]) == 26
+      assert Enum.at(posts["data"], 0)["id"] == Enum.at(created_posts, 25).id
+      assert Enum.at(posts["data"], 25)["id"] == Enum.at(created_posts, 0).id
 
       response =
         conn
@@ -152,9 +152,9 @@ defmodule TilWeb.CategoryControllerTest do
       assert posts["pageSize"] == 20
       assert posts["totalEntries"] == 66
       assert posts["totalPages"] == 4
-      assert length(posts["posts"]) == 20
-      assert Enum.at(posts["posts"], 0)["id"] == Enum.at(created_posts, 45).id
-      assert Enum.at(posts["posts"], 19)["id"] == Enum.at(created_posts, 26).id
+      assert length(posts["data"]) == 20
+      assert Enum.at(posts["data"], 0)["id"] == Enum.at(created_posts, 45).id
+      assert Enum.at(posts["data"], 19)["id"] == Enum.at(created_posts, 26).id
     end
 
     test "returns category with only reviewed posts when authenticated", %{conn: conn} do
@@ -184,9 +184,9 @@ defmodule TilWeb.CategoryControllerTest do
 
       %{ "posts" => posts } = parsed_response_body
 
-      assert length(posts["posts"]) == 3
+      assert length(posts["data"]) == 3
 
-      [first_responded_post, second_responded_post, third_responded_post] = posts["posts"]
+      [first_responded_post, second_responded_post, third_responded_post] = posts["data"]
 
       assert first_responded_post["title"] == first_post.title
       assert second_responded_post["title"] == second_post.title

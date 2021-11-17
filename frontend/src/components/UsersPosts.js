@@ -21,7 +21,7 @@ const UserPosts = () => {
   return (
     <>
       <h3>Users posts</h3>
-      {userPosts.map(({ id, title }) => (
+      {userPosts.data.map(({ id, title }) => (
         <Link to={`/posts/${id}`} key={id}>
           <p>{title}</p>
         </Link>

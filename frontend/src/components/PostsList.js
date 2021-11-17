@@ -23,7 +23,7 @@ const PostsList = props => {
 
   let delay = 0
 
-  return posts.map(post => {
+  return posts.data.map(post => {
     delay += delayStep
 
     return <Post key={post.id} post={post} animationDelay={delay} />

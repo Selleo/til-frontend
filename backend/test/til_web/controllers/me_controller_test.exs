@@ -25,7 +25,7 @@ defmodule TilWeb.MeControllerTest do
       assert parsed_response_body["firstName"] == current_user.first_name
       assert parsed_response_body["lastName"] == current_user.last_name
       assert parsed_response_body["image"] == current_user.image
-      assert length(parsed_response_body["posts"]["posts"]) == 2
+      assert length(parsed_response_body["posts"]["data"]) == 2
     end
 
     test "paginates posts properly", %{conn: conn} do
@@ -51,9 +51,9 @@ defmodule TilWeb.MeControllerTest do
       assert posts["pageSize"] == 20
       assert posts["totalEntries"] == 66
       assert posts["totalPages"] == 4
-      assert length(posts["posts"]) == 20
-      assert Enum.at(posts["posts"], 0)["id"] == Enum.at(created_posts, 65).id
-      assert Enum.at(posts["posts"], 19)["id"] == Enum.at(created_posts, 46).id
+      assert length(posts["data"]) == 20
+      assert Enum.at(posts["data"], 0)["id"] == Enum.at(created_posts, 65).id
+      assert Enum.at(posts["data"], 19)["id"] == Enum.at(created_posts, 46).id
 
       response =
         conn
@@ -69,9 +69,9 @@ defmodule TilWeb.MeControllerTest do
       assert posts["pageSize"] == 40
       assert posts["totalEntries"] == 66
       assert posts["totalPages"] == 2
-      assert length(posts["posts"]) == 26
-      assert Enum.at(posts["posts"], 0)["id"] == Enum.at(created_posts, 25).id
-      assert Enum.at(posts["posts"], 25)["id"] == Enum.at(created_posts, 0).id
+      assert length(posts["data"]) == 26
+      assert Enum.at(posts["data"], 0)["id"] == Enum.at(created_posts, 25).id
+      assert Enum.at(posts["data"], 25)["id"] == Enum.at(created_posts, 0).id
 
       response =
         conn
@@ -87,9 +87,9 @@ defmodule TilWeb.MeControllerTest do
       assert posts["pageSize"] == 20
       assert posts["totalEntries"] == 66
       assert posts["totalPages"] == 4
-      assert length(posts["posts"]) == 20
-      assert Enum.at(posts["posts"], 0)["id"] == Enum.at(created_posts, 45).id
-      assert Enum.at(posts["posts"], 19)["id"] == Enum.at(created_posts, 26).id
+      assert length(posts["data"]) == 20
+      assert Enum.at(posts["data"], 0)["id"] == Enum.at(created_posts, 45).id
+      assert Enum.at(posts["data"], 19)["id"] == Enum.at(created_posts, 26).id
     end
 
     test "throws error when not authenticated", %{conn: conn} do

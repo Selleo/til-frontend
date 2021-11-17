@@ -10,14 +10,14 @@ defmodule TilWeb.PostView do
     posts = page.entries
     |> Enum.map(&serialize_post/1)
 
-    Map.merge(%{posts: posts}, serialize_page_params(page))
+    Map.merge(%{data: posts}, serialize_page_params(page))
   end
 
   def render("paginated_index_with_nested.json", %{page: page}) do
     posts = page.entries
     |> Enum.map(fn post -> serialize_post(post, :nested) end)
 
-    Map.merge(%{posts: posts}, serialize_page_params(page))
+    Map.merge(%{data: posts}, serialize_page_params(page))
   end
 
   def render("index_with_nested.json", %{posts: posts}) do
