@@ -5,8 +5,8 @@ const initialState = {
   categoryPosts: null,
   currentUser: null,
   users: [],
-  posts: [],
-  searchedPosts: [],
+  posts: null,
+  searchedPosts: null,
   searchQuery: '',
 }
 

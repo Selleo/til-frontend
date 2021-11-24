@@ -47,8 +47,8 @@ defmodule Til.ShareableContent do
     end
   end
 
-  def get_posts(only_public, %{"q" => search_query}) do
-    sql = """
+  def get_posts(only_public, %{"q" => search_query} = params) do
+    total_entries_sql = """
     select p.* from posts p
       join users u on u.id = p.author_id
       join lateral (
@@ -66,18 +66,61 @@ defmodule Til.ShareableContent do
       order by ranks.rank desc, p.inserted_at desc
     """
 
-    results = SQL.query!(Repo, sql, [search_query, is_public_in(only_public)])
+    sql = """
+    select p.* from posts p
+      join users u on u.id = p.author_id
+      join lateral (
+        select ts_rank_cd(
+          setweight(to_tsvector(p.title), 'A')
+          ||
+          setweight(to_tsvector(u.first_name || ' ' || u.last_name), 'B')
+          ||
+          setweight(to_tsvector(p.body), 'D')
+          ,
+          plainto_tsquery($1)
+        ) as rank
+      ) ranks on true
+      where ranks.rank > 0 and p.is_public = ANY($2) and p.reviewed = true
+      order by ranks.rank desc, p.inserted_at desc
+      limit $3
+      offset $4
+    """
 
-    results.rows
+    total_entries_results =
+      SQL.query!(Repo, total_entries_sql, [search_query, is_public_in(only_public)])
+
+    page = if is_nil(params["page"]), do: 1, else: String.to_integer(params["page"])
+    page_size = if is_nil(params["page_size"]), do: 20, else: String.to_integer(params["page_size"])
+    offset = (page - 1) * page_size
+    total_entries = length(total_entries_results.rows)
+    total_pages = total_entries / page_size
+      |> Float.ceil()
+      |> trunc
+
+    results =
+      SQL.query!(Repo, sql, [search_query, is_public_in(only_public), page_size, offset])
+
+    posts = results.rows
       |> Enum.map(&Repo.load(Post, {results.columns, &1}))
       |> Repo.preload([:author, posts_categories: :category, reactions: :user])
       |> Enum.map(&Post.populate_reaction_count/1)
+
+    %{
+      entries: posts,
+      page_number: page,
+      page_size: page_size,
+      total_pages: total_pages,
+      total_entries: total_entries
+    }
   end
 
-  def get_posts(only_public, _) do
-    base_posts_query(only_public)
-    |> Repo.all()
-    |> Enum.map(&Post.populate_reaction_count/1)
+  def get_posts(only_public, params) do
+    result = base_posts_query(only_public)
+    |> Repo.paginate(params)
+
+    Map.merge(result, %{
+      entries: result.entries |> Enum.map(&Post.populate_reaction_count/1)
+    })
   end
 
   def create_post(_, %{"is_public" => true, "reviewed" => true}) do
@@ -123,14 +166,14 @@ defmodule Til.ShareableContent do
 
   def get_categories, do: Repo.all(Category)
 
-  def get_category(id, only_public) do
+  def get_category(id, only_public, params) do
     case Repo.get(Category, id) do
       nil -> {:error, :not_found}
       category ->
         {
           :ok,
           category
-          |> preload_category_posts(only_public)
+          |> preload_category_posts(only_public, params)
         }
     end
   end
@@ -179,7 +222,7 @@ defmodule Til.ShareableContent do
 
     from(pc in PostCategory, where: pc.post_id == ^post.id) |> Repo.delete_all
 
-    post_categories = categories
+    categories
       |> Enum.with_index(1)
       |> Enum.map(fn {category, position} -> PostCategory.changeset(%PostCategory{}, %{ post_id: post.id, category_id: category.id, position: position  }) end)
       |> Enum.map(&Repo.insert/1)
@@ -187,31 +230,27 @@ defmodule Til.ShareableContent do
     {:ok}
   end
 
-  defp process_categories_association(post, _), do: {:ok}
+  defp process_categories_association(_, _), do: {:ok}
 
   defp preload_post_data(post_data) do
     Repo.preload(post_data, [:author, posts_categories: :category, reactions: :user])
   end
 
-  defp preload_category_posts(category, only_public_posts) do
+  defp preload_category_posts(category, only_public_posts, params) do
     preload_posts_query = from(
       p in Post,
-      order_by: [desc: p.inserted_at],
       preload: [:author, posts_categories: :category, reactions: :user]
     )
 
-    preload_posts_categories_query = from(
-      pc in PostCategory,
-      join: p in Post,
-      on: pc.post_id == p.id,
-      where: p.is_public in ^is_public_in(only_public_posts) and p.reviewed == true,
-      select: pc,
-      preload: [
-        post: ^preload_posts_query,
-      ]
-    )
+    preloaded_post_categories = PostCategory
+      |> join(:inner, [pc], p in Post, on: pc.post_id == p.id)
+      |> where([pc, p], pc.category_id == ^category.id and p.is_public in ^is_public_in(only_public_posts) and p.reviewed == true)
+      |> select([pc, p], pc)
+      |> order_by([pc, p], desc: p.inserted_at)
+      |> preload(post: ^preload_posts_query)
+      |> Repo.paginate(params)
 
-    Repo.preload(category, [posts_categories: preload_posts_categories_query])
+    Map.put(category, :posts_categories, preloaded_post_categories)
   end
 
   defp jwt_handler do

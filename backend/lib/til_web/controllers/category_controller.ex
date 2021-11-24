@@ -10,10 +10,10 @@ defmodule TilWeb.CategoryController do
       |> render("index.json", categories: categories)
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => id} = params) do
     only_public_posts = is_nil conn.private[:guardian_default_resource]
 
-    with {:ok, category} <- ShareableContent.get_category(id, only_public_posts) do
+    with {:ok, category} <- ShareableContent.get_category(id, only_public_posts, params) do
       conn
       |> put_status(:ok)
       |> render("show.json", category: category)

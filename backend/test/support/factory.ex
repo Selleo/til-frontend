@@ -10,7 +10,8 @@ defmodule Til.Factory do
       email: sequence(:email, &"email-#{&1}@til.com"),
       first_name: "Peter",
       last_name: "Parker",
-      image: "some_image"
+      image: "some_image",
+      username: sequence(:name, &"name-#{&1}"),
     }
   end
 
@@ -21,7 +22,8 @@ defmodule Til.Factory do
       is_public: true,
       reviewed: false,
       reaction_count: 1,
-      author: build(:user)
+      author: build(:user),
+      slug: "dummy",
     }
   end
 

@@ -69,7 +69,7 @@ defmodule TilWeb.Statistics.UserStatisticsControllerTest do
             "firstName" => second_user.first_name,
             "lastName" => second_user.last_name,
             "image" => second_user.image,
-            "userName" => first_user.username
+            "userName" => second_user.username
           },
           "postCount" => 2,
           "reactionsGiven" => %{
@@ -192,7 +192,7 @@ defmodule TilWeb.Statistics.UserStatisticsControllerTest do
 
       response =
         conn
-        |> get(Routes.user_statistics_path(conn, :show, first_user.uuid))
+        |> get(Routes.user_statistics_path(conn, :show, first_user.username))
 
       assert response.status == 200
 
@@ -244,7 +244,7 @@ defmodule TilWeb.Statistics.UserStatisticsControllerTest do
 
       response =
         conn
-        |> get(Routes.user_statistics_path(conn, :show, first_user.uuid))
+        |> get(Routes.user_statistics_path(conn, :show, first_user.username))
 
       assert response.status == 200
 
@@ -281,7 +281,7 @@ defmodule TilWeb.Statistics.UserStatisticsControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> get(Routes.user_statistics_path(conn, :show, first_user.uuid))
+        |> get(Routes.user_statistics_path(conn, :show, first_user.username))
 
       assert response.status == 200
 
