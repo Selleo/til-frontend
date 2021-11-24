@@ -33,10 +33,10 @@ defmodule Til.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.0"},
+      {:phoenix, "~> 1.6.2"},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_ecto, "~> 4.0"},
-      {:ecto_sql, "~> 3.1"},
+      {:ecto_sql, "~> 3.7.1"},
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
@@ -46,7 +46,9 @@ defmodule Til.MixProject do
       {:ex_machina, "~> 2.3", only: :test},
       {:bodyguard, "~> 2.4"},
       {:httpoison, "~> 1.6"},
-      {:cors_plug, "~> 2.0"}
+      {:cors_plug, "~> 2.0"},
+      {:ecto_autoslug_field, "~> 3.0"},
+      {:scrivener_ecto, "~> 2.0"},
     ]
   end
 

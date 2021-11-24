@@ -6,6 +6,20 @@ defmodule TilWeb.PostView do
     |> Enum.map(&serialize_post/1)
   end
 
+  def render("paginated_index.json", %{page: page}) do
+    posts = page.entries
+    |> Enum.map(&serialize_post/1)
+
+    Map.merge(%{data: posts}, serialize_page_params(page))
+  end
+
+  def render("paginated_index_with_nested.json", %{page: page}) do
+    posts = page.entries
+    |> Enum.map(fn post -> serialize_post(post, :nested) end)
+
+    Map.merge(%{data: posts}, serialize_page_params(page))
+  end
+
   def render("index_with_nested.json", %{posts: posts}) do
     posts
     |> Enum.map(fn post -> serialize_post(post, :nested) end)
@@ -21,6 +35,15 @@ defmodule TilWeb.PostView do
     |> serialize_post(:nested)
   end
 
+  defp serialize_page_params(page) do
+    %{
+      pageNumber: page.page_number,
+      pageSize: page.page_size,
+      totalPages: page.total_pages,
+      totalEntries: page.total_entries
+    }
+  end
+
   defp serialize_post(post, :nested) do
     %{
       id: post.id,
@@ -29,6 +52,7 @@ defmodule TilWeb.PostView do
       isPublic: post.is_public,
       reactionCount: post.reaction_count,
       reactions: render(TilWeb.ReactionView, "index.json", reactions: post.reactions),
+      slug: post.slug,
       author: render(TilWeb.UserView, "show.json", user: post.author),
       reviewed: post.reviewed,
       categories: render(TilWeb.PostCategoryView, "index.json", categories: Enum.map(post.posts_categories, &(Map.merge(&1.category, %{position: &1.position})))),
@@ -44,6 +68,7 @@ defmodule TilWeb.PostView do
       isPublic: post.is_public,
       reviewed: post.reviewed,
       reactionCount: post.reaction_count,
+      slug: post.slug,
       createdAt: post.inserted_at
     }
   end

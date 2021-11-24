@@ -16,7 +16,7 @@ const UserProfile = () => {
     <>
       {userPosts ? (
         <div className="posts">
-          {userPosts.map(post => (
+          {userPosts.data.map(post => (
             <Post key={post.id} post={post} userMenu userImage={user.image} />
           ))}
         </div>

@@ -19,8 +19,7 @@ defmodule TilWeb.Router do
     pipe_through :api
 
     get("/healthcheck", HealthcheckController, :index)
-
-    resources "/users", UserController, only: [:index, :show]
+    resources "/authors", UserController, only: [:index, :show]
     resources "/posts", PostController, only: [:index, :show]
     resources "/categories", CategoryController, only: [:index, :show]
 

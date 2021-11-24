@@ -39,7 +39,7 @@ defmodule TilWeb.UserControllerTest do
 
       response =
         conn
-        |> get(Routes.user_path(conn, :show, user.uuid))
+        |> get(Routes.user_path(conn, :show, user.username))
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
 
@@ -51,9 +51,9 @@ defmodule TilWeb.UserControllerTest do
       assert parsed_response_body["lastName"] == user.last_name
       assert parsed_response_body["userName"] == user.username
 
-      assert length(parsed_response_body["posts"]) == 1
+      assert length(parsed_response_body["posts"]["data"]) == 1
 
-      [post] = parsed_response_body["posts"]
+      [post] = parsed_response_body["posts"]["data"]
 
       assert post["title"] == "public post"
     end
@@ -70,12 +70,76 @@ defmodule TilWeb.UserControllerTest do
       response =
         conn
         |> put_req_header("authorization", "bearer: " <> token)
-        |> get(Routes.user_path(conn, :show, user.uuid))
+        |> get(Routes.user_path(conn, :show, user.username))
 
       assert response.status == 200
 
       {:ok, parsed_response_body} = Jason.decode(response.resp_body)
-      assert length(parsed_response_body["posts"]) == 2
+      assert length(parsed_response_body["posts"]["data"]) == 2
+    end
+
+    test "paginates posts properly", %{conn: conn} do
+      user = insert(:user)
+      {:ok, token, _} = encode_and_sign(user.uuid, %{})
+
+      now = DateTime.utc_now()
+      created_posts = Enum.map(0..65,
+        fn num -> insert(:post, author: user, reviewed: true, is_public: true, inserted_at: DateTime.add(now, num, :second)) end
+      )
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> get(Routes.user_path(conn, :show, user.username))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      %{ "posts" => posts } = parsed_response_body
+
+      assert posts["pageNumber"] == 1
+      assert posts["pageSize"] == 20
+      assert posts["totalEntries"] == 66
+      assert posts["totalPages"] == 4
+      assert length(posts["data"]) == 20
+      assert Enum.at(posts["data"], 0)["id"] == Enum.at(created_posts, 65).id
+      assert Enum.at(posts["data"], 19)["id"] == Enum.at(created_posts, 46).id
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> get(Routes.user_path(conn, :show, user.username, page: 2, page_size: 40))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      %{ "posts" => posts } = parsed_response_body
+
+      assert posts["pageNumber"] == 2
+      assert posts["pageSize"] == 40
+      assert posts["totalEntries"] == 66
+      assert posts["totalPages"] == 2
+      assert length(posts["data"]) == 26
+      assert Enum.at(posts["data"], 0)["id"] == Enum.at(created_posts, 25).id
+      assert Enum.at(posts["data"], 25)["id"] == Enum.at(created_posts, 0).id
+
+      response =
+        conn
+        |> put_req_header("authorization", "bearer: " <> token)
+        |> get(Routes.user_path(conn, :show, user.username, page: 2))
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      %{ "posts" => posts } = parsed_response_body
+
+      assert posts["pageNumber"] == 2
+      assert posts["pageSize"] == 20
+      assert posts["totalEntries"] == 66
+      assert posts["totalPages"] == 4
+      assert length(posts["data"]) == 20
+      assert Enum.at(posts["data"], 0)["id"] == Enum.at(created_posts, 45).id
+      assert Enum.at(posts["data"], 19)["id"] == Enum.at(created_posts, 26).id
     end
   end
 end
