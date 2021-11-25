@@ -1,9 +1,8 @@
 # --- build stage ---
-FROM elixir:1.12-alpine AS build
+FROM elixir:1.13.0-rc.1-alpine AS build
 
 RUN apk add --update alpine-sdk coreutils
 
-RUN mkdir /app
 WORKDIR /app
 
 ENV MIX_ENV=prod
@@ -25,7 +24,6 @@ FROM alpine:3.14
 
 RUN apk add --update bash openssl libstdc++ ncurses-libs curl postgresql-client
 
-RUN mkdir /app
 WORKDIR /app
 
 COPY --from=build /app/_build/prod/rel/til ./
