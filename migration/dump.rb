@@ -61,6 +61,7 @@ File.open("posts.csv", "w") do |f|
       CSV.generate_line([
         "id",
         "title",
+        "slug",
         "body",
         "is_public",
         "author_id",
@@ -74,6 +75,7 @@ File.open("posts.csv", "w") do |f|
       CSV.generate_line([
         post.id,
         post.title,
+        post.slug,
         post.body,
         true,
         post.developer_id,
