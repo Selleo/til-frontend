@@ -75,7 +75,7 @@ File.open("posts.csv", "w") do |f|
       CSV.generate_line([
         post.id,
         post.title,
-        post.slug,
+        title_url(post.title),
         post.body,
         true,
         post.developer_id,
