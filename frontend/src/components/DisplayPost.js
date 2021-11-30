@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { fetchSinglePost } from '../utils'
-import { useParams } from 'react-router-dom'
 import Post from '../components/Post'
 import PostBanner from './PostBanner'
+import useParamsWithoutSlug from '../utils/customHooks/useParamsWithoutSlug'
+import { useHistory } from 'react-router'
 
 const { REACT_APP_API_URL: API_URL } = process.env
 
 const DisplayPost = () => {
   const [post, setPost] = useState(null)
-  const { id } = useParams()
+  const { id, slug } = useParamsWithoutSlug()
+  const history = useHistory()
 
   useEffect(() => {
     const fetchPost = async () => {
       const post = await fetchSinglePost(`${API_URL}/api/posts/`, id)
       setPost(post)
+
+      if (!slug || slug !== post.slug) {
+        history.replace(`/posts/${id}-${post.slug}`)
+      }
     }
     fetchPost()
   }, [id])
