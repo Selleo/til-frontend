@@ -3,6 +3,31 @@
 =======
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Backend setup
+
+Ensure you have `.dev.env` file in your `backend/` folder.
+
+```
+# spin up containers
+cd backend
+docker-compose up
+
+# once everything is ready, run migraitons
+cd backend
+docker exec backend-phoenix-1 /app/bin/til rpc Til.Release.migrate
+```
+
+Seed database
+
+```
+# connect to database
+cd backend
+docker exec -it backend-db-1 psql -U postgres
+
+# inside psql insert some categories
+insert into categories(name) values ('Elixir');
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

@@ -5,17 +5,23 @@ services:
     build:
       context: .
     environment:
+      DATABASE_URL: "postgres://postgres:postgres@db:5432/til_dev?sslmode=disable"
+      DATABASE_SSL: false
       PGUSER: postgres
       PGPASSWORD: postgres
       PGDATABASE: til_dev
       PGPORT: 5432
       PGHOST: db
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
-      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
-      GUARDIAN_SECRET: ${GUARDIAN_SECRET}
-      FRONTEND_HOST: ${FRONTEND_HOST}
-      SLACK_FEED_HOOK: ${SLACK_FEED_HOOK}
-      SLACK_REVIEW_HOOK: ${SLACK_REVIEW_HOOK}
+      GUARDIAN_SECRET: ymGEkFwXGtZWwJTec2LMdpaN8tNarn87
+      SECRET_KEY_BASE: xHWz8e9LBPy35cKnW7VnPfNQeXmppRJ6
+      FRONTEND_HOST: http://localhost:3000
+      HOST_URL: localhost:4000
+      SLACK_FEED_HOOK: ""
+      SLACK_REVIEW_HOOK: ""
+      PORT: 4000
+      HOST_SCHEME: http
+    env_file:
+      - .dev.env
     ports:
       - "4000:4000"
     depends_on:
@@ -25,6 +31,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: til_dev
       PGDATA: /var/lib/postgresql/data/pgdata
     restart: always
     volumes:
