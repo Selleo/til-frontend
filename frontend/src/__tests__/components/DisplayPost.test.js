@@ -15,7 +15,7 @@ jest.mock('react-router', () => {
   }
 })
 
-function renderTestComponent(Component, { route = '/' } = {}) {
+const renderTestComponent = (component, { route = '/' } = {}) => {
   const history = createMemoryHistory([route])
   history.push(route)
 
@@ -25,9 +25,7 @@ function renderTestComponent(Component, { route = '/' } = {}) {
       <Provider store={store}>
         <Router history={history}>
           <Switch>
-            <Route path="/posts/:id">
-              <Component />
-            </Route>
+            <Route path="/posts/:id">{component}</Route>
           </Switch>
         </Router>
       </Provider>
@@ -38,7 +36,9 @@ function renderTestComponent(Component, { route = '/' } = {}) {
 
 describe('DisplayPost', () => {
   it.only('sets adds the post slug in url when entering post details without providing slug', async () => {
-    const { history } = renderTestComponent(DisplayPost, { route: `/posts/1` })
+    const { history } = renderTestComponent(<DisplayPost />, {
+      route: `/posts/1`,
+    })
 
     expect(history.location.pathname).toMatch('posts/1')
 
@@ -52,7 +52,7 @@ describe('DisplayPost', () => {
   })
 
   it('sets changes the post slug in url when user enters post details with invalid slug', async () => {
-    const { history } = renderTestComponent(DisplayPost, {
+    const { history } = renderTestComponent(<DisplayPost />, {
       route: `/posts/1-wrong-slug`,
     })
 

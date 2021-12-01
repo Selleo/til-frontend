@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router'
 import { fetchSinglePost } from '../utils'
 import Post from '../components/Post'
 import PostBanner from './PostBanner'
 import useParamsWithoutSlug from '../utils/customHooks/useParamsWithoutSlug'
-import { useHistory } from 'react-router'
 
 const { REACT_APP_API_URL: API_URL } = process.env
 
