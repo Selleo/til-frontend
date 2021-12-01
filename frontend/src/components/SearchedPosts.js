@@ -14,7 +14,7 @@ const SearchedPosts = () => {
     history.push('/')
   }
 
-  if (!searchedPosts.length) {
+  if (!searchedPosts?.length) {
     return searchQuery && <NothingFound text={searchQuery} />
   }
 
