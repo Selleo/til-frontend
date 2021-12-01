@@ -8,17 +8,22 @@
     align-items: center
     color: $color-white
     text-decoration: none
+    cursor: pointer
     width: max-content
     border-radius: $border-radius-base
     padding: 5px 10px 5px 0px
 
     +transition(background-color, padding, color, margin)
 
-    &:hover
+    &:hover:not(.-active)
       svg
+        +transition(fill)
+        fill: $color-primary
         path
           fill: $color-primary
-
+      .categories__name
+          +transition(color)
+          color: $color-primary
     svg
       path
         +transition(fill)

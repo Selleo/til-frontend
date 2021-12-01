@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { Transition } from './Transition'
 import Icon from './UI/Icon'
 import ActionModal from '../components/ActionModal'
@@ -10,7 +10,11 @@ import { sortCategories } from '../utils/array/helpers.js'
 
 const Categories = () => {
   const history = useHistory()
-  const categories = useSelector(state => state.categories)
+  const { pathname } = useLocation()
+
+  const sortedCategories = useSelector(state =>
+    sortCategories(state.categories)
+  )
   const { isDisabled } = useDisableOnRoute(['add', 'edit'])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [navigationPath, setNavigationPath] = useState(null)
@@ -36,20 +40,20 @@ const Categories = () => {
     }
   })
 
-  const sortedCategories = sortCategories(categories)
-
   const onNavLinkClick = name => {
     if (isDisabled) {
       setNavigationPath(`/category/${name}`)
       setIsModalOpen(true)
-    } else history.push(`/category/${name}`)
+    } else `/category/${name}` !== pathname && history.push(`/category/${name}`)
   }
 
   return sortedCategories.map(({ id, name }) => (
     <div key={id}>
       <Transition name="opacity-animation">
         <div
-          className="categories__single-category"
+          className={`${
+            pathname === `/category/${name}` && '-active'
+          } categories__single-category`}
           onClick={() => onNavLinkClick(name)}
         >
           <div className="categories__icon">
