@@ -8,10 +8,14 @@ import {
   saveAllPosts,
 } from './store/actions/actions'
 import AuthenticatedApp from './authenticated'
-import AuthHandler from './components/AuthHandler'
-import NonAuthenticatedApp from './nonAuthenticated'
 import useUser from './utils/customHooks/useUser'
+
+import AuthHandler from './components/AuthHandler'
 import ScrollToTop from './components/ScrollToTop'
+import AppHeader from './components/AppHeader'
+import SideNav from './components/SideNav'
+import MainRoutes from './components/MainRoutes'
+import Footer from './components/Footer'
 // needed for styling that has not been changed yet
 import './App.css'
 import './devicon.css'
@@ -29,13 +33,19 @@ const App = () => {
     dispatch(saveAllUsers())
   }, [dispatch])
 
-  const renderApp = currentUser ? <AuthenticatedApp /> : <NonAuthenticatedApp />
-
   return (
     <Router>
       <div className="app-main" data-testid="app-main">
         <ScrollToTop />
-        {renderApp}
+        <SideNav />
+        <div className="main-content">
+          <AppHeader />
+          <div className="main-content-area">
+            <MainRoutes />
+            {currentUser && <AuthenticatedApp />}
+          </div>
+          <Footer />
+        </div>
         <Route path="/auth">
           <AuthHandler />
         </Route>

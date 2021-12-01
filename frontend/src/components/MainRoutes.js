@@ -11,7 +11,6 @@ import useUser from '../utils/customHooks/useUser'
 
 const MainRoutes = () => {
   const posts = useSelector(state => state.posts)
-  const categoryPosts = useSelector(state => state.categoryPosts?.posts)
   const user = useUser()
 
   return (
@@ -26,7 +25,7 @@ const MainRoutes = () => {
         <DisplayPost />
       </Route>
       <Route path="/category/:id">
-        <PostsList posts={categoryPosts} />
+        <PostsList />
       </Route>
       <Route path="/user-posts/:id">
         <UserPosts />
