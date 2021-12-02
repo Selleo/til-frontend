@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
 import { Transition } from './Transition'
-import Icon from './UI/Icon'
+import { useHistory, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import ActionModal from '../components/ActionModal'
+import classNames from 'classnames'
+import Icon from './UI/Icon'
 
 import { useDisableOnRoute } from '../utils/customHooks/useDisableOnRoute'
 import { sortCategories } from '../utils/array/helpers.js'
@@ -48,14 +49,16 @@ const Categories = () => {
       setIsModalOpen(true)
     } else !isActiveNav(name) && history.push(`/category/${name}`)
   }
+  const navItemClasses = name =>
+    classNames('categories__single-category', {
+      '-active': isActiveNav(name),
+    })
 
   return sortedCategories.map(({ id, name }) => (
     <div key={id}>
       <Transition name="opacity-animation">
         <div
-          className={`${
-            isActiveNav(name) && '-active'
-          } categories__single-category`}
+          className={navItemClasses(name)}
           onClick={() => onNavLinkClick(name)}
         >
           <div className="categories__icon">

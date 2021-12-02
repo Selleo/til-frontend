@@ -22,7 +22,6 @@ export const saveAllCategories = () => async dispatch => {
   const categoriesArray = await fetchData(`${API_URL}/api/categories`)
 
   dispatch(getAllCategories(categoriesArray))
-  dispatch(setStatus({ key: 'categories', value: statusType.fetched }))
 }
 
 // USER
@@ -40,7 +39,6 @@ export const saveCurrentUser = () => async dispatch => {
   }
 
   dispatch(getCurrentUser(currentUser))
-  dispatch(setStatus({ key: 'currentUser', value: statusType.fetched }))
 }
 
 export const deleteCurrentUser = () => ({
@@ -64,7 +62,6 @@ export const saveCategoryPosts = id => async dispatch => {
     `${API_URL}/api/categories/${id}`
   )
   dispatch(getCategoryPosts(categoryPosts))
-  dispatch(setStatus({ key: 'categoryPosts', value: statusType.fetched }))
 }
 
 export const getCategoryPosts = categoryPosts => ({
@@ -90,7 +87,6 @@ export const saveAllUsers = () => async dispatch => {
   const allUsers = await fetchData(`${API_URL}/api/statistics/users`)
 
   dispatch(getAllUsers(allUsers))
-  dispatch(setStatus({ key: 'users', value: statusType.fetched }))
 }
 
 // POSTS
@@ -102,10 +98,8 @@ const getPosts = posts => ({
 export const saveAllPosts = () => async dispatch => {
   dispatch(setStatus({ key: 'posts', value: statusType.loading }))
   const allPosts = await fetchData(`${API_URL}/api/posts`)
-  console.log(allPosts)
 
   dispatch(getPosts(allPosts))
-  dispatch(setStatus({ key: 'posts', value: statusType.fetched }))
 }
 
 // SEARCHED POSTS
@@ -121,7 +115,6 @@ export const saveSearchedPosts = query => async dispatch => {
 
   dispatch(saveSearchedQuery(query))
   dispatch(getSerchedPosts(searchedPosts))
-  dispatch(setStatus({ key: 'searchedPosts', value: statusType.fetched }))
 }
 
 export const saveSearchedQuery = searchQuery => ({

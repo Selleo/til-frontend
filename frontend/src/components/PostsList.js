@@ -13,8 +13,8 @@ const PostsList = ({ withCategory = false }) => {
   const categories = useSelector(state => state.categories)
   const categoryPosts = useSelector(state => state.categoryPosts?.posts)
   const posts = useSelector(state => state.posts)
-  const categoriesStatus = useSelector(state => state.statuses.categoryPosts)
-  const postStatus = useSelector(state => state.statuses.posts)
+  const categoriesStatus = useSelector(state => state.statuses?.categoryPosts)
+  const postStatus = useSelector(state => state.statuses?.posts)
 
   const { id } = useParams()
   const dispatch = useDispatch()
@@ -30,18 +30,14 @@ const PostsList = ({ withCategory = false }) => {
   if (!!withCategory && categoriesStatus !== statusType.fetched) return null
 
   let delay = 0
+  const renderPost = post => {
+    delay += delayStep
+    return <Post key={post.id} post={post} animationDelay={delay} />
+  }
 
   return withCategory
-    ? categoryPosts.data.map(post => {
-        delay += delayStep
-
-        return <Post key={post.id} post={post} animationDelay={delay} />
-      })
-    : posts.data.map(post => {
-        delay += delayStep
-
-        return <Post key={post.id} post={post} animationDelay={delay} />
-      })
+    ? categoryPosts.data.map(renderPost)
+    : posts.data.map(renderPost)
 }
 
 export default PostsList
