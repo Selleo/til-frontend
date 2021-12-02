@@ -2,12 +2,12 @@ import { useParams } from 'react-router-dom'
 
 const useParamsWithoutSlug = () => {
   const { id } = useParams()
-  const dashIndex = id.indexOf('-')
 
-  if (dashIndex === -1) {
-    return { id, slug: false }
+  if (id.includes('-')) {
+    const splittedId = id.split('-')
+    return { id: splittedId.shift(), slug: splittedId.join('-') }
   }
-  return { id: id.slice(0, dashIndex), slug: id.slice(dashIndex + 1) }
+  return { id, slug: false }
 }
 
 export default useParamsWithoutSlug
