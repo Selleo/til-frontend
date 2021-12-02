@@ -7,6 +7,7 @@ import {
   fetchCategoryPosts,
   fetchSearchedPosts,
 } from '../../utils'
+import { statusType } from '../../utils/constants'
 
 const { REACT_APP_API_URL: API_URL } = process.env
 
@@ -17,9 +18,11 @@ const getAllCategories = categories => ({
 })
 
 export const saveAllCategories = () => async dispatch => {
+  dispatch(setStatus({ key: 'categories', value: statusType.loading }))
   const categoriesArray = await fetchData(`${API_URL}/api/categories`)
 
   dispatch(getAllCategories(categoriesArray))
+  dispatch(setStatus({ key: 'categories', value: statusType.fetched }))
 }
 
 // USER
@@ -29,6 +32,7 @@ const getCurrentUser = currentUser => ({
 })
 
 export const saveCurrentUser = () => async dispatch => {
+  dispatch(setStatus({ key: 'currentUser', value: statusType.loading }))
   let currentUser = await fetchUser(`${API_URL}/api/me`)
 
   if (currentUser.errors) {
@@ -36,6 +40,7 @@ export const saveCurrentUser = () => async dispatch => {
   }
 
   dispatch(getCurrentUser(currentUser))
+  dispatch(setStatus({ key: 'currentUser', value: statusType.fetched }))
 }
 
 export const deleteCurrentUser = () => ({
@@ -54,10 +59,12 @@ export const getCurrentUserPosts = currentUserPosts => ({
 })
 
 export const saveCategoryPosts = id => async dispatch => {
+  dispatch(setStatus({ key: 'categoryPosts', value: statusType.loading }))
   const categoryPosts = await fetchCategoryPosts(
     `${API_URL}/api/categories/${id}`
   )
   dispatch(getCategoryPosts(categoryPosts))
+  dispatch(setStatus({ key: 'categoryPosts', value: statusType.fetched }))
 }
 
 export const getCategoryPosts = categoryPosts => ({
@@ -78,9 +85,12 @@ const getAllUsers = users => ({
 })
 
 export const saveAllUsers = () => async dispatch => {
+  dispatch(setStatus({ key: 'users', value: statusType.loading }))
+
   const allUsers = await fetchData(`${API_URL}/api/statistics/users`)
 
   dispatch(getAllUsers(allUsers))
+  dispatch(setStatus({ key: 'users', value: statusType.fetched }))
 }
 
 // POSTS
@@ -90,9 +100,12 @@ const getPosts = posts => ({
 })
 
 export const saveAllPosts = () => async dispatch => {
+  dispatch(setStatus({ key: 'posts', value: statusType.loading }))
   const allPosts = await fetchData(`${API_URL}/api/posts`)
+  console.log(allPosts)
 
   dispatch(getPosts(allPosts))
+  dispatch(setStatus({ key: 'posts', value: statusType.fetched }))
 }
 
 // SEARCHED POSTS
@@ -103,13 +116,20 @@ const getSerchedPosts = searchedPosts => ({
 })
 
 export const saveSearchedPosts = query => async dispatch => {
+  dispatch(setStatus({ key: 'searchedPosts', value: statusType.loading }))
   const searchedPosts = await fetchSearchedPosts(query)
 
   dispatch(saveSearchedQuery(query))
   dispatch(getSerchedPosts(searchedPosts))
+  dispatch(setStatus({ key: 'searchedPosts', value: statusType.fetched }))
 }
 
 export const saveSearchedQuery = searchQuery => ({
   type: actionTypes.SEARCH_QUERY,
   searchQuery,
+})
+
+const setStatus = ({ key, value }) => ({
+  type: actionTypes.UPDATE_STATUS,
+  payload: { key, value },
 })

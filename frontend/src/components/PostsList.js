@@ -1,15 +1,20 @@
 import React, { useEffect } from 'react'
-import Post from './Post'
-import '../App.css'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { saveCategoryPosts } from '../store/actions/actions'
 import { delayStep } from './Transition'
+import Post from './Post'
+
+import { statusType } from '../utils/constants'
+import '../App.css'
 
 const PostsList = ({ withCategory = false }) => {
   const categories = useSelector(state => state.categories)
   const categoryPosts = useSelector(state => state.categoryPosts?.posts)
   const posts = useSelector(state => state.posts)
+  const categoriesStatus = useSelector(state => state.statuses.categoryPosts)
+  const postStatus = useSelector(state => state.statuses.posts)
 
   const { id } = useParams()
   const dispatch = useDispatch()
@@ -19,12 +24,12 @@ const PostsList = ({ withCategory = false }) => {
       const foundCategory = categories.find(({ name }) => name === id)
       foundCategory && dispatch(saveCategoryPosts(foundCategory.id))
     }
-  }, [id, categories, dispatch, withCategory])
+  }, [withCategory, categories, dispatch, id])
+
+  if (!withCategory && postStatus !== statusType.fetched) return null
+  if (!!withCategory && categoriesStatus !== statusType.fetched) return null
 
   let delay = 0
-
-  if (!withCategory && !posts) return <div>loading</div>
-  if (!!withCategory && !categoryPosts) return <div>loading</div>
 
   return withCategory
     ? categoryPosts.data.map(post => {

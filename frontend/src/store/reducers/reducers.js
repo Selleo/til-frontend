@@ -8,8 +8,14 @@ const initialState = {
   posts: null,
   searchedPosts: null,
   searchQuery: '',
+  statuses: {},
 }
 
+Object.keys(initialState).forEach(
+  val => val !== 'statuses' && (initialState.statuses[val] = 'idle')
+)
+
+console.log(initialState)
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_ALL_CATEGORIES:
@@ -64,6 +70,15 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         searchQuery: action.searchQuery,
+      }
+
+    case actionTypes.UPDATE_STATUS:
+      return {
+        ...state,
+        statuses: {
+          ...state.statuses,
+          [action.payload.key]: action.payload.value,
+        },
       }
 
     default:

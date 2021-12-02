@@ -40,11 +40,13 @@ const Categories = () => {
     }
   })
 
+  const isActiveNav = name => `/category/${name}` === pathname
+
   const onNavLinkClick = name => {
     if (isDisabled) {
       setNavigationPath(`/category/${name}`)
       setIsModalOpen(true)
-    } else `/category/${name}` !== pathname && history.push(`/category/${name}`)
+    } else !isActiveNav(name) && history.push(`/category/${name}`)
   }
 
   return sortedCategories.map(({ id, name }) => (
@@ -52,7 +54,7 @@ const Categories = () => {
       <Transition name="opacity-animation">
         <div
           className={`${
-            pathname === `/category/${name}` && '-active'
+            isActiveNav(name) && '-active'
           } categories__single-category`}
           onClick={() => onNavLinkClick(name)}
         >
