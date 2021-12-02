@@ -36,7 +36,7 @@ const Post = props => {
     return review ? (
       <span className="post__title">{title}</span>
     ) : (
-      <Link className="post__title" to={`/posts/${post.id}`}>
+      <Link className="post__title" to={`/posts/${post.id}-${post.slug}`}>
         {title}
       </Link>
     )

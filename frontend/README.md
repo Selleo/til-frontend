@@ -22,7 +22,7 @@ Seed database
 ```
 # connect to database
 cd backend
-docker exec -it backend-db-1 psql -U postgres
+docker exec -it backend-db-1 psql -U postgres -d til_dev
 
 # inside psql insert some categories
 insert into categories(name) values ('Elixir');

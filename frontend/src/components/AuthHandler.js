@@ -14,7 +14,7 @@ const AuthHandler = () => {
 
   dispatch(saveCurrentUser())
 
-  if (callbackURL) {
+  if (callbackURL?.includes('hashed_id')) {
     history.push(callbackURL)
   } else {
     history.push('/')
