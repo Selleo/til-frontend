@@ -7,6 +7,7 @@ import {
   fetchCategoryPosts,
   fetchSearchedPosts,
 } from '../../utils'
+import { statusType } from '../../utils/constants'
 
 const { REACT_APP_API_URL: API_URL } = process.env
 
@@ -17,6 +18,7 @@ const getAllCategories = categories => ({
 })
 
 export const saveAllCategories = () => async dispatch => {
+  dispatch(setStatus({ key: 'categories', value: statusType.loading }))
   const categoriesArray = await fetchData(`${API_URL}/api/categories`)
 
   dispatch(getAllCategories(categoriesArray))
@@ -29,6 +31,7 @@ const getCurrentUser = currentUser => ({
 })
 
 export const saveCurrentUser = () => async dispatch => {
+  dispatch(setStatus({ key: 'currentUser', value: statusType.loading }))
   let currentUser = await fetchUser(`${API_URL}/api/me`)
 
   if (currentUser.errors) {
@@ -54,6 +57,7 @@ export const getCurrentUserPosts = currentUserPosts => ({
 })
 
 export const saveCategoryPosts = id => async dispatch => {
+  dispatch(setStatus({ key: 'categoryPosts', value: statusType.loading }))
   const categoryPosts = await fetchCategoryPosts(
     `${API_URL}/api/categories/${id}`
   )
@@ -78,6 +82,8 @@ const getAllUsers = users => ({
 })
 
 export const saveAllUsers = () => async dispatch => {
+  dispatch(setStatus({ key: 'users', value: statusType.loading }))
+
   const allUsers = await fetchData(`${API_URL}/api/statistics/users`)
 
   dispatch(getAllUsers(allUsers))
@@ -90,6 +96,7 @@ const getPosts = posts => ({
 })
 
 export const saveAllPosts = () => async dispatch => {
+  dispatch(setStatus({ key: 'posts', value: statusType.loading }))
   const allPosts = await fetchData(`${API_URL}/api/posts`)
 
   dispatch(getPosts(allPosts))
@@ -103,6 +110,7 @@ const getSerchedPosts = searchedPosts => ({
 })
 
 export const saveSearchedPosts = query => async dispatch => {
+  dispatch(setStatus({ key: 'searchedPosts', value: statusType.loading }))
   const searchedPosts = await fetchSearchedPosts(query)
 
   dispatch(saveSearchedQuery(query))
@@ -112,4 +120,9 @@ export const saveSearchedPosts = query => async dispatch => {
 export const saveSearchedQuery = searchQuery => ({
   type: actionTypes.SEARCH_QUERY,
   searchQuery,
+})
+
+const setStatus = ({ key, value }) => ({
+  type: actionTypes.UPDATE_STATUS,
+  payload: { key, value },
 })

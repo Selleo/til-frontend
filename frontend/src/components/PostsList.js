@@ -1,33 +1,43 @@
-import React from 'react'
-import Post from './Post'
-import '../App.css'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { saveCategoryPosts } from '../store/actions/actions'
 import { delayStep } from './Transition'
+import Post from './Post'
 
-const PostsList = props => {
-  const { posts } = props
+import { statusType } from '../utils/constants'
+import '../App.css'
+
+const PostsList = ({ withCategory = false }) => {
   const categories = useSelector(state => state.categories)
+  const categoryPosts = useSelector(state => state.categoryPosts?.posts)
+  const posts = useSelector(state => state.posts)
+  const categoriesStatus = useSelector(state => state.statuses?.categoryPosts)
+  const postStatus = useSelector(state => state.statuses?.posts)
+
   const { id } = useParams()
   const dispatch = useDispatch()
 
-  if (!posts) {
-    const foundCategory = categories.find(({ name }) => name === id)
-    if (foundCategory) {
-      dispatch(saveCategoryPosts(foundCategory.id))
+  useEffect(() => {
+    if (withCategory) {
+      const foundCategory = categories.find(({ name }) => name === id)
+      foundCategory && dispatch(saveCategoryPosts(foundCategory.id))
     }
+  }, [withCategory, categories, dispatch, id])
 
-    return null
-  }
+  if (!withCategory && postStatus !== statusType.fetched) return null
+  if (!!withCategory && categoriesStatus !== statusType.fetched) return null
 
   let delay = 0
-
-  return posts.data.map(post => {
+  const renderPost = post => {
     delay += delayStep
-
     return <Post key={post.id} post={post} animationDelay={delay} />
-  })
+  }
+
+  return withCategory
+    ? categoryPosts.data.map(renderPost)
+    : posts.data.map(renderPost)
 }
 
 export default PostsList
