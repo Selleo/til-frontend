@@ -1,12 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const SearchedPhrase = props => {
-  const { phrase } = props
-
-  if (!phrase.length > 0) {
-    return null
-  }
-
+const SearchedPhrase = ({ phrase }) => {
   return (
     <p>
       Searched phrase:{' '}
@@ -15,6 +10,10 @@ const SearchedPhrase = props => {
       </b>
     </p>
   )
+}
+
+SearchedPhrase.propTypes = {
+  phrase: PropTypes.string.isRequired,
 }
 
 export default SearchedPhrase

@@ -5,10 +5,10 @@ import PostsList from '../components/PostsList'
 import NothingFound from './NothingFound'
 
 const SearchedPosts = () => {
-  const searchedPosts = useSelector(state => state.searchedPosts)
-  const searchQuery = useSelector(state => state.searchQuery)
+  const searchedPosts = useSelector(({ searchedPosts }) => searchedPosts?.data)
+  const searchQuery = useSelector(({ searchQuery }) => searchQuery)
 
-  if (!searchedPosts?.length) {
+  if (!searchedPosts) {
     return searchQuery && <NothingFound text={searchQuery} />
   }
 
