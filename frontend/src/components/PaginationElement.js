@@ -1,17 +1,18 @@
 import React from 'react'
 import classNames from 'classnames'
-import { useSelector } from 'react-redux'
 
-const PaginationElement = ({ page }) => {
-  const pageNumber = useSelector(({ posts }) => posts.pageNumber)
-
+const PaginationElement = ({ page, isActive, handleClick }) => {
   const className = classNames({
     pagination__page: true,
-    '-active': pageNumber === page,
+    '-active': isActive,
     '-dot': page === '...',
   })
 
-  return <button className={className}>{page}</button>
+  return (
+    <button className={className} onClick={handleClick}>
+      {page}
+    </button>
+  )
 }
 
 export default PaginationElement

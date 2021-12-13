@@ -1,66 +1,59 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { range } from '../utils/array/helpers'
+import { usePagination } from '../utils/customHooks/usePagination'
 import PaginationElement from './PaginationElement'
+import { saveAllPosts, saveCategoryPosts } from '../store/actions/actions'
+import { useSelector, useDispatch } from 'react-redux'
 
-const DOTS = '...'
+const PostsPagination = ({ posts, withCategory = false }) => {
+  const pagination = usePagination(posts)
+  const pageNumber = useSelector(({ posts }) => posts.pageNumber)
+  const category = useSelector(({ categoryPosts }) => categoryPosts)
+  const dispatch = useDispatch()
 
-const PostsPagination = () => {
-  const posts = useSelector(({ posts }) => posts)
-
-  if (!posts) {
+  if (!posts.data.length) {
     return null
   }
 
-  const { pageNumber, totalPages } = posts
-
-  const paginationRange = () => {
-    if (3 >= totalPages) {
-      return range(1, totalPages)
-    }
-
-    const leftSiblingIndex = Math.max(pageNumber - 1, 1)
-    const rightSiblingIndex = Math.min(pageNumber + 1, totalPages)
-    const shouldShowLeftDots = leftSiblingIndex > 2
-    const shouldShowRightDots = rightSiblingIndex < totalPages - 1
-
-    if (!shouldShowLeftDots && shouldShowRightDots) {
-      let leftRange = 0
-      if (pageNumber === 1) {
-        leftRange = range(1, 2)
-      } else {
-        leftRange = range(1, pageNumber)
+  const handleClick = page => {
+    if (withCategory) {
+      switch (page) {
+        case 'Prev':
+          return dispatch(
+            saveCategoryPosts(category.id, category.posts.pageNumber - 1)
+          )
+        case 'Next':
+          return dispatch(
+            saveCategoryPosts(category.id, category.posts.pageNumber + 1)
+          )
+        case '...':
+          return
+        default:
+          return dispatch(saveCategoryPosts(category.id, page))
       }
-
-      return [...leftRange, DOTS, totalPages]
-    }
-
-    if (shouldShowLeftDots && !shouldShowRightDots) {
-      let rightRange = 0
-      if (pageNumber === totalPages) {
-        rightRange = range(totalPages - 1, totalPages)
-      } else {
-        rightRange = range(totalPages - (totalPages - pageNumber), totalPages)
+    } else {
+      switch (page) {
+        case 'Prev':
+          return dispatch(saveAllPosts(pageNumber - 1))
+        case 'Next':
+          return dispatch(saveAllPosts(pageNumber + 1))
+        case '...':
+          return
+        default:
+          return dispatch(saveAllPosts(page))
       }
-
-      return [1, DOTS, ...rightRange]
-    }
-
-    if (shouldShowLeftDots && shouldShowRightDots) {
-      let middleRange = range(leftSiblingIndex, rightSiblingIndex)
-      return [1, DOTS, ...middleRange, DOTS, totalPages]
     }
   }
 
   return (
     <nav className="pagination__wrapper">
-      {pageNumber !== 1 && <PaginationElement page="Prev" />}
-
-      {paginationRange().map((page, index) => (
-        <PaginationElement page={page} key={index} />
+      {pagination.map((page, index) => (
+        <PaginationElement
+          page={page}
+          key={index}
+          isActive={posts.pageNumber === page}
+          handleClick={() => handleClick(page)}
+        />
       ))}
-
-      {pageNumber !== totalPages && <PaginationElement page="Next" />}
     </nav>
   )
 }
