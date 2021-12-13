@@ -1,8 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { range } from '../utils/array/helpers'
+import PaginationElement from './PaginationElement'
 
-const DOTS = 'DOTS'
+const DOTS = '...'
 
 const PostsPagination = () => {
   const posts = useSelector(({ posts }) => posts)
@@ -12,19 +13,16 @@ const PostsPagination = () => {
   }
 
   const { pageNumber, totalPages } = posts
-  const siblingCount = 1
 
   const paginationRange = () => {
     if (3 >= totalPages) {
       return range(1, totalPages)
     }
 
-    const leftSiblingIndex = Math.max(pageNumber - siblingCount, 1)
-    const rightSiblingIndex = Math.min(pageNumber + siblingCount, totalPages)
+    const leftSiblingIndex = Math.max(pageNumber - 1, 1)
+    const rightSiblingIndex = Math.min(pageNumber + 1, totalPages)
     const shouldShowLeftDots = leftSiblingIndex > 2
     const shouldShowRightDots = rightSiblingIndex < totalPages - 1
-    const firstPageIndex = 1
-    const lastPageIndex = totalPages
 
     if (!shouldShowLeftDots && shouldShowRightDots) {
       let leftRange = 0
@@ -45,24 +43,24 @@ const PostsPagination = () => {
         rightRange = range(totalPages - (totalPages - pageNumber), totalPages)
       }
 
-      return [firstPageIndex, DOTS, ...rightRange]
+      return [1, DOTS, ...rightRange]
     }
 
     if (shouldShowLeftDots && shouldShowRightDots) {
       let middleRange = range(leftSiblingIndex, rightSiblingIndex)
-      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
+      return [1, DOTS, ...middleRange, DOTS, totalPages]
     }
   }
 
-  console.log(paginationRange())
-
   return (
     <nav className="pagination__wrapper">
-      {pageNumber !== 1 && <button className="pagination__page">Prev</button>}
+      {pageNumber !== 1 && <PaginationElement page="Prev" />}
 
-      {pageNumber !== totalPages && (
-        <button className="pagination__page">Next</button>
-      )}
+      {paginationRange().map((page, index) => (
+        <PaginationElement page={page} key={index} />
+      ))}
+
+      {pageNumber !== totalPages && <PaginationElement page="Next" />}
     </nav>
   )
 }
