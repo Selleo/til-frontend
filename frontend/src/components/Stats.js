@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 const Stats = () => {
@@ -9,11 +8,9 @@ const Stats = () => {
     <>
       {usersStats.map(({ user, reactionsReceived, postCount }) => (
         <div key={user.uuid}>
-          <Link to={`/user-posts/${user.uuid}`}>
-            <p>
-              {user.firstName} {user.lastName}
-            </p>
-          </Link>
+          <p>
+            {user.firstName} {user.lastName}
+          </p>
           <p>Post count: {postCount}</p>
           <p>Reactions total: {reactionsReceived.total} </p>
           <p>Reaction like : {reactionsReceived.like} </p>

@@ -69,8 +69,8 @@ export const getCategoryPosts = categoryPosts => ({
   categoryPosts,
 })
 
-export const saveCurrentUserPosts = id => async dispatch => {
-  const posts = await fetchUserPosts(`${API_URL}/api/users/`, id)
+export const saveCurrentUserPosts = (id, username) => async dispatch => {
+  const posts = await fetchUserPosts(`${API_URL}/api/authors/${username}/`, id)
 
   dispatch(getCurrentUserPosts(posts))
 }
