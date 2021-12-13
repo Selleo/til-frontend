@@ -58,7 +58,7 @@ const Post = props => {
             <div className="post__text-details">
               <Link
                 to={
-                  !isPostOwner ? `/profile` : `/authors/${post.author.userName}`
+                  isPostOwner ? `/profile` : `/authors/${post.author.userName}`
                 }
                 className="post__link"
               >
