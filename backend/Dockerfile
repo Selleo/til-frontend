@@ -1,5 +1,5 @@
 # --- build stage ---
-FROM elixir:1.12-alpine AS build
+FROM elixir:1.13-alpine AS build
 
 RUN apk add --update alpine-sdk coreutils
 
