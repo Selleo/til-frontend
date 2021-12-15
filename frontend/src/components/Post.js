@@ -56,9 +56,14 @@ const Post = props => {
               alt="author-img"
             />
             <div className="post__text-details">
-              <div>
+              <Link
+                to={
+                  isPostOwner ? `/profile` : `/authors/${post.author.userName}`
+                }
+                className="post__link"
+              >
                 {post.author.firstName} {post.author.lastName}
-              </div>
+              </Link>
               <div className="post__date">{date}</div>
               <div className="post__is-public">{isPublic}</div>
             </div>
