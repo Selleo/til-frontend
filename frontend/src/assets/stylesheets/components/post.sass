@@ -7,13 +7,13 @@
   position: relative
 
   &__link
+    +transition(color)
     color: $color-white
     text-decoration: none
-    
-    +transition(color)
 
     &:hover
-      color: $color-primary
+      .post__text-details
+        color: $color-primary
 
   &__body
     min-height: 100px
