@@ -17,7 +17,7 @@ const UserPosts = () => {
     posts()
   }, [username])
 
-  if (userPosts.length === 0) return null
+  if (!userPosts?.length) return null
 
   return (
     <>

@@ -49,25 +49,24 @@ const Post = props => {
         style={{ transitionDelay: `${animationDelay}ms` }}
       >
         <div className="post__header">
-          <div className="post__details">
-            <img
-              src={post.author.image || userImage}
-              className="user__image"
-              alt="author-img"
-            />
-            <div className="post__text-details">
-              <Link
-                to={
-                  isPostOwner ? `/profile` : `/authors/${post.author.userName}`
-                }
-                className="post__link"
-              >
+          <Link
+            to={isPostOwner ? `/profile` : `/authors/${post.author.userName}`}
+            className="post__link"
+          >
+            <div className="post__details">
+              <img
+                src={post.author.image || userImage}
+                className="user__image"
+                alt="author-img"
+              />
+              <div className="post__text-details">
                 {post.author.firstName} {post.author.lastName}
-              </Link>
-              <div className="post__date">{date}</div>
-              <div className="post__is-public">{isPublic}</div>
+                <div className="post__date">{date}</div>
+                <div className="post__is-public">{isPublic}</div>
+              </div>
             </div>
-          </div>
+          </Link>
+
           {!review && <CopyPostURL postId={post.id} />}
         </div>
         <div>
