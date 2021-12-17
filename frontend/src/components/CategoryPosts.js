@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import PostsList from './PostsList'
 import { saveCategoryPosts } from '../store/actions/actions'
-import { usePosts } from '../utils/customHooks/usePosts'
+import { useCategoryPosts } from '../utils/customHooks/useCategoryPosts'
 
 const CategoryPosts = () => {
-  const posts = usePosts('category')
+  const posts = useCategoryPosts()
   const categories = useSelector(state => state.categories)
 
   const dispatch = useDispatch()
