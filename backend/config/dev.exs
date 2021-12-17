@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configure your database
 config :til, Til.Repo,
@@ -8,6 +8,13 @@ config :til, Til.Repo,
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
+
+config :til,
+  ecto_repos: [Til.Repo],
+  frontend_host: System.get_env("FRONTEND_HOST"),
+  slack_review_hook: System.get_env("SLACK_REVIEW_HOOK"),
+  slack_feed_hook: System.get_env("SLACK_FEED_HOOK"),
+  http_adapter: HTTPoison
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

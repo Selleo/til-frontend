@@ -24,6 +24,12 @@ defmodule Til.Accounts do
     |> Repo.insert()
   end
 
+  def update_user(user, attrs \\ %{}) do
+    user
+    |> User.changeset(attrs)
+    |> Repo.update()
+  end
+
   # private
 
   defp preload_posts(user, only_public) do
@@ -38,6 +44,7 @@ defmodule Til.Accounts do
     preloaded_posts = Post
       |> where([p], p.author_id == ^user.id)
       |> preload([:author, posts_categories: :category, reactions: :user])
+      |> order_by([p], desc: p.inserted_at)
       |> Repo.paginate(params)
 
     Map.put(user, :posts, preloaded_posts)
@@ -47,6 +54,7 @@ defmodule Til.Accounts do
     preloaded_posts = Post
       |> where([p], p.author_id == ^user.id and p.is_public in ^is_public_in(only_public) and p.reviewed == true)
       |> preload([:author, posts_categories: :category, reactions: :user])
+      |> order_by([p], desc: p.inserted_at)
       |> Repo.paginate(params)
 
     Map.put(user, :posts, preloaded_posts)

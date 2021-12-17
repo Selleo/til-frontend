@@ -14,7 +14,7 @@ docker-compose up
 
 # once everything is ready, run migraitons
 cd backend
-docker exec backend-phoenix-1 /app/bin/til rpc Til.Release.migrate
+docker exec backend_phoenix_1 /app/bin/til rpc Til.Release.migrate
 ```
 
 Seed database
@@ -22,7 +22,7 @@ Seed database
 ```
 # connect to database
 cd backend
-docker exec -it backend-db-1 psql -U postgres -d til_dev
+docker exec -it backend_db_1 psql -U postgres -d til_dev
 
 # inside psql insert some categories
 insert into categories(name) values ('Elixir');
