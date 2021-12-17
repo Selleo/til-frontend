@@ -1,9 +1,9 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import PostsList from './PostsList'
+import { usePosts } from '../utils/customHooks/usePosts'
 
 const AllPosts = () => {
-  const posts = useSelector(({ posts }) => posts?.data)
+  const posts = usePosts()
 
   if (!posts) {
     return null
