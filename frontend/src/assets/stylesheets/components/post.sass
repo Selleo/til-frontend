@@ -7,8 +7,13 @@
   position: relative
 
   &__link
-    position: absolute
-    inset: 0
+    +transition(color)
+    color: $color-white
+    text-decoration: none
+
+    &:hover
+      .post__text-details
+        color: $color-primary
 
   &__body
     min-height: 100px

@@ -6,7 +6,7 @@ services:
       context: .
     environment:
       DATABASE_URL: "postgres://postgres:postgres@db:5432/til_dev?sslmode=disable"
-      DATABASE_SSL: false
+      DATABASE_SSL: "false"
       PGUSER: postgres
       PGPASSWORD: postgres
       PGDATABASE: til_dev

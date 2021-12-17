@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { fetchUserPosts } from '../utils'
+import Post from './Post'
 
 const { REACT_APP_API_URL: API_URL } = process.env
 
 const UserPosts = () => {
   const [userPosts, setUserPosts] = useState([])
-  const { id } = useParams()
+  const { username } = useParams()
 
   useEffect(() => {
     const posts = async () => {
-      const posts = await fetchUserPosts(`${API_URL}/api/users/`, id)
-
-      setUserPosts(posts)
+      const posts = await fetchUserPosts(`${API_URL}/api/authors/`, username)
+      posts?.data && setUserPosts(posts.data)
     }
-
     posts()
-  }, [id])
+  }, [username])
+
+  if (!userPosts?.length) return null
 
   return (
     <>
-      <h3>Users posts</h3>
-      {userPosts.data.map(({ id, title }) => (
-        <Link to={`/posts/${id}`} key={id}>
-          <p>{title}</p>
-        </Link>
+      <h3 className="users-posts__title">{`Posts created by ${userPosts[0].author.firstName} ${userPosts[0].author.lastName}`}</h3>
+      {userPosts.map(post => (
+        <Post key={post.id} post={post} />
       ))}
     </>
   )

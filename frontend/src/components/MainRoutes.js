@@ -25,7 +25,7 @@ const MainRoutes = () => {
       <Route path="/category/:id">
         <CategoryPosts />
       </Route>
-      <Route path="/user-posts/:id">
+      <Route path="/authors/:username">
         <UserPosts />
       </Route>
       {!user && <Route path="/review-posts" component={CheckIfCanReview} />}
