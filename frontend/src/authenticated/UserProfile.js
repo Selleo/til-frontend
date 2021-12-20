@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import Post from '../components/Post'
+
 import useUser from '../utils/customHooks/useUser'
+
+import Post from '../components/Post'
 
 const UserProfile = () => {
   const [userPosts, setUserPosts] = useState(null)
@@ -8,20 +10,23 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (user) {
-      setUserPosts(user.posts)
+      setUserPosts(user.posts.data)
     }
   }, [user])
 
   return (
     <>
       {userPosts ? (
-        <div className="posts">
-          {userPosts.data.map(post => (
-            <Post key={post.id} post={post} userMenu userImage={user.image} />
-          ))}
-        </div>
+        <>
+          <h1 className="post__my-posts-header">My posts</h1>
+          <div className="posts">
+            {userPosts.map(post => (
+              <Post key={post.id} post={post} userMenu userImage={user.image} />
+            ))}
+          </div>
+        </>
       ) : (
-        <p>loading</p>
+        <p>Loading...</p>
       )}
     </>
   )
