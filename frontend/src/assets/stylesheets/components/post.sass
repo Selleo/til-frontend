@@ -102,6 +102,13 @@
 
     svg
       margin-right: 2px
+    
+    &:hover
+      color: $color-white
+      +transition(color)
+      & svg 
+        fill: $color-white
+        +transition(fill)
 
   &__separator
     display: flex
