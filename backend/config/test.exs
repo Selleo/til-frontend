@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configure your database
 config :til, Til.Repo,
@@ -15,7 +15,9 @@ config :til, TilWeb.Endpoint,
   server: false
 
 config :til,
-  http_adapter: Til.HTTPoisonMock
+  ecto_repos: [Til.Repo],
+  http_adapter: Til.HTTPoisonMock,
+  frontend_host: "http://localhost:3000"
 
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
   client_id: "xxx",
@@ -23,3 +25,7 @@ config :ueberauth, Ueberauth.Strategy.Google.OAuth,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :til, Til.Guardian,
+  issuer: "til",
+  secret_key: "xxx"

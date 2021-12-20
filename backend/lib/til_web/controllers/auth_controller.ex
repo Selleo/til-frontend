@@ -27,7 +27,14 @@ defmodule TilWeb.AuthController do
           username: String.downcase("#{first_name}#{last_name}"),
           uuid: uuid
         })
-      user -> {:ok, user}
+      user -> Accounts.update_user(user, %{
+        email: email,
+        image: image,
+        first_name: first_name,
+        last_name: last_name,
+        username: String.downcase("#{first_name}#{last_name}"),
+        uuid: uuid
+      })
     end
 
     {:ok, jwt, _} = jwt_handler().encode_and_sign(user.uuid)
