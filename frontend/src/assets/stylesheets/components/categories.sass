@@ -1,43 +1,30 @@
 .categories
   overflow: auto
-  padding-left: 40px
 
   &__single-category
-    display: flex
-    margin-bottom: $m-base
     align-items: center
     color: $color-white
-    text-decoration: none
     cursor: pointer
-    width: max-content
-    border-radius: $border-radius-base
-    padding: 5px 10px 5px 0px
+    display: flex
+    padding: $m-sm 0 $m-sm $m-lg
+    text-decoration: none
+    width: 100%
 
-    +transition(background-color, padding, color, margin)
+    &:hover, &.-active
+      background-color: rgba($color-primary, .1)
+      +transition(background-color)
 
-    &:hover:not(.-active)
       svg
         +transition(fill)
         fill: $color-primary
         path
           fill: $color-primary
       .categories__name
-          +transition(color)
-          color: $color-primary
+        +transition(color)
+        color: $color-primary
     svg
       path
-        +transition(fill)
         fill: $color-white
-
-    &.-active
-      background-color: $color-white
-      color: $color-black
-      padding-left: 10px
-      margin-left: -10px
-
-      svg
-        path
-          fill: $color-black
 
   &__icon
     height: 17px
