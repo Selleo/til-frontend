@@ -6,7 +6,7 @@ export const fetchSearchedPosts = async query => {
   const optionsToken = checkForToken()
 
   const response = await fetch(
-    `${API_URL}/api/posts?query=${query}`,
+    `${API_URL}/api/posts?q=${query}`,
     optionsToken
   )
 

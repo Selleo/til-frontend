@@ -77,7 +77,7 @@ defmodule Til.ShareableContent do
           ||
           setweight(to_tsvector(p.body), 'D')
           ,
-          plainto_tsquery($1)
+          to_tsquery($1)
         ) as rank
       ) ranks on true
       where ranks.rank > 0 and p.is_public = ANY($2) and p.reviewed = true
@@ -86,8 +86,10 @@ defmodule Til.ShareableContent do
       offset $4
     """
 
+    prepared_query = "#{search_query |> String.trim() |> String.replace(" ", " & ")}:*"
+
     total_entries_results =
-      SQL.query!(Repo, total_entries_sql, [search_query, is_public_in(only_public)])
+      SQL.query!(Repo, total_entries_sql, [prepared_query, is_public_in(only_public)])
 
     page = if is_nil(params["page"]), do: 1, else: String.to_integer(params["page"])
     page_size = if is_nil(params["page_size"]), do: 20, else: String.to_integer(params["page_size"])
@@ -98,7 +100,7 @@ defmodule Til.ShareableContent do
       |> trunc
 
     results =
-      SQL.query!(Repo, sql, [search_query, is_public_in(only_public), page_size, offset])
+      SQL.query!(Repo, sql, [prepared_query, is_public_in(only_public), page_size, offset])
 
     posts = results.rows
       |> Enum.map(&Repo.load(Post, {results.columns, &1}))
