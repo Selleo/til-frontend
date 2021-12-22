@@ -2,10 +2,20 @@ require 'rubygems'
 require 'bundler/setup'
 require 'csv'
 require 'active_record'
+require 'pry'
 
 
 def title_url(title)
   title.downcase.gsub(/\s+/, "-").gsub(/[^a-zA-Z0-9\-_]/, "").squeeze("-")
+end
+
+def extract_full_name(dev)
+  last_name = dev.email.split(/(\.|@)/)[2]
+  start_at = I18n.transliterate(dev.username).index(last_name)
+  first_name = dev.username[0...start_at].capitalize
+  last_name = dev.username[start_at..-1].capitalize
+
+  [first_name, last_name]
 end
 
 ActiveRecord::Base.establish_connection(
@@ -22,16 +32,21 @@ File.open("users.csv", "w") do |f|
         "id",
         "email",
         "username",
-        "uuid"
+        "uuid",
+        "first_name",
+        "last_name",
       ])
     )
   Developer.all.each do |dev|
+    first_name, last_name = extract_full_name(dev)
     f.write(
       CSV.generate_line([
         dev.id,
         dev.email,
         dev.username,
-        SecureRandom.uuid
+        SecureRandom.uuid,
+        first_name,
+        last_name,
       ], col_sep: ",", row_sep: "\n", quote_char: '"')
     )
   end
@@ -108,6 +123,9 @@ end
 File.open("redirections.cr", "w") do |f|
   f.write("# This file is generated from Selleo/til/migration/dump.rb script based on current database\n\n")
   f.write("REDIRECTIONS = {\n")
+
+  f.write("  \"/\" => \"https://til.selleo.com\"\n")
+  f.write("\n")
 
   Post.all.each do |post|
     f.write("  \"/posts/#{post.slug}-#{title_url(post.title)}\" => \"https://til.selleo.com/posts/#{post.id}-#{title_url(post.title)}\",\n")
