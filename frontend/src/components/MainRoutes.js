@@ -1,11 +1,12 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import PostsList from '../components/PostsList'
 import DisplayPost from '../components/DisplayPost'
 import UserPosts from './UsersPosts'
 import SearchedPosts from './SearchedPosts'
 import CheckIfCanReview from './CheckIfCanReview'
 import useUser from '../utils/customHooks/useUser'
+import AllPosts from './AllPosts'
+import CategoryPosts from './CategoryPosts'
 
 const MainRoutes = () => {
   const user = useUser()
@@ -13,7 +14,7 @@ const MainRoutes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <PostsList />
+        <AllPosts />
       </Route>
       <Route path="/search">
         <SearchedPosts />
@@ -22,7 +23,7 @@ const MainRoutes = () => {
         <DisplayPost />
       </Route>
       <Route path="/category/:id">
-        <PostsList withCategory />
+        <CategoryPosts />
       </Route>
       <Route path="/authors/:username">
         <UserPosts />
