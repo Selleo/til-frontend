@@ -392,6 +392,59 @@ defmodule TilWeb.PostControllerTest do
 
       assert responded_post["body"] == "Bruce post body"
     end
+
+    test "searches properly partial words", %{conn: conn} do
+      first_user = insert(:user, first_name: "Bruce", last_name: "Wayne")
+      second_user = insert(:user, first_name: "Peter", last_name: "Parker")
+
+      # No fit at all
+      insert(:post, title: "No fit title 5", body: "no fit body", author: second_user, reviewed: true)
+      # Only fit for post body
+      insert(:post, title: "No fit title 4", body: "Bruce post body", author: second_user, reviewed: true)
+      # Only fit for category name
+      first_category = insert(:category, name: "Bruce category")
+      second_category = insert(:category, name: "no fit category")
+      post = insert(:post,
+        title: "Not fit title 3",
+        body: "some not fit body",
+        author: second_user,
+        reviewed: true,
+      )
+      insert(:post_category, post_id: post.id, category_id: first_category.id)
+      insert(:post_category, post_id: post.id, category_id: second_category.id)
+      # Only fit for author name
+      insert(:post, title: "Not fit title", body: "some not fit body", author: first_user, reviewed: true, is_public: false)
+      # Only fit for title
+      insert(:post, title: "Bruce post", body: "some not fit body", author: second_user, reviewed: true, is_public: false)
+
+      response =
+        conn
+        |> get(Routes.post_path(conn, :index), %{
+          q: "post bod"
+        })
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert length(parsed_response_body["data"]) == 1
+      [responded_post] = parsed_response_body["data"]
+
+      assert responded_post["body"] == "Bruce post body"
+
+      second_response =
+        conn
+        |> get(Routes.post_path(conn, :index), %{
+          q: "bruce way"
+        })
+
+      assert response.status == 200
+
+      {:ok, parsed_response_body} = Jason.decode(response.resp_body)
+      assert length(parsed_response_body["data"]) == 1
+      [responded_post] = parsed_response_body["data"]
+
+      assert responded_post["body"] == "Bruce post body"
+    end
   end
 
   describe "GET /api/posts/:id" do
