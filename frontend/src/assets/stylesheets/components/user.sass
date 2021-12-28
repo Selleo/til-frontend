@@ -4,13 +4,13 @@
     height: 40px
     width: 40px
 
-    &.-margin
-      margin-left: 20px
-      margin-right: 10px
-
   &__name
     font-size: 14px
+    margin-left: 10px
     letter-spacing: 0.28px
     font-weight: 600
     margin: auto
 
+  +media-breakpoint-only(xs)
+    &__image
+      margin-bottom: 12px

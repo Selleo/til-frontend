@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import Logout from './Logout'
-import useUser from '../utils/customHooks/useUser'
-import chevron from '../assets/icons/chevron.png'
 import classNames from 'classnames'
+
 import AddPostButton from './AddPostButton'
+import Logout from './Logout'
 import Icon from '../components/UI/Icon'
 import { Transition } from '../components/Transition'
+import Avatar from '../components/Avatar'
+
+import useUser from '../utils/customHooks/useUser'
+import chevron from '../assets/icons/chevron.png'
 
 const AdminPanel = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -52,7 +55,7 @@ const AdminPanel = () => {
     <div className="user-panel-container" ref={node}>
       <AddPostButton />
       <div className={userPanelClasses} onClick={toggleDropdown}>
-        <img className="user__image -margin" src={user.image} alt="user-img" />
+        <Avatar imageUrl={user.image} />
         <p className="user__name">
           {user.firstName} {user.lastName}
         </p>

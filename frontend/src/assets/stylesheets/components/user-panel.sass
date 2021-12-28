@@ -31,9 +31,6 @@ $user-panel-radius: 5px
   cursor: pointer
   transition-duration: $transition-duration
 
-  .user__image
-    margin: 0px 16px 0px 0px
-
   &__menu
     background-color: $color-black
     box-shadow: 0px 3px 10px #1F1F1F
@@ -67,14 +64,6 @@ $user-panel-radius: 5px
 
   +media-breakpoint-only(xs)
     min-width: 110px
-
-    &.-active
-      .user__image
-        margin: auto
-
-    .user__image
-      margin-right: 0
-      margin-left: auto
 
     .user__name,
     .chevron

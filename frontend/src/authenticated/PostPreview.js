@@ -1,6 +1,7 @@
 import React from 'react'
 import Markdown from '../components/Markdown'
 import PostCategories from '../components/PostCategories'
+import Avatar from '../components/Avatar'
 import useUser from '../utils/customHooks/useUser'
 import { getDate } from '../utils'
 
@@ -12,7 +13,7 @@ const PostPreview = props => {
     <article className="post -preview">
       <div className="post__header">
         <div className="post__details">
-          <img src={user.image} className="user__image" alt="author-img" />
+          <Avatar imageUrl={user.image} />
           <div className="post__text-details">
             <div>
               {user.firstName} {user.lastName}
