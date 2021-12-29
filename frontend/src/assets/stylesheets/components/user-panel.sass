@@ -24,6 +24,7 @@ $user-panel-radius: 5px
   border-top-right-radius: $user-panel-radius
   display: flex
   align-items: center
+  justify-content: flex-end
   letter-spacing: 0.28px
   padding: $m-sm
 
@@ -64,7 +65,12 @@ $user-panel-radius: 5px
 
   +media-breakpoint-only(xs)
     min-width: 110px
-
     .user__name,
     .chevron
       display: none
+
+    .user__image
+      margin-bottom: 0
+    &.-active
+      .user__image
+        margin: 0 auto

@@ -1,16 +1,17 @@
 .user
   &__image
     border-radius: 50%
+    margin-right: 16px
     height: 40px
     width: 40px
 
   &__name
     font-size: 14px
-    margin-left: 10px
     letter-spacing: 0.28px
     font-weight: 600
     margin: auto
 
-  +media-breakpoint-only(xs)
-    &__image
-      margin-bottom: 12px
++media-breakpoint-only(xs)
+  .user__image
+    margin-right: 0
+    margin-bottom: 12px

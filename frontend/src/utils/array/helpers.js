@@ -33,5 +33,8 @@ const compare = (a, b) => {
 }
 
 export const sortCategories = categories => {
-  return categories.sort(compare)
+  if (Array.isArray(categories)) {
+    return categories?.sort(compare)
+  }
+  return []
 }

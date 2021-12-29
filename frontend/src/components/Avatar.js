@@ -6,7 +6,7 @@ const Avatar = ({ imageUrl }) => {
   return imageUrl ? (
     <img src={imageUrl} className="user__image" alt="author-img" />
   ) : (
-    <UserIcon width={40} height={40} />
+    <UserIcon className="user__image" fill="#A0A0A0" />
   )
 }
 
