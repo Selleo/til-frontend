@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import CopyButton from './CopyButton'
 import { Tooltip } from 'react-tippy'
 
-const CopyPostURL = ({ post }) => {
+const CopyPostURL = ({ id, slug }) => {
   const [buttonText, setButtonText] = useState('Click to copy link')
 
   const copyURL = () => {
     let url = window.location.origin
-    if (post) {
-      url += `/posts/${post.id}-${post.slug}`
+    if (id && slug) {
+      url += `/posts/${id}-${slug}`
     }
 
     navigator.clipboard.writeText(url)
@@ -36,8 +36,6 @@ const CopyPostURL = ({ post }) => {
 export default CopyPostURL
 
 CopyPostURL.propTypes = {
-  post: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-  }),
+  id: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
 }

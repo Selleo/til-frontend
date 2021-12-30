@@ -67,7 +67,7 @@ const Post = props => {
             </div>
           </Link>
 
-          {!review && <CopyPostURL post={post} />}
+          {!review && <CopyPostURL id={post.id} slug={post.slug} />}
         </div>
         <div>
           <TitleLink />
