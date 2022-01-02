@@ -18,8 +18,9 @@ const Reaction = props => {
       const didReact = checkHasReacted(whoReacted, user.uuid)
 
       setHasReacted(didReact)
-      setReactionNumber(whoReacted.length)
     }
+
+    setReactionNumber(whoReacted.length)
   }, [user, whoReacted])
 
   const toggleReaction = async () => {
