@@ -6,7 +6,8 @@ import UserPostMenu from '../authenticated/UserPostMenu'
 import ReactionBar from './ReactionBar'
 import { Link, useLocation } from 'react-router-dom'
 import TextBlock from './TextBlock'
-import { format, parseISO } from 'date-fns'
+import { parseISO } from 'date-fns'
+import { timeFormat } from '../utils'
 import { Transition } from './Transition'
 import useUser from '../utils/customHooks/useUser'
 import { useIsPostPublic } from '../utils/customHooks/useIsPostPublic'
@@ -31,7 +32,7 @@ const Post = props => {
   }
 
   const parsed = parseISO(post.createdAt)
-  const date = format(parsed, ' dd MMM  hh:mm')
+  const date = timeFormat(parsed)
 
   const TitleLink = () => {
     return review ? (

@@ -3,7 +3,7 @@ import Markdown from '../components/Markdown'
 import PostCategories from '../components/PostCategories'
 import Avatar from '../components/Avatar'
 import useUser from '../utils/customHooks/useUser'
-import { getDate } from '../utils'
+import { timeFormat } from '../utils'
 
 const PostPreview = props => {
   const user = useUser()
@@ -18,7 +18,7 @@ const PostPreview = props => {
             <div>
               {user.firstName} {user.lastName}
             </div>
-            <div className="post__date">{getDate()}</div>
+            <div className="post__date">{timeFormat(new Date())}</div>
           </div>
         </div>
       </div>

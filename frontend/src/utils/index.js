@@ -22,4 +22,4 @@ export { convertReactions, checkHasReacted } from './reactions/reactions'
 
 export { deleteToken } from './auth'
 
-export { getDate } from './date'
+export { timeFormat } from './date'

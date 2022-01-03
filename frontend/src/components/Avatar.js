@@ -7,7 +7,7 @@ const Avatar = ({ imageUrl, background = 'dark' }) => {
     <img src={imageUrl} className="user__image" alt="author-img" />
   ) : (
     <div className={`user__image -background-${background}`}>
-      <UserIcon className="icon" />
+      <UserIcon className="user__icon" />
     </div>
   )
 }
