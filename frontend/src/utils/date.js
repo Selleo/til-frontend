@@ -20,7 +20,7 @@ export const getDate = () => {
     minutes = `0${today.getMinutes()}`
   }
   const time = `${today.getHours()}:${minutes}`
-  const month = monthNames[today.getMonth() - 1].slice(0, 3)
+  const month = monthNames[today.getMonth()].slice(0, 3)
   const date = `${month} ${today.getDate()} | ${time}`
 
   return date
