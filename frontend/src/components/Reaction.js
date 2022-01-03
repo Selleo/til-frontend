@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react'
+
 import { useDispatch } from 'react-redux'
-import { handleReaction, checkHasReacted } from '../utils'
-import { saveAllPosts, saveAllUsers } from '../store/actions/actions'
-import useUser from '../utils/customHooks/useUser'
 import classNames from 'classnames'
 
-const Reaction = props => {
-  const { id } = props.post
-  const { type, whoReacted, Icon } = props.reaction
+import { saveAllPosts, saveAllUsers } from '../store/actions/actions'
+import { handleReaction, checkHasReacted } from '../utils'
+import useUser from '../utils/customHooks/useUser'
+
+const Reaction = ({ post: { id }, reaction: { type, whoReacted, Icon } }) => {
   const [hasReacted, setHasReacted] = useState(false)
   const [reactionNumber, setReactionNumber] = useState(0)
+
   const user = useUser()
   const dispatch = useDispatch()
+
+  const iconActiveClasses = classNames(type, {
+    '-fill': hasReacted,
+  })
 
   useEffect(() => {
     if (user) {
@@ -26,8 +31,8 @@ const Reaction = props => {
     if (hasReacted) {
       await handleReaction(id, 'DELETE', type)
         .then(() => {
-          setHasReacted(!hasReacted)
-          setReactionNumber(reactionNumber - 1)
+          setHasReacted(false)
+          setReactionNumber(reactionNumber => reactionNumber - 1)
           dispatch(saveAllPosts())
           dispatch(saveAllUsers())
         })
@@ -35,8 +40,8 @@ const Reaction = props => {
     } else {
       await handleReaction(id, 'POST', type)
         .then(() => {
-          setHasReacted(!hasReacted)
-          setReactionNumber(reactionNumber + 1)
+          setHasReacted(true)
+          setReactionNumber(reactionNumber => reactionNumber + 1)
           dispatch(saveAllPosts())
           dispatch(saveAllUsers())
         })
@@ -44,14 +49,10 @@ const Reaction = props => {
     }
   }
 
-  const iconActiveClasses = classNames(type, {
-    '-fill': hasReacted,
-  })
-
   return (
     <div className="post__single-reaction" onClick={toggleReaction}>
       <Icon className={iconActiveClasses} />
-      <div>{reactionNumber}</div>
+      <div className="reaction-number">{reactionNumber}</div>
     </div>
   )
 }

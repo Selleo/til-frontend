@@ -12,7 +12,7 @@
   &__link
     color: $color-white
     text-decoration: none
-    
+
     +transition(color)
 
     &:hover
@@ -102,11 +102,11 @@
 
     svg
       margin-right: 2px
-    
+
     &:hover
       color: $color-white
       +transition(color)
-      & svg 
+      & svg
         fill: $color-white
         +transition(fill)
 
@@ -172,6 +172,23 @@
     cursor: pointer
     +transition(width)
 
+    &:hover
+      .reaction-number
+        +transition(color)
+        color: $color-white
+
+      .like,
+        transform: scale(1.1)
+        path
+          stroke: $color-white
+
+      .funny,
+      .love,
+      .surprised
+        transform: scale(1.1)
+        path
+          fill: $color-white
+
     &:not(:nth-last-child(1))
       margin-right: 16px
 
@@ -192,18 +209,18 @@
       &.-fill
         path
           stroke: #1769ff
-  .funny
-    &.-fill
-      path
-        fill: #FFC074
-  .love
-    &.-fill
-      path
-        fill: red
-  .surprised
-    &.-fill
-      path
-        fill: #E99497
+    .funny
+      &.-fill
+        path
+          fill: #FFC074
+    .love
+      &.-fill
+        path
+          fill: red
+    .surprised
+      &.-fill
+        path
+          fill: #E99497
 
   &__text-details
     color: $color-white
