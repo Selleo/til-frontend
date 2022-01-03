@@ -13,7 +13,7 @@ const PostPreview = props => {
     <article className="post -preview">
       <div className="post__header">
         <div className="post__details">
-          <Avatar imageUrl={user.image} />
+          <Avatar imageUrl={user.image} background="light" />
           <div className="post__text-details">
             <div>
               {user.firstName} {user.lastName}

@@ -55,7 +55,7 @@ const Post = props => {
             className="post__link"
           >
             <div className="post__details">
-              <Avatar imageUrl={post.author.image} />
+              <Avatar imageUrl={post.author.image} background="light" />
               <div className="post__text-details">
                 {post.author.firstName} {post.author.lastName}
                 <div className="post__date">{date}</div>
