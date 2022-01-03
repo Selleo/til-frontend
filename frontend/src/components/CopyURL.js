@@ -24,7 +24,6 @@ const CopyPostURL = ({ postId }) => {
   return (
     <Tooltip
       className="ToolTip"
-      arrow
       delay={150}
       duration={500}
       html={<div>{buttonText}</div>}
