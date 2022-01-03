@@ -6,13 +6,15 @@ import UserPostMenu from '../authenticated/UserPostMenu'
 import ReactionBar from './ReactionBar'
 import { Link, useLocation } from 'react-router-dom'
 import TextBlock from './TextBlock'
-import { format, parseISO } from 'date-fns'
+import { parseISO } from 'date-fns'
+import { timeFormat } from '../utils'
 import { Transition } from './Transition'
 import useUser from '../utils/customHooks/useUser'
 import { useIsPostPublic } from '../utils/customHooks/useIsPostPublic'
+import Avatar from './Avatar'
 
 const Post = props => {
-  const { post, userMenu, userImage, review, animationDelay } = props
+  const { post, userMenu, review, animationDelay } = props
   const location = useLocation()
   const user = useUser()
   const isPostOwner = useMemo(() => {
@@ -30,7 +32,7 @@ const Post = props => {
   }
 
   const parsed = parseISO(post.createdAt)
-  const date = format(parsed, ' dd MMM  hh:mm')
+  const date = timeFormat(parsed)
 
   const TitleLink = () => {
     return review ? (
@@ -54,11 +56,7 @@ const Post = props => {
             className="post__link"
           >
             <div className="post__details">
-              <img
-                src={post.author.image || userImage}
-                className="user__image"
-                alt="author-img"
-              />
+              <Avatar imageUrl={post.author.image} background="light" />
               <div className="post__text-details">
                 {post.author.firstName} {post.author.lastName}
                 <div className="post__date">{date}</div>

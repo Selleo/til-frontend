@@ -24,15 +24,13 @@ $user-panel-radius: 5px
   border-top-right-radius: $user-panel-radius
   display: flex
   align-items: center
+  justify-content: flex-end
   letter-spacing: 0.28px
   padding: $m-sm
 
   position: relative
   cursor: pointer
   transition-duration: $transition-duration
-
-  .user__image
-    margin: 0px 16px 0px 0px
 
   &__menu
     background-color: $color-black
@@ -67,15 +65,12 @@ $user-panel-radius: 5px
 
   +media-breakpoint-only(xs)
     min-width: 110px
-
-    &.-active
-      .user__image
-        margin: auto
-
-    .user__image
-      margin-right: 0
-      margin-left: auto
-
     .user__name,
     .chevron
       display: none
+
+    .user__image
+      margin-bottom: 0
+    &.-active
+      .user__image
+        margin: 0 auto
