@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 
 import { Link, useLocation } from 'react-router-dom'
 import { parseISO } from 'date-fns'
@@ -17,7 +17,6 @@ import { Transition } from './Transition'
 import UserPostMenu from '../authenticated/UserPostMenu'
 
 const PostContent = ({ animationDelay, post, review, userMenu }) => {
-  const [title, setTitle] = useState()
   const { pathname } = useLocation()
   const user = useUser()
 
@@ -31,11 +30,22 @@ const PostContent = ({ animationDelay, post, review, userMenu }) => {
     }
   }, [user, post])
 
-  useEffect(() => {
-    pathname !== '/search'
-      ? setTitle(<TextBlock value={post.title} />)
-      : setTitle(post.title)
-  }, [post, post.title, pathname])
+  let title
+  if (pathname === '/search') {
+    title = <TextBlock value={post.title} />
+  } else {
+    title = post.title
+  }
+
+  const TitleLink = () => {
+    return review ? (
+      <span className="post__title">{title}</span>
+    ) : (
+      <Link className="post__title" to={`/posts/${post.id}-${post.slug}`}>
+        {title}
+      </Link>
+    )
+  }
 
   return (
     <Transition name="post-animation" delay={animationDelay}>
@@ -72,7 +82,7 @@ const PostContent = ({ animationDelay, post, review, userMenu }) => {
           {!review && <CopyPostURL postId={post.id} />}
         </div>
         <div>
-          <span className="post__title">{title}</span>
+          <TitleLink />
         </div>
         <div className="post__body">
           <Markdown source={post.body} />
