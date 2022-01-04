@@ -1,46 +1,24 @@
 import React from 'react'
 import { usePagination } from '../utils/customHooks/usePagination'
 import PaginationElement from './PaginationElement'
-import { saveAllPosts, saveCategoryPosts } from '../store/actions/actions'
-import { useSelector, useDispatch } from 'react-redux'
 
-const PostsPagination = ({ posts, withCategory = false }) => {
+const PostsPagination = ({ posts, savePosts }) => {
   const pagination = usePagination(posts)
-  const pageNumber = useSelector(({ posts }) => posts.pageNumber)
-  const category = useSelector(({ categoryPosts }) => categoryPosts)
-  const dispatch = useDispatch()
 
   if (!posts.data.length) {
     return null
   }
 
   const handleClick = page => {
-    if (withCategory) {
-      switch (page) {
-        case 'Prev':
-          return dispatch(
-            saveCategoryPosts(category.id, category.posts.pageNumber - 1)
-          )
-        case 'Next':
-          return dispatch(
-            saveCategoryPosts(category.id, category.posts.pageNumber + 1)
-          )
-        case '...':
-          return
-        default:
-          return dispatch(saveCategoryPosts(category.id, page))
-      }
-    } else {
-      switch (page) {
-        case 'Prev':
-          return dispatch(saveAllPosts(pageNumber - 1))
-        case 'Next':
-          return dispatch(saveAllPosts(pageNumber + 1))
-        case '...':
-          return
-        default:
-          return dispatch(saveAllPosts(page))
-      }
+    switch (page) {
+      case 'Prev':
+        return savePosts(posts.pageNumber - 1)
+      case 'Next':
+        return savePosts(posts.pageNumber + 1)
+      case '...':
+        return
+      default:
+        return savePosts(page)
     }
   }
 
@@ -51,7 +29,7 @@ const PostsPagination = ({ posts, withCategory = false }) => {
           page={page}
           key={index}
           isActive={posts.pageNumber === page}
-          handleClick={() => handleClick(page)}
+          changePage={handleClick}
         />
       ))}
     </nav>

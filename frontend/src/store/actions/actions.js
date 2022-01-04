@@ -110,9 +110,9 @@ const getSerchedPosts = searchedPosts => ({
   searchedPosts,
 })
 
-export const saveSearchedPosts = query => async dispatch => {
+export const saveSearchedPosts = (query, page) => async dispatch => {
   dispatch(setStatus({ key: 'searchedPosts', value: statusType.loading }))
-  const searchedPosts = await fetchSearchedPosts(query)
+  const searchedPosts = await fetchSearchedPosts(query, page)
 
   dispatch(saveSearchedQuery(query))
   dispatch(getSerchedPosts(searchedPosts))

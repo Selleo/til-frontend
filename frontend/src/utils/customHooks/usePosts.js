@@ -1,3 +1,3 @@
 import { useSelector } from 'react-redux'
 
-export const usePosts = () => useSelector(({ posts }) => posts?.data)
+export const usePosts = () => useSelector(({ posts }) => posts)
