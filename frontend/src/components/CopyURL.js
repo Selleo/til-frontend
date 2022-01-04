@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import CopyButton from './CopyButton'
+
 import { Tooltip } from 'react-tippy'
+import PropTypes from 'prop-types'
+
+import CopyButton from './CopyButton'
 
 const CopyPostURL = ({ id, slug }) => {
   const [buttonText, setButtonText] = useState('Click to copy link')
@@ -23,7 +25,6 @@ const CopyPostURL = ({ id, slug }) => {
   return (
     <Tooltip
       className="ToolTip"
-      arrow
       delay={150}
       duration={1000}
       html={<div>{buttonText}</div>}
