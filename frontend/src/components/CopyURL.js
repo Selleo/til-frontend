@@ -8,7 +8,9 @@ import CopyButton from './CopyButton'
 const CopyPostURL = ({ id, slug }) => {
   const [buttonText, setButtonText] = useState('Click to copy link')
 
-  const copyURL = () => {
+  const copyURL = e => {
+    e.preventDefault()
+
     let url = window.location.origin
     if (id && slug) {
       url += `/posts/${id}-${slug}`

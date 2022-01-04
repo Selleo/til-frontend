@@ -1,3 +1,8 @@
+$animate: all 0.2s .1s ease-in-out;
+  
+.post-wrapper
+  text-decoration: none
+
 .post
   background: $color-black
   border-radius: 8px
@@ -6,6 +11,10 @@
   padding: 32px
   position: relative
 
+  &:hover
+    +transition(background-color)
+    background-color: darken($color-black, 1%)
+
   &__my-posts-header
     margin: $m-lg 0
 
@@ -13,14 +22,10 @@
     color: $color-white
     text-decoration: none
 
-    +transition(color)
-
-    &:hover
-      color: $color-primary
-
   &__body
     min-height: 100px
     margin-bottom: 56px
+    color: $color-white
     p
       font-size: 20px
       font-weight: $font-weight-light
@@ -33,9 +38,7 @@
     align-items: baseline
     flex-wrap: wrap
     margin-bottom: $m-sm
-
     flex-basis: 100%
-
     color: #8a8a8a
 
     &.-preview
@@ -224,7 +227,41 @@
 
   &__text-details
     color: $color-white
-    font-weight: 600
+    font-weight: 600 
+
+  &__owner
+    +transition(color)
+
+    .animation
+      transition: $animate
+      position: relative
+
+      &:before,
+      &:after
+        content: ""
+        position: absolute
+        bottom: 0
+        width: 0px
+        height: 1px
+        margin: 1px 0 0
+        transition: $animate
+        transition-duration: .5s
+        transition-duration: 0.75s
+        opacity: 0
+        background-color: $color-primary
+      
+      &.animation
+        &:before,
+        &:after 
+          left: 0
+
+    &:hover
+      cursor: pointer
+      .animation
+        &:before,
+        &:after
+          width: 100%
+          opacity: 1        
 
   &__title
     display: block
@@ -236,11 +273,6 @@
     word-break: break-word
     margin-bottom: $m-sm
     text-decoration: none
-
-    +transition(color)
-
-    &:hover
-      color: $color-primary
 
   &.-preview
     flex-basis: 55%
@@ -283,6 +315,10 @@
       .user__image
         margin-bottom: 0px
         margin-right: 16px
+        +transition(box-shadow)
+
+        &:hover
+          box-shadow: 0 0 0 1.5px $color-primary
 
   +media-breakpoint-up(lg)
     &__footer

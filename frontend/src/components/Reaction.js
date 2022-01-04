@@ -27,7 +27,9 @@ const Reaction = ({ post: { id }, reaction: { type, whoReacted, Icon } }) => {
     }
   }, [user, whoReacted])
 
-  const toggleReaction = async () => {
+  const toggleReaction = async e => {
+    e.preventDefault()
+
     if (hasReacted) {
       await handleReaction(id, 'DELETE', type)
         .then(() => {
