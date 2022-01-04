@@ -6,14 +6,17 @@
   padding: 32px
   position: relative
 
+  &__my-posts-header
+    margin: $m-lg 0
+
   &__link
-    +transition(color)
     color: $color-white
     text-decoration: none
 
+    +transition(color)
+
     &:hover
-      .post__text-details
-        color: $color-primary
+      color: $color-primary
 
   &__body
     min-height: 100px
@@ -57,6 +60,9 @@
     flex-direction: column
     letter-spacing: 0.32px
 
+    .user__image
+      margin-bottom: 12px
+
   &__footer
     display: flex
     flex-direction: column
@@ -96,6 +102,13 @@
 
     svg
       margin-right: 2px
+
+    &:hover
+      color: $color-white
+      +transition(color)
+      & svg
+        fill: $color-white
+        +transition(fill)
 
   &__separator
     display: flex
@@ -159,14 +172,25 @@
     cursor: pointer
     +transition(width)
 
+    &:hover
+      .reaction-number
+        +transition(color)
+        color: $color-white
+
+      .like,
+        transform: scale(1.1)
+        path
+          stroke: $color-white
+
+      .funny,
+      .love,
+      .surprised
+        transform: scale(1.1)
+        path
+          fill: $color-white
+
     &:not(:nth-last-child(1))
       margin-right: 16px
-
-    &:hover
-      svg,
-      div
-        color: rgba(#8a8a8a, 0.5)
-        transform: scale(1.1)
 
     div
       margin-left: 6px
@@ -185,18 +209,18 @@
       &.-fill
         path
           stroke: #1769ff
-  .funny
-    &.-fill
-      path
-        fill: #FFC074
-  .love
-    &.-fill
-      path
-        fill: red
-  .surprised
-    &.-fill
-      path
-        fill: #E99497
+    .funny
+      &.-fill
+        path
+          fill: #FFC074
+    .love
+      &.-fill
+        path
+          fill: red
+    .surprised
+      &.-fill
+        path
+          fill: #E99497
 
   &__text-details
     color: $color-white
@@ -255,6 +279,10 @@
     &__details
       flex-direction: row
       align-items: center
+
+      .user__image
+        margin-bottom: 0px
+        margin-right: 16px
 
   +media-breakpoint-up(lg)
     &__footer
