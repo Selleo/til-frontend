@@ -6,7 +6,7 @@ describe('usePagination', () => {
 
     const result = [1, 2, 3, 4, 5, '...', 10, 'Next']
 
-    const pagination = usePagination(posts)
+    const { pagination } = usePagination(posts)
 
     expect(pagination).toEqual(result)
   })
@@ -16,7 +16,7 @@ describe('usePagination', () => {
 
     const result = ['Prev', 1, '...', 3, 4, 5, '...', 15, 'Next']
 
-    const pagination = usePagination(posts)
+    const { pagination } = usePagination(posts)
 
     expect(pagination).toEqual(result)
   })
@@ -26,7 +26,7 @@ describe('usePagination', () => {
 
     const result = ['Prev', 1, '...', 16, 17, 18, 19, 20]
 
-    const pagination = usePagination(posts)
+    const { pagination } = usePagination(posts)
 
     expect(pagination).toEqual(result)
   })
