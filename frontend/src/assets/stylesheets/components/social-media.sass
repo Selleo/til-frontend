@@ -1,65 +1,67 @@
 .social-links
   display: flex
   flex-wrap: wrap
-  padding: 0
   list-style-type: none
-
-  max-width: 1500px
   margin: $m-base auto
+  max-width: 1500px
+  padding: 0
 
   li
     display: flex
     flex-basis: 33%
     flex-grow: 1
+
     a
       margin: auto
 
   &__link
-    display: flex
     align-items: center
+    display: flex
 
     svg
+      height: 16px
       margin: 14px
+      width: 22px
 
       path
-        fill: #A0A0A0
-        transition: fill $transition-duration $transition-function
+        fill: $color-gray
+        +transition(fill)
 
     &:hover
       &.-linkedin
         svg
           path
-            fill: #0077b5
+            fill: $color-icon-linkedin
 
       &.-medium
         svg
           path
-            fill: #1c9963
+            fill: $color-icon-medium
 
       &.-youtube
         svg
           path
-            fill: red
+            fill: $color-icon-youtube
 
       &.-behance
         svg
           path
-            fill: #1769ff
+            fill: $color-icon-behance
 
       &.-dribbble
         svg
           path
-            fill: #ea4c89
+            fill: $color-icon-dribbble
 
       &.-twitter
         svg
           path
-            fill: #1da1f2
+            fill: $color-icon-twitter
 
       &.-instagram
         svg
           path
-            fill: #e1306c
+            fill: $color-icon-instagram
 
   +media-breakpoint-up(md)
     li
