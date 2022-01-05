@@ -30,22 +30,12 @@ const PostContent = ({ animationDelay, post, review, userMenu }) => {
     }
   }, [user, post])
 
-  let title
-  if (pathname === '/search') {
-    title = <TextBlock value={post.title} />
-  } else {
-    title = post.title
-  }
+  const title =
+    pathname === 'search' ? <TextBlock value={post.title} /> : post.title
 
-  const TitleLink = () => {
-    return review ? (
-      <span className="post__title">{title}</span>
-    ) : (
-      <Link className="post__title" to={`/posts/${post.id}-${post.slug}`}>
-        {title}
-      </Link>
-    )
-  }
+  const linkToOwnerOfPostProfile = isPostOwner
+    ? `/profile`
+    : `/authors/${post.author.userName}`
 
   return (
     <Transition name="post-animation" delay={animationDelay}>
@@ -56,18 +46,13 @@ const PostContent = ({ animationDelay, post, review, userMenu }) => {
         <div className="post__header">
           <div className="post__details">
             <Link
-              to={isPostOwner ? `/profile` : `/authors/${post.author.userName}`}
+              to={linkToOwnerOfPostProfile}
               className="post__link user-avatar"
             >
               <Avatar imageUrl={post.author.image} background="light" />
             </Link>
             <div className="post__text-details">
-              <Link
-                to={
-                  isPostOwner ? `/profile` : `/authors/${post.author.userName}`
-                }
-                className="post__link"
-              >
+              <Link to={linkToOwnerOfPostProfile} className="post__link">
                 <div className="post__owner">
                   <span className="animation">
                     {post.author.firstName} {post.author.lastName}
@@ -82,7 +67,7 @@ const PostContent = ({ animationDelay, post, review, userMenu }) => {
           {!review && <CopyPostURL postId={post.id} />}
         </div>
         <div>
-          <TitleLink />
+          <span className="post__title">{title}</span>
         </div>
         <div className="post__body">
           <Markdown source={post.body} />

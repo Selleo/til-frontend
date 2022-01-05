@@ -15,36 +15,39 @@
       +transition(background-color)
 
       svg
-        +transition(fill)
         fill: $color-primary
+        +transition(fill)
+        
         path
           fill: $color-primary
+
       .categories__name
-        +transition(color)
         color: $color-primary
+        +transition(color)
+        
     svg
       path
         fill: $color-white
 
   &__icon
-    height: 17px
-    width: auto
     display: flex
+    height: $m-sm
     margin-right: $m-xs
+    width: auto
+
   &__name
     display: flex
-    font-size: 14px
-    font-weight: 600
-    letter-spacing: 0.28px
+    font-size: $font-size-sm
+    font-weight: $font-weight-600
     text-transform: uppercase
 
   &::-webkit-scrollbar
     width: 3px
 
   &::-webkit-scrollbar-thumb
-    background-color: #707070
+    background-color: $color-gray
     outline: 1px solid slategrey
 
   &::-webkit-scrollbar-track-piece:end
     background: transparent
-    margin-bottom: 10px
+    margin-bottom: $m-xs
