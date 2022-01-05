@@ -124,7 +124,7 @@ File.open("redirections.cr", "w") do |f|
   f.write("# This file is generated from Selleo/til/migration/dump.rb script based on current database\n\n")
   f.write("REDIRECTIONS = {\n")
 
-  f.write("  \"/\" => \"https://til.selleo.com\"\n")
+  f.write("  \"/\" => \"https://til.selleo.com\",\n")
   f.write("\n")
 
   Post.all.each do |post|
