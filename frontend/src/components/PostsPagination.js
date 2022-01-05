@@ -12,7 +12,9 @@ const PostsPagination = ({ posts, savePosts }) => {
   const handleClick = page => {
     switch (page) {
       case 'Prev':
-        return savePosts(posts.pageNumber - 1)
+        return savePosts(
+          posts.pageNumber === 1 ? posts.pageNumber : posts.pageNumber - 1
+        )
       case 'Next':
         return savePosts(posts.pageNumber + 1)
       case '...':

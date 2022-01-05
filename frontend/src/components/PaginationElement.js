@@ -2,8 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 const PaginationElement = ({ page, isActive, changePage }) => {
-  const className = classNames({
-    pagination__page: true,
+  const className = classNames('pagination__page', {
     '-active': isActive,
     '-dot': page === '...',
   })
