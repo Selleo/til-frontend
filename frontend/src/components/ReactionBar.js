@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
+
 import { convertReactions } from '../utils'
+
 import Reaction from './Reaction'
 
-const ReactionBar = props => {
-  const { post } = props
+const ReactionBar = ({ post }) => {
   const [reactions, setReactions] = useState()
 
   useEffect(() => {
@@ -16,7 +17,7 @@ const ReactionBar = props => {
   return (
     <div className="post__reactions">
       {reactions.map(reaction => (
-        <Reaction post={post} reaction={reaction} key={reaction.type} />
+        <Reaction key={reaction.type} post={post} reaction={reaction} />
       ))}
     </div>
   )

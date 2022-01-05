@@ -1,88 +1,26 @@
-import React, { useMemo } from 'react'
-import Markdown from './Markdown'
-import CopyPostURL from './CopyURL'
-import PostCategories from './PostCategories'
-import UserPostMenu from '../authenticated/UserPostMenu'
-import ReactionBar from './ReactionBar'
-import { Link, useLocation } from 'react-router-dom'
-import TextBlock from './TextBlock'
-import { parseISO } from 'date-fns'
-import { timeFormat } from '../utils'
-import { Transition } from './Transition'
-import useUser from '../utils/customHooks/useUser'
-import { useIsPostPublic } from '../utils/customHooks/useIsPostPublic'
-import Avatar from './Avatar'
+import React from 'react'
 
-const Post = props => {
-  const { post, userMenu, review, animationDelay } = props
-  const location = useLocation()
-  const user = useUser()
-  const isPostOwner = useMemo(() => {
-    if (user && post) {
-      return user.uuid === post.author.uuid
-    }
-  }, [user, post])
-  const isPublic = useIsPostPublic(post.isPublic)
+import { Link } from 'react-router-dom'
 
-  let title
-  if (location.pathname === '/search') {
-    title = <TextBlock value={post.title} />
-  } else {
-    title = post.title
-  }
+import PostContent from './PostContent'
 
-  const parsed = parseISO(post.createdAt)
-  const date = timeFormat(parsed)
-
-  const TitleLink = () => {
-    return review ? (
-      <span className="post__title">{title}</span>
-    ) : (
-      <Link className="post__title" to={`/posts/${post.id}-${post.slug}`}>
-        {title}
-      </Link>
-    )
-  }
-
-  return (
-    <Transition name="post-animation" delay={animationDelay}>
-      <article
-        className="post"
-        style={{ transitionDelay: `${animationDelay}ms` }}
-      >
-        <div className="post__header">
-          <Link
-            to={isPostOwner ? `/profile` : `/authors/${post.author.userName}`}
-            className="post__link"
-          >
-            <div className="post__details">
-              <Avatar imageUrl={post.author.image} background="light" />
-              <div className="post__text-details">
-                {post.author.firstName} {post.author.lastName}
-                <div className="post__date">{date}</div>
-                <div className="post__is-public">{isPublic}</div>
-              </div>
-            </div>
-          </Link>
-
-          {!review && <CopyPostURL id={post.id} slug={post.slug} />}
-        </div>
-        <div>
-          <TitleLink />
-        </div>
-        <div className="post__body">
-          <Markdown source={post.body} />
-        </div>
-        <div className="post__footer">
-          <PostCategories categories={post.categories} />
-          {!review && <ReactionBar post={post} />}
-        </div>
-        {(userMenu || isPostOwner) && (
-          <UserPostMenu post={post} userMenu={userMenu} isOnReview={review} />
-        )}
-      </article>
-    </Transition>
+const Post = ({ post, userMenu, review, animationDelay }) =>
+  review ? (
+    <PostContent
+      animationDelay={animationDelay}
+      post={post}
+      review={review}
+      userMenu={userMenu}
+    />
+  ) : (
+    <Link className="post-wrapper" to={`/posts/${post.id}-${post.slug}`}>
+      <PostContent
+        animationDelay={animationDelay}
+        post={post}
+        review={review}
+        userMenu={userMenu}
+      />
+    </Link>
   )
-}
 
 export default Post
