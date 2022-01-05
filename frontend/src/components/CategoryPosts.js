@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import PostsList from './PostsList'
 import { saveCategoryPosts } from '../store/actions/actions'
 import { useCategoryPosts } from '../utils/customHooks/useCategoryPosts'
+import PostSkeletonTemplate from './PostSkeletonTemplate'
 
 const CategoryPosts = () => {
   const posts = useCategoryPosts()
@@ -18,7 +19,7 @@ const CategoryPosts = () => {
   }, [categories, dispatch, id])
 
   if (!posts) {
-    return null
+    return <PostSkeletonTemplate />
   }
 
   return <PostsList posts={posts} />

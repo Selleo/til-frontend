@@ -4,13 +4,18 @@ import SearchedPhrase from './SearchedPhrase'
 import PostsList from '../components/PostsList'
 import NothingFound from './NothingFound'
 import { useSearchedPosts } from '../utils/customHooks/useSearchedPosts'
+import PostSkeletonTemplate from './PostSkeletonTemplate'
 
 const SearchedPosts = () => {
   const posts = useSearchedPosts()
   const searchQuery = useSelector(({ searchQuery }) => searchQuery)
 
   if (!posts) {
-    return searchQuery && <NothingFound text={searchQuery} />
+    if (searchQuery) {
+      return <NothingFound text={searchQuery} />
+    } else {
+      return <PostSkeletonTemplate />
+    }
   }
 
   return (
