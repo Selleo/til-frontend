@@ -3,37 +3,61 @@ import { usePagination } from '../utils/customHooks/usePagination'
 import PaginationElement from './PaginationElement'
 
 const PostsPagination = ({ posts, savePosts }) => {
-  const pagination = usePagination(posts)
+  const { pagination, PREV, NEXT, DOTS } = usePagination(posts)
 
   if (!posts.data.length) {
     return null
   }
 
   const handleClick = page => {
-    switch (page) {
-      case 'Prev':
-        return savePosts(
-          posts.pageNumber === 1 ? posts.pageNumber : posts.pageNumber - 1
-        )
-      case 'Next':
-        return savePosts(posts.pageNumber + 1)
-      case '...':
-        return
-      default:
-        return savePosts(page)
+    if (page !== DOTS) {
+      savePosts(page)
+    }
+  }
+
+  const handleMoveLeft = () => {
+    if (posts.pageNumber > 1) {
+      savePosts(posts.pageNumber - 1)
+    }
+  }
+
+  const handleMoveRight = () => {
+    if (posts.pageNumber < posts.totalPages) {
+      savePosts(posts.pageNumber + 1)
     }
   }
 
   return (
     <nav className="pagination__wrapper">
-      {pagination.map((page, index) => (
-        <PaginationElement
-          page={page}
-          key={index}
-          isActive={posts.pageNumber === page}
-          changePage={handleClick}
-        />
-      ))}
+      {pagination.map((page, index) => {
+        if (page === PREV)
+          return (
+            <PaginationElement
+              page={page}
+              key={index}
+              isActive={posts.pageNumber === page}
+              changePage={handleMoveLeft}
+            />
+          )
+        if (page === NEXT)
+          return (
+            <PaginationElement
+              page={page}
+              key={index}
+              isActive={posts.pageNumber === page}
+              changePage={handleMoveRight}
+            />
+          )
+
+        return (
+          <PaginationElement
+            page={page}
+            key={index}
+            isActive={posts.pageNumber === page}
+            changePage={handleClick}
+          />
+        )
+      })}
     </nav>
   )
 }

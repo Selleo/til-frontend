@@ -6,9 +6,11 @@ const PaginationElement = ({ page, isActive, changePage }) => {
     '-active': isActive,
     '-dot': page === '...',
   })
+
   const handleClick = () => {
     changePage(page)
   }
+
   return (
     <button className={className} onClick={handleClick}>
       {page}

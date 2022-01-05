@@ -38,14 +38,14 @@ export const usePagination = posts => {
     }
   }
 
-  const paginationArray = paginationRange()
+  const pagination = paginationRange()
 
   if (pageNumber !== 1) {
-    paginationArray.unshift(PREV)
+    pagination.unshift(PREV)
   }
   if (pageNumber !== totalPages) {
-    paginationArray.push(NEXT)
+    pagination.push(NEXT)
   }
 
-  return paginationArray
+  return { pagination, DOTS, PREV, NEXT }
 }
