@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { debounce } from 'lodash'
 
 import { saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
@@ -9,39 +10,48 @@ import Icon from './UI/Icon'
 import { useDisableOnRoute } from '../utils/customHooks/useDisableOnRoute'
 import ActionModal from './ActionModal'
 import { Transition } from './Transition'
+import { useSearchQuery } from '../utils/customHooks/useSearchQuery'
 
 const Search = () => {
-  const [input, setInput] = useState('')
-  const [timeoutID, setTimeoutID] = useState(null)
   const dispatch = useDispatch()
-  const history = useHistory()
-  const hasLeavedRoute = useOnRouteLeave('/search')
+
+  const [input, setInput] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
+
   const { isDisabled } = useDisableOnRoute(['add', 'edit'])
+  const hasLeftRoute = useOnRouteLeave('/search')
+  const searchQuery = useSearchQuery()
+  const history = useHistory()
+
+  const debouncedHistoryPush = useMemo(() => debounce(history.push, 400), [
+    history,
+  ])
+
+  useEffect(() => {
+    if (searchQuery) {
+      setInput(searchQuery)
+    }
+  }, [])
 
   const handleClearInput = useCallback(() => {
     dispatch(saveSearchedQuery(''))
     setInput('')
     history.push('/')
-  }, [dispatch])
+  }, [dispatch, history])
 
   useEffect(() => {
     if (hasLeavedRoute) {
       dispatch(saveSearchedQuery(''))
       setInput('')
     }
-  }, [hasLeavedRoute, handleClearInput])
+  }, [hasLeftRoute, handleClearInput])
 
   const handleInput = event => {
-    clearTimeout(timeoutID)
     const searchedValue = event.target.value
     setInput(searchedValue)
 
     if (searchedValue) {
-      const timeout = setTimeout(() => {
-        history.push(`/search?q=${searchedValue}`)
-      }, 500)
-      setTimeoutID(timeout)
+      debouncedHistoryPush(`/search?q=${searchedValue}`)
     } else {
       history.push('/')
     }
