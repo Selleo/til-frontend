@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { saveSearchedPosts, saveSearchedQuery } from '../store/actions/actions'
+
+import { saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
 import { ReactComponent as SearchIcon } from '../assets/icons/search.svg'
 import Icon from './UI/Icon'
@@ -32,17 +33,14 @@ const Search = () => {
   }, [hasLeavedRoute, handleClearInput])
 
   const handleInput = event => {
-    const targetValue = event.target.value
-
-    setInput(targetValue)
     clearTimeout(timeoutID)
+    const searchedValue = event.target.value
+    setInput(searchedValue)
 
-    if (targetValue) {
+    if (searchedValue) {
       const timeout = setTimeout(() => {
-        history.push('/search')
-
-        dispatch(saveSearchedPosts(targetValue))
-      }, 300)
+        history.push(`/search?q=${searchedValue}`)
+      }, 500)
       setTimeoutID(timeout)
     } else {
       history.push('/')
