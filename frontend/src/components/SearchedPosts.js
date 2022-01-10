@@ -1,22 +1,29 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import SearchedPhrase from './SearchedPhrase'
 import PostsList from '../components/PostsList'
 import NothingFound from './NothingFound'
-import { useSearchedPosts } from '../utils/customHooks/useSearchedPosts'
+import { saveSearchedPosts } from '../store/actions/actions'
+import PostsPagination from './PostsPagination'
 
 const SearchedPosts = () => {
-  const posts = useSearchedPosts()
-  const searchQuery = useSelector(({ searchQuery }) => searchQuery)
+  const searchedPosts = useSelector(state => state.searchedPosts)
+  const searchQuery = useSelector(state => state.searchQuery)
+  const dispatch = useDispatch()
 
-  if (!posts) {
+  const savePosts = page => {
+    dispatch(saveSearchedPosts(searchQuery, page))
+  }
+
+  if (!searchedPosts?.data.length) {
     return searchQuery && <NothingFound text={searchQuery} />
   }
 
   return (
     <>
       <SearchedPhrase phrase={searchQuery} />
-      <PostsList posts={posts} />
+      <PostsList posts={searchedPosts.data} />
+      <PostsPagination posts={searchedPosts} savePosts={savePosts} />
     </>
   )
 }
