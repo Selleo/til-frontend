@@ -64,7 +64,7 @@ const PostContent = ({ animationDelay, post, review, userMenu }) => {
             </div>
           </div>
 
-          {!review && <CopyPostURL postId={post.id} />}
+          {!review && <CopyPostURL id={post.id} slug={post.slug} />}
         </div>
         <div>
           <span className="post__title">{title}</span>
