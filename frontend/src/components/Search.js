@@ -21,6 +21,7 @@ const Search = () => {
   const handleClearInput = useCallback(() => {
     dispatch(saveSearchedQuery(''))
     setInput('')
+    history.push('/')
   }, [dispatch])
 
   useEffect(() => {
@@ -56,7 +57,11 @@ const Search = () => {
 
   const InputIcon = () => {
     return input ? (
-      <div className="search-box__icon -cancel" onClick={handleClearInput}>
+      <div
+        className="search-box__icon -cancel"
+        onClick={handleClearInput}
+        title="Clear"
+      >
         <Icon name="cancel" />
       </div>
     ) : (
