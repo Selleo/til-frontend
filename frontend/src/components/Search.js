@@ -26,7 +26,8 @@ const Search = () => {
 
   useEffect(() => {
     if (hasLeavedRoute) {
-      handleClearInput()
+      dispatch(saveSearchedQuery(''))
+      setInput('')
     }
   }, [hasLeavedRoute, handleClearInput])
 
