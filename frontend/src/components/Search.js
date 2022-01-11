@@ -40,7 +40,7 @@ const Search = () => {
   }, [dispatch, history])
 
   useEffect(() => {
-    if (hasLeavedRoute) {
+    if (hasLeftRoute) {
       dispatch(saveSearchedQuery(''))
       setInput('')
     }
