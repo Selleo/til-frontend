@@ -5,14 +5,15 @@ import { Provider } from 'react-redux'
 import { Route, Router, Switch } from 'react-router-dom'
 import React from 'react'
 
-const renderWithStoreAndRouter = (component, historyPathArray = ['/']) => {
+const renderWithStoreAndRouter = (
+  component,
+  history = createMemoryHistory({
+    initialEntries: ['/'],
+  })
+) => {
   const middlewares = []
   const mockStore = configureStore(middlewares)
   const store = mockStore({})
-
-  const history = createMemoryHistory({
-    initialEntries: historyPathArray,
-  })
 
   return render(
     <Provider store={store}>
