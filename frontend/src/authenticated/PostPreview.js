@@ -23,7 +23,7 @@ const PostPreview = props => {
         </div>
       </div>
       <span className="post__title">{title || 'Your title'}</span>
-      <div className="post__body">
+      <div className="post__body -preview">
         <Markdown source={body || 'Your content'} />
       </div>
       <div className="post__footer">

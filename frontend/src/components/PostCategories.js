@@ -22,9 +22,7 @@ const PostCategories = props => {
     dispatch(saveCategoryPosts(id))
   }
 
-  const postCategoriesClassnames = classNames('post__categories', {
-    '-preview': preview,
-  })
+  const postCategoriesClassnames = classNames('post__categories')
 
   const postSingeCategoryClassNames = classNames('post__single-category', {
     '-expanded-category': showRestCategories,
