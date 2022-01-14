@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { isEmpty } from 'lodash'
 import PostsList from './PostsList'
 import { saveCategoryPosts } from '../store/actions/actions'
-import { useCategoryPosts } from '../utils/customHooks/useCategoryPosts'
+import { selectCategoryPostsWithStatus } from '../utils/selectors/selectCategoryPosts'
 import PostSkeletonTemplate from './PostSkeletonTemplate'
 import PostsPagination from './PostsPagination'
+import { statusType } from '../utils/constants'
+import NothingFound from './NothingFound'
 
 const CategoryPosts = () => {
-  const posts = useCategoryPosts()
+  const [posts, status] = useSelector(selectCategoryPostsWithStatus)
   const categories = useSelector(state => state.categories)
 
   const dispatch = useDispatch()
@@ -23,8 +26,12 @@ const CategoryPosts = () => {
     savePosts()
   }, [categories, dispatch, id])
 
-  if (!posts) {
+  if (!status || status === statusType.loading) {
     return <PostSkeletonTemplate />
+  }
+
+  if (isEmpty(posts?.data)) {
+    return <NothingFound />
   }
 
   return (
