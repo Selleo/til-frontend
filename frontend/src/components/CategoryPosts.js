@@ -5,6 +5,7 @@ import PostsList from './PostsList'
 import { saveCategoryPosts } from '../store/actions/actions'
 import { useCategoryPosts } from '../utils/customHooks/useCategoryPosts'
 import PostSkeletonTemplate from './PostSkeletonTemplate'
+import PostsPagination from './PostsPagination'
 
 const CategoryPosts = () => {
   const posts = useCategoryPosts()
@@ -13,16 +14,25 @@ const CategoryPosts = () => {
   const dispatch = useDispatch()
   const { id } = useParams()
 
-  useEffect(() => {
+  const savePosts = (page = null) => {
     const foundCategory = categories.find(({ name }) => name === id)
-    foundCategory && dispatch(saveCategoryPosts(foundCategory.id))
+    foundCategory && dispatch(saveCategoryPosts(foundCategory.id, page))
+  }
+
+  useEffect(() => {
+    savePosts()
   }, [categories, dispatch, id])
 
   if (!posts) {
     return <PostSkeletonTemplate />
   }
 
-  return <PostsList posts={posts} />
+  return (
+    <>
+      <PostsList posts={posts.data} />
+      <PostsPagination posts={posts} savePosts={savePosts} />
+    </>
+  )
 }
 
 export default CategoryPosts

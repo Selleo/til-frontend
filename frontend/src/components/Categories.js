@@ -1,24 +1,27 @@
-import React, { useState, useEffect } from 'react'
-import { Transition } from './Transition'
+import React, { useEffect, useState } from 'react'
+
 import { useHistory, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import ActionModal from '../components/ActionModal'
 import classNames from 'classnames'
+
+import ActionModal from '../components/ActionModal'
 import Icon from './UI/Icon'
+import { Transition } from './Transition'
 
 import { useDisableOnRoute } from '../utils/customHooks/useDisableOnRoute'
 import { sortCategories } from '../utils/array/helpers.js'
 
 const Categories = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [navigationPath, setNavigationPath] = useState(null)
+  const { isDisabled } = useDisableOnRoute(['add', 'edit'])
+
   const history = useHistory()
   const { pathname } = useLocation()
 
   const sortedCategories = useSelector(state =>
     sortCategories(state.categories)
   )
-  const { isDisabled } = useDisableOnRoute(['add', 'edit'])
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [navigationPath, setNavigationPath] = useState(null)
 
   useEffect(() => {
     const currentCategory = document.querySelector(
@@ -55,28 +58,29 @@ const Categories = () => {
     })
 
   return sortedCategories.map(({ id, name }) => (
-    <div key={id}>
+    <button
+      key={id}
+      className={navItemClasses(name)}
+      onClick={() => onNavLinkClick(name)}
+    >
       <Transition name="opacity-animation">
-        <div
-          className={navItemClasses(name)}
-          onClick={() => onNavLinkClick(name)}
-        >
+        <>
           <div className="categories__icon">
             <Icon name={name} />
           </div>
           <div className="categories__name">{name}</div>
-        </div>
+        </>
       </Transition>
 
       {isModalOpen && (
         <ActionModal
           action={() => history.push(navigationPath)}
           isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
           message="If you leave, you will lose your data!"
+          setIsOpen={setIsModalOpen}
         />
       )}
-    </div>
+    </button>
   ))
 }
 

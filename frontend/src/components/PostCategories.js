@@ -16,14 +16,13 @@ const PostCategories = props => {
     setShowRestCategories(!showRestCategories)
   }
 
-  const handleClick = (name, id) => {
+  const handleClick = (e, name, id) => {
+    if (e) e.preventDefault()
     history.push(`/category/${name}`)
     dispatch(saveCategoryPosts(id))
   }
 
-  const postCategoriesClassnames = classNames('post__categories', {
-    '-preview': preview,
-  })
+  const postCategoriesClassnames = classNames('post__categories')
 
   const postSingeCategoryClassNames = classNames('post__single-category', {
     '-expanded-category': showRestCategories,
@@ -50,7 +49,7 @@ const PostCategories = props => {
       return (
         <SinglePostCategory
           key={id}
-          handleClick={() => handleClick(name, id)}
+          handleClick={e => handleClick(e, name, id)}
           categoryName={name}
           classNames={postSingeCategoryClassNames}
         />
@@ -67,7 +66,7 @@ const PostCategories = props => {
         return (
           <SinglePostCategory
             key={id}
-            handleClick={() => handleClick(name, id)}
+            handleClick={e => handleClick(e, name, id)}
             categoryName={name}
             classNames={postSingeCategoryClassNames}
           />

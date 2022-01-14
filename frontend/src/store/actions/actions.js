@@ -56,10 +56,10 @@ export const getCurrentUserPosts = currentUserPosts => ({
   currentUserPosts,
 })
 
-export const saveCategoryPosts = id => async dispatch => {
+export const saveCategoryPosts = (id, page = null) => async dispatch => {
   dispatch(setStatus({ key: 'categoryPosts', value: statusType.loading }))
   const categoryPosts = await fetchCategoryPosts(
-    `${API_URL}/api/categories/${id}`
+    `${API_URL}/api/categories/${id}?page=${page}`
   )
   dispatch(getCategoryPosts(categoryPosts))
 }
@@ -95,9 +95,10 @@ const getPosts = posts => ({
   posts,
 })
 
-export const saveAllPosts = () => async dispatch => {
+export const saveAllPosts = (page = null) => async dispatch => {
   dispatch(setStatus({ key: 'posts', value: statusType.loading }))
-  const allPosts = await fetchData(`${API_URL}/api/posts`)
+
+  const allPosts = await fetchData(`${API_URL}/api/posts?page=${page}`)
 
   dispatch(getPosts(allPosts))
 }
@@ -109,9 +110,9 @@ const getSerchedPosts = searchedPosts => ({
   searchedPosts,
 })
 
-export const saveSearchedPosts = query => async dispatch => {
+export const saveSearchedPosts = (query, page) => async dispatch => {
   dispatch(setStatus({ key: 'searchedPosts', value: statusType.loading }))
-  const searchedPosts = await fetchSearchedPosts(query)
+  const searchedPosts = await fetchSearchedPosts(query, page)
 
   dispatch(saveSearchedQuery(query))
   dispatch(getSerchedPosts(searchedPosts))
