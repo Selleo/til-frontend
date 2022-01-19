@@ -1,45 +1,45 @@
 .chevron
   border-radius: 50%
-  height: 20px
-  margin-left: 30px
+  height: $m-base
+  margin-left: $m-base
   margin-right: 0
   transition: all 0.3s ease-in
-  width: 20px
+  width: $m-base
 
   &.-rotate
     transform: rotate(180deg)
 
 .add-post-btn
   background-color: $color-primary
-  border-radius: 10px
+  border-radius: $border-radius-sm
   color: $color-dark
   display: inline-block
-  font-size: 12px
-  font-weight: 600
-  height: 40px
-  padding: 8px
+  font-size: $font-size-xs
+  font-weight: $font-weight-600
+  height: $m-xs * 5
+  padding: $m-xs
   text-align: center
   text-decoration: none
-  width: 160px
+  width: $m-sm * 10
 
   &:hover
     +transition(opacity,background-color)
-    color: $color-dark
     background-color: $color-primary-hover
+    color: $color-dark
     opacity: 0.9
 
 .delete-post-btn
   background-color: $color-primary-red
-  border-radius: 10px
+  border-radius: $border-radius-sm
   color: $color-white
   display: inline-block
-  font-size: 16px
-  font-weight: 600
-  height: 40px
-  padding: 10px
+  font-size: $font-size-m
+  font-weight: $font-weight-600
+  height: $m-xs * 5
+  padding: $m-xs
   text-align: center
   text-decoration: none
-  width: 160px
+  width: $m-sm * 10
 
   &:hover
     +transition(background-color)
@@ -47,17 +47,17 @@
 
 .edit-post-btn
   background-color: transparent
-  border-radius: 10px
   border: 2px solid $color-primary-blue
+  border-radius: $border-radius-sm
   color: $color-primary-blue
   display: inline-block
-  font-size: 16px
-  font-weight: 600
-  height: 40px
-  padding: 10px
+  font-size: $font-size-m
+  font-weight: $font-weight-600
+  height: $m-xs * 5
+  padding: $m-xs
   text-align: center
   text-decoration: none
-  width: 160px
+  width: $m-sm * 10
 
   &:hover
     +transition(background-color)
@@ -65,19 +65,26 @@
 
 .cancel-button
   background-color: transparent
-  border-radius: 10px
+  border-radius: $border-radius-sm
   border: 2px solid $color-gray
   color: $color-gray
   display: inline-block
-  font-size: 16px
-  font-weight: 600
-  height: 40px
-  margin-right: 48px
-  padding: 10px
+  font-size: $font-size-m
+  font-weight: $font-weight-600
+  height: $m-xs * 5
+  margin-right: $m-lg
+  padding: $m-xs
   text-align: center
   text-decoration: none
-  width: 160px
+  width: $m-sm * 10
 
 .profile-link
   color: white
   text-decoration: none
+
+  svg
+    height: $font-size-m
+    width: $font-size-m
+
+  &__text
+    font-size: $font-size-m
