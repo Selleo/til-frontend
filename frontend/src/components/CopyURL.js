@@ -28,7 +28,7 @@ const CopyPostURL = ({ id, slug }) => {
     <Tooltip
       className="ToolTip"
       delay={150}
-      duration={1000}
+      duration={300}
       html={<div>{buttonText}</div>}
     >
       <CopyButton handleClick={copyURL} text={'Share'} />

@@ -7,7 +7,7 @@ const CopyButton = props => {
   return (
     <button onClick={handleClick} className="post__share-button">
       {!isInTooltip && <Share />}
-      {text}
+      <span className="post__share-text">{text}</span>
     </button>
   )
 }
