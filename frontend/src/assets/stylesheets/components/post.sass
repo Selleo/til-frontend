@@ -125,17 +125,17 @@
     font-weight: $font-weight-600
     justify-content: space-around
     width: auto
+    +transition(color)
 
     svg
       margin-right: $m-xs / 4
 
     &:hover
       color: $color-white
-      +transition(color)
+      +transition(fill)
       
       & svg
         fill: $color-white
-        +transition(fill)
         
   &__share-text
     margin-left: $m-xs

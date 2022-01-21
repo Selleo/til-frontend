@@ -21,12 +21,11 @@
   text-align: center
   text-decoration: none
   width: $m-sm * 10
+  +transition(background-color)
 
   &:hover
-    +transition(opacity,background-color)
     background-color: $color-primary-hover
     color: $color-dark
-    opacity: 0.9
 
 .delete-post-btn
   background-color: $color-primary-red
@@ -40,9 +39,9 @@
   text-align: center
   text-decoration: none
   width: $m-sm * 10
+  +transition(background-color)
 
   &:hover
-    +transition(background-color)
     background-color: $color-red-hover
 
 .edit-post-btn
@@ -58,9 +57,9 @@
   text-align: center
   text-decoration: none
   width: $m-sm * 10
+  +transition(background-color)
 
   &:hover
-    +transition(background-color)
     background-color: rgba($color-primary-blue, .1)
 
 .cancel-button
@@ -77,6 +76,11 @@
   text-align: center
   text-decoration: none
   width: $m-sm * 10
+  +transition(border-color, color)
+
+  &:hover
+    border-color: $color-white
+    color: $color-white
 
 .profile-link
   color: white

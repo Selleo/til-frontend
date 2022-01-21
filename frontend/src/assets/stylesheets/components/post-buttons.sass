@@ -21,6 +21,10 @@
     text-transform: uppercase
     width: $m-base * 7
     transition: $transition-duration $transition-function
+    +transition(background-color)
+
+    &:hover
+      background-color: #E0B228
 
     &:disabled
       background: none
@@ -47,6 +51,11 @@
     outline: none
     text-transform: uppercase
     width: $m-sm * 7
+    +transition(color, border-color)
+
+    &:hover
+      border-color: $color-white
+      color: $color-white
 
   &__button-logout
     background: none

@@ -168,7 +168,7 @@ const EditPost = () => {
             disabled={buttonState}
             onClick={updatePost}
           >
-            update Post
+            Update Post
           </button>
         </div>
       </>
