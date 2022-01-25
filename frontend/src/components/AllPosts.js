@@ -1,20 +1,28 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { isEmpty } from 'lodash'
 import PostsList from './PostsList'
-import { usePosts } from '../utils/customHooks/usePosts'
+import { selectPostsWithStatus } from '../utils/selectors/selectPosts'
+import PostSkeletonTemplate from './PostSkeletonTemplate'
 import PostsPagination from './PostsPagination'
 import { saveAllPosts } from '../store/actions/actions'
+import { statusType } from '../utils/constants'
+import NothingFound from './NothingFound'
 
 const AllPosts = () => {
-  const posts = usePosts()
+  const [posts, status] = useSelector(selectPostsWithStatus)
   const dispatch = useDispatch()
 
   const savePosts = (page = null) => {
     dispatch(saveAllPosts(page))
   }
 
-  if (!posts) {
-    return null
+  if (!status || status === statusType.loading) {
+    return <PostSkeletonTemplate />
+  }
+
+  if (isEmpty(posts?.data)) {
+    return <NothingFound />
   }
 
   return (
