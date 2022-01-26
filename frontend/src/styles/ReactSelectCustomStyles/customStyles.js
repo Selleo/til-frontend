@@ -11,6 +11,8 @@ const customStyles = {
     color: '#A0A0A0',
     border: 'none',
     borderRadius: '26px',
+    fontWeight: 300,
+    cursor: 'pointer',
   }),
   valueContainer: provided => ({
     ...provided,
@@ -25,6 +27,7 @@ const customStyles = {
     backgroundColor: 'transparent',
     border: 'none',
     minWidth: 300,
+    cursor: 'pointer',
   }),
   menu: provided => ({
     ...provided,
@@ -75,7 +78,7 @@ const customStyles = {
   placeholder: provided => ({
     ...provided,
     color: '#A0A0A0',
-    fontWeight: 500,
+    fontWeight: 300,
     fontSize: '16px',
     fontFamily: 'Poppins',
     letterSpacing: '0.48px',

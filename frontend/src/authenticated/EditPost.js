@@ -124,25 +124,34 @@ const EditPost = () => {
           <div className="add-post__post-create">
             <div className="add-post__header">Update your post</div>
             <form>
-              <input
-                className="add-post__title"
-                type="text"
-                name="name"
-                placeholder="Title"
-                value={title}
-                onChange={handleTitle}
-              />
+              <label className="form-label">
+                Title
+                <input
+                  className="add-post__title"
+                  type="text"
+                  name="name"
+                  placeholder="Title"
+                  value={title}
+                  onChange={handleTitle}
+                />
+              </label>
             </form>
-            <ReactMde
-              classes={{
-                toolbar: 'no-show',
-                textArea: 'text-area',
-                reactMde: 'react-mde',
-                grip: 'grip',
-              }}
-              onChange={handleInput}
-              value={markdown}
-            />
+            <label className="form-label">
+              Description
+              <ReactMde
+                classes={{
+                  toolbar: 'no-show',
+                  textArea: 'text-area',
+                  reactMde: 'react-mde',
+                  grip: 'grip',
+                }}
+                onChange={handleInput}
+                textAreaProps={{
+                  placeholder: 'Write away...',
+                }}
+                value={markdown}
+              />
+            </label>
             <Select
               isMulti
               name="colors"

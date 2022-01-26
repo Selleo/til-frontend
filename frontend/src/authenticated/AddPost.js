@@ -112,29 +112,35 @@ const AddPost = () => {
           <div className="add-post__post-create">
             <h2 className="add-post__header">Create a post</h2>
             <form>
-              <input
-                className="add-post__title"
-                name="name"
-                onChange={handleTitle}
-                placeholder="Title"
-                type="text"
-                value={title}
-                autoComplete="off"
-              />
+              <label className="form-label">
+                Title
+                <input
+                  className="add-post__title"
+                  name="name"
+                  onChange={handleTitle}
+                  placeholder="Title"
+                  type="text"
+                  value={title}
+                  autoComplete="off"
+                />
+              </label>
             </form>
-            <ReactMde
-              classes={{
-                toolbar: 'no-show',
-                textArea: 'text-area',
-                reactMde: 'react-mde',
-                grip: 'grip',
-              }}
-              onChange={handleInput}
-              textAreaProps={{
-                placeholder: 'Write away...',
-              }}
-              value={markdown}
-            />
+            <label className="form-label">
+              Description
+              <ReactMde
+                classes={{
+                  toolbar: 'no-show',
+                  textArea: 'text-area',
+                  reactMde: 'react-mde',
+                  grip: 'grip',
+                }}
+                onChange={handleInput}
+                textAreaProps={{
+                  placeholder: 'Write away...',
+                }}
+                value={markdown}
+              />
+            </label>
             <CreatableSelect
               className="basic-multi-select"
               classNamePrefix="select"

@@ -1,8 +1,8 @@
-.go-to-all-posts
-    visibility: hidden
-
+.navigator-button
+    cursor: pointer
     margin:
         right: auto
+    visibility: hidden
 
     &__link
         align-items: center
@@ -10,6 +10,10 @@
         display: flex
         font-size: $font-size-sm
         text-decoration: none
+        +transition(color)
+
+        &:hover
+            color: $color-primary
 
     &__text
         margin-left: $m-xs
