@@ -1,0 +1,19 @@
+.go-to-all-posts
+    visibility: hidden
+
+    margin:
+        right: auto
+
+    &__link
+        align-items: center
+        color: $color-white
+        display: flex
+        font-size: $font-size-sm
+        text-decoration: none
+
+    &__text
+        margin-left: $m-xs
+
+    +media-breakpoint-up(xl)
+        padding-left: $side-nav-width
+        visibility: visible

@@ -50,7 +50,8 @@ const Categories = () => {
     if (isDisabled) {
       setNavigationPath(`/category/${name}`)
       setIsModalOpen(true)
-    } else !isActiveNav(name) && history.push(`/category/${name}`)
+    } else
+      isActiveNav(name) ? history.push('/') : history.push(`/category/${name}`)
   }
   const navItemClasses = name =>
     classNames('categories__single-category', {
