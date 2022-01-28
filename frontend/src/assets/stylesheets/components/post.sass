@@ -30,8 +30,8 @@
       min-height: 408px
      
   &:hover
-    background-color: $color-dark
     +transition(background-color)
+    background-color: $color-dark
 
   &__my-posts-header
     margin: $m-lg 0
@@ -73,6 +73,9 @@
   &__author
     color: $color-white
     font-weight: $font-weight-500
+
+  &__date
+    margin-top: $m-xs / 2
 
   &__date,
   &__is-public
@@ -117,6 +120,7 @@
     width: 100%
 
   &__share-button
+    +transition(color)
     align-items: center
     color: gray
     cursor: pointer
@@ -124,18 +128,20 @@
     font-size: $font-size-base
     font-weight: $font-weight-600
     justify-content: space-around
-    width: $m-xl
+    width: auto
 
     svg
       margin-right: $m-xs / 4
 
     &:hover
       color: $color-white
-      +transition(color)
+      +transition(fill)
       
       & svg
         fill: $color-white
-        +transition(fill)
+        
+  &__share-text
+    margin-left: $m-xs
 
   &__separator
     align-items: center
@@ -189,13 +195,13 @@
       opacity: 1
 
   &__single-reaction
+    +transition(width)
     align-items: center
     color: $color-gray
     cursor: pointer
     display: flex
     justify-content: space-between
     width: $m-lg
-    +transition(width)
 
     &:hover
 
@@ -225,8 +231,8 @@
 
     svg,
     div
-      color: $color-gray
       +transition(color, transform)
+      color: $color-gray
 
     svg
       width: $m-base
@@ -264,6 +270,7 @@
 
       &:before,
       &:after
+        +transition(color, width, opacity)
         background-color: $color-primary
         bottom: 0
         content: ""
@@ -272,7 +279,6 @@
         opacity: 0
         position: absolute
         width: 0
-        +transition(color, width, opacity)
       
       &.animation
         &:before,

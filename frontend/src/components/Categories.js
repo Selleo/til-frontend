@@ -50,11 +50,13 @@ const Categories = () => {
     if (isDisabled) {
       setNavigationPath(`/category/${name}`)
       setIsModalOpen(true)
-    } else !isActiveNav(name) && history.push(`/category/${name}`)
+    } else
+      isActiveNav(name) ? history.push('/') : history.push(`/category/${name}`)
   }
   const navItemClasses = name =>
     classNames('categories__single-category', {
       '-active': isActiveNav(name),
+      '-color-only-stroke': name.toLowerCase().includes('chrome', 'general'),
     })
 
   return sortedCategories.map(({ id, name }) => (

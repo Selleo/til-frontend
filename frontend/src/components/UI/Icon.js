@@ -40,6 +40,7 @@ import { SiAzuredevops } from 'react-icons/si'
 import { GrTest } from 'react-icons/gr'
 import { FaReact } from 'react-icons/fa'
 import { GrMysql } from 'react-icons/gr'
+import { MdKeyboardArrowLeft } from 'react-icons/md'
 
 import { BsFillCircleFill } from 'react-icons/bs'
 
@@ -49,6 +50,8 @@ import { MdCancel } from 'react-icons/md'
 
 const Icon = ({ name }) => {
   switch (name) {
+    case 'arrowleft':
+      return <MdKeyboardArrowLeft />
     case 'profile':
       return <CgProfile />
     case 'logout':

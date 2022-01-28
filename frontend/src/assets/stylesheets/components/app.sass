@@ -1,3 +1,61 @@
+body 
+  background-color: $color-background
+  font-family: $font-family, $font-family-default
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  margin: 0
+
+code 
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  
+.Overlay 
+  +position(fixed, 0, 0, 0, 0)
+  background-color: $color-black
+  backdrop-filter: blur($m-xs / 4)
+  z-index: $z-higher
+
+.no-show
+  display: none !important
+
+.text-area
+  +transition(border-color)
+  background-color: transparent
+  border: 1px solid $color-gray !important
+  border-radius: $border-radius-sm
+  caret-color: $color-gray
+  color: $color-gray
+  font-family: $font-family
+  font-size: $font-size-m
+  font-weight: $font-weight-light
+  min-height: $text-area-height
+  outline: none
+
+  &::placeholder 
+    color: $color-gray
+    font-family: $font-family
+    font-size: $font-size-m
+    font-weight: $font-weight-light
+
+  &:not(:placeholder-shown)
+    border-color: $color-white !important
+    color: $color-white
+
+  &:focus,
+  &:active
+    border-color: $color-warning!important
+
+.react-mde
+  border: none
+  border-radius: $border-radius-sm
+  margin-top: $m-xs
+  min-height: $text-area-height
+
+  .grip
+    display: none
+
+  span
+    padding: 0
+  
 .app-main
   display: flex
   min-height: 100vh

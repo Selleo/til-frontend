@@ -6,28 +6,28 @@
     flex-direction: row
 
 .add-post
+
   &__header
-    color: #ffffff
-    font-size: 24px
-    font-weight: 600
-    letter-spacing: 0.48px
+    color: $color-white
+    font-size: $font-size-xs * 2
+    font-weight: $font-weight-600
     margin-bottom: $m-base
+
   &__title
+    +transition(border-color)
     background: $color-background
-    border-radius: 10px
-    border: 1px solid #8a8a8a
-    caret-color: #8a8a8a
+    border-radius: $border-radius-sm
+    border: 1px solid $color-gray
+    caret-color: $color-gray
     color: $color-gray
-    font-size: 16px
-    height: 48px
-    letter-spacing: 0.48px
-    margin-bottom: 16px
+    font-size: $font-size-m
+    font-weight: $font-weight-light
+    height: $m-lg
+    margin: $m-xs 0 $m-sm
     opacity: 1
     outline: none
-    padding-left: 16px
+    padding-left: $m-sm
     width: 100%
-
-    +transition(border-color)
 
     &::placeholder
       color: $color-gray
@@ -43,3 +43,8 @@
 
   &__post-create
     flex-basis: 45%
+
+.form-label
+  font-size: $font-size-m
+  font-weight: $font-weight-bold
+  

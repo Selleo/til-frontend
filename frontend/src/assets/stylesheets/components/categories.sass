@@ -2,6 +2,7 @@
   overflow: auto
 
   &__single-category
+    +transition(background-color)
     align-items: center
     color: $color-white
     cursor: pointer
@@ -10,24 +11,32 @@
     text-decoration: none
     width: 100%
 
+    svg
+
+      path
+        fill: $color-white
+
     &:hover, &.-active
       background-color: rgba($color-primary, .1)
-      +transition(background-color)
 
       svg
         fill: $color-primary
-        +transition(fill)
-        
+
         path
-          fill: $color-primary
+          fill: $color-primary 
+          +transition(fill)
 
       .categories__name
-        color: $color-primary
         +transition(color)
+        color: $color-primary
+
+    &.-color-only-stroke:hover, &.-color-only-stroke.-active
+
+      svg
+        fill: transparent
+        stroke: $color-primary
+        +transition(stroke)
         
-    svg
-      path
-        fill: $color-white
 
   &__icon
     display: flex

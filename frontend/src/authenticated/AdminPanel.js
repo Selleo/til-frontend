@@ -64,7 +64,7 @@ const AdminPanel = () => {
           <div className={userMenuClasses}>
             <Link to="/profile" className="profile-link">
               <Icon name="profile" />
-              Profile
+              <span className="profile-link__text">Profile</span>
             </Link>
             <Logout />
           </div>

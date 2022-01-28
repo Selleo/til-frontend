@@ -2,59 +2,73 @@
   display: flex
   justify-content: center
   margin:
-    top: 118px
-    bottom: 60px
+    bottom: $m-sm * 4
+    top: $m-sm * 7
 
   &__button-primary
     background-color: $color-primary
-    border-radius: 10px
+    border-radius: $border-radius-sm
     border: none
-    color: #1f1f1f
+    color: $color-dark
     display: inline-block
-    font-size: 16px
-    font-weight: 500
-    height: 48px
-    margin-left: 80px
+    font-size: $font-size-m
+    font-weight: $font-weight-500
+    height: $m-base * 2
+    margin-left: $m-sm * 5
     outline: none
-    padding: 10px
+    padding: $m-xs
     text-align: center
     text-transform: uppercase
-    width: 180px
-
+    width: $m-base * 7
     transition: $transition-duration $transition-function
+    +transition(background-color)
+
+    &:hover
+      background-color: #E0B228
 
     &:disabled
       background: none
-      border-radius: 10px
-      border: 1px solid #8a8a8a
-      color: #8a8a8a
-      font-size: 16px
-      font-weight: 500
-      height: 48px
+      border-radius: $m-xs
+      border: 1px solid $color-gray
+      color: $color-gray
+      font-size: $m-sm
+      font-weight: $font-weight-500
+      height: $m-lg
       outline: none
       text-transform: uppercase
-      width: 180px
+      width: $m-sm * 7
       opacity: 0.4
       cursor: not-allowed
 
   &__button-cancel
     background: none
-    border-radius: 10px
-    border: 1px solid #8a8a8a
-    color: #8a8a8a
-    font-size: 16px
-    font-weight: 500
-    height: 48px
+    border-radius: $border-radius-sm
+    border: 1px solid $color-gray
+    color: $color-gray
+    font-size: $font-size-m
+    font-weight: $font-weight-500
+    height: $m-lg
     outline: none
     text-transform: uppercase
-    width: 180px
+    width: $m-sm * 7
+    +transition(color, border-color)
+
+    &:hover
+      border-color: $color-white
+      color: $color-white
 
   &__button-logout
     background: none
     border: none
     color: white
     cursor: pointer
-    font-size: 16px
     padding: 0
     text-align: left
     text-decoration: none
+
+    svg
+      height: $m-sm
+      width: $m-sm
+
+    .text-logout
+      font-size: $font-size-m

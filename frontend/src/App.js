@@ -17,7 +17,6 @@ import SideNav from './components/SideNav'
 import MainRoutes from './components/MainRoutes'
 import Footer from './components/Footer'
 // needed for styling that has not been changed yet
-import './App.css'
 import './devicon.css'
 import './assets/stylesheets/application.sass'
 import 'react-tippy/dist/tippy.css'
