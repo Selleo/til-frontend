@@ -2,7 +2,7 @@ const customStyles = {
   container: provided => ({
     ...provided,
     margin: '16px 0',
-    border: '1px solid #8a8a8a',
+    border: '1px solid #FFFEFC',
     borderRadius: '8px',
   }),
   option: provided => ({
@@ -28,11 +28,12 @@ const customStyles = {
     border: 'none',
     minWidth: 300,
     cursor: 'pointer',
+    boxShadow: 'none',
   }),
   menu: provided => ({
     ...provided,
     backgroundColor: '#2a2e32',
-    border: '1px solid #8a8a8a',
+    border: '1px solid #FFFEFC',
     borderRadius: '8px',
     position: 'absolute',
     left: '-1px',
@@ -41,7 +42,7 @@ const customStyles = {
     ...provided,
     background: 'transparent',
     color: '#a0a0a0',
-    border: '1px solid #8a8a8a',
+    border: '1px solid #FFFEFC',
     display: 'flex',
     justifyContent: 'space-between',
     padding: '4px 14px',
