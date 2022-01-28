@@ -14,6 +14,7 @@
     margin-bottom: $m-base
 
   &__title
+    +transition(border-color)
     background: $color-background
     border-radius: $border-radius-sm
     border: 1px solid $color-gray
@@ -27,8 +28,6 @@
     outline: none
     padding-left: $m-sm
     width: 100%
-
-    +transition(border-color)
 
     &::placeholder
       color: $color-gray
@@ -48,3 +47,4 @@
 .form-label
   font-size: $font-size-m
   font-weight: $font-weight-bold
+  

@@ -2,6 +2,7 @@
   overflow: auto
 
   &__single-category
+    +transition(background-color)
     align-items: center
     color: $color-white
     cursor: pointer
@@ -9,7 +10,6 @@
     padding: $m-sm 0 $m-sm $m-lg
     text-decoration: none
     width: 100%
-    +transition(background-color)
 
     svg
 
@@ -27,8 +27,8 @@
           +transition(fill)
 
       .categories__name
-        color: $color-primary
         +transition(color)
+        color: $color-primary
 
     &.-color-only-stroke:hover, &.-color-only-stroke.-active
 
