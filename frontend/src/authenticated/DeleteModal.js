@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
+
 import Modal from 'react-modal'
 
-const DeleteModal = props => {
+const DeleteModal = ({ deletePost, toggleModal }) => {
   const [isModalOpen, setIsModalOpen] = useState(true)
-  const { deletePost, toggleModal } = props
 
-  /* backdrop-filter: blur(2px); */
   const customStyles = {
     content: {
       top: '50%',
