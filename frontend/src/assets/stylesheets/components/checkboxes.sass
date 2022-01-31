@@ -1,19 +1,22 @@
 .checkboxes
-  margin-top: 40px
+  margin-top: $m-xs * 5
+
+  &__input:focus ~ .checkboxes__checkmark
+    border-color: $color-primary
 
   &__single-checkbox
     -moz-user-select: none
     -ms-user-select: none
     -webkit-user-select: none
-    color: #707070
+    color: $color-gray
     cursor: pointer
     display: block
-    font-size: 16px
-    font-weight: 500
+    font:
+      size: $font-size-m
+      weight: $font-weight-500
     font-family: $font-family
-    margin-bottom: 12px
-    letter-spacing: 0.48px
-    padding-left: 38px
+    margin-bottom: $m-sm
+    padding-left: $m-xs * 5
     position: relative
     user-select: none
 
@@ -21,18 +24,17 @@
       display: block
 
     &.-active
-      color: #ffffff
+      color: $color-white
 
     &.-darken
-      opacity: 0.5;
+      opacity: 0.5
 
     label
       align-content: center
-      color: #707070
+      color: $color-gray
       cursor: pointer
       display: flex
-      font-weight: 600
-      letter-spacing: 0.48px
+      font-weight: $font-weight-600
       
     input
       cursor: pointer
@@ -42,31 +44,30 @@
       width: 0
 
   &__checkmark
-    border-radius: 4px
-    border: 1px solid #707070
+    border: 1px solid $color-gray
+    border-radius: $border-radius-sm / 2
     cursor: pointer
-    height: 25px
+    height: $m-base
     left: 0
     position: absolute
     top: 0px
-    width: 25px
+    width: $m-base
 
     &:after
       content: ''
-      position: absolute
       display: none
+      position: absolute
 
     &:after
-      left: 7px;
-      top: 2px;
-      width: 7px;
-      height: 13px;
-      border: solid yellow;
-      border-width: 0 2px 2px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
+      -ms-transform: rotate(45deg)
+      -webkit-transform: rotate(45deg)
+      border: solid $color-primary
+      border-width: 0 2px 2px 0
+      height: 13px
+      left: 7px
+      transform: rotate(45deg)
+      width: 7px
 
     &.-active
-      border: 1px solid #ffffff
-
+      border: 1px solid $color-white
+    
