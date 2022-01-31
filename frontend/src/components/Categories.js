@@ -56,7 +56,9 @@ const Categories = () => {
   const navItemClasses = name =>
     classNames('categories__single-category', {
       '-active': isActiveNav(name),
-      '-color-only-stroke': name.toLowerCase().includes('chrome', 'general'),
+      '-color-only-stroke':
+        name.toLowerCase().includes('chrome') ||
+        name.toLowerCase().includes('general'),
     })
 
   return sortedCategories.map(({ id, name }) => (
