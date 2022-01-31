@@ -23,7 +23,7 @@
     transition: $transition-duration $transition-function
     +transition(background-color)
 
-    &:hover
+    &:hover, &:focus
       background-color: #E0B228
 
     &:disabled
@@ -53,7 +53,7 @@
     width: $m-sm * 7
     +transition(color, border-color)
 
-    &:hover
+    &:hover, &:focus
       border-color: $color-white
       color: $color-white
 
