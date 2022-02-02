@@ -1,14 +1,15 @@
 import React from 'react'
+
 import classNames from 'classnames'
 
-const Checkboxes = props => {
-  const {
-    handlePublicCheckbox,
-    isPublic,
-    handleReviewCheckbox,
-    isReviewNeeded,
-  } = props
+import { ReactComponent as CheckMark } from '../assets/icons/checkmark.svg'
 
+const Checkboxes = ({
+  handlePublicCheckbox,
+  isPublic,
+  handleReviewCheckbox,
+  isReviewNeeded,
+}) => {
   const publicLabelClasses = classNames({
     'checkboxes__single-checkbox': true,
     '-active': isPublic,
@@ -37,10 +38,13 @@ const Checkboxes = props => {
           Make public?
           <input
             type="checkbox"
+            className="checkboxes__input"
             onChange={handlePublicCheckbox}
             checked={isPublic}
           />
-          <span className={publicCheckmarkClasses}></span>
+          <span className={publicCheckmarkClasses}>
+            <CheckMark />
+          </span>
         </label>
       </div>
       <div>
@@ -48,11 +52,14 @@ const Checkboxes = props => {
           For review?
           <input
             type="checkbox"
+            className="checkboxes__input"
             onChange={handleReviewCheckbox}
             checked={isReviewNeeded}
             disabled={isPublic}
           />
-          <span className={reviewCheckmarkClasses}></span>
+          <span className={reviewCheckmarkClasses}>
+            <CheckMark />
+          </span>
         </label>
       </div>
     </div>
