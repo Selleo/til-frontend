@@ -2,6 +2,8 @@ import React from 'react'
 
 import classNames from 'classnames'
 
+import { ReactComponent as CheckMark } from '../assets/icons/checkmark.svg'
+
 const Checkboxes = ({
   handlePublicCheckbox,
   isPublic,
@@ -40,7 +42,9 @@ const Checkboxes = ({
             onChange={handlePublicCheckbox}
             checked={isPublic}
           />
-          <span className={publicCheckmarkClasses}></span>
+          <span className={publicCheckmarkClasses}>
+            <CheckMark />
+          </span>
         </label>
       </div>
       <div>
@@ -53,7 +57,9 @@ const Checkboxes = ({
             checked={isReviewNeeded}
             disabled={isPublic}
           />
-          <span className={reviewCheckmarkClasses}></span>
+          <span className={reviewCheckmarkClasses}>
+            <CheckMark />
+          </span>
         </label>
       </div>
     </div>

@@ -53,21 +53,13 @@
     top: 0px
     width: $m-base
 
-    &:after
-      content: ''
+    svg
       display: none
-      position: absolute
-
-    &:after
-      -ms-transform: rotate(45deg)
-      -webkit-transform: rotate(45deg)
-      border: solid $color-primary
-      border-width: 0 2px 2px 0
-      height: 13px
-      left: 7px
-      transform: rotate(45deg)
-      width: 7px
 
     &.-active
-      border: 1px solid $color-white
-    
+      svg
+        display: block
+        margin: auto
+
+        path
+          fill: $color-primary
