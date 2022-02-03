@@ -1,30 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
+import { useHistory } from 'react-router-dom'
+
 import { usePagination } from '../utils/customHooks/usePagination'
 import PaginationElement from './PaginationElement'
 
-const PostsPagination = ({ posts, savePosts }) => {
+const PostsPagination = ({ posts }) => {
+  const history = useHistory()
   const { pagination, PREV, NEXT, DOTS } = usePagination(posts)
 
-  if (!posts.data.length) {
-    return null
+  useEffect(() => {
+    if (!posts.data.length) {
+      return null
+    }
+  }, [posts.data.length])
+
+  const switchToSpecificPage = page => {
+    if (!history.location.search && page === 1) return
+    if (page !== DOTS) history.push(`/?page=${page}`)
   }
 
-  const handleClick = page => {
-    if (page !== DOTS) {
-      savePosts(page)
-    }
+  const switchToPrevPage = () => {
+    if (posts.pageNumber > 1) history.push(`/?page=${posts.pageNumber - 1}`)
   }
 
-  const handleMoveLeft = () => {
-    if (posts.pageNumber > 1) {
-      savePosts(posts.pageNumber - 1)
-    }
-  }
-
-  const handleMoveRight = () => {
-    if (posts.pageNumber < posts.totalPages) {
-      savePosts(posts.pageNumber + 1)
-    }
+  const switchToNextPage = () => {
+    if (posts.pageNumber < posts.totalPages)
+      history.push(`/?page=${posts.pageNumber + 1}`)
   }
 
   return (
@@ -36,7 +38,7 @@ const PostsPagination = ({ posts, savePosts }) => {
               page={page}
               key={index}
               isActive={posts.pageNumber === page}
-              changePage={handleMoveLeft}
+              changePage={switchToPrevPage}
             />
           )
         if (page === NEXT)
@@ -45,7 +47,7 @@ const PostsPagination = ({ posts, savePosts }) => {
               page={page}
               key={index}
               isActive={posts.pageNumber === page}
-              changePage={handleMoveRight}
+              changePage={switchToNextPage}
             />
           )
 
@@ -54,7 +56,7 @@ const PostsPagination = ({ posts, savePosts }) => {
             page={page}
             key={index}
             isActive={posts.pageNumber === page}
-            changePage={handleClick}
+            changePage={switchToSpecificPage}
           />
         )
       })}

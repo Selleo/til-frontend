@@ -1,21 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import { isEmpty } from 'lodash'
-import PostsList from './PostsList'
-import { selectPostsWithStatus } from '../utils/selectors/selectPosts'
-import PostSkeletonTemplate from './PostSkeletonTemplate'
-import PostsPagination from './PostsPagination'
+
 import { saveAllPosts } from '../store/actions/actions'
+import { selectPostsWithStatus } from '../utils/selectors/selectPosts'
 import { statusType } from '../utils/constants'
+
 import NothingFound from './NothingFound'
+import PostsList from './PostsList'
+import PostsPagination from './PostsPagination'
+import PostSkeletonTemplate from './PostSkeletonTemplate'
 
 const AllPosts = () => {
-  const [posts, status] = useSelector(selectPostsWithStatus)
+  const { search } = useLocation()
   const dispatch = useDispatch()
+  let searchParams = new URLSearchParams(search).get('page')
+  const [posts, status] = useSelector(selectPostsWithStatus)
 
-  const savePosts = (page = null) => {
-    dispatch(saveAllPosts(page))
-  }
+  useEffect(() => {
+    dispatch(saveAllPosts(searchParams))
+  }, [dispatch, searchParams])
 
   if (!status || status === statusType.loading) {
     return <PostSkeletonTemplate />
@@ -28,7 +34,7 @@ const AllPosts = () => {
   return (
     <>
       <PostsList posts={posts.data} />
-      <PostsPagination posts={posts} savePosts={savePosts} />
+      <PostsPagination posts={posts} />
     </>
   )
 }
