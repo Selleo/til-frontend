@@ -13,6 +13,12 @@ const PostsPagination = ({ posts }) => {
     if (!posts.data.length) {
       return null
     }
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    })
   }, [posts.data.length])
 
   const switchToSpecificPage = page => {
