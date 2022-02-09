@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import { usePagination } from '../utils/customHooks/usePagination'
 import PaginationElement from './PaginationElement'
 
 const PostsPagination = ({ posts }) => {
   const history = useHistory()
+  const { pathname } = useLocation()
   const { pagination, PREV, NEXT, DOTS } = usePagination(posts)
 
   useEffect(() => {
@@ -23,16 +24,24 @@ const PostsPagination = ({ posts }) => {
 
   const switchToSpecificPage = page => {
     if (!history.location.search && page === 1) return
-    if (page !== DOTS) history.push(`/?page=${page}`)
+    if (page !== DOTS)
+      pathname.includes('category')
+        ? history.push(`${pathname}?page=${page}`)
+        : history.push(`/?page=${page}`)
   }
 
   const switchToPrevPage = () => {
-    if (posts.pageNumber > 1) history.push(`/?page=${posts.pageNumber - 1}`)
+    if (posts.pageNumber > 1)
+      pathname.includes('category')
+        ? history.push(`${pathname}?page=${posts.pageNumber - 1}`)
+        : history.push(`/?page=${posts.pageNumber - 1}`)
   }
 
   const switchToNextPage = () => {
     if (posts.pageNumber < posts.totalPages)
-      history.push(`/?page=${posts.pageNumber + 1}`)
+      pathname.includes('category')
+        ? history.push(`${pathname}?page=${posts.pageNumber + 1}`)
+        : history.push(`/?page=${posts.pageNumber + 1}`)
   }
 
   return (

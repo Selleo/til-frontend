@@ -55,7 +55,7 @@ const Categories = () => {
   }
   const navItemClasses = name =>
     classNames('categories__single-category', {
-      '-active': isActiveNav(name),
+      '-active': isActiveNav(name) || pathname.includes(name),
       '-color-only-stroke':
         name.toLowerCase().includes('chrome') ||
         name.toLowerCase().includes('general'),
