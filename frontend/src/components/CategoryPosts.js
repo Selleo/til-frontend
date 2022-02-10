@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 import PostsList from './PostsList'
 import { saveCategoryPosts } from '../store/actions/actions'
@@ -11,20 +11,22 @@ import { statusType } from '../utils/constants'
 import NothingFound from './NothingFound'
 
 const CategoryPosts = () => {
+  const { search } = useLocation()
+  let searchParams = new URLSearchParams(search).get('page')
   const [posts, status] = useSelector(selectCategoryPostsWithStatus)
   const categories = useSelector(state => state.categories)
 
   const dispatch = useDispatch()
   const { id } = useParams()
 
-  const savePosts = (page = null) => {
+  const savePosts = useCallback(() => {
     const foundCategory = categories.find(({ name }) => name === id)
-    foundCategory && dispatch(saveCategoryPosts(foundCategory.id, page))
-  }
+    foundCategory && dispatch(saveCategoryPosts(foundCategory.id, searchParams))
+  }, [searchParams, categories, dispatch, id])
 
   useEffect(() => {
     savePosts()
-  }, [categories, dispatch, id])
+  }, [savePosts])
 
   if (!status || status === statusType.loading) {
     return <PostSkeletonTemplate />
