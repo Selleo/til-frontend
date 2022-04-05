@@ -23,9 +23,10 @@ const Search = () => {
   const searchQuery = useSearchQuery()
   const history = useHistory()
 
-  const debouncedHistoryPush = useMemo(() => debounce(history.push, 400), [
-    history,
-  ])
+  const debouncedHistoryPush = useMemo(
+    () => debounce(history.push, 400),
+    [history]
+  )
 
   useEffect(() => {
     if (searchQuery) {
