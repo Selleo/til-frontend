@@ -2,16 +2,21 @@ import React from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { darcula } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
-class CodeBlock extends React.PureComponent {
-  render() {
-    const { language, value } = this.props
+function CodeBlock(props) {
+  const { children, className } = props
+  const match = /language-(\w+)/.exec(className || '')
 
-    return (
-      <SyntaxHighlighter style={darcula} language={language}>
-        {value}
-      </SyntaxHighlighter>
-    )
-  }
+  return match ? (
+    <SyntaxHighlighter
+      children={String(children).replace(/\n$/, '')}
+      style={darcula}
+      language={match[1]}
+      PreTag="div"
+      className={className}
+    />
+  ) : (
+    <code className={className}>{children}</code>
+  )
 }
 
 export default CodeBlock

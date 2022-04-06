@@ -70,7 +70,7 @@ const PostContent = ({ animationDelay, post, review, userMenu }) => {
           <span className="post__title">{title}</span>
         </div>
         <div className="post__body">
-          <Markdown source={post.body} />
+          <Markdown children={post.body} />
         </div>
         <div className="post__footer">
           <PostCategories categories={post.categories} />
