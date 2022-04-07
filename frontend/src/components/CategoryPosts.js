@@ -8,7 +8,8 @@ import { selectCategoryPostsWithStatus } from '../utils/selectors/selectCategory
 import PostSkeletonTemplate from './PostSkeletonTemplate'
 import PostsPagination from './PostsPagination'
 import { statusType } from '../utils/constants'
-import NothingFound from './NothingFound'
+import EmptyPage from './EmptyPage'
+import AddPostButton from '../authenticated/AddPostButton'
 
 const CategoryPosts = () => {
   const { search } = useLocation()
@@ -33,7 +34,16 @@ const CategoryPosts = () => {
   }
 
   if (isEmpty(posts?.data)) {
-    return <NothingFound />
+    return (
+      <EmptyPage
+        heading={'No posts yet.'}
+        firstLine={'Looksa little bit empty here!'}
+        secondLine={
+          'Go to the other categories ro create new one to fill this one.'
+        }
+        ctaComponent={<AddPostButton />}
+      />
+    )
   }
 
   return (

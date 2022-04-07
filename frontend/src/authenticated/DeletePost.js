@@ -28,14 +28,14 @@ const DeletePost = ({ postId }) => {
     )
 
     if (isDeleted.ok) {
-      history.push('/')
+      history.push('/profile')
       dispatch(saveAllPosts())
       dispatch(saveCurrentUser())
       postSuccessToast('Post deleted successfully.')
     }
 
-    history.push('/')
-    history.go()
+    history.push('/profile')
+    // history.go() // TODO: WHY??
   }
 
   return (

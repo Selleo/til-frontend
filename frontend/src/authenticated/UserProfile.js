@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 import useUser from '../utils/customHooks/useUser'
 
 import Post from '../components/Post'
+import { isEmpty } from 'lodash'
+import EmptyPage from '../components/EmptyPage'
+import AddPostButton from './AddPostButton'
 
 const UserProfile = () => {
   const [userPosts, setUserPosts] = useState(null)
@@ -16,7 +19,13 @@ const UserProfile = () => {
 
   return (
     <>
-      {userPosts ? (
+      {isEmpty(userPosts) ? (
+        <EmptyPage
+          ctaComponent={<AddPostButton />}
+          firstLine={'Looks a little bit empty here!'}
+          heading={'No posts yet.'}
+        />
+      ) : (
         <>
           <h1 className="post__my-posts-header">My posts</h1>
           <div className="posts">
@@ -25,8 +34,6 @@ const UserProfile = () => {
             ))}
           </div>
         </>
-      ) : (
-        <p>Loading...</p>
       )}
     </>
   )
