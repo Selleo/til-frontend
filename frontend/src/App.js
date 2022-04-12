@@ -21,6 +21,7 @@ import SideNav from './components/SideNav'
 import 'react-tippy/dist/tippy.css'
 import './devicon.css'
 import './assets/stylesheets/application.sass'
+import { Helmet } from 'react-helmet'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -33,23 +34,28 @@ const App = () => {
   }, [dispatch])
 
   return (
-    <Router>
-      <div className="app-main" data-testid="app-main">
-        <ScrollToTop />
-        <SideNav />
-        <div className="main-content">
-          <AppHeader />
-          <div className="main-content-area">
-            <MainRoutes />
-            {currentUser && <AuthenticatedApp />}
+    <>
+      <Helmet>
+        <title>TIL TEST</title>
+      </Helmet>
+      <Router>
+        <div className="app-main" data-testid="app-main">
+          <ScrollToTop />
+          <SideNav />
+          <div className="main-content">
+            <AppHeader />
+            <div className="main-content-area">
+              <MainRoutes />
+              {currentUser && <AuthenticatedApp />}
+            </div>
+            <Footer />
           </div>
-          <Footer />
+          <Route path="/auth">
+            <AuthHandler />
+          </Route>
         </div>
-        <Route path="/auth">
-          <AuthHandler />
-        </Route>
-      </div>
-    </Router>
+      </Router>
+    </>
   )
 }
 
