@@ -36,7 +36,6 @@ const renderTestComponent = (component, { route = '/' } = {}) => {
 
 describe('DisplayPost', () => {
   it('sets adds the post slug in url when entering post details without providing slug', async () => {
-
     const { history } = renderTestComponent(<DisplayPost />, {
       route: `/posts/1`,
     })

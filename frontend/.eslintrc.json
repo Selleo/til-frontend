@@ -10,7 +10,6 @@
     "react",
     "react-hooks"
   ],
-  "parser": "babel-eslint",
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -18,7 +17,10 @@
   ],
   "parserOptions": {
     "sourceType": "module",
-    "ecmaVersion": 2018
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest"
   },
   "settings": {
     "react": {
@@ -33,6 +35,7 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/prop-types": 0,
+    "react/no-children-prop": "off",
     "react/sort-prop-types": [
       2,
       {

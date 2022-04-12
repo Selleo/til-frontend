@@ -8,7 +8,6 @@ import { timeFormat } from '../utils'
 const PostPreview = props => {
   const user = useUser()
   const { body, title, categories } = props
-
   return (
     <article className="post -preview">
       <div className="post__header">
@@ -24,7 +23,7 @@ const PostPreview = props => {
       </div>
       <span className="post__title">{title || 'Your title'}</span>
       <div className="post__body -preview">
-        <Markdown source={body || 'Your content'} />
+        <Markdown children={body || 'Your content'} />
       </div>
       <div className="post__footer">
         <PostCategories categories={categories} preview isHidden />

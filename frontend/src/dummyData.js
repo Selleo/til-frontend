@@ -26,7 +26,8 @@ export const allUsers = [
   {
     email: 'maciekPlacek@selleo.com',
     firstName: null,
-    image: 'https://lh5.googleusercontent.com/-4na6W1JJVa0/AAAAAAAAAAIdsdfjdkjdfi/photo.jpg',
+    image:
+      'https://lh5.googleusercontent.com/-4na6W1JJVa0/AAAAAAAAAAIdsdfjdkjdfi/photo.jpg',
     lastName: null,
     uuid: '36528600-e215-49bf-8d5b-dadlfj33343443',
   },

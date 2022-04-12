@@ -7,19 +7,17 @@ import { useLocation } from 'react-router-dom'
 import CodeBlock from './CodeBlock'
 import TextBlock from './TextBlock'
 
-const Markdown = ({ source }) => {
+const Markdown = ({ children }) => {
   const searchQuery = useSelector(state => state.searchQuery)
   const { pathname } = useLocation()
 
   const renderers = {
-    code: CodeBlock,
+    code: props => <CodeBlock {...props} />,
+    ...(searchQuery &&
+      pathname === '/search' && { p: () => <TextBlock value={children} /> }),
   }
 
-  if (searchQuery && pathname === '/search') {
-    renderers.text = TextBlock
-  }
-
-  return <ReactMarkdown source={source} renderers={renderers} />
+  return <ReactMarkdown children={children} components={renderers} />
 }
 
 export default Markdown
