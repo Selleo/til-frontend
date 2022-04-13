@@ -11,6 +11,8 @@ const initialState = {
   searchedPosts: null,
   searchQuery: '',
   statuses: {},
+  pageTitle: null,
+  pageDescription: null,
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -113,6 +115,18 @@ const rootReducer = (state = initialState, action) => {
           ...state.statuses,
           authorPostsStatus: statusType.fetched,
         },
+      }
+
+    case actionTypes.SET_PAGE_TITLE:
+      return {
+        ...state,
+        pageTitle: action.payload,
+      }
+
+    case actionTypes.SET_PAGE_DESCRIPTION:
+      return {
+        ...state,
+        pageDescription: action.payload,
       }
 
     default:

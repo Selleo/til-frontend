@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {
   saveAllCategories,
@@ -21,6 +21,7 @@ import SideNav from './components/SideNav'
 import 'react-tippy/dist/tippy.css'
 import './devicon.css'
 import './assets/stylesheets/application.sass'
+import { Helmet } from 'react-helmet'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -32,24 +33,43 @@ const App = () => {
     dispatch(saveAllUsers())
   }, [dispatch])
 
+  const pageTitle = useSelector(state => state.pageTitle)
+  const pageDescription = useSelector(state => state.pageDescription)
+  const title = pageTitle ? `Selleo | ${pageTitle}` : 'Selleo | Today I Learned'
+  const description = pageDescription || 'Today I Learned | Selleo Portal'
+
   return (
-    <Router>
-      <div className="app-main" data-testid="app-main">
-        <ScrollToTop />
-        <SideNav />
-        <div className="main-content">
-          <AppHeader />
-          <div className="main-content-area">
-            <MainRoutes />
-            {currentUser && <AuthenticatedApp />}
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta
+          property="og:image"
+          content={`../public/assets/images/logo.svg`}
+        />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="400" />
+      </Helmet>
+      <Router>
+        <div className="app-main" data-testid="app-main">
+          <ScrollToTop />
+          <SideNav />
+          <div className="main-content">
+            <AppHeader />
+            <div className="main-content-area">
+              <MainRoutes />
+              {currentUser && <AuthenticatedApp />}
+            </div>
+            <Footer />
           </div>
-          <Footer />
+          <Route path="/auth">
+            <AuthHandler />
+          </Route>
         </div>
-        <Route path="/auth">
-          <AuthHandler />
-        </Route>
-      </div>
-    </Router>
+      </Router>
+    </>
   )
 }
 

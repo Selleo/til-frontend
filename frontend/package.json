@@ -14,6 +14,7 @@
     "node-sass": "7.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-helmet": "6.1.0",
     "react-highlight-words": "0.17.0",
     "react-icons": "3.11.0",
     "react-markdown": "8.0.2",
@@ -37,6 +38,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && cp _redirects build/_redirects",
+    "postbuild": "react-snap",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
@@ -61,9 +63,9 @@
   },
   "proxy": "http://localhost:4000",
   "devDependencies": {
-    "@babel/core": "^7.17.8",
-    "@babel/eslint-parser": "^7.17.0",
-    "eslint": "^8.12.0",
+    "@babel/core": "7.17.8",
+    "@babel/eslint-parser": "7.17.0",
+    "eslint": "8.12.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "7.29.4",
@@ -74,6 +76,7 @@
     "lint-staged": "12.3.7",
     "msw": "0.39.2",
     "prettier": "2.6.2",
+    "react-snap": "1.23.0",
     "redux-mock-store": "1.5.4"
   },
   "husky": {

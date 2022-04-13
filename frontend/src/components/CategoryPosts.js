@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useLocation } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 import PostsList from './PostsList'
-import { saveCategoryPosts } from '../store/actions/actions'
+import { saveCategoryPosts, setPageTitle } from '../store/actions/actions'
 import { selectCategoryPostsWithStatus } from '../utils/selectors/selectCategoryPosts'
 import PostSkeletonTemplate from './PostSkeletonTemplate'
 import PostsPagination from './PostsPagination'
@@ -23,11 +23,18 @@ const CategoryPosts = () => {
   const savePosts = useCallback(() => {
     const foundCategory = categories.find(({ name }) => name === id)
     foundCategory && dispatch(saveCategoryPosts(foundCategory.id, searchParams))
+    dispatch(setPageTitle(foundCategory?.name))
   }, [searchParams, categories, dispatch, id])
 
   useEffect(() => {
     savePosts()
   }, [savePosts])
+
+  useEffect(() => {
+    return () => {
+      dispatch(setPageTitle(null))
+    }
+  }, [])
 
   if (!status || status === statusType.loading) {
     return <PostSkeletonTemplate />
