@@ -36,11 +36,9 @@ const CategoryPosts = () => {
   if (isEmpty(posts?.data)) {
     return (
       <EmptyPage
-        heading={'No posts yet.'}
-        firstLine={'Looksa little bit empty here!'}
-        secondLine={
-          'Go to the other categories ro create new one to fill this one.'
-        }
+        heading="No posts yet."
+        firstLine="Looksa little bit empty here!"
+        secondLine="Go to the other categories ro create new one to fill this one."
         ctaComponent={<AddPostButton />}
       />
     )

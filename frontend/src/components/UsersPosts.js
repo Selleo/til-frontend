@@ -30,18 +30,14 @@ const UserPosts = () => {
   )
     return <PostSkeletonTemplate />
 
+  if (isEmpty(userPosts)) return <EmptyPage />
+
   return (
     <>
-      {isEmpty(userPosts) ? (
-        <EmptyPage />
-      ) : (
-        <>
-          <h3 className="users-posts__title">{`Posts created by ${userPosts[0].author.firstName} ${userPosts[0].author.lastName}`}</h3>
-          {userPosts.map(post => (
-            <Post key={post.id} post={post} />
-          ))}
-        </>
-      )}
+      <h3 className="users-posts__title">{`Posts created by ${userPosts[0].author.firstName} ${userPosts[0].author.lastName}`}</h3>
+      {userPosts.map(post => (
+        <Post key={post.id} post={post} />
+      ))}
     </>
   )
 }

@@ -35,7 +35,6 @@ const DeletePost = ({ postId }) => {
     }
 
     history.push('/profile')
-    history.go()
   }
 
   return (
