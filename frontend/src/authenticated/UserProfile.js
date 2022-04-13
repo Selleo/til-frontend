@@ -29,8 +29,8 @@ const UserProfile = () => {
       {isEmpty(userPosts) ? (
         <EmptyPage
           ctaComponent={<AddPostButton />}
-          firstLine={'Looks a little bit empty here!'}
-          heading={'No posts yet.'}
+          firstLine="Looks a little bit empty here!"
+          heading="No posts yet."
         />
       ) : (
         <>
