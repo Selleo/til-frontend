@@ -2,6 +2,7 @@ import * as actionTypes from '../actionTypes'
 import { statusType } from '../../utils/constants'
 
 const initialState = {
+  authorPostsStatus: '',
   categories: [],
   categoryPosts: null,
   currentUser: null,
@@ -102,6 +103,15 @@ const rootReducer = (state = initialState, action) => {
         statuses: {
           ...state.statuses,
           [action.payload.key]: action.payload.value,
+        },
+      }
+
+    case actionTypes.GET_AUTHOR_POSTS_STATUS:
+      return {
+        ...state,
+        statuses: {
+          ...state.statuses,
+          authorPostsStatus: statusType.fetched,
         },
       }
 

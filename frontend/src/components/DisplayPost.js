@@ -4,6 +4,7 @@ import { fetchSinglePost } from '../utils'
 import Post from '../components/Post'
 import PostBanner from './PostBanner'
 import useParamsWithoutSlug from '../utils/customHooks/useParamsWithoutSlug'
+import PostSkeletonTemplate from './PostSkeletonTemplate'
 
 const { REACT_APP_API_URL: API_URL } = process.env
 
@@ -25,7 +26,7 @@ const DisplayPost = () => {
   }, [id])
 
   if (!post) {
-    return <p>...loading...</p>
+    return <PostSkeletonTemplate />
   }
 
   if (post.errors) {

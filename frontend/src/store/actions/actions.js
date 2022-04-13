@@ -107,6 +107,19 @@ export const saveAllPosts =
     dispatch(getPosts(allPosts))
   }
 
+const getAuthorPosts = posts => ({
+  type: actionTypes.GET_AUTHOR_POSTS_STATUS,
+  posts,
+})
+
+export const getAuthorPostsStatus = username => async dispatch => {
+  dispatch(setStatus({ key: 'authorPostsStatus', value: statusType.loading }))
+  const authorPosts = await fetchData(
+    `${API_URL}/api/authors/${username}`
+  ).then(response => response.posts)
+  dispatch(getAuthorPosts(authorPosts))
+}
+
 // SEARCHED POSTS
 
 const getSerchedPosts = searchedPosts => ({
