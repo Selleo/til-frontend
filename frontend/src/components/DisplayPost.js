@@ -5,7 +5,7 @@ import Post from '../components/Post'
 import PostBanner from './PostBanner'
 import useParamsWithoutSlug from '../utils/customHooks/useParamsWithoutSlug'
 import { useDispatch } from 'react-redux'
-import { setPageTitle } from '../store/actions/actions'
+import { setPageDescription, setPageTitle } from '../store/actions/actions'
 import PostSkeletonTemplate from './PostSkeletonTemplate'
 
 const { REACT_APP_API_URL: API_URL } = process.env
@@ -22,6 +22,7 @@ const DisplayPost = () => {
       setPost(post)
 
       dispatch(setPageTitle(post?.title))
+      dispatch(setPageDescription(post?.body))
 
       if (!slug || slug !== post.slug) {
         history.replace(`/posts/${id}-${post.slug}`)
@@ -33,6 +34,7 @@ const DisplayPost = () => {
   useEffect(() => {
     return () => {
       dispatch(setPageTitle(null))
+      dispatch(setPageDescription(null))
     }
   }, [])
 

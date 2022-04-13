@@ -34,25 +34,20 @@ const App = () => {
   }, [dispatch])
 
   const pageTitle = useSelector(state => state.pageTitle)
-  const title = pageTitle ? `Selleo | ${pageTitle}` : 'Selleo - Today I Learned'
-  console.log(pageTitle)
+  const pageDescription = useSelector(state => state.pageDescription)
+  const title = pageTitle ? `Selleo | ${pageTitle}` : 'Selleo | Today I Learned'
+  const description = pageDescription || 'Today I Learned | Selleo Portal'
 
   return (
     <>
       <Helmet>
         <title>{title}</title>
-        <meta name="description" content="Today I Learned | Selleo Portal" />
-        <meta
-          property="og:title"
-          content={`Selleo - Today I Learned / ${title}`}
-        />
-        <meta
-          property="og:description"
-          content="Today I Learned | Selleo Portal"
-        />
+        <meta name="description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
         <meta
           property="og:image"
-          content={`${process.env.PUBLIC_URL}/assets/images/logo.svg`}
+          content={`../public/assets/images/logo.svg`}
         />
         <meta property="og:image:width" content="400" />
         <meta property="og:image:height" content="400" />

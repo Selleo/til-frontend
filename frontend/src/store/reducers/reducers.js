@@ -12,7 +12,7 @@ const initialState = {
   searchQuery: '',
   statuses: {},
   pageTitle: null,
-  pageDescription: {},
+  pageDescription: null,
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -121,6 +121,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         pageTitle: action.payload,
+      }
+
+    case actionTypes.SET_PAGE_DESCRIPTION:
+      return {
+        ...state,
+        pageDescription: action.payload,
       }
 
     default:

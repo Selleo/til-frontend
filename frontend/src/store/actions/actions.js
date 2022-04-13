@@ -145,7 +145,13 @@ const setStatus = ({ key, value }) => ({
   payload: { key, value },
 })
 
+// SEO
 export const setPageTitle = pageTitle => ({
   type: actionTypes.SET_PAGE_TITLE,
   payload: pageTitle,
+})
+
+export const setPageDescription = pageDescription => ({
+  type: actionTypes.SET_PAGE_DESCRIPTION,
+  payload: pageDescription,
 })
