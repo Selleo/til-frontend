@@ -23,7 +23,7 @@ const CategoryPosts = () => {
   const savePosts = useCallback(() => {
     const foundCategory = categories.find(({ name }) => name === id)
     foundCategory && dispatch(saveCategoryPosts(foundCategory.id, searchParams))
-    dispatch(setPageTitle(foundCategory.name))
+    dispatch(setPageTitle(foundCategory?.name))
   }, [searchParams, categories, dispatch, id])
 
   useEffect(() => {
