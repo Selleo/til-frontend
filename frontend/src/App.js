@@ -35,6 +35,7 @@ const App = () => {
 
   const pageTitle = useSelector(state => state.pageTitle)
   const title = pageTitle ? `Selleo | ${pageTitle}` : 'Selleo - Today I Learned'
+  console.log(pageTitle)
 
   return (
     <>

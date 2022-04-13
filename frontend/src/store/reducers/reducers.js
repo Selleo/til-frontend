@@ -11,7 +11,7 @@ const initialState = {
   searchedPosts: null,
   searchQuery: '',
   statuses: {},
-  pageTitle: {},
+  pageTitle: null,
   pageDescription: {},
 }
 
