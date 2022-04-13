@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {
   saveAllCategories,
@@ -33,10 +33,28 @@ const App = () => {
     dispatch(saveAllUsers())
   }, [dispatch])
 
+  const pageTitle = useSelector(state => state.pageTitle)
+  const title = pageTitle ? `Selleo | ${pageTitle}` : 'Selleo - Today I Learned'
+
   return (
     <>
       <Helmet>
-        <title>TIL TEST</title>
+        <title>{title}</title>
+        <meta name="description" content="Today I Learned | Selleo Portal" />
+        <meta
+          property="og:title"
+          content={`Selleo - Today I Learned / ${title}`}
+        />
+        <meta
+          property="og:description"
+          content="Today I Learned | Selleo Portal"
+        />
+        <meta
+          property="og:image"
+          content={`${process.env.PUBLIC_URL}/assets/images/logo.svg`}
+        />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="400" />
       </Helmet>
       <Router>
         <div className="app-main" data-testid="app-main">

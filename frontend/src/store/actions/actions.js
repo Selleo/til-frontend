@@ -144,3 +144,8 @@ const setStatus = ({ key, value }) => ({
   type: actionTypes.UPDATE_STATUS,
   payload: { key, value },
 })
+
+export const setPageTitle = pageTitle => ({
+  type: actionTypes.SET_PAGE_TITLE,
+  payload: pageTitle,
+})
