@@ -24,24 +24,24 @@ const UserProfile = () => {
   if (!statuses.currentUser || statuses.currentUser === statusType.loading)
     return <PostSkeletonTemplate />
 
+  if (isEmpty(userPosts)) {
+    return (
+      <EmptyPage
+        ctaComponent={<AddPostButton />}
+        firstLine="Looks a little bit empty here!"
+        heading="No posts yet."
+      />
+    )
+  }
+
   return (
     <>
-      {isEmpty(userPosts) ? (
-        <EmptyPage
-          ctaComponent={<AddPostButton />}
-          firstLine="Looks a little bit empty here!"
-          heading="No posts yet."
-        />
-      ) : (
-        <>
-          <h1 className="post__my-posts-header">My posts</h1>
-          <div className="posts">
-            {userPosts.map(post => (
-              <Post key={post.id} post={post} userMenu userImage={user.image} />
-            ))}
-          </div>
-        </>
-      )}
+      <h1 className="post__my-posts-header">My posts</h1>
+      <div className="posts">
+        {userPosts.map(post => (
+          <Post key={post.id} post={post} userMenu userImage={user.image} />
+        ))}
+      </div>
     </>
   )
 }
