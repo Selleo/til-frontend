@@ -42,9 +42,7 @@ describe('DisplayPost', () => {
 
     expect(history.location.pathname).toMatch('posts/1')
 
-    const loading = screen.getByText('...loading...')
-
-    expect(loading).toBeInTheDocument()
+    expect(screen.getAllByTestId('post-skeleton')).toHaveLength(2)
 
     expect(await screen.findByText('Post Title')).toBeInTheDocument()
 
@@ -58,9 +56,7 @@ describe('DisplayPost', () => {
 
     expect(history.location.pathname).toMatch('posts/1')
 
-    const loading = screen.getByText('...loading...')
-
-    expect(loading).toBeInTheDocument()
+    expect(screen.getAllByTestId('post-skeleton')).toHaveLength(2)
 
     expect(await screen.findByText('Post Title')).toBeInTheDocument()
 

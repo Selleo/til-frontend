@@ -2,7 +2,7 @@ import React from 'react'
 
 const PostSkeleton = () => {
   return (
-    <article className="post">
+    <article className="post" data-testid="post-skeleton">
       <div className="post__header">
         <div className="post__link">
           <div className="post__details">
