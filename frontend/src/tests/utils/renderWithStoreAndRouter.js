@@ -1,29 +1,31 @@
-import configureStore from 'redux-mock-store'
 import { createMemoryHistory } from 'history'
 import { render } from '@testing-library/react'
 import { Provider } from 'react-redux'
-import { Route, Router, Switch } from 'react-router-dom'
+import { Router, Route } from 'react-router-dom'
 import React from 'react'
+import rootReducer from '../../store/reducers/reducers'
+import { applyMiddleware, createStore } from 'redux'
+import thunk from 'redux-thunk'
 
-const renderWithStoreAndRouter = (
-  component,
-  history = createMemoryHistory({
-    initialEntries: ['/'],
-  })
+export const renderWithStoreAndRouter = (
+  ui,
+  { actions = [], route = '/' } = {}
 ) => {
-  const middlewares = []
-  const mockStore = configureStore(middlewares)
-  const store = mockStore({})
-
-  return render(
-    <Provider store={store}>
-      <Router history={history}>
-        <Switch>
-          <Route path={history.location.pathname}>{component}</Route>
-        </Switch>
-      </Router>
-    </Provider>
+  const store = createStore(rootReducer, applyMiddleware(thunk))
+  actions.forEach(action => store.dispatch(action))
+  const history = createMemoryHistory({
+    initialEntries: [route],
+  })
+  const renderResult = render(
+    <Router history={history}>
+      <Provider store={store}>{ui}</Provider>
+    </Router>
   )
+  return {
+    ...renderResult,
+    store,
+    history,
+  }
 }
 
 export default renderWithStoreAndRouter

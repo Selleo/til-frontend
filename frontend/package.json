@@ -72,6 +72,7 @@
     "eslint-plugin-react-hooks": "4.4.0",
     "husky": "7.0.4",
     "jest-date-mock": "1.0.8",
+    "jest-mock-fetch": "2.0.5",
     "json-server": "0.17.0",
     "lint-staged": "12.3.7",
     "msw": "0.39.2",
