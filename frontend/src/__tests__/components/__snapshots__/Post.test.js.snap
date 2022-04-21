@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Post should render PostContent 1`] = `
+<div>
+  <article
+    class="post post-animation-appear post-animation-appear-active"
+    style="transition-delay: undefinedms;"
+  >
+    <div
+      class="post__header"
+    >
+      <div
+        class="post__details"
+      >
+        <a
+          class="post__link user-avatar"
+          href="/authors/Tenteges"
+        >
+          <div
+            class="user__image -background-light"
+            data-testid="avatar-without-image"
+          >
+            <svg
+              class="user__icon"
+            >
+              avatar.svg
+            </svg>
+          </div>
+        </a>
+        <div
+          class="post__text-details"
+        >
+          <a
+            class="post__link"
+            href="/authors/Tenteges"
+          >
+            <div
+              class="post__owner"
+            >
+              <span
+                class="animation"
+              >
+                 
+              </span>
+            </div>
+          </a>
+          <div
+            class="post__date"
+          >
+             21 Apr 09:39
+          </div>
+          <div
+            class="post__is-public"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <span
+        class="post__title"
+      />
+    </div>
+    <div
+      class="post__body"
+    />
+    <div
+      class="post__footer"
+    />
+  </article>
+</div>
+`;
