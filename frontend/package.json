@@ -40,6 +40,7 @@
     "build": "react-scripts build && cp _redirects build/_redirects",
     "postbuild": "react-snap",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "lint": "eslint . --ext .js,.jsx",

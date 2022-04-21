@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CodeBlock should render SyntaxHighlighter 1`] = `
+<div>
+  <div
+    class="language-ts"
+    style="color: rgb(169, 183, 198); font-family: Consolas, Monaco, 'Andale Mono', monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 4; hyphens: none; padding: 1em; margin: .5em 0px; overflow: auto; background: rgb(43, 43, 43);"
+  >
+    <code
+      class="language-ts"
+      style="color: rgb(169, 183, 198); font-family: Consolas, Monaco, 'Andale Mono', monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 4; hyphens: none;"
+    >
+      <span
+        class="token console class-name"
+      >
+        console
+      </span>
+      <span
+        class="token"
+        style="color: rgb(169, 183, 198);"
+      >
+        .
+      </span>
+      <span
+        class="token method property-access"
+        style="color: rgb(255, 198, 109);"
+      >
+        log
+      </span>
+      <span
+        class="token"
+        style="color: rgb(169, 183, 198);"
+      >
+        (
+      </span>
+      <span
+        class="token"
+        style="color: rgb(106, 135, 89);"
+      >
+        "test"
+      </span>
+      <span
+        class="token"
+        style="color: rgb(169, 183, 198);"
+      >
+        )
+      </span>
+    </code>
+  </div>
+</div>
+`;
