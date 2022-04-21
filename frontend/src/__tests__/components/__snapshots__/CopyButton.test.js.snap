@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CopyButton should not render Share component 1`] = `
+<button
+  class="post__share-button"
+>
+  <span
+    class="post__share-text"
+  />
+</button>
+`;
