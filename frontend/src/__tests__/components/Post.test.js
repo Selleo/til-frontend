@@ -1,7 +1,7 @@
 import React from 'react'
 import Post from '../../components/Post'
 import renderWithStoreAndRouter from '../../tests/utils/renderWithStoreAndRouter'
-import { prettyDOM, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 describe('Post', () => {
   const postMock = {
