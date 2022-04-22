@@ -40,6 +40,7 @@
     "build": "react-scripts build && cp _redirects build/_redirects",
     "postbuild": "react-snap",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage --watchAll=false ",
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "lint": "eslint . --ext .js,.jsx",
@@ -90,6 +91,22 @@
     "*.{js,jsx}": [
       "prettier --config .prettierrc --write",
       "eslint --fix"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{js,jsx,ts,tsx}",
+      "!**/*.d.ts",
+      "!**/node_modules/**",
+      "!*.config.js",
+      "!.eslintrc.js",
+      "!**coverage/**",
+      "!**lib/**",
+      "!**/styles/**",
+      "!**/tests/**",
+      "!**/store/*.js",
+      "!**/nonAuthenticated/**",
+      "!**/src/*.js"
     ]
   }
 }

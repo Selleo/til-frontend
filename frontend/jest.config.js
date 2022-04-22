@@ -1,5 +1,6 @@
 // jest.config.js
 module.exports = {
+  resetMocks: false,
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
     '!**/*.d.ts',
