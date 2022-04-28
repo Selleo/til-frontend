@@ -7,8 +7,12 @@ import rootReducer from '../../store/reducers/reducers'
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 
-const renderWithStoreAndRouter = (ui, { actions = [], route = '/' } = {}) => {
-  const store = createStore(rootReducer, applyMiddleware(thunk))
+const renderWithStoreAndRouter = (
+  ui,
+  { actions = [], route = '/', initialState } = {}
+) => {
+  const store = createStore(rootReducer, initialState, applyMiddleware(thunk))
+
   actions.forEach(action => store.dispatch(action))
   const history = createMemoryHistory({
     initialEntries: [route],
