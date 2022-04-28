@@ -6,12 +6,7 @@ import {
   setPageDescription,
   setPageTitle,
 } from '../../store/actions/actions'
-import fetch from 'jest-mock-fetch'
 import { prettyDOM } from '@testing-library/react'
-
-afterEach(() => {
-  fetch.reset()
-})
 
 describe('UserPosts component', () => {
   xit('should render properly', () => {
