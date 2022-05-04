@@ -1,11 +1,17 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import PostContent from './PostContent'
 
-const Post = ({ post, userMenu, review, animationDelay }) =>
-  review ? (
+const Post = ({
+  post,
+  userMenu,
+  review,
+  animationDelay,
+  isClickable = false,
+}) =>
+  review || !isClickable ? (
     <PostContent
       animationDelay={animationDelay}
       post={post}
@@ -22,5 +28,13 @@ const Post = ({ post, userMenu, review, animationDelay }) =>
       />
     </Link>
   )
+
+Post.propTypes = {
+  animationDelay: PropTypes.number,
+  isClickable: PropTypes.bool,
+  post: PropTypes.object,
+  review: PropTypes.bool,
+  userMenu: PropTypes.object,
+}
 
 export default Post
