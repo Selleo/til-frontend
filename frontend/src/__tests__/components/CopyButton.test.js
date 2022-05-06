@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, prettyDOM, render, screen } from '@testing-library/react'
 import CopyButton from '../../components/CopyButton'
 
 describe('CopyButton', () => {
@@ -12,7 +12,7 @@ describe('CopyButton', () => {
 
   it('should not render Share component', () => {
     render(<CopyButton isInTooltip={true} />)
-    expect(screen.getByRole('button')).toMatchSnapshot()
+    expect(screen.queryByText('share.svg')).not.toBeInTheDocument()
   })
 
   it('should render with text', () => {

@@ -17,7 +17,7 @@ describe('PaginationComponent', () => {
     expect(screen.getByRole('button').getAttribute('class')).toContain('-dot')
   })
 
-  it('should call Fn after click', () => {
+  it('should call changePage after click', () => {
     const handleClickMock = jest.fn()
 
     render(<PaginationElement changePage={handleClickMock} />)

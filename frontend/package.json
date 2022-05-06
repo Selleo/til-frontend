@@ -43,7 +43,7 @@
     "test:coverage": "react-scripts test --coverage --watchAll=false ",
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "lint": "eslint . --ext .js,.jsx",
+    "lint": "eslint --ext .js --ext .jsx .",
     "lint-fix": "eslint . --ext .js,.jsx --fix",
     "prepare": "cd .. && husky install frontend/.husky"
   },

@@ -5,12 +5,10 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from '../../store/reducers/reducers'
-import { server } from '../../tests/test-server'
 
 const store = createStore(rootReducer, compose(applyMiddleware(thunk)))
 
 window.scrollTo = jest.fn()
-beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))
 
 describe('<App/>', () => {
   it('renders properly', () => {
