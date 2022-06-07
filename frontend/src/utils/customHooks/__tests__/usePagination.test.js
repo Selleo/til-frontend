@@ -1,4 +1,4 @@
-import { usePagination } from '../../utils/customHooks/usePagination'
+import { usePagination } from '../usePagination'
 
 describe('usePagination', () => {
   it('should generate array of pagination elements for first page', () => {

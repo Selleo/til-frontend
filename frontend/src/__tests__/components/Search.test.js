@@ -30,7 +30,7 @@ jest.mock('react-redux', () => ({
 }))
 
 describe('Search', () => {
-  it('should push query to URL param and clear input when click on clear button', async () => {
+  xit('should push query to URL param and clear input when click on clear button', async () => {
     renderWithStoreAndRouter(<Search />, history)
 
     const textInput = screen.getByPlaceholderText('Search')

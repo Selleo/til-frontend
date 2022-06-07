@@ -6,7 +6,10 @@ const Avatar = ({ imageUrl, background = 'dark' }) => {
   return imageUrl ? (
     <img src={imageUrl} className="user__image" alt="author-img" />
   ) : (
-    <div className={`user__image -background-${background}`}>
+    <div
+      className={`user__image -background-${background}`}
+      data-testid="avatar-without-image"
+    >
       <UserIcon className="user__icon" />
     </div>
   )

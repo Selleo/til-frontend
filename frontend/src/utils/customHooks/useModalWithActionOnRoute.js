@@ -11,8 +11,6 @@ export const useModalWithActionOnRoute = (paths, message) => {
     setIsModalOpen(!isModalOpen)
   }
 
-  console.log(isDisabled)
-
   const handleShowModal = (actionForModal, e) => {
     if (isDisabled) {
       e.preventDefault()

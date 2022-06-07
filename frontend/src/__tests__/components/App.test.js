@@ -8,6 +8,8 @@ import rootReducer from '../../store/reducers/reducers'
 
 const store = createStore(rootReducer, compose(applyMiddleware(thunk)))
 
+window.scrollTo = jest.fn()
+
 describe('<App/>', () => {
   it('renders properly', () => {
     const { getByTestId } = render(

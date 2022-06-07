@@ -9,6 +9,5 @@ export const approvePost = async url => {
       'Content-Type': 'application/json',
     },
   })
-
   return response.ok
 }

@@ -19,7 +19,6 @@ const UserPosts = () => {
   const dispatch = useDispatch()
   const user = useUser()
   const statuses = useSelector(state => state.statuses)
-
   const pageHeader = `Posts created by ${userPosts[0]?.author.firstName} ${userPosts[0]?.author.lastName}`
 
   useEffect(() => {
@@ -34,6 +33,7 @@ const UserPosts = () => {
   useEffect(() => {
     return () => {
       dispatch(setPageTitle(null))
+      dispatch(setPageDescription(null))
     }
   }, [])
 
