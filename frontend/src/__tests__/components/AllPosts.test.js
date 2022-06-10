@@ -2,6 +2,7 @@ import renderWithStoreAndRouter from '../../tests/utils/renderWithStoreAndRouter
 import AllPosts from '../../components/AllPosts'
 import React from 'react'
 import { screen } from '@testing-library/react'
+
 import nock from 'nock'
 
 jest.mock('react-router-dom', () => ({
@@ -78,7 +79,7 @@ const postsMock = {
   ],
   totalPages: 3,
 }
-
+//TODO: MOCK DATA
 describe('AllPosts', () => {
   it('should return "nothing found" if there is no posts', async () => {
     window.scrollTo = jest.fn()
@@ -90,7 +91,7 @@ describe('AllPosts', () => {
     expect(await screen.findByText('Nothing found')).toBeInTheDocument()
   })
 
-  xit('should return posts', async () => {
+  it('should return posts', async () => {
     // nock doesn't work as it should
     window.scrollTo = jest.fn()
     const state = { posts: postsMock, statuses: { posts: 'fetched' } }

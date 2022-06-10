@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import useUser from '../utils/customHooks/useUser'
 
-import Post from '../components/Post'
+import PostContent from '../components/PostContent'
 import { isEmpty } from 'lodash'
 import EmptyPage from '../components/EmptyPage'
 import AddPostButton from './AddPostButton'
@@ -39,7 +39,12 @@ const UserProfile = () => {
       <h1 className="post__my-posts-header">My posts</h1>
       <div className="posts">
         {userPosts.map(post => (
-          <Post key={post.id} post={post} userMenu userImage={user.image} />
+          <PostContent
+            key={post.id}
+            post={post}
+            userMenu
+            userImage={user.image}
+          />
         ))}
       </div>
     </>

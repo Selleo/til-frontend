@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { delayStep } from './Transition'
-import Post from './Post'
+import PostContent from './PostContent'
 
 const PostsList = ({ posts }) => {
   const { pathname } = useLocation()
@@ -21,7 +21,7 @@ const PostsList = ({ posts }) => {
       )}
       {posts.map(post => {
         delay += delayStep
-        return <Post key={post.id} post={post} animationDelay={delay} />
+        return <PostContent key={post.id} post={post} animationDelay={delay} />
       })}
     </div>
   )

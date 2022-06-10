@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchUserPosts } from '../utils'
-import Post from './Post'
+import PostContent from './PostContent'
 import EmptyPage from './EmptyPage'
 import { useDispatch, useSelector } from 'react-redux'
 import { statusType } from '../utils/constants'
@@ -49,7 +49,7 @@ const UserPosts = () => {
     <>
       <h3 className="users-posts__title">{pageHeader}</h3>
       {userPosts.map(post => (
-        <Post key={post.id} post={post} />
+        <PostContent key={post.id} post={post} />
       ))}
     </>
   )
