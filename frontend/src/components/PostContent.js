@@ -16,7 +16,13 @@ import TextBlock from './TextBlock'
 import { Transition } from './Transition'
 import UserPostMenu from '../authenticated/UserPostMenu'
 
-const PostContent = ({ animationDelay, post, review, userMenu }) => {
+const PostContent = ({
+  animationDelay,
+  post,
+  review,
+  userMenu,
+  interactive,
+}) => {
   const { pathname } = useLocation()
 
   const user = useUser()
@@ -38,9 +44,7 @@ const PostContent = ({ animationDelay, post, review, userMenu }) => {
     ? `/profile`
     : `/authors/${post.author.userName}`
 
-  const handleNavigate = e => {
-    e.stopPropagation()
-    const text = document.getSelection().toString()
+  const navigateConditionally = (e, selectedText) => {
     if (
       !(
         e.target.closest('a') ||
@@ -48,18 +52,26 @@ const PostContent = ({ animationDelay, post, review, userMenu }) => {
         e.target.closest('.post__categories') ||
         e.target.closest('.post__single-reaction')
       ) &&
-      !text
+      !selectedText
     ) {
-      history.push(`/posts/${post.id}-${post.slug}`)
+      history.push({
+        pathname: `/posts/${post.id}-${post.slug}`,
+      })
     }
+  }
+
+  const handleNavigate = e => {
+    e.stopPropagation()
+    const selectedText = document.getSelection().toString()
+    navigateConditionally(e, selectedText)
   }
 
   return (
     <Transition name="post-animation" delay={animationDelay}>
       <article
         onClick={e => handleNavigate(e)}
-        className="post"
-        style={{ cursor: 'pointer', transitionDelay: `${animationDelay}ms` }}
+        className={interactive ? 'post -interactive' : 'post'}
+        style={{ transitionDelay: `${animationDelay}ms` }}
       >
         <div>
           <div className="post__header">
@@ -87,16 +99,13 @@ const PostContent = ({ animationDelay, post, review, userMenu }) => {
               </div>
             </div>
 
-            {!review && <CopyPostURL id={post.id} slug={post.slug} />}
+            {!review && <CopyPostURL id={post?.id} slug={post?.slug} />}
           </div>
           <div>
             <span className="post__title">{title}</span>
           </div>
           <div className="post__body">
-            <span>
-              {' '}
-              <Markdown children={post.body} />
-            </span>
+            <Markdown children={post.body} />
           </div>
           <div className="post__footer">
             <PostCategories categories={post.categories} />

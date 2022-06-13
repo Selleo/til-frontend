@@ -39,6 +39,6 @@ const CopyPostURL = ({ id, slug }) => {
 export default CopyPostURL
 
 CopyPostURL.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   slug: PropTypes.string.isRequired,
 }

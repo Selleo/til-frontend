@@ -12,8 +12,8 @@ exports[`PostList should render 1`] = `
       test-category
     </h1>
     <article
-      class="post post-animation-appear post-animation-appear-active"
-      style="cursor: pointer; transition-delay: 75ms;"
+      class="post -interactive post-animation-appear post-animation-appear-active"
+      style="transition-delay: 75ms;"
     >
       <div>
         <div
@@ -95,10 +95,7 @@ exports[`PostList should render 1`] = `
         <div
           class="post__body"
         >
-          <span>
-             
-            Test
-          </span>
+          Test
         </div>
         <div
           class="post__footer"
@@ -176,8 +173,8 @@ exports[`PostList should render 1`] = `
       </div>
     </article>
     <article
-      class="post post-animation-appear post-animation-appear-active"
-      style="cursor: pointer; transition-delay: 150ms;"
+      class="post -interactive post-animation-appear post-animation-appear-active"
+      style="transition-delay: 150ms;"
     >
       <div>
         <div
@@ -259,10 +256,7 @@ exports[`PostList should render 1`] = `
         <div
           class="post__body"
         >
-          <span>
-             
-            Test2
-          </span>
+          Test2
         </div>
         <div
           class="post__footer"

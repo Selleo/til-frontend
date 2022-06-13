@@ -4,7 +4,7 @@ exports[`PostContent should render properly 1`] = `
 <div>
   <article
     class="post post-animation-appear post-animation-appear-active"
-    style="cursor: pointer; transition-delay: undefinedms;"
+    style="transition-delay: undefinedms;"
   >
     <div>
       <div
@@ -83,11 +83,7 @@ exports[`PostContent should render properly 1`] = `
       </div>
       <div
         class="post__body"
-      >
-        <span>
-           
-        </span>
-      </div>
+      />
       <div
         class="post__footer"
       >

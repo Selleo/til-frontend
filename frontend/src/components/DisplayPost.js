@@ -29,14 +29,14 @@ const DisplayPost = () => {
       }
     }
     fetchPost()
-  }, [id])
+  }, [dispatch, history, id, slug])
 
   useEffect(() => {
     return () => {
       dispatch(setPageTitle(null))
       dispatch(setPageDescription(null))
     }
-  }, [])
+  }, [dispatch])
 
   if (!post) {
     return <PostSkeletonTemplate />
