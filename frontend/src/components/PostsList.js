@@ -1,17 +1,11 @@
 import React from 'react'
 
-import { useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { delayStep } from './Transition'
 import PostContent from './PostContent'
 
-const PostsList = ({ posts }) => {
-  const { pathname } = useLocation()
-
-  const currentCategory =
-    pathname.includes('category') && pathname.split('/')[2]
-
+const PostsList = ({ posts, currentCategory }) => {
   let delay = 0
   const interactive = true
   return (

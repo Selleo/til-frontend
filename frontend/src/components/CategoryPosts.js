@@ -34,7 +34,7 @@ const CategoryPosts = () => {
     return () => {
       dispatch(setPageTitle(null))
     }
-  }, [])
+  }, [dispatch])
 
   if (!status || status === statusType.loading) {
     return <PostSkeletonTemplate />
@@ -50,10 +50,9 @@ const CategoryPosts = () => {
       />
     )
   }
-
   return (
     <>
-      <PostsList posts={posts.data} />
+      <PostsList posts={posts.data} currentCategory={id} />
       <PostsPagination posts={posts} savePosts={savePosts} />
     </>
   )
