@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 import { parseISO } from 'date-fns'
 
 import { timeFormat } from '../utils'
@@ -16,10 +16,17 @@ import TextBlock from './TextBlock'
 import { Transition } from './Transition'
 import UserPostMenu from '../authenticated/UserPostMenu'
 
-const PostContent = ({ animationDelay, post, review, userMenu }) => {
+const PostContent = ({
+  animationDelay,
+  post,
+  review,
+  userMenu,
+  interactive,
+}) => {
   const { pathname } = useLocation()
-  const user = useUser()
 
+  const user = useUser()
+  const history = useHistory()
   const isPublic = useIsPostPublic(post.isPublic)
   const parsed = parseISO(post.createdAt)
   const date = timeFormat(parsed)
@@ -37,44 +44,73 @@ const PostContent = ({ animationDelay, post, review, userMenu }) => {
     ? `/profile`
     : `/authors/${post.author.userName}`
 
+  const navigateConditionally = (e, selectedText) => {
+    if (
+      !(
+        e.target.closest('a') ||
+        e.target.closest('button') ||
+        e.target.closest('.post__categories') ||
+        e.target.closest('.post__single-reaction')
+      ) &&
+      !selectedText
+    ) {
+      history.push({
+        pathname: `/posts/${post.id}-${post.slug}`,
+      })
+    }
+  }
+
+  const handleNavigate = e => {
+    e.stopPropagation()
+    const selectedText = document.getSelection().toString()
+    navigateConditionally(e, selectedText)
+  }
+
   return (
     <Transition name="post-animation" delay={animationDelay}>
       <article
-        className="post"
+        onClick={e => handleNavigate(e)}
+        className={interactive ? 'post -interactive' : 'post'}
         style={{ transitionDelay: `${animationDelay}ms` }}
       >
-        <div className="post__header">
-          <div className="post__details">
-            <Link
-              to={linkToOwnerOfPostProfile}
-              className="post__link user-avatar"
-            >
-              <Avatar imageUrl={post.author.image} background="light" />
-            </Link>
-            <div className="post__text-details">
-              <Link to={linkToOwnerOfPostProfile} className="post__link">
-                <div className="post__owner">
-                  <span className="animation">
-                    {post.author.firstName} {post.author.lastName}
-                  </span>
-                </div>
-              </Link>
-              <div className="post__date">{date}</div>
-              <div className="post__is-public">{isPublic}</div>
-            </div>
-          </div>
-
-          {!review && <CopyPostURL id={post.id} slug={post.slug} />}
-        </div>
         <div>
-          <span className="post__title">{title}</span>
-        </div>
-        <div className="post__body">
-          <Markdown children={post.body} />
-        </div>
-        <div className="post__footer">
-          <PostCategories categories={post.categories} />
-          {!review && <ReactionBar post={post} />}
+          <div className="post__header">
+            <div className="post__details">
+              <Link
+                to={linkToOwnerOfPostProfile}
+                className="post__link user-avatar"
+              >
+                <Avatar imageUrl={post.author.image} background="light" />
+              </Link>
+              <div className="post__text-details">
+                <Link to={linkToOwnerOfPostProfile} className="post__link">
+                  <div className="post__owner">
+                    <span className="animation">
+                      {post.author.firstName} {post.author.lastName}
+                    </span>
+                  </div>
+                </Link>
+                <div className="post__date">
+                  <span>{date}</span>
+                </div>
+                <div className="post__is-public">
+                  <span>{isPublic}</span>
+                </div>
+              </div>
+            </div>
+
+            {!review && <CopyPostURL id={post?.id} slug={post?.slug} />}
+          </div>
+          <div>
+            <span className="post__title">{title}</span>
+          </div>
+          <div className="post__body">
+            <Markdown children={post.body} />
+          </div>
+          <div className="post__footer">
+            <PostCategories categories={post.categories} />
+            {!review && <ReactionBar post={post} />}
+          </div>
         </div>
         {(userMenu || isPostOwner) && (
           <UserPostMenu post={post} userMenu={userMenu} isOnReview={review} />

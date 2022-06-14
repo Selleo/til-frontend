@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { saveAllPosts } from '../store/actions/actions'
-import Post from '../components/Post'
+import PostContent from '../components/PostContent'
 import { useQuery, fetchReviewPost, approvePost } from '../utils'
 
 const { REACT_APP_API_URL: API_URL } = process.env
@@ -46,7 +46,7 @@ const ReviewPost = () => {
 
   return (
     <div className="review-post__container">
-      <Post post={post} review={true} />
+      <PostContent post={post} review={true} />
       <button
         className="review-post__confirm-button"
         onClick={approvePostHandler}

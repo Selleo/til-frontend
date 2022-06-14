@@ -25,6 +25,5 @@ describe('UserPosts component', () => {
       ],
       route: '/authors/authorName',
     })
-    console.log(prettyDOM(container))
   })
 })

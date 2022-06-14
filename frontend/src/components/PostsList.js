@@ -1,17 +1,13 @@
 import React from 'react'
 
-import { useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { delayStep } from './Transition'
-import Post from './Post'
+import PostContent from './PostContent'
 
-const PostsList = ({ posts }) => {
-  const { pathname } = useLocation()
-
-  const currentCategory = pathname.includes('category') && pathname.slice(10)
+const PostsList = ({ posts, currentCategory }) => {
   let delay = 0
-
+  const interactive = true
   return (
     <div className="posts-list-wrapper">
       {currentCategory && (
@@ -21,7 +17,14 @@ const PostsList = ({ posts }) => {
       )}
       {posts.map(post => {
         delay += delayStep
-        return <Post key={post.id} post={post} animationDelay={delay} />
+        return (
+          <PostContent
+            key={post.id}
+            post={post}
+            animationDelay={delay}
+            interactive={interactive}
+          />
+        )
       })}
     </div>
   )

@@ -10,7 +10,6 @@ xdescribe('convertReactions', () => {
       type: 'like',
     }
     const test = convertReactions(reactionsMock)
-    console.log(test)
   })
 })
 xdescribe('checkHasReacted', () => {})

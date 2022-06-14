@@ -6,139 +6,145 @@ exports[`PostContent should render properly 1`] = `
     class="post post-animation-appear post-animation-appear-active"
     style="transition-delay: undefinedms;"
   >
-    <div
-      class="post__header"
-    >
+    <div>
       <div
-        class="post__details"
+        class="post__header"
       >
-        <a
-          class="post__link user-avatar"
-          href="/authors/Tenteges"
-        >
-          <img
-            alt="author-img"
-            class="user__image"
-            src="http://placekitten.com/200/"
-          />
-        </a>
         <div
-          class="post__text-details"
+          class="post__details"
         >
           <a
-            class="post__link"
+            class="post__link user-avatar"
             href="/authors/Tenteges"
           >
-            <div
-              class="post__owner"
-            >
-              <span
-                class="animation"
-              >
-                Tenteges
-                 
-                Wihajster
-              </span>
-            </div>
+            <img
+              alt="author-img"
+              class="user__image"
+              src="http://placekitten.com/200/"
+            />
           </a>
           <div
-            class="post__date"
+            class="post__text-details"
           >
-             21 Apr 09:39
+            <a
+              class="post__link"
+              href="/authors/Tenteges"
+            >
+              <div
+                class="post__owner"
+              >
+                <span
+                  class="animation"
+                >
+                  Tenteges
+                   
+                  Wihajster
+                </span>
+              </div>
+            </a>
+            <div
+              class="post__date"
+            >
+              <span>
+                 21 Apr 09:39
+              </span>
+            </div>
+            <div
+              class="post__is-public"
+            >
+              <span />
+            </div>
           </div>
-          <div
-            class="post__is-public"
-          />
+        </div>
+        <div
+          aria-describedby="tippy-tooltip-1"
+          class="ToolTip"
+          data-tooltipped=""
+          style="display: inline;"
+        >
+          <button
+            class="post__share-button"
+          >
+            <svg>
+              share.svg
+            </svg>
+            <span
+              class="post__share-text"
+            >
+              Share
+            </span>
+          </button>
         </div>
       </div>
-      <div
-        aria-describedby="tippy-tooltip-1"
-        class="ToolTip"
-        data-tooltipped=""
-        style="display: inline;"
-      >
-        <button
-          class="post__share-button"
-        >
-          <svg>
-            share.svg
-          </svg>
-          <span
-            class="post__share-text"
-          >
-            Share
-          </span>
-        </button>
+      <div>
+        <span
+          class="post__title"
+        />
       </div>
-    </div>
-    <div>
-      <span
-        class="post__title"
+      <div
+        class="post__body"
       />
-    </div>
-    <div
-      class="post__body"
-    />
-    <div
-      class="post__footer"
-    >
       <div
-        class="post__reactions"
+        class="post__footer"
       >
         <div
-          class="post__single-reaction"
+          class="post__reactions"
         >
-          <svg
-            class="like"
-          >
-            like.svg
-          </svg>
           <div
-            class="reaction-number"
+            class="post__single-reaction"
           >
-            0
+            <svg
+              class="like"
+            >
+              like.svg
+            </svg>
+            <div
+              class="reaction-number"
+            >
+              0
+            </div>
           </div>
-        </div>
-        <div
-          class="post__single-reaction"
-        >
-          <svg
-            class="funny"
-          >
-            funny.svg
-          </svg>
           <div
-            class="reaction-number"
+            class="post__single-reaction"
           >
-            0
+            <svg
+              class="funny"
+            >
+              funny.svg
+            </svg>
+            <div
+              class="reaction-number"
+            >
+              0
+            </div>
           </div>
-        </div>
-        <div
-          class="post__single-reaction"
-        >
-          <svg
-            class="love"
-          >
-            love.svg
-          </svg>
           <div
-            class="reaction-number"
+            class="post__single-reaction"
           >
-            0
+            <svg
+              class="love"
+            >
+              love.svg
+            </svg>
+            <div
+              class="reaction-number"
+            >
+              0
+            </div>
           </div>
-        </div>
-        <div
-          class="post__single-reaction"
-        >
-          <svg
-            class="surprised"
-          >
-            surprised.svg
-          </svg>
           <div
-            class="reaction-number"
+            class="post__single-reaction"
           >
-            0
+            <svg
+              class="surprised"
+            >
+              surprised.svg
+            </svg>
+            <div
+              class="reaction-number"
+            >
+              0
+            </div>
           </div>
         </div>
       </div>

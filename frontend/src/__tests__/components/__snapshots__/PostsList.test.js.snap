@@ -5,20 +5,11 @@ exports[`PostList should render 1`] = `
   <div
     class="posts-list-wrapper"
   >
-    <h1
-      class="posts-list-wrapper__header"
+    <article
+      class="post -interactive post-animation-appear post-animation-appear-active"
+      style="transition-delay: 75ms;"
     >
-      Posts in 
-      test-category
-    </h1>
-    <a
-      class="post-wrapper"
-      href="/posts/420-test-slug"
-    >
-      <article
-        class="post post-animation-appear post-animation-appear-active"
-        style="transition-delay: 75ms;"
-      >
+      <div>
         <div
           class="post__header"
         >
@@ -57,11 +48,15 @@ exports[`PostList should render 1`] = `
               <div
                 class="post__date"
               >
-                 28 Jan 01:16
+                <span>
+                   28 Jan 01:16
+                </span>
               </div>
               <div
                 class="post__is-public"
-              />
+              >
+                <span />
+              </div>
             </div>
           </div>
           <div
@@ -169,16 +164,13 @@ exports[`PostList should render 1`] = `
             </div>
           </div>
         </div>
-      </article>
-    </a>
-    <a
-      class="post-wrapper"
-      href="/posts/421-test-slug"
+      </div>
+    </article>
+    <article
+      class="post -interactive post-animation-appear post-animation-appear-active"
+      style="transition-delay: 150ms;"
     >
-      <article
-        class="post post-animation-appear post-animation-appear-active"
-        style="transition-delay: 150ms;"
-      >
+      <div>
         <div
           class="post__header"
         >
@@ -217,11 +209,15 @@ exports[`PostList should render 1`] = `
               <div
                 class="post__date"
               >
-                 28 Jan 01:16
+                <span>
+                   28 Jan 01:16
+                </span>
               </div>
               <div
                 class="post__is-public"
-              />
+              >
+                <span />
+              </div>
             </div>
           </div>
           <div
@@ -329,8 +325,8 @@ exports[`PostList should render 1`] = `
             </div>
           </div>
         </div>
-      </article>
-    </a>
+      </div>
+    </article>
   </div>
 </div>
 `;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 import { fetchSinglePost } from '../utils'
-import Post from '../components/Post'
+import PostContent from '../components/PostContent'
 import PostBanner from './PostBanner'
 import useParamsWithoutSlug from '../utils/customHooks/useParamsWithoutSlug'
 import { useDispatch } from 'react-redux'
@@ -29,14 +29,14 @@ const DisplayPost = () => {
       }
     }
     fetchPost()
-  }, [id])
+  }, [dispatch, history, id, slug])
 
   useEffect(() => {
     return () => {
       dispatch(setPageTitle(null))
       dispatch(setPageDescription(null))
     }
-  }, [])
+  }, [dispatch])
 
   if (!post) {
     return <PostSkeletonTemplate />
@@ -48,7 +48,7 @@ const DisplayPost = () => {
 
   return (
     <>
-      <Post key={post.id} post={post} />
+      <PostContent key={post.id} post={post} />
       <PostBanner postCategory={post.categories[0]} />
     </>
   )
