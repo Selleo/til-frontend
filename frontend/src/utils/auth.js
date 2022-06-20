@@ -2,11 +2,15 @@ const localStorageKey = 'til_token'
 
 // TOKENS
 export const deleteToken = () => {
-  window.localStorage.removeItem(localStorageKey)
+  if (typeof window !== 'undefined') {
+    window.localStorage.removeItem(localStorageKey)
+  }
 }
 
 export const getToken = () => {
-  return window.localStorage.getItem(localStorageKey)
+  if (typeof window !== 'undefined') {
+    return window.localStorage.getItem(localStorageKey)
+  }
 }
 
 export const checkForToken = () => {

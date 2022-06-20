@@ -9,7 +9,7 @@ import {
 } from '../../utils'
 import { statusType } from '../../utils/constants'
 
-const { REACT_APP_API_URL: API_URL } = process.env
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 // CATEGORIES
 const getAllCategories = categories => ({

@@ -2,11 +2,11 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import DisplayPost from '../components/DisplayPost'
 import UserPosts from './UsersPosts'
-import SearchedPosts from './SearchedPosts'
+import SearchedPosts from '../../pages/content/SearchedPosts'
 import CheckIfCanReview from './CheckIfCanReview'
 import useUser from '../utils/customHooks/useUser'
 import AllPosts from './AllPosts'
-import CategoryPosts from './CategoryPosts'
+import CategoryPosts from '../../pages/content/CategoryPosts'
 
 const MainRoutes = () => {
   const user = useUser()

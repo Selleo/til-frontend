@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ReactComponent as UserIcon } from '../assets/icons/avatar.svg'
 
 const Avatar = ({ imageUrl, background = 'dark' }) => {
   return imageUrl ? (
@@ -10,7 +9,11 @@ const Avatar = ({ imageUrl, background = 'dark' }) => {
       className={`user__image -background-${background}`}
       data-testid="avatar-without-image"
     >
-      <UserIcon className="user__icon" />
+      <img
+        src="/public/assets/icons/avatar.svg"
+        alt=""
+        className="user__icon"
+      />{' '}
     </div>
   )
 }

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import 'react-mde/lib/styles/css/react-mde-all.css'
 import { request, fetchSinglePost, convertToSelectOptions } from '../utils'
-import { useHistory, useParams } from 'react-router-dom'
+// import { useHistory, useParams } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import { saveCurrentUser, saveAllPosts } from '../store/actions/actions'
 import PostPreview from '../authenticated/PostPreview'
@@ -27,10 +28,12 @@ const EditPost = () => {
   // allCategories from redux in form {id: 1, name: "java"}
   const allCategories = useSelector(state => state.categories)
   const dispatch = useDispatch()
-  const history = useHistory()
+  const router = useRouter()
+  // const history = useHistory()
   const { id } = useParams()
 
   useEffect(() => {
+    const { id } = router
     const fetchPost = async () => {
       const post = await fetchSinglePost(`${API_URL}/api/posts/`, id)
 
@@ -72,7 +75,7 @@ const EditPost = () => {
     if (post.ok) {
       dispatch(saveAllPosts())
       dispatch(saveCurrentUser())
-      history.push(`/posts/${id}`)
+      router.push(`/posts/${id}`)
       postSuccessToast('Post updated successfully')
     }
   }
@@ -106,7 +109,7 @@ const EditPost = () => {
   }
 
   const handleCancel = () => {
-    history.push('/')
+    router.push('/')
   }
 
   useEffect(() => {

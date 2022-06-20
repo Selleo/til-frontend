@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import 'react-mde/lib/styles/css/react-mde-all.css'
 import { request, convertToSelectOptions } from '../utils'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   saveAllCategories,
@@ -27,7 +28,8 @@ const AddPost = () => {
   const [title, setTitle] = useState('')
   const [isPublic, setIsPublic] = useState(false)
   const [isReviewNeeded, setIsReviewNeeded] = useState(false)
-  const history = useHistory()
+  // const history = useHistory()
+  const router = useRouter()
   const dispatch = useDispatch()
   const categoriesOptions = useSelector(state =>
     convertToSelectOptions(state.categories)
@@ -53,7 +55,7 @@ const AddPost = () => {
       dispatch(saveCurrentUser())
       dispatch(saveAllCategories())
       postSuccessToast('Post added successfully!')
-      history.push('/')
+      router.push('/')
     } else {
       const errors = await savePost.json()
 

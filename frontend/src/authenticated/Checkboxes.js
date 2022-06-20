@@ -2,7 +2,7 @@ import React from 'react'
 
 import classNames from 'classnames'
 
-import { ReactComponent as CheckMark } from '../assets/icons/checkmark.svg'
+import CheckMark from '../assets/icons/checkmark.svg'
 
 const Checkboxes = ({
   handlePublicCheckbox,

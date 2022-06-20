@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { debounce } from 'lodash'
 
 import { saveSearchedQuery } from '../store/actions/actions'
 import { useOnRouteLeave } from '../utils/customHooks/useOnRouteLeave'
-import { ReactComponent as SearchIcon } from '../assets/icons/search.svg'
+
 import Icon from './UI/Icon'
 import { useDisableOnRoute } from '../utils/customHooks/useDisableOnRoute'
 import ActionModal from './ActionModal'
@@ -13,6 +14,7 @@ import { Transition } from './Transition'
 import { useSearchQuery } from '../utils/customHooks/useSearchQuery'
 
 const Search = () => {
+  const router = useRouter()
   const dispatch = useDispatch()
 
   const [input, setInput] = useState('')
@@ -21,31 +23,30 @@ const Search = () => {
   const { isDisabled } = useDisableOnRoute(['add', 'edit'])
   const hasLeftRoute = useOnRouteLeave('/search')
   const searchQuery = useSearchQuery()
-  const history = useHistory()
 
   const debouncedHistoryPush = useMemo(
-    () => debounce(history.push, 400),
-    [history]
+    () => debounce(router.push, 400),
+    [router]
   )
 
   useEffect(() => {
     if (searchQuery) {
       setInput(searchQuery)
     }
-  }, [])
+  }, [searchQuery])
 
   const handleClearInput = useCallback(() => {
     dispatch(saveSearchedQuery(''))
     setInput('')
-    history.push('/')
-  }, [dispatch, history])
+    router.push('/')
+  }, [dispatch, router])
 
   useEffect(() => {
     if (hasLeftRoute) {
       dispatch(saveSearchedQuery(''))
       setInput('')
     }
-  }, [hasLeftRoute, handleClearInput])
+  }, [hasLeftRoute, handleClearInput, dispatch])
 
   const handleInput = event => {
     const searchedValue = event.target.value
@@ -54,7 +55,7 @@ const Search = () => {
     if (searchedValue) {
       debouncedHistoryPush(`/search?q=${searchedValue}`)
     } else {
-      history.push('/')
+      router.push('/')
     }
   }
 
@@ -75,7 +76,11 @@ const Search = () => {
         <Icon name="cancel" />
       </div>
     ) : (
-      <SearchIcon className="search-box__icon" />
+      <img
+        src="/public/assets/icons/search.svg"
+        alt=""
+        className="search-box__icon"
+      />
     )
   }
 
@@ -96,7 +101,7 @@ const Search = () => {
       </Transition>
       {isModalOpen && (
         <ActionModal
-          action={() => history.push('/')}
+          action={() => router.push('/')}
           isOpen={isModalOpen}
           setIsOpen={setIsModalOpen}
           message="If you leave, you will lose your data!"

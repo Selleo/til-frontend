@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router'
+// import { useHistory } from 'react-router'
+import { useRouter } from 'next/router'
 import { fetchSinglePost } from '../utils'
 import PostContent from '../components/PostContent'
 import PostBanner from './PostBanner'
@@ -13,7 +14,8 @@ const { REACT_APP_API_URL: API_URL } = process.env
 const DisplayPost = () => {
   const [post, setPost] = useState(null)
   const { id, slug } = useParamsWithoutSlug()
-  const history = useHistory()
+  const router = useRouter()
+  // const history = useHistory()
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -25,11 +27,11 @@ const DisplayPost = () => {
       dispatch(setPageDescription(post?.body))
 
       if (!slug || slug !== post.slug) {
-        history.replace(`/posts/${id}-${post.slug}`)
+        router.replace(`/posts/${id}-${post.slug}`)
       }
     }
     fetchPost()
-  }, [dispatch, history, id, slug])
+  }, [dispatch, router, id, slug])
 
   useEffect(() => {
     return () => {

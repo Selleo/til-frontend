@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { useHistory, useLocation } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 
@@ -16,8 +16,7 @@ const Categories = () => {
   const [navigationPath, setNavigationPath] = useState(null)
   const { isDisabled } = useDisableOnRoute(['add', 'edit'])
 
-  const history = useHistory()
-  const { pathname } = useLocation()
+  const router = useRouter()
 
   const sortedCategories = useSelector(state =>
     sortCategories(state.categories)
@@ -44,18 +43,18 @@ const Categories = () => {
     }
   })
 
-  const isActiveNav = name => `/category/${name}` === pathname
+  const isActiveNav = name => `/category/${name}` === router.pathname
 
   const onNavLinkClick = name => {
     if (isDisabled) {
       setNavigationPath(`/category/${name}`)
       setIsModalOpen(true)
     } else
-      isActiveNav(name) ? history.push('/') : history.push(`/category/${name}`)
+      isActiveNav(name) ? router.push('/') : router.push(`/category/${name}`)
   }
   const navItemClasses = name =>
     classNames('categories__single-category', {
-      '-active': isActiveNav(name) || pathname.includes(name),
+      '-active': isActiveNav(name) || router.pathname.includes(name),
       '-color-only-stroke':
         name.toLowerCase().includes('chrome') ||
         name.toLowerCase().includes('general'),
@@ -78,7 +77,7 @@ const Categories = () => {
 
       {isModalOpen && (
         <ActionModal
-          action={() => history.push(navigationPath)}
+          action={() => router.push(navigationPath)}
           isOpen={isModalOpen}
           message="If you leave, you will lose your data!"
           setIsOpen={setIsModalOpen}

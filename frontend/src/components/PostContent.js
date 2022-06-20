@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react'
 
-import { Link, useLocation, useHistory } from 'react-router-dom'
+// import { Link, useLocation, useHistory } from 'react-router-dom'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { parseISO } from 'date-fns'
 
 import { timeFormat } from '../utils'
@@ -23,10 +25,10 @@ const PostContent = ({
   userMenu,
   interactive,
 }) => {
-  const { pathname } = useLocation()
-
+  // const { pathname } = useLocation()
+  const router = useRouter()
   const user = useUser()
-  const history = useHistory()
+  // const history = useHistory()
   const isPublic = useIsPostPublic(post.isPublic)
   const parsed = parseISO(post.createdAt)
   const date = timeFormat(parsed)
@@ -38,7 +40,7 @@ const PostContent = ({
   }, [user, post])
 
   const title =
-    pathname === 'search' ? <TextBlock value={post.title} /> : post.title
+    router.pathname === 'search' ? <TextBlock value={post.title} /> : post.title
 
   const linkToOwnerOfPostProfile = isPostOwner
     ? `/profile`
@@ -54,7 +56,7 @@ const PostContent = ({
       ) &&
       !selectedText
     ) {
-      history.push({
+      router.push({
         pathname: `/posts/${post.id}-${post.slug}`,
       })
     }
@@ -76,19 +78,20 @@ const PostContent = ({
         <div>
           <div className="post__header">
             <div className="post__details">
-              <Link
-                to={linkToOwnerOfPostProfile}
-                className="post__link user-avatar"
-              >
-                <Avatar imageUrl={post.author.image} background="light" />
+              <Link href={linkToOwnerOfPostProfile}>
+                <a className="post__link user-avatar">
+                  <Avatar imageUrl={post.author.image} background="light" />
+                </a>
               </Link>
               <div className="post__text-details">
-                <Link to={linkToOwnerOfPostProfile} className="post__link">
-                  <div className="post__owner">
-                    <span className="animation">
-                      {post.author.firstName} {post.author.lastName}
-                    </span>
-                  </div>
+                <Link href={linkToOwnerOfPostProfile}>
+                  <a className="post__link">
+                    <div className="post__owner">
+                      <span className="animation">
+                        {post.author.firstName} {post.author.lastName}
+                      </span>
+                    </div>
+                  </a>
                 </Link>
                 <div className="post__date">
                   <span>{date}</span>
