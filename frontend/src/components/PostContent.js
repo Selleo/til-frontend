@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 
 // import { Link, useLocation, useHistory } from 'react-router-dom'
 import Link from 'next/link'
@@ -25,10 +25,9 @@ const PostContent = ({
   userMenu,
   interactive,
 }) => {
-  // const { pathname } = useLocation()
   const router = useRouter()
   const user = useUser()
-  // const history = useHistory()
+
   const isPublic = useIsPostPublic(post.isPublic)
   const parsed = parseISO(post.createdAt)
   const date = timeFormat(parsed)
@@ -40,7 +39,7 @@ const PostContent = ({
   }, [user, post])
 
   const title =
-    router.pathname === 'search' ? <TextBlock value={post.title} /> : post.title
+    router.asPath === 'search' ? <TextBlock value={post.title} /> : post.title
 
   const linkToOwnerOfPostProfile = isPostOwner
     ? `/profile`

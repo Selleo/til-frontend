@@ -1,8 +1,7 @@
-import React from 'react'
+import UserPosts from '../../src/components/UsersPosts'
 
 const Author = () => {
-  //  <UserPosts />
-  return <div>[userName]</div>
+  return <UserPosts />
 }
 
 export default Author

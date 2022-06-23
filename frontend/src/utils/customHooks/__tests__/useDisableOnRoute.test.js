@@ -1,11 +1,15 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { useDisableOnRoute } from '../useDisableOnRoute'
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: () => ({
-    pathname: '/test',
-  }),
+jest.mock('next/router', () => ({
+  useRouter() {
+    return {
+      route: '',
+      pathname: '',
+      query: {},
+      asPath: '/test',
+    }
+  },
 }))
 
 describe('useDisableOnRoute', () => {

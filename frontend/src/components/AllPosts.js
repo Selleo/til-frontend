@@ -31,7 +31,6 @@ const AllPosts = () => {
   if (!status || status === statusType.loading) {
     return <PostSkeletonTemplate />
   }
-
   if (isEmpty(posts?.data)) {
     return <NothingFound />
   }

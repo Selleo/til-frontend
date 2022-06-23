@@ -1,10 +1,10 @@
-import { useParams } from 'react-router-dom'
+import { useRouter } from 'next/router'
 
 const useParamsWithoutSlug = () => {
-  const { id } = useParams()
+  const { query } = useRouter()
 
   const slugMatcher = /(?<postId>\w+)-?(?<slug>[^]*)/
-  const result = slugMatcher.exec(id)
+  const result = slugMatcher.exec(query.postId)
   const {
     groups: { postId, slug },
   } = result

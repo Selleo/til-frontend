@@ -1,4 +1,3 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 
 const Avatar = ({ imageUrl, background = 'dark' }) => {
@@ -9,11 +8,7 @@ const Avatar = ({ imageUrl, background = 'dark' }) => {
       className={`user__image -background-${background}`}
       data-testid="avatar-without-image"
     >
-      <img
-        src="/public/assets/icons/avatar.svg"
-        alt=""
-        className="user__icon"
-      />{' '}
+      <img src="../assets/icons/avatar.svg" alt="" className="user__icon" />{' '}
     </div>
   )
 }

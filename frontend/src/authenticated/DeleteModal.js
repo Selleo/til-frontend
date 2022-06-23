@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import Modal from 'react-modal'
 
@@ -18,8 +18,11 @@ const DeleteModal = ({ deletePost, toggleModal }) => {
       width: '90%',
     },
   }
+
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#root')
+    if (process.env.NODE_ENV !== 'test') {
+      Modal.setAppElement('#__next')
+    }
   }, [])
 
   const handleDelete = () => {

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
-import Link from 'next/link'
-import classNames from 'classnames'
+import { useState, useEffect, useRef } from 'react'
 
+import classNames from 'classnames'
+import ProfileLink from './ProfileLink'
 import AddPostButton from './AddPostButton'
 import Logout from './Logout'
-import Icon from '../components/UI/Icon'
+
 import { Transition } from '../components/Transition'
 import Avatar from '../components/Avatar'
 
@@ -65,12 +65,7 @@ const AdminPanel = () => {
         />
         <Transition name="opacity-animation" condition={isMenuOpen}>
           <div className={userMenuClasses}>
-            <Link href="/profile">
-              <a className="profile-link">
-                <Icon name="profile" />
-                <span className="profile-link__text">Profile</span>
-              </a>
-            </Link>
+            <ProfileLink />
             <Logout />
           </div>
         </Transition>

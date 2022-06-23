@@ -1,6 +1,5 @@
-import React from 'react'
 import { useEffect } from 'react'
-// import { useHistory } from 'react-router-dom'
+
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
@@ -8,11 +7,11 @@ import { saveAllPosts } from '../store/actions/actions'
 import PostContent from '../components/PostContent'
 import { useQuery, fetchReviewPost, approvePost } from '../utils'
 
-const { REACT_APP_API_URL: API_URL } = process.env
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const ReviewPost = () => {
   const router = useRouter()
-  // const history = useHistory()
+
   const dispatch = useDispatch()
   const query = useQuery()
   const [post, setPost] = useState(null)
@@ -25,10 +24,8 @@ const ReviewPost = () => {
       setHash(hash)
       setPost(post)
     }
-
     fetchpost()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [query])
 
   const approvePostHandler = () => {
     const response = approvePost(`${API_URL}/api/posts/${hash}/review`)

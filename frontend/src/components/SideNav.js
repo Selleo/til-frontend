@@ -1,15 +1,13 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Categories from '../components/Categories'
 import Search from './Search'
-// import { useHistory } from 'react-router-dom'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
+
 import { useDisableOnRoute } from '../utils/customHooks/useDisableOnRoute'
 import ActionModal from './ActionModal'
 import LogoSelleo from './LogoSelleo'
 
 const SideNav = () => {
-  // const history = useHistory()
   const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { isDisabled } = useDisableOnRoute(['add', 'edit'])
@@ -18,6 +16,7 @@ const SideNav = () => {
     if (isDisabled) {
       e.preventDefault()
       setIsModalOpen(true)
+      router.push('/')
     }
   }
 
@@ -25,9 +24,9 @@ const SideNav = () => {
     <>
       <div className="side-nav">
         <div className="logo">
-          <Link href="/" onClick={handleClick}>
-            <a className="logo__link"> todayilearned</a>
-          </Link>
+          <div onClick={handleClick}>
+            <span className="logo__link"> todayilearned</span>
+          </div>
           <LogoSelleo className="logo__link" />
         </div>
 

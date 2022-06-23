@@ -1,18 +1,25 @@
-import renderWithStoreAndRouter from '../../tests/utils/renderWithStoreAndRouter'
+import renderWithStore from '../../tests/utils/renderWithStore'
 import AllPosts from '../../components/AllPosts'
-import React from 'react'
+
 import { screen } from '@testing-library/react'
 
 import nock from 'nock'
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: () => ({
-    pathname: '/posts',
-    search: 'page',
-  }),
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve([]),
+  })
+)
+jest.mock('next/router', () => ({
+  useRouter() {
+    return {
+      route: '/posts',
+      pathname: '',
+      query: '',
+      asPath: '',
+    }
+  },
 }))
-
 const postsMock = {
   data: [
     {
@@ -79,15 +86,16 @@ const postsMock = {
   ],
   totalPages: 3,
 }
+
 //TODO: MOCK DATA
 describe('AllPosts', () => {
-  it('should return "nothing found" if there is no posts', async () => {
+  it.only('should return "nothing found" if there is no posts', async () => {
     window.scrollTo = jest.fn()
-    const state = { posts: [], statuses: { posts: 'fetched' } }
 
-    renderWithStoreAndRouter(<AllPosts />, {
-      initialState: state,
-    })
+    nock(`http://localhost:4000/`).get('/api/posts?page=null').reply(200, [])
+
+    renderWithStore(<AllPosts />)
+
     expect(await screen.findByText('Nothing found')).toBeInTheDocument()
   })
 
@@ -100,7 +108,7 @@ describe('AllPosts', () => {
       .get('/api/posts?page=null')
       .reply(200, postsMock)
 
-    renderWithStoreAndRouter(<AllPosts />, {
+    renderWithStore(<AllPosts />, {
       initialState: state,
     })
     // expect

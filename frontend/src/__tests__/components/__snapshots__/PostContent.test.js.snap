@@ -65,9 +65,10 @@ exports[`PostContent should render properly 1`] = `
           <button
             class="post__share-button"
           >
-            <svg>
-              share.svg
-            </svg>
+            <img
+              alt=""
+              src="../assets/icons/share.svg"
+            />
             <span
               class="post__share-text"
             >
@@ -93,11 +94,9 @@ exports[`PostContent should render properly 1`] = `
           <div
             class="post__single-reaction"
           >
-            <svg
+            <span
               class="like"
-            >
-              like.svg
-            </svg>
+            />
             <div
               class="reaction-number"
             >
@@ -107,11 +106,9 @@ exports[`PostContent should render properly 1`] = `
           <div
             class="post__single-reaction"
           >
-            <svg
+            <span
               class="funny"
-            >
-              funny.svg
-            </svg>
+            />
             <div
               class="reaction-number"
             >
@@ -121,11 +118,9 @@ exports[`PostContent should render properly 1`] = `
           <div
             class="post__single-reaction"
           >
-            <svg
+            <span
               class="love"
-            >
-              love.svg
-            </svg>
+            />
             <div
               class="reaction-number"
             >
@@ -135,11 +130,9 @@ exports[`PostContent should render properly 1`] = `
           <div
             class="post__single-reaction"
           >
-            <svg
+            <span
               class="surprised"
-            >
-              surprised.svg
-            </svg>
+            />
             <div
               class="reaction-number"
             >

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import 'react-mde/lib/styles/css/react-mde-all.css'
 import { request, fetchSinglePost, convertToSelectOptions } from '../utils'
-// import { useHistory, useParams } from 'react-router-dom'
+
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import { saveCurrentUser, saveAllPosts } from '../store/actions/actions'
@@ -13,29 +13,28 @@ import postSuccessToast from '../utils/toasts/postSuccessToast'
 import PostSeparator from '../components/UI/PostSeparator'
 import { Transition } from '../components/Transition'
 
-const { REACT_APP_API_URL: API_URL } = process.env
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const EditPost = () => {
   const [buttonState, setButtonState] = useState(true)
   const [markdown, setMarkdown] = useState('')
   const [title, setTitle] = useState('')
-  // user categories as strings
+
   const [categories, setCategories] = useState([])
-  // select friendly categories used to pass to select options
+
   const [categoriesOptions, setCategoriesOptions] = useState('')
-  // select friendly user options
+
   const [userCategoriesOptions, setUserCategoriesOptions] = useState([])
-  // allCategories from redux in form {id: 1, name: "java"}
+
   const allCategories = useSelector(state => state.categories)
   const dispatch = useDispatch()
   const router = useRouter()
-  // const history = useHistory()
-  const { id } = useParams()
+
+  const { postId } = router.query
 
   useEffect(() => {
-    const { id } = router
     const fetchPost = async () => {
-      const post = await fetchSinglePost(`${API_URL}/api/posts/`, id)
+      const post = await fetchSinglePost(`${API_URL}/api/posts/`, postId)
 
       setMarkdown(post.body)
       setTitle(post.title)
@@ -43,7 +42,7 @@ const EditPost = () => {
     }
 
     fetchPost()
-  }, [id])
+  }, [postId])
 
   useEffect(() => {
     setCategoriesOptions(convertToSelectOptions(allCategories))
@@ -68,14 +67,14 @@ const EditPost = () => {
 
     const post = await request(
       'PATCH',
-      `${API_URL}/api/me/posts/${id}`,
+      `${API_URL}/api/me/posts/${postId}`,
       JSON.stringify(markdownPost)
     )
 
     if (post.ok) {
       dispatch(saveAllPosts())
       dispatch(saveCurrentUser())
-      router.push(`/posts/${id}`)
+      router.push(`/posts/${postId}`)
       postSuccessToast('Post updated successfully')
     }
   }

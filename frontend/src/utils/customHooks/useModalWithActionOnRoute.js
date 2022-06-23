@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ActionModal from '../../components/ActionModal'
 import { useDisableOnRoute } from './useDisableOnRoute'
 

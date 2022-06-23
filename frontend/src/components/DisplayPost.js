@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-// import { useHistory } from 'react-router'
+import { useState, useEffect } from 'react'
+
 import { useRouter } from 'next/router'
 import { fetchSinglePost } from '../utils'
 import PostContent from '../components/PostContent'
@@ -9,13 +9,13 @@ import { useDispatch } from 'react-redux'
 import { setPageDescription, setPageTitle } from '../store/actions/actions'
 import PostSkeletonTemplate from './PostSkeletonTemplate'
 
-const { REACT_APP_API_URL: API_URL } = process.env
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const DisplayPost = () => {
   const [post, setPost] = useState(null)
   const { id, slug } = useParamsWithoutSlug()
   const router = useRouter()
-  // const history = useHistory()
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const DisplayPost = () => {
       }
     }
     fetchPost()
-  }, [dispatch, router, id, slug])
+  }, [dispatch, id, router, slug])
 
   useEffect(() => {
     return () => {

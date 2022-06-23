@@ -7,15 +7,16 @@ import { timeFormat } from '../utils'
 
 const PostPreview = props => {
   const user = useUser()
+
   const { body, title, categories } = props
   return (
     <article className="post -preview">
       <div className="post__header">
         <div className="post__details">
-          <Avatar imageUrl={user.image} background="light" />
+          <Avatar imageUrl={user?.image} background="light" />
           <div className="post__text-details">
             <div>
-              {user.firstName} {user.lastName}
+              {user?.firstName} {user?.lastName}
             </div>
             <div className="post__date">{timeFormat(new Date())}</div>
           </div>

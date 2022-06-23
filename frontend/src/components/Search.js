@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
-// import { useHistory } from 'react-router-dom'
+import { useState, useEffect, useCallback, useMemo } from 'react'
+
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { debounce } from 'lodash'
@@ -77,7 +77,7 @@ const Search = () => {
       </div>
     ) : (
       <img
-        src="/public/assets/icons/search.svg"
+        src="../assets/icons/search.svg"
         alt=""
         className="search-box__icon"
       />

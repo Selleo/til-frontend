@@ -1,6 +1,3 @@
-import React from 'react'
-
-// import { Link, useHistory, useLocation } from 'react-router-dom'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -12,17 +9,15 @@ import LogInButton from './LogInButton'
 import NavigatorButton from './NavigatorButton'
 
 const AppHeader = () => {
-  // const history = useHistory()
-  // const { pathname } = useLocation()
   const router = useRouter()
   const user = useUser()
 
-  const isOnCategoryPage = router.pathname.includes('category')
-  const isOnPostsPage = router.pathname.includes('posts')
+  const isOnCategoryPage = router.asPath.includes('category')
+  const isOnPostsPage = router.asPath.includes('posts')
   const isDisplayAllPostsButton = isOnCategoryPage || isOnPostsPage
-  const isOnEditPostPage = router.pathname.includes('edit-post')
+  const isOnEditPostPage = router.asPath.includes('edit-post')
 
-  const handleGoToBackPage = () => router.goBack()
+  const handleGoToBackPage = () => router.back()
   const handleGoToAllPosts = () => router.push('/')
 
   return (

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import 'react-mde/lib/styles/css/react-mde-all.css'
 import { request, convertToSelectOptions } from '../utils'
-// import { useHistory } from 'react-router-dom'
+
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -19,7 +19,7 @@ import ReactMde from 'react-mde'
 import PostSeparator from '../components/UI/PostSeparator'
 import { Transition } from '../components/Transition'
 
-const { REACT_APP_API_URL: API_URL } = process.env
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const AddPost = () => {
   const [buttonState, setButtonState] = useState(true)
@@ -28,7 +28,7 @@ const AddPost = () => {
   const [title, setTitle] = useState('')
   const [isPublic, setIsPublic] = useState(false)
   const [isReviewNeeded, setIsReviewNeeded] = useState(false)
-  // const history = useHistory()
+
   const router = useRouter()
   const dispatch = useDispatch()
   const categoriesOptions = useSelector(state =>
@@ -96,7 +96,7 @@ const AddPost = () => {
   }
 
   const handleCancel = () => {
-    history.push('/')
+    router.push('/')
   }
 
   useEffect(() => {

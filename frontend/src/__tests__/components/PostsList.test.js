@@ -1,7 +1,15 @@
-import React from 'react'
-import renderWithStoreAndRouter from '../../tests/utils/renderWithStoreAndRouter'
+import renderWithStore from '../../tests/utils/renderWithStore'
 import PostsList from '../../components/PostsList'
-
+jest.mock('next/router', () => ({
+  useRouter() {
+    return {
+      route: '/category/test-category',
+      pathname: '',
+      query: '',
+      asPath: '',
+    }
+  },
+}))
 describe('PostList', () => {
   const postsMock = [
     {
@@ -83,10 +91,7 @@ describe('PostList', () => {
   ]
 
   it('should render', () => {
-    const { container } = renderWithStoreAndRouter(
-      <PostsList posts={postsMock} />,
-      { route: '/category/test-category' }
-    )
+    const { container } = renderWithStore(<PostsList posts={postsMock} />)
     expect(container).toMatchSnapshot()
   })
 })

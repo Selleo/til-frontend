@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { Tooltip } from 'react-tippy'
 import PropTypes from 'prop-types'
@@ -39,6 +39,6 @@ const CopyPostURL = ({ id, slug }) => {
 export default CopyPostURL
 
 CopyPostURL.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   slug: PropTypes.string.isRequired,
 }

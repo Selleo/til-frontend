@@ -1,33 +1,34 @@
-import React from 'react'
-import App from 'next/app'
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware, compose } from 'redux'
-import rootReducer from '../src/store/reducers/reducers'
-import thunk from 'redux-thunk'
+import { useEffect } from 'react'
+import { store, wrapper } from '../src/store/store'
+import { Provider, useDispatch } from 'react-redux'
 import SideNav from '../src/components/SideNav'
 import AppHeader from '../src/components/AppHeader'
 import ScrollToTop from '../src/components/ScrollToTop'
-// import MainRoutes from '../src/components/MainRoutes'
-// import AuthenticatedApp from '../src/authenticated'
-import AuthHandler from '../src/components/AuthHandler'
 import Footer from '../src/components/Footer'
-
+import {
+  saveAllCategories,
+  saveAllUsers,
+  saveCurrentUser,
+} from '../src/store/actions/actions'
+import 'react-tippy/dist/tippy.css'
 import 'react-tippy/dist/tippy.css'
 
 import '../src/devicon.css'
 import '../src/assets/stylesheets/application.sass'
+import useUser from '../src/utils/customHooks/useUser'
 
 const TilApp = ({ Component, pageProps }) => {
-  // const currentUser = useUser()
-  let composeEnhancers = compose
-  if (typeof window !== 'undefined') {
-    composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-  }
+  const currentUser = useUser()
+  const dispatch = useDispatch()
 
-  const store = createStore(
-    rootReducer,
-    composeEnhancers(applyMiddleware(thunk))
-  )
+  useEffect(() => {
+    dispatch(saveAllCategories())
+    dispatch(saveAllUsers())
+  }, [dispatch, currentUser])
+  useEffect(() => {
+    dispatch(saveCurrentUser())
+  }, [dispatch])
+
   return (
     <Provider store={store}>
       <div className="app-main" data-testid="app-main">
@@ -36,16 +37,12 @@ const TilApp = ({ Component, pageProps }) => {
         <div className="main-content">
           <AppHeader />
           <Component {...pageProps} />
-          <div className="main-content-area">
-            {/* <MainRoutes /> */}
-            {/* {currentUser && <AuthenticatedApp />} */}
-          </div>
+          <div className="main-content-area"></div>
           <Footer />
         </div>
-        {/* <div path="/auth">{<AuthHandler />}</div> */}
       </div>
     </Provider>
   )
 }
 
-export default TilApp
+export default wrapper.withRedux(TilApp)

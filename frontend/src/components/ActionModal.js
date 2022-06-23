@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Modal from 'react-modal'
 
 const ActionModal = props => {
@@ -19,7 +19,9 @@ const ActionModal = props => {
   }
 
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#root')
+    if (process.env.NODE_ENV !== 'test') {
+      Modal.setAppElement('#root')
+    }
   }, [])
 
   const handleCancel = () => {
@@ -37,6 +39,7 @@ const ActionModal = props => {
       style={customStyles}
       shouldCloseOnOverlayClick
       shouldCloseOnEsc
+      ariaHideApp={false}
       overlayClassName="Overlay action-modal"
       appElement={document.getElementById('root')}
     >

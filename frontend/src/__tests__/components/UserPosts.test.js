@@ -1,12 +1,11 @@
 import React from 'react'
 import UserPosts from '../../components/UsersPosts'
-import renderWithStoreAndRouter from '../../tests/utils/renderWithStoreAndRouter'
+import renderWithStore from '../../tests/utils/renderWithStore'
 import {
   getAuthorPostsStatus,
   setPageDescription,
   setPageTitle,
 } from '../../store/actions/actions'
-import { prettyDOM } from '@testing-library/react'
 
 describe('UserPosts component', () => {
   xit('should render properly', () => {
@@ -17,7 +16,7 @@ describe('UserPosts component', () => {
       lastName: 'authorLastName',
     })
 
-    const { container } = renderWithStoreAndRouter(<UserPosts />, {
+    renderWithStore(<UserPosts />, {
       actions: [
         getAuthorPostsStatus(mockUser.firstName),
         setPageTitle(),

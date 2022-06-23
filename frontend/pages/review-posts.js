@@ -1,7 +1,6 @@
-import React from 'react'
+import ReviewPost from '../src/authenticated/ReviewPost'
 
-const ReviewPosts = () => {
-  return <div>review-posts</div>
+const ReviewPostsView = () => {
+  return <ReviewPost />
 }
-
-export default ReviewPosts
+export default ReviewPostsView
