@@ -4,13 +4,7 @@ import DisplayPost from '../../components/DisplayPost'
 import renderWithStore from '../../tests/utils/renderWithStore'
 
 const mockReplace = jest.fn()
-//
-// jest.mock('react-router', () => {
-//   return {
-//     ...jest.requireActual('react-router'),
-//     useHistory: () => ({ replace: mockReplace }),
-//   }
-// })
+
 // TODO: fix this test
 describe('DisplayPost', () => {
   xit('sets adds the post slug in url when entering post details without providing slug', async () => {

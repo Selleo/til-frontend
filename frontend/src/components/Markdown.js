@@ -1,8 +1,5 @@
-import React from 'react'
-
 import ReactMarkdown from 'react-markdown'
 import { useSelector } from 'react-redux'
-// import { useLocation } from 'react-router-dom'
 import { useRouter } from 'next/router'
 import CodeBlock from './CodeBlock'
 import TextBlock from './TextBlock'

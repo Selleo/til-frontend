@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
-// import { useLocation } from 'react-router-dom'
+
 import { useRouter } from 'next/router'
 import { isEmpty } from 'lodash'
 
-// import { saveAllPosts } from '../store/actions/actions'
 import { saveAllPosts } from '../store/actions/actions'
 import { selectPostsWithStatus } from '../utils/selectors/selectPosts'
 import { statusType } from '../utils/constants'
@@ -17,11 +16,9 @@ import PostSkeletonTemplate from './PostSkeletonTemplate'
 
 const AllPosts = () => {
   const router = useRouter()
-  // const { search } = useLocation()
+
   const dispatch = useDispatch()
-
   let searchParams = router.query.page
-
   const [posts, status] = useSelector(selectPostsWithStatus)
 
   useEffect(() => {
