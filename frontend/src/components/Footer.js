@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { socialMedia } from '../utils/sociaMedia'
 
 const Footer = () => (

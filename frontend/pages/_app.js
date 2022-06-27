@@ -12,7 +12,6 @@ import {
 } from '../src/store/actions/actions'
 import 'react-tippy/dist/tippy.css'
 import 'react-tippy/dist/tippy.css'
-
 import '../src/devicon.css'
 import '../src/assets/stylesheets/application.sass'
 import useUser from '../src/utils/customHooks/useUser'
@@ -25,6 +24,7 @@ const TilApp = ({ Component, pageProps }) => {
     dispatch(saveAllCategories())
     dispatch(saveAllUsers())
   }, [dispatch, currentUser])
+
   useEffect(() => {
     dispatch(saveCurrentUser())
   }, [dispatch])
@@ -37,7 +37,7 @@ const TilApp = ({ Component, pageProps }) => {
         <div className="main-content">
           <AppHeader />
           <Component {...pageProps} />
-          <div className="main-content-area"></div>
+          <div className="main-content-area" />
           <Footer />
         </div>
       </div>

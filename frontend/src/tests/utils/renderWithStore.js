@@ -5,10 +5,8 @@ import rootReducer from '../../store/reducers/reducers'
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 
-const renderWithStore = (ui, { actions = [], initialState } = {}) => {
+const renderWithStore = (ui, { initialState } = {}) => {
   const store = createStore(rootReducer, initialState, applyMiddleware(thunk))
-
-  // actions.forEach(action => store.dispatch(action))
 
   const renderResult = render(<Provider store={store}>{ui}</Provider>)
   return {

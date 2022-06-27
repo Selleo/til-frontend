@@ -8,7 +8,7 @@ const Avatar = ({ imageUrl, background = 'dark' }) => {
       className={`user__image -background-${background}`}
       data-testid="avatar-without-image"
     >
-      <img src="../assets/icons/avatar.svg" alt="" className="user__icon" />{' '}
+      <img src="../assets/icons/avatar.svg" alt="" className="user__icon" />
     </div>
   )
 }

@@ -14,6 +14,11 @@ const customJestConfig = {
     '!.eslintrc.js',
     '!**coverage/**',
     '!**lib/**',
+    '!**/styles/**',
+    '!**/tests/**',
+    '!**/store/*.js',
+    '!**/nonAuthenticated/**',
+    '!**/src/*.js',
   ],
 
   moduleNameMapper: {

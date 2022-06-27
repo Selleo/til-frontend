@@ -17,10 +17,9 @@ const App = () => {
         <meta name="description" content={description} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta
-          property="og:image"
-          content={`../public/assets/images/logo.svg`}
-        />
+        <meta property="og:image" content="../public/assets/images/logo.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
         <meta property="og:image:width" content="400" />
         <meta property="og:image:height" content="400" />
       </Head>

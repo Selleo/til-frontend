@@ -4,7 +4,6 @@ import classNames from 'classnames'
 import ProfileLink from './ProfileLink'
 import AddPostButton from './AddPostButton'
 import Logout from './Logout'
-
 import { Transition } from '../components/Transition'
 import Avatar from '../components/Avatar'
 

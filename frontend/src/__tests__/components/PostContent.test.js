@@ -4,7 +4,7 @@ import renderWithStore from '../../tests/utils/renderWithStore'
 jest.mock('next/router', () => ({
   useRouter() {
     return {
-      route: '/search',
+      route: '/',
       pathname: '',
       query: '',
       asPath: '',
@@ -13,7 +13,7 @@ jest.mock('next/router', () => ({
 }))
 describe('PostContent', () => {
   const postMock = {
-    id: 'test-id',
+    id: 1,
     isPublic: true,
     slug: 'test-slug',
     createdAt: '2022-04-21T09:39:26',
@@ -25,7 +25,7 @@ describe('PostContent', () => {
     },
     reactions: [
       {
-        post_id: 'test-id',
+        post_id: 1,
         type: 'like',
         user_uuid: '1',
       },

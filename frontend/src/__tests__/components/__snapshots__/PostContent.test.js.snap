@@ -94,7 +94,7 @@ exports[`PostContent should render properly 1`] = `
           <div
             class="post__single-reaction"
           >
-            <span
+            <svg
               class="like"
             />
             <div
@@ -106,7 +106,7 @@ exports[`PostContent should render properly 1`] = `
           <div
             class="post__single-reaction"
           >
-            <span
+            <svg
               class="funny"
             />
             <div
@@ -118,7 +118,7 @@ exports[`PostContent should render properly 1`] = `
           <div
             class="post__single-reaction"
           >
-            <span
+            <svg
               class="love"
             />
             <div
@@ -130,7 +130,7 @@ exports[`PostContent should render properly 1`] = `
           <div
             class="post__single-reaction"
           >
-            <span
+            <svg
               class="surprised"
             />
             <div

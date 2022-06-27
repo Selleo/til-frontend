@@ -23,7 +23,7 @@ jest.mock('next/router', () => ({
 const postsMock = {
   data: [
     {
-      id: 'test-2',
+      id: 2,
       slug: 'test-slug',
       createdAt: '2022-04-21T09:39:26',
       author: {
@@ -38,7 +38,7 @@ const postsMock = {
       ],
     },
     {
-      id: 'test-3',
+      id: 3,
       slug: 'test-slug',
       createdAt: '2022-04-21T09:39:26',
       author: {
@@ -54,7 +54,7 @@ const postsMock = {
       ],
     },
     {
-      id: 'test-5',
+      id: 5,
       slug: 'test-slug',
       createdAt: '2022-04-21T09:39:26',
       author: {
@@ -69,7 +69,7 @@ const postsMock = {
       ],
     },
     {
-      id: 'test-4',
+      id: 4,
       slug: 'test-slug',
       createdAt: '2022-04-21T09:39:26',
       author: {
@@ -89,7 +89,7 @@ const postsMock = {
 
 //TODO: MOCK DATA
 describe('AllPosts', () => {
-  it.only('should return "nothing found" if there is no posts', async () => {
+  it('should return "nothing found" if there is no posts', async () => {
     window.scrollTo = jest.fn()
 
     nock(`http://localhost:4000/`).get('/api/posts?page=null').reply(200, [])

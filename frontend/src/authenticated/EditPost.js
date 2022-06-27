@@ -19,13 +19,13 @@ const EditPost = () => {
   const [buttonState, setButtonState] = useState(true)
   const [markdown, setMarkdown] = useState('')
   const [title, setTitle] = useState('')
-
+  // user categories as strings
   const [categories, setCategories] = useState([])
-
+  // select friendly categories used to pass to select options
   const [categoriesOptions, setCategoriesOptions] = useState('')
-
+  // select friendly user options
   const [userCategoriesOptions, setUserCategoriesOptions] = useState([])
-
+  // allCategories from redux in form {id: 1, name: "java"}
   const allCategories = useSelector(state => state.categories)
   const dispatch = useDispatch()
   const router = useRouter()

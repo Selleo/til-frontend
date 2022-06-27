@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 import { usePagination } from '../utils/customHooks/usePagination'
@@ -23,22 +23,22 @@ const PostsPagination = ({ posts }) => {
   const switchToSpecificPage = page => {
     if (!router.location.search && page === 1) return
     if (page !== DOTS)
-      router.pathname.includes('category')
-        ? router.push(`${router.pathname}?page=${page}`)
+      router.asPath.includes('category')
+        ? router.push(`${router.asPath}?page=${page}`)
         : router.push(`/?page=${page}`)
   }
 
   const switchToPrevPage = () => {
     if (posts.pageNumber > 1)
-      router.pathname.includes('category')
-        ? router.push(`${router.pathname}?page=${posts.pageNumber - 1}`)
+      router.asPath.includes('category')
+        ? router.push(`${router.asPath}?page=${posts.pageNumber - 1}`)
         : router.push(`/?page=${posts.pageNumber - 1}`)
   }
 
   const switchToNextPage = () => {
     if (posts.pageNumber < posts.totalPages)
-      router.pathname.includes('category')
-        ? router.push(`${router.pathname}?page=${posts.pageNumber + 1}`)
+      router.asPath.includes('category')
+        ? router.push(`${router.asPath}?page=${posts.pageNumber + 1}`)
         : router.push(`/?page=${posts.pageNumber + 1}`)
   }
 

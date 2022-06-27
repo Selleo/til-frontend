@@ -14,11 +14,9 @@ import AddPostButton from '../authenticated/AddPostButton'
 
 const CategoryPosts = () => {
   const { query } = useRouter()
-
-  let searchParams = new URLSearchParams(query).get('page')
+  let searchParams = new URLSearchParams(query).get('categoryId')
   const [posts, status] = useSelector(selectCategoryPostsWithStatus)
-  const categories = useSelector(state => state.categories)
-
+  const { categories } = useSelector(state => state)
   const dispatch = useDispatch()
 
   const savePosts = useCallback(() => {

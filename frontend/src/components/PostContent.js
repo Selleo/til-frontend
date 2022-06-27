@@ -65,7 +65,6 @@ const PostContent = ({
     const selectedText = document.getSelection().toString()
     navigateConditionally(e, selectedText)
   }
-
   return (
     <Transition name="post-animation" delay={animationDelay}>
       <article

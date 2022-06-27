@@ -39,7 +39,6 @@ const ActionModal = props => {
       style={customStyles}
       shouldCloseOnOverlayClick
       shouldCloseOnEsc
-      ariaHideApp={false}
       overlayClassName="Overlay action-modal"
       appElement={document.getElementById('root')}
     >

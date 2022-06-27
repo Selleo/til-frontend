@@ -10,6 +10,7 @@ const AddPostView = () => {
       router.push('/')
     }
   }, [router, user])
+
   if (!user) {
     return null
   }
