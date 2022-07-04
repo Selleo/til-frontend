@@ -1,4 +1,3 @@
-import React from 'react'
 import Markdown from '../components/Markdown'
 import PostCategories from '../components/PostCategories'
 import Avatar from '../components/Avatar'
@@ -7,6 +6,7 @@ import { timeFormat } from '../utils'
 
 const PostPreview = props => {
   const user = useUser()
+
   const { body, title, categories } = props
   return (
     <article className="post -preview">

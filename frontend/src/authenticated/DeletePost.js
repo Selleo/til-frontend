@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { request } from '../utils'
-import { useHistory } from 'react-router-dom'
 
+import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { saveAllPosts, saveCurrentUser } from '../store/actions/actions'
 import DeleteModal from './DeleteModal'
 import postSuccessToast from '../utils/toasts/postSuccessToast'
 
-const { REACT_APP_API_URL: API_URL } = process.env
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const DeletePost = ({ postId }) => {
-  const history = useHistory()
+  const router = useRouter()
+
   const dispatch = useDispatch()
   const [isModalOpen, setIsOpenModal] = useState(false)
 
@@ -28,13 +29,13 @@ const DeletePost = ({ postId }) => {
     )
 
     if (isDeleted.ok) {
-      history.push('/profile')
+      router.push('/profile')
       dispatch(saveAllPosts())
       dispatch(saveCurrentUser())
       postSuccessToast('Post deleted successfully.')
     }
 
-    history.push('/profile')
+    router.push('/profile')
   }
 
   return (

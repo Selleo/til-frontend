@@ -1,7 +1,6 @@
 import { checkForToken } from '../auth'
 
-const { REACT_APP_API_URL: API_URL } = process.env
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 export const fetchSearchedPosts = async (query, page = 1) => {
   const optionsToken = checkForToken()
 

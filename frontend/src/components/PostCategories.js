@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
-import { useHistory } from 'react-router-dom'
+
+import { useRouter } from 'next/router'
 import { saveCategoryPosts } from '../store/actions/actions'
 import { useDispatch } from 'react-redux'
 import { Transition } from './Transition'
@@ -9,7 +10,8 @@ import SinglePostCategory from './SinglePostCategory'
 const PostCategories = props => {
   const { categories, preview } = props
   const [showRestCategories, setShowRestCategories] = useState(false)
-  const history = useHistory()
+
+  const router = useRouter()
   const dispatch = useDispatch()
 
   const toogleShowRestCategories = () => {
@@ -18,7 +20,7 @@ const PostCategories = props => {
 
   const handleClick = (e, name, id) => {
     if (e) e.preventDefault()
-    history.push(`/category/${name}`)
+    router.push(`/category/${name}`)
     dispatch(saveCategoryPosts(id))
   }
 

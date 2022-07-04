@@ -1,7 +1,7 @@
 import React from 'react'
 import { act, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import renderWithStoreAndRouter from '../../tests/utils/renderWithStoreAndRouter'
+import renderWithStore from '../../tests/utils/renderWithStore'
 
 import { advanceBy } from 'jest-date-mock'
 import Search from '../../components/Search'
@@ -31,7 +31,7 @@ jest.mock('react-redux', () => ({
 
 describe('Search', () => {
   xit('should push query to URL param and clear input when click on clear button', async () => {
-    renderWithStoreAndRouter(<Search />, history)
+    renderWithStore(<Search />, history)
 
     const textInput = screen.getByPlaceholderText('Search')
 

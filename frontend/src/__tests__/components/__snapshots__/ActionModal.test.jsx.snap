@@ -2,6 +2,7 @@
 
 exports[`ActionModal should render 1`] = `
 <body
+  aria-hidden="true"
   class="ReactModal__Body--open"
 >
   <div

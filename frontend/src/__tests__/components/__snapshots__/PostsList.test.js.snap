@@ -68,9 +68,10 @@ exports[`PostList should render 1`] = `
             <button
               class="post__share-button"
             >
-              <svg>
-                share.svg
-              </svg>
+              <img
+                alt=""
+                src="../assets/icons/share.svg"
+              />
               <span
                 class="post__share-text"
               >
@@ -111,9 +112,7 @@ exports[`PostList should render 1`] = `
             >
               <svg
                 class="like"
-              >
-                like.svg
-              </svg>
+              />
               <div
                 class="reaction-number"
               >
@@ -125,9 +124,7 @@ exports[`PostList should render 1`] = `
             >
               <svg
                 class="funny"
-              >
-                funny.svg
-              </svg>
+              />
               <div
                 class="reaction-number"
               >
@@ -139,9 +136,7 @@ exports[`PostList should render 1`] = `
             >
               <svg
                 class="love"
-              >
-                love.svg
-              </svg>
+              />
               <div
                 class="reaction-number"
               >
@@ -153,9 +148,7 @@ exports[`PostList should render 1`] = `
             >
               <svg
                 class="surprised"
-              >
-                surprised.svg
-              </svg>
+              />
               <div
                 class="reaction-number"
               >
@@ -229,9 +222,10 @@ exports[`PostList should render 1`] = `
             <button
               class="post__share-button"
             >
-              <svg>
-                share.svg
-              </svg>
+              <img
+                alt=""
+                src="../assets/icons/share.svg"
+              />
               <span
                 class="post__share-text"
               >
@@ -272,9 +266,7 @@ exports[`PostList should render 1`] = `
             >
               <svg
                 class="like"
-              >
-                like.svg
-              </svg>
+              />
               <div
                 class="reaction-number"
               >
@@ -286,9 +278,7 @@ exports[`PostList should render 1`] = `
             >
               <svg
                 class="funny"
-              >
-                funny.svg
-              </svg>
+              />
               <div
                 class="reaction-number"
               >
@@ -300,9 +290,7 @@ exports[`PostList should render 1`] = `
             >
               <svg
                 class="love"
-              >
-                love.svg
-              </svg>
+              />
               <div
                 class="reaction-number"
               >
@@ -314,9 +302,7 @@ exports[`PostList should render 1`] = `
             >
               <svg
                 class="surprised"
-              >
-                surprised.svg
-              </svg>
+              />
               <div
                 class="reaction-number"
               >

@@ -1,7 +1,8 @@
 import React from 'react'
 
 const LogInButton = props => {
-  const { REACT_APP_API_URL: API_URL } = process.env
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
+
   const { className, text, callbackURL } = props
 
   const linkText = text || 'log in'

@@ -1,11 +1,8 @@
-// REACTIONS
+import Like from '../../assets/icons/reactions/like.svg'
+import Love from '../../assets/icons/reactions/love.svg'
+import Funny from '../../assets/icons/reactions/funny.svg'
+import Surprised from '../../assets/icons/reactions/surprised.svg'
 
-import { ReactComponent as Like } from '../../assets/icons/reactions/like.svg'
-import { ReactComponent as Love } from '../../assets/icons/reactions/love.svg'
-import { ReactComponent as Funny } from '../../assets/icons/reactions/funny.svg'
-import { ReactComponent as Surprised } from '../../assets/icons/reactions/surprised.svg'
-
-// assign imported icons to reactions
 export const convertReactions = reactions => {
   const reactionsType = [
     { type: 'like', Icon: Like },
@@ -13,7 +10,6 @@ export const convertReactions = reactions => {
     { type: 'love', Icon: Love },
     { type: 'surprised', Icon: Surprised },
   ]
-
   let filteredReactions = []
 
   reactionsType.forEach(reaction => {

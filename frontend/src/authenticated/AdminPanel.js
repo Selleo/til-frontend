@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import classNames from 'classnames'
+import { useState, useEffect, useRef } from 'react'
 
+import classNames from 'classnames'
+import ProfileLink from './ProfileLink'
 import AddPostButton from './AddPostButton'
 import Logout from './Logout'
-import Icon from '../components/UI/Icon'
 import { Transition } from '../components/Transition'
 import Avatar from '../components/Avatar'
 
 import useUser from '../utils/customHooks/useUser'
-import chevron from '../assets/icons/chevron.png'
 
 const AdminPanel = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -59,13 +57,14 @@ const AdminPanel = () => {
         <p className="user__name">
           {user.firstName} {user.lastName}
         </p>
-        <img src={chevron} alt="chevron" className={chevronClasses} />
+        <img
+          src="/assets/icons/chevron.png"
+          alt="chevron"
+          className={chevronClasses}
+        />
         <Transition name="opacity-animation" condition={isMenuOpen}>
           <div className={userMenuClasses}>
-            <Link to="/profile" className="profile-link">
-              <Icon name="profile" />
-              <span className="profile-link__text">Profile</span>
-            </Link>
+            <ProfileLink />
             <Logout />
           </div>
         </Transition>

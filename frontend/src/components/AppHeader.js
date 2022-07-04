@@ -1,6 +1,5 @@
-import React from 'react'
-
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import AdminPanel from '../authenticated/AdminPanel'
 import useUser from '../utils/customHooks/useUser'
@@ -10,23 +9,22 @@ import LogInButton from './LogInButton'
 import NavigatorButton from './NavigatorButton'
 
 const AppHeader = () => {
-  const history = useHistory()
-  const { pathname } = useLocation()
+  const router = useRouter()
   const user = useUser()
 
-  const isOnCategoryPage = pathname.includes('category')
-  const isOnPostsPage = pathname.includes('posts')
+  const isOnCategoryPage = router.asPath.includes('category')
+  const isOnPostsPage = router.asPath.includes('posts')
   const isDisplayAllPostsButton = isOnCategoryPage || isOnPostsPage
-  const isOnEditPostPage = pathname.includes('edit-post')
+  const isOnEditPostPage = router.asPath.includes('edit-post')
 
-  const handleGoToBackPage = () => history.goBack()
-  const handleGoToAllPosts = () => history.push('/')
+  const handleGoToBackPage = () => router.back()
+  const handleGoToAllPosts = () => router.push('/')
 
   return (
     <Transition name="opacity-animation">
       <div className="app-header">
-        <Link to="/" className="logo__link">
-          todayilearned
+        <Link href="/">
+          <a className="logo__link"> todayilearned</a>
         </Link>
         {isDisplayAllPostsButton && (
           <NavigatorButton action={handleGoToAllPosts} text="Go to all posts" />

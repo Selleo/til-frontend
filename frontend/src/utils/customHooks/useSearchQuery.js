@@ -1,3 +1,3 @@
-import { useLocation } from 'react-router-dom'
+import { useRouter } from 'next/router'
 
-export const useSearchQuery = () => useLocation().search.replace('?q=', '')
+export const useSearchQuery = () => useRouter().query.q

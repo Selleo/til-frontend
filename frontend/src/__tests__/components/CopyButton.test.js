@@ -1,13 +1,11 @@
-import React from 'react'
-import { fireEvent, prettyDOM, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import CopyButton from '../../components/CopyButton'
 
 describe('CopyButton', () => {
   it('should render Share component', () => {
     render(<CopyButton isInTooltip={false} />)
-    expect(
-      screen.getByRole('button', { name: 'share.svg' })
-    ).toBeInTheDocument()
+
+    expect(screen.getByRole('button')).toBeInTheDocument()
   })
 
   it('should not render Share component', () => {

@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams, useLocation } from 'react-router-dom'
+
+import { useRouter } from 'next/router'
 import { isEmpty } from 'lodash'
 import PostsList from './PostsList'
 import { saveCategoryPosts, setPageTitle } from '../store/actions/actions'
@@ -12,19 +13,19 @@ import EmptyPage from './EmptyPage'
 import AddPostButton from '../authenticated/AddPostButton'
 
 const CategoryPosts = () => {
-  const { search } = useLocation()
-  let searchParams = new URLSearchParams(search).get('page')
+  const { query } = useRouter()
+  let searchParams = new URLSearchParams(query).get('categoryId')
   const [posts, status] = useSelector(selectCategoryPostsWithStatus)
-  const categories = useSelector(state => state.categories)
-
+  const { categories } = useSelector(state => state)
   const dispatch = useDispatch()
-  const { id } = useParams()
 
   const savePosts = useCallback(() => {
-    const foundCategory = categories.find(({ name }) => name === id)
+    const foundCategory = categories.find(
+      ({ name }) => name === query.categoryId
+    )
     foundCategory && dispatch(saveCategoryPosts(foundCategory.id, searchParams))
     dispatch(setPageTitle(foundCategory?.name))
-  }, [searchParams, categories, dispatch, id])
+  }, [searchParams, categories, dispatch, query.categoryId])
 
   useEffect(() => {
     savePosts()
@@ -52,7 +53,8 @@ const CategoryPosts = () => {
   }
   return (
     <>
-      <PostsList posts={posts.data} currentCategory={id} />
+      <PostsList posts={posts.data} currentCategory={query.categoryId} />
+
       <PostsPagination posts={posts} savePosts={savePosts} />
     </>
   )

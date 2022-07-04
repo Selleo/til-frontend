@@ -1,14 +1,19 @@
 import { renderHook } from '@testing-library/react-hooks'
 import useParamsWithoutSlug from '../useParamsWithoutSlug'
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useParams: () => ({
-    id: '12-test',
-  }),
+jest.mock('next/router', () => ({
+  useRouter() {
+    return {
+      route: '',
+      pathname: '',
+      query: {
+        postId: '12-test',
+      },
+      asPath: '/test',
+    }
+  },
 }))
-
-describe('useParamsWithoutSzlug', () => {
+describe('useParamsWithoutSlug', () => {
   const expectedResult = {
     id: '12',
     slug: 'test',

@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Categories from '../components/Categories'
 import Search from './Search'
-import { Link, useHistory } from 'react-router-dom'
+import { useRouter } from 'next/router'
+
 import { useDisableOnRoute } from '../utils/customHooks/useDisableOnRoute'
 import ActionModal from './ActionModal'
 import LogoSelleo from './LogoSelleo'
 
 const SideNav = () => {
-  const history = useHistory()
+  const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { isDisabled } = useDisableOnRoute(['add', 'edit'])
 
@@ -15,6 +16,7 @@ const SideNav = () => {
     if (isDisabled) {
       e.preventDefault()
       setIsModalOpen(true)
+      router.push('/')
     }
   }
 
@@ -22,9 +24,9 @@ const SideNav = () => {
     <>
       <div className="side-nav">
         <div className="logo">
-          <Link to="/" className="logo__link" onClick={handleClick}>
-            todayilearned
-          </Link>
+          <div onClick={handleClick}>
+            <span className="logo__link"> todayilearned</span>
+          </div>
           <LogoSelleo className="logo__link" />
         </div>
 
@@ -40,7 +42,7 @@ const SideNav = () => {
 
       {isModalOpen && (
         <ActionModal
-          action={() => history.push('/')}
+          action={() => router.push('/')}
           isOpen={isModalOpen}
           setIsOpen={setIsModalOpen}
           message="If you leave, you will lose your data!"

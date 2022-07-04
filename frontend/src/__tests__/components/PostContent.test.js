@@ -1,12 +1,20 @@
-import React from 'react'
 import { screen } from '@testing-library/react'
 import PostContent from '../../components/PostContent'
-import renderWithStoreAndRouter from '../../tests/utils/renderWithStoreAndRouter'
-
+import renderWithStore from '../../tests/utils/renderWithStore'
+jest.mock('next/router', () => ({
+  useRouter() {
+    return {
+      route: '/',
+      pathname: '',
+      query: '',
+      asPath: '',
+    }
+  },
+}))
 describe('PostContent', () => {
   const postMock = {
-    id: 'test-id',
-    isPulic: true,
+    id: 1,
+    isPublic: true,
     slug: 'test-slug',
     createdAt: '2022-04-21T09:39:26',
     author: {
@@ -17,7 +25,7 @@ describe('PostContent', () => {
     },
     reactions: [
       {
-        post_id: 'test-id',
+        post_id: 1,
         type: 'like',
         user_uuid: '1',
       },
@@ -25,16 +33,13 @@ describe('PostContent', () => {
   }
 
   it('should render properly', () => {
-    const { container } = renderWithStoreAndRouter(
-      <PostContent post={postMock} />,
-      { route: '/search' }
-    )
+    const { container } = renderWithStore(<PostContent post={postMock} />)
     expect(container).toMatchSnapshot()
   })
 
   it('should render with userMenu', () => {
-    renderWithStoreAndRouter(<PostContent post={postMock} userMenu />, {
-      route: '/search',
+    renderWithStore(<PostContent post={postMock} userMenu />, {
+      route: '/',
     })
     expect(screen.getByText('Edit')).toBeInTheDocument()
     expect(screen.getByText('Delete')).toBeInTheDocument()

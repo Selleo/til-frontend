@@ -1,5 +1,5 @@
 import { rest } from 'msw'
-import { Post } from './mocks/post.mock'
+import { Post } from './__mocks__/post.mock'
 
 export const apiUrl = process.env.REACT_APP_API_URL
 

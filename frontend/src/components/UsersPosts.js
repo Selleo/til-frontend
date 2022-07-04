@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+
 import { fetchUserPosts } from '../utils'
 import PostContent from './PostContent'
 import EmptyPage from './EmptyPage'
@@ -10,12 +10,15 @@ import { isEmpty } from 'lodash'
 import { getAuthorPostsStatus } from '../store/actions/actions'
 import useUser from '../utils/customHooks/useUser'
 import { setPageDescription, setPageTitle } from '../store/actions/actions'
+import { useRouter } from 'next/router'
 
-const { REACT_APP_API_URL: API_URL } = process.env
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const UserPosts = () => {
   const [userPosts, setUserPosts] = useState([])
-  const { username } = useParams()
+  const { query } = useRouter()
+
+  const username = query.userName
   const dispatch = useDispatch()
   const user = useUser()
   const statuses = useSelector(state => state.statuses)
@@ -28,14 +31,14 @@ const UserPosts = () => {
     fetchUserPosts(`${API_URL}/api/authors/`, username).then(response =>
       setUserPosts(response?.data)
     )
-  }, [username, user])
+  }, [username, user, dispatch, pageHeader])
 
   useEffect(() => {
     return () => {
       dispatch(setPageTitle(null))
       dispatch(setPageDescription(null))
     }
-  }, [])
+  }, [dispatch])
 
   if (
     !statuses.authorPostsStatus ||

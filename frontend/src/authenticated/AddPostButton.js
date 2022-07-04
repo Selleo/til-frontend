@@ -1,6 +1,6 @@
 import React from 'react'
 import { useIsOnRoute } from '../utils/customHooks/useIsOnRoute'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { Transition } from '../components/Transition'
 
 const AddPostButton = () => {
@@ -8,8 +8,8 @@ const AddPostButton = () => {
 
   return (
     <Transition name="zoom-animation" condition={!isOnAddRoute}>
-      <Link to="/add-post" className="add-post-btn">
-        ADD POST
+      <Link href="/add-post">
+        <a className="add-post-btn"> ADD POST</a>
       </Link>
     </Transition>
   )
