@@ -21,7 +21,7 @@ RUN mix local.hex --force && \
     mix release
 
 # --- application stage ---
-FROM alpine:3.14
+FROM alpine:3.16
 
 RUN apk add --update bash openssl libstdc++ ncurses-libs curl postgresql-client
 
