@@ -118,29 +118,3 @@ File.open("posts_categories.csv", "w") do |f|
     )
   end
 end
-
-
-File.open("redirections.cr", "w") do |f|
-  f.write("# This file is generated from Selleo/til/migration/dump.rb script based on current database\n\n")
-  f.write("REDIRECTIONS = {\n")
-
-  f.write("  \"/\" => \"https://til.selleo.com\",\n")
-  f.write("\n")
-
-  Post.all.each do |post|
-    f.write("  \"/posts/#{post.slug}-#{title_url(post.title)}\" => \"https://til.selleo.com/posts/#{post.id}-#{title_url(post.title)}\",\n")
-  end
-  f.write("\n")
-  Channel.all.each do |ch|
-    f.write("  \"/#{ch.name}\" => \"https://til.selleo.com/category/#{ch.name}\",\n")
-  end
-  f.write("\n")
-  Developer.all.each do |dev|
-    f.write("  \"/authors/#{dev.username}\" => \"https://til.selleo.com/authors/#{dev.username}\",\n")
-  end
-
-  f.write("}")
-end
-
-
-
