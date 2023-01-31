@@ -10,19 +10,19 @@ services:
       POSTGRES_PASSWORD: secret
       POSTGRES_USER: til
       POSTGRES_DB: til
-      
+
   pgweb:
     restart: always
     image: sosedoff/pgweb
-    ports: 
-      - "8400:8081" 
+    ports:
+      - "8400:8081"
     environment:
       - DATABASE_URL=postgres://til:secret@pg:5432/til?sslmode=disable
     depends_on:
       - pg
 
   app:
-    image: til:0.8.0
+    image: til:latest
     ports:
       - "4000:4000"
     environment:
@@ -37,4 +37,3 @@ services:
       FRONTEND_HOST: localhost
       SLACK_REVIEW_HOOK: todo
       SLACK_FEED_HOOK: todo
-
