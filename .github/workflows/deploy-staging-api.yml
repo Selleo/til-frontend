@@ -3,7 +3,7 @@ name: Deploy API (staging)
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - backend/**
       - .github/workflows/deploy-staging-api.yml
