@@ -51,10 +51,9 @@ jobs:
           ECS_SERVICE: api
           DOCKER_IMAGE: ${{ secrets.AWS_ECR_URL }}:${{ github.sha }}
         run: selleo aws ecs deploy --region $AWS_REGION --cluster $ECS_CLUSTER --service $ECS_SERVICE --docker-image $DOCKER_IMAGE --one-off migrate
-
-      - name: ECS Run migrations
-        env:
-          AWS_REGION: eu-central-1
-          ECS_CLUSTER: til-48d7cf30
-          ECS_SERVICE: api
-        run: selleo aws ecs run --region $AWS_REGION --cluster $ECS_CLUSTER --service $ECS_SERVICE --one-off migrate
+      # - name: ECS Run migrations
+      #   env:
+      #     AWS_REGION: eu-central-1
+      #     ECS_CLUSTER: til-48d7cf30
+      #     ECS_SERVICE: api
+      #   run: selleo aws ecs run --region $AWS_REGION --cluster $ECS_CLUSTER --service $ECS_SERVICE --one-off migrate
