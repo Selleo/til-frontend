@@ -29,9 +29,9 @@ RUN mkdir /app
 WORKDIR /app
 
 COPY --from=build /app/_build/prod/rel/til ./
+ADD entrypoint.sh /app/
 RUN chown -R nobody: /app
 USER nobody
 
 ENV HOME=/app
-
-CMD ["./bin/til", "start"]
+ENTRYPOINT [ "/app/entrypoint.sh" ]

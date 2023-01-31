@@ -1,20 +1,15 @@
-#!/bin/bash
+#!/bin/sh
+set -e
 
-if [[ "$MIX_ENV" != "prod" ]]; then
-    while ! pg_isready -q -h $PGHOST -p $PGPORT -U $PGUSER
-    do
-      echo "$(date) - waiting for database to start"
-      sleep 2
-    done
+COMMAND="${1:-server}"
 
-    if [[ -z `psql -Atqc "\\list $PGDATABASE"` ]]; then
-      echo "Database $PGDATABASE does not exist. Creating..."
-      createdb -E UTF8 $PGDATABASE -l en_US.UTF-8 -T template0
-      mix ecto.migrate
-      mix run priv/repo/seeds.exs
-      echo "Database $PGDATABASE created."
-    fi
+if [ $COMMAND == "server" ]; then
+  echo "Starting server..."
+  /app/bin/til start
+elif [ $COMMAND == "migrate" ]; then
+  echo "Running migrations..."
+  /app/bin/til rpc Til.Release.migrate
+else
+  echo "Usage: entrypoint.sh [server|migrate]"
+  exit 1
 fi
-
-mix ecto.migrate
-exec mix phx.server
