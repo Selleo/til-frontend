@@ -28,14 +28,14 @@ const UserPosts = () => {
     fetchUserPosts(`${API_URL}/api/authors/`, username).then(response =>
       setUserPosts(response?.data)
     )
-  }, [username, user])
+  }, [username, user, dispatch, pageHeader])
 
   useEffect(() => {
     return () => {
       dispatch(setPageTitle(null))
       dispatch(setPageDescription(null))
     }
-  }, [])
+  }, [dispatch])
 
   if (
     !statuses.authorPostsStatus ||

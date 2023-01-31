@@ -32,7 +32,7 @@ const Search = () => {
     if (searchQuery) {
       setInput(searchQuery)
     }
-  }, [])
+  }, [searchQuery])
 
   const handleClearInput = useCallback(() => {
     dispatch(saveSearchedQuery(''))
@@ -45,7 +45,7 @@ const Search = () => {
       dispatch(saveSearchedQuery(''))
       setInput('')
     }
-  }, [hasLeftRoute, handleClearInput])
+  }, [dispatch, hasLeftRoute, handleClearInput])
 
   const handleInput = event => {
     const searchedValue = event.target.value
