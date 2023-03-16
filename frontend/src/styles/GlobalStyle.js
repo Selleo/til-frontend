@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
-  
+
   * {
    box-sizing: border-box;
   }
@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
   pre {
     font-size: 20px;
     border-radius: 10px;
+    overflow-x: auto;
   }
 
   body {
