@@ -3,7 +3,7 @@ name: Deploy Frontend (production)
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 
 jobs:
   build:

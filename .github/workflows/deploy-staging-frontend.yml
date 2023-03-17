@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - frontend/**
-      - .github/workflows/deploy-staging-frontend.yml
 
 jobs:
   build:

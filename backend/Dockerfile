@@ -1,5 +1,5 @@
 # --- build stage ---
-FROM elixir:1.13-alpine AS build
+FROM hexpm/elixir:1.13.4-erlang-24.3.4.10-alpine-3.16.4 AS build
 
 RUN apk add --update alpine-sdk coreutils
 
@@ -21,7 +21,7 @@ RUN mix local.hex --force && \
     mix release
 
 # --- application stage ---
-FROM alpine:3.16
+FROM alpine:3.16.4
 
 RUN apk add --update bash openssl libstdc++ ncurses-libs curl postgresql-client
 
