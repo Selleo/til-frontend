@@ -3,13 +3,11 @@ name: Deploy API (production)
 on:
   push:
     tags:
-      - '*'
-    paths:
-      - backend/**
-      - .github/workflows/deploy-production-api.yml
+      - 'v*'
 
 jobs:
   build:
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     environment:
       name: production
@@ -42,7 +40,7 @@ jobs:
         uses: jaxxstorm/action-install-gh-release@v1.5.0
         with:
           repo: selleo/cli
-          tag: v0.9.0
+          tag: v0.16.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: ECS Deployment

@@ -4,9 +4,6 @@ on:
   push:
     tags:
       - '*'
-    paths:
-      - frontend/**
-      - .github/workflows/deploy-production-frontend.yml
 
 jobs:
   build:
