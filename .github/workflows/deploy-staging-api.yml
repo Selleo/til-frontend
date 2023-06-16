@@ -38,13 +38,13 @@ jobs:
         uses: jaxxstorm/action-install-gh-release@v1.5.0
         with:
           repo: selleo/cli
-          tag: v0.16.0
+          tag: v0.21.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: ECS Deployment
         env:
           AWS_REGION: eu-central-1
-          ECS_CLUSTER: til-48d7cf30
+          ECS_CLUSTER: til-16c8d725
           ECS_SERVICE: api
           DOCKER_IMAGE: ${{ secrets.AWS_ECR_URL }}:${{ github.sha }}
         run: selleo aws ecs deploy --region $AWS_REGION --cluster $ECS_CLUSTER --service $ECS_SERVICE --docker-image $DOCKER_IMAGE --one-off migrate
