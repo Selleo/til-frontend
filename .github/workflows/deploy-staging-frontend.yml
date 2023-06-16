@@ -24,7 +24,7 @@ jobs:
       - name: Build app
         run: npm run build
         env:
-          REACT_APP_API_URL: https://api.til.beta.selleo.app
+          REACT_APP_API_URL: https://api-til.beta.selleo.app
       - name: Synchronize S3 Bucket
         uses: jakejarvis/s3-sync-action@master
         with:
